@@ -19,24 +19,17 @@ export default function Index({ allPosts }) {
         <Head>
           <title>Komika Media</title>
         </Head>
-        <Container>
-          <Navbar />
-          <Intro />
-          <ContainerPadding>
-            {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.coverImage}
-              date={heroPost.date}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
-            )}
-            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-          </ContainerPadding>
+        {/* <Container> */}
+        <Navbar />
+        <Intro />
+        <ContainerPadding>
+          {heroPost && (
+            'x'
+          )}
+          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        </ContainerPadding>
 
-        </Container>
+        {/* </Container> */}
       </Layout>
     </>
   )
