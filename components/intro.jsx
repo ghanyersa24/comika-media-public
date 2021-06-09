@@ -4,7 +4,7 @@ import { autoPlay } from 'react-swipeable-views-utils'
 import { CMS_NAME } from '../lib/constants'
 
 export const Item = ({ url }) => (
-  <div className="w-full">
+  <div className="w-full ">
     <img src={url} alt="" className="w-full object-cover" />
   </div>
 )
