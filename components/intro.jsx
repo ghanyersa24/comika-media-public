@@ -13,7 +13,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 export default function Intro() {
   return (
     <section className="mb-4">
-      <AutoPlaySwipeableViews enableMouseEvents className="h-4/5">
+      <AutoPlaySwipeableViews enableMouseEvents className="h-4/5" interval={7000}>
         <Item url="https://media-origin.kompas.tv/library/image/thumbnail/1604991035/KALIS1604991035.jpg" />
         <Item url="https://media-origin.kompas.tv/library/image/thumbnail/1615547951/NOPEK_-_KOMIKA_ANGIN-ANGINAN_KOK_MASUK_FINAL1615547951.jpg" />
       </AutoPlaySwipeableViews>

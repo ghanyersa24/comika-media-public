@@ -8,6 +8,7 @@ import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
+import Navbar from '../components/blog/navigation/navbar'
 
 export default function Index({ allPosts }) {
   const heroPost = allPosts[0]
@@ -19,6 +20,7 @@ export default function Index({ allPosts }) {
           <title>Komika Media</title>
         </Head>
         <Container>
+          <Navbar />
           <Intro />
           <ContainerPadding>
             {heroPost && (
