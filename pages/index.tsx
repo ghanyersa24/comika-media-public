@@ -1,12 +1,14 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react'
+import Head from 'next/head'
 import Container from '../components/container'
+import ContainerPadding from '../components/container-padding'
 import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
-import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
+
 export default function Index({ allPosts }) {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
@@ -18,7 +20,8 @@ export default function Index({ allPosts }) {
         </Head>
         <Container>
           <Intro />
-          {heroPost && (
+          <ContainerPadding>
+            {heroPost && (
             <HeroPost
               title={heroPost.title}
               coverImage={heroPost.coverImage}
@@ -27,8 +30,10 @@ export default function Index({ allPosts }) {
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
             />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+            )}
+            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          </ContainerPadding>
+
         </Container>
       </Layout>
     </>
