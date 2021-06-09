@@ -1,3 +1,3 @@
 export default function Container({ children }) {
-  return <div className="">{children}</div>
+  return <div className="min-h-screen">{children}</div>
 }
