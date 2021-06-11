@@ -35,10 +35,7 @@
         "simple-import-sort"
     ],
     "rules": {
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
+        "linebreak-style": 0,
         "semi": [
             2,
             "never"

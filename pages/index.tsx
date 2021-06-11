@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Head from 'next/head'
 import Container from '../components/container'
 import ContainerPadding from '../components/container-padding'
-import MoreStories from '../components/more-stories'
+import MorePosts from '../components/more-posts'
 import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
@@ -22,11 +22,8 @@ export default function Index({ allPosts }) {
         {/* <Container> */}
         <Navbar />
         <Intro />
-        <ContainerPadding>
-          {heroPost && (
-            'x'
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        <ContainerPadding className="mt-12">
+          {morePosts.length > 0 && <MorePosts posts={morePosts} title="Konten Terpoluler" />}
         </ContainerPadding>
 
         {/* </Container> */}
