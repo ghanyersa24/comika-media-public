@@ -42,12 +42,12 @@ export const SideBar = ({ isShowing }) => (
             <XIcon className="block h-6 w-6" aria-hidden="true" />
           </Disclosure.Button>
         </div>
-        <div className="divide-y ">
+        <div className="divide-y pt-4 ">
           <div className="flex items-center flex-col  ">
             <img src="/assets/logo/comikamedia.svg" className="w-full px-2 " alt="logo komika" />
             <span className="py-4">Tempat mencari kebahagiaan</span>
           </div>
-          <div className="pt-4" >
+          <div className="pt-8" >
             {navigation.map((item) => (
               <a
                 key={item.name}
