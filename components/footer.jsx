@@ -1,30 +1,48 @@
-import Container from './container'
 import { EXAMPLE_PATH } from '../lib/constants'
 
 export default function Footer() {
   return (
-    <footer className="bg-primary border-t border-accent-2">
-      <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-4xl pl-24 text-white lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Comika Media
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <a
-              href="https://nextjs.org/docs/basic-features/pages"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-            >
-              Read Documentation
-            </a>
-            <a
-              href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-              className="mx-3 font-bold hover:underline"
-            >
-              View on GitHub
-            </a>
+    <footer className="bg-primary border-t border-accent-2 text-white">
+      <div className="grid md:grid-cols-3 gap-4 h-72 py-8 ">
+        <div className="flex items-center ">
+          <img src="/assets/logo/comikamedia.svg" className="ml-16 lg:w-72 " alt="logo komika" />
+
+        </div>
+        <div className="flex text-left justify-between  flex-col ">
+          <a
+            href="https://nextjs.org/docs/basic-features/pages"
+            className="font-bold hover:underline"
+          >
+            Konten
+          </a>
+          <a
+            href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
+            className="font-bold hover:underline"
+          >
+            Store
+          </a>
+          <a
+            href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
+            className="font-bold hover:underline"
+          >
+            Kontak kami
+          </a>
+          <a
+            href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
+            className="font-bold hover:underline"
+          >
+            Temukan kami di
+          </a>
+          <div className="flex flex-row">
+            <img src="/assets/social-media/facebook.svg" className="mr-4 w-8" alt="logo komika" />
+            <img src="/assets/social-media/ig.svg" className="mr-4  w-8" alt="logo komika" />
+            <img src="/assets/social-media/twitter.svg" className="mr-4 w-8" alt="logo komika" />
           </div>
         </div>
-      </Container>
+      </div>
+      <div className=" flex justify-center items-center text-center h-12 bg-black bg-opacity-5 ">
+        © Copyright COMIKAMEDIA 2021. All right reserved.
+      </div>
     </footer>
   )
 }
