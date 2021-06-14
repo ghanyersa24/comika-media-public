@@ -36,7 +36,7 @@ export const SideBar = ({ isShowing }) => (
       leaveFrom="translate-x-0"
       leaveTo="-translate-x-full"
     >
-      <div className="relative z-50  px-2 pt-2 pb-3 space-y-1 w-screen md:w-full min-h-screen bg-gray-900 ">
+      <div className="relative  z-50  px-2 pt-2 pb-3 space-y-1 w-screen md:w-full min-h-screen bg-gray-900 ">
         <div className="flex justify-end">
           <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <span className="sr-only">Open main menu</span>
