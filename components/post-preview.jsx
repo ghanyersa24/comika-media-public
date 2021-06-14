@@ -24,9 +24,9 @@ export default function PostPreview({
       </div>
       <Avatar name={author.name} picture={author.picture} />
       <h3 className="text-xl mb-3 font-bold  leading-snug">
-        <Link as={`/posts/${slug}`} href="/posts/[slug]">
+        {/* <Link as={`/posts/${slug}`} href="/posts/[slug]"> */}
           <a className="hover:underline">{title}</a>
-        </Link>
+        {/* </Link> */}
       </h3>
       <div className="text-lg mb-4">
         Selengkapnya...
