@@ -8,7 +8,7 @@ export default function Footer() {
           <img src="/assets/logo/comikamedia.svg" className="ml-16 lg:w-72 " alt="logo komika" />
 
         </div>
-        <div className="flex text-left justify-between  flex-col ">
+        <div className="flex text-left justify-between  flex-col pt-8 ">
           <a
             href="https://nextjs.org/docs/basic-features/pages"
             className="font-bold hover:underline"
