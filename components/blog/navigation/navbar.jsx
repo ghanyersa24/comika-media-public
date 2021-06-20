@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { SvgFacebook,SvgInstagram } from '../../assets/svg'
+
 const navigation = [
   { name: 'Home', href: '#', current: true },
   { name: 'Article', href: '#', current: false },
@@ -89,11 +91,9 @@ export default function Example() {
               <div className="">
                 <img src="/assets/logo/comikamedia-navbar.svg" className="" alt="logo komika" />
               </div>
-              <div className=" text-blue-500 flex  flex-row  ">
-                <img src="/assets/social-media/facebook.svg" className="mr-4 w-8 fill-current " alt="logo komika" />
-                <img src="/assets/social-media/instagram.svg" className="mr-4 w-8 fill-current " alt="logo komika" />
-                <img src="/assets/social-media/twitter.svg" className="mr-4 w-8  fill-current  " alt="logo komika" />
-                <img src="/assets/social-media/youtube.svg" className="mr-4 w-8  fill-current  " alt="logo komika" />
+              <div className=" text-blue-500 flex flex-row  ">
+                <SvgFacebook className="text-primary w-8 h-8" />
+                <SvgInstagram className="text-primary w-8 h-8" />
               </div>
             </div>
           </div>
