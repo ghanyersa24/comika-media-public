@@ -25,18 +25,18 @@ export const SideBar = ({ isShowing }) => (
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="fixed z-10 h-screen w-full bg-black bg-opacity-80 " />
+      <div className="fixed z-40 top-0 h-screen w-full bg-black bg-opacity-80 " />
     </Transition.Child>
     {/* Sliding sidebar */}
     <Transition.Child
-      enter="transition ease-in-out duration-200 transform"
-      enterFrom="-translate-x-full"
-      enterTo="translate-x-0"
-      leave="transition ease-in-out duration-200 transform"
-      leaveFrom="translate-x-0"
-      leaveTo="-translate-x-full"
+      enter="duration-200 ease-out"
+      enterFrom="opacity-0 scale-95"
+      enterTo="opacity-100 scale-100"
+      leave="duration-100 ease-in"
+      leaveFrom="opacity-100 scale-100"
+      leaveTo="opacity-0 scale-95"
     >
-      <div className="relative    z-50  px-4 pt-2 pb-3 space-y-1 w-screen md:w-full min-h-screen bg-primary text-white ">
+      <div className="fixed w-full top-0  z-50  px-4 pt-2 pb-3 space-y-1  md:w-80 min-h-screen bg-primary text-white ">
         <div className="flex justify-end">
           <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md  hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -47,7 +47,7 @@ export const SideBar = ({ isShowing }) => (
             <img src="/assets/logo/comikamedia.svg" className="w-full px-2 " alt="logo komika" />
             <span className="py-4">Tempat mencari kebahagiaan</span>
           </div>
-          <div className="pt-8" >
+          <div className="pt-8">
             {navigation.map((item) => (
               <a
                 key={item.name}
@@ -71,32 +71,25 @@ export const SideBar = ({ isShowing }) => (
 
 export default function Example() {
   return (
-    <Disclosure as="nav" className="bg-transparent z-40 fixed w-80 ">
+    <Disclosure as="nav" className="fixed z-30 bg-white w-screen">
       {({ open }) => (
         <>
-          <Transition
-            show={!open}
-            enter="transition-opacity duration-75"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity duration-150"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="absolute mx-auto px-2 sm:px-6 lg:px-8 ">
-              <div className="relative flex items-center justify-between h-16">
-                <div className=" inset-y-0 left-0 flex items-center">
-                  {/* Mobile menu button */}
-                  <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                    <span className="sr-only">Open main menu</span>
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                  </Disclosure.Button>
-                </div>
-
+          <div className=" mx-auto px-6  lg:px-8 ">
+            <div className=" flex items-center justify-between h-16">
+              <div className=" inset-y-0 left-0 flex items-center">
+                {/* Mobile menu button */}
+                <Disclosure.Button className={classNames(
+                  open ? 'text-gray-900' : 'text-gray-500',
+                  'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                )}
+                >
+                  <span className="sr-only">Open main menu</span>
+                  <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                </Disclosure.Button>
               </div>
-            </div>
-          </Transition>
 
+            </div>
+          </div>
           <SideBar isShowing={open} />
         </>
       )}

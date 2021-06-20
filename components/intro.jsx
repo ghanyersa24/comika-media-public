@@ -12,7 +12,7 @@ export const Item = ({ url }) => (
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 export default function Intro() {
   return (
-    <section className="mb-4">
+    <section className="mb-4 pt-16">
       <AutoPlaySwipeableViews enableMouseEvents className="h-4/5" interval={7000}>
         <Item url="https://cdn-production-thumbor-vidio.akamaized.net/wcfHB49qGZmrBNYaV0IQygpjzC4=/1336x480/filters:quality(75)/vidio-web-prod-headline/uploads/headline/premium_image/7763/vidio-community-cup-ea72d9.jpg" />
         <Item url="https://cdn-production-thumbor-vidio.akamaized.net/_17v0x0yzEKcuvAYfQCNzaZjMyM=/1336x480/filters:quality(75)/vidio-web-prod-headline/uploads/headline/premium_image/8659/facetrix-6669a3.jpg" />
