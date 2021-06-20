@@ -35,7 +35,7 @@ export default function Footer() {
           </a>
           <div className="flex flex-row">
             <img src="/assets/social-media/facebook.svg" className="mr-4 w-8" alt="logo komika" />
-            <img src="/assets/social-media/ig.svg" className="mr-4  w-8" alt="logo komika" />
+            <img src="/assets/social-media/instagram.svg" className="mr-4  w-8" alt="logo komika" />
             <img src="/assets/social-media/twitter.svg" className="mr-4 w-8" alt="logo komika" />
           </div>
         </div>
