@@ -1,12 +1,13 @@
 import { EXAMPLE_PATH } from '../lib/constants'
+import { SocialMediaLogo } from './social-media'
+import { Comikamedia } from './svg'
 
 export default function Footer() {
   return (
     <footer className="bg-primary border-t border-accent-2 text-white">
       <div className="grid md:grid-cols-3 gap-4 h-72 py-8 ">
         <div className="flex items-center ">
-          <img src="/assets/logo/comikamedia.svg" className="ml-16 lg:w-72 " alt="logo komika" />
-
+          <Comikamedia className="ml-16 lg:w-72 " />
         </div>
         <div className="flex text-left justify-between  flex-col pt-8 ">
           <a
@@ -34,9 +35,7 @@ export default function Footer() {
             Temukan kami di
           </a>
           <div className="flex flex-row">
-            <img src="/assets/social-media/facebook.svg" className="mr-4 w-8" alt="logo komika" />
-            <img src="/assets/social-media/instagram.svg" className="mr-4  w-8" alt="logo komika" />
-            <img src="/assets/social-media/twitter.svg" className="mr-4 w-8" alt="logo komika" />
+            <SocialMediaLogo className="fill-current text-white mr-4 w-8" />
           </div>
         </div>
       </div>

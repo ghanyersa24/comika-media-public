@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import { SvgFacebook,SvgInstagram } from '../../assets/svg'
+import { ComikamediaNavbar, Comikamedia } from '../../svg'
+import { SocialMediaLogo } from '../../social-media'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -45,23 +46,30 @@ export const SideBar = ({ isShowing }) => (
         </div>
         <div className="divide-y pt-4 ">
           <div className="flex items-center flex-col  ">
-            <img src="/assets/logo/comikamedia.svg" className="w-full px-2 " alt="logo komika" />
+            {/* <img src="/assets/logo/comikamedia.svg" className="w-full px-2 " alt="logo komika" /> */}
+            <Comikamedia className="w-full px-2 " />
             <span className="py-4">Tempat mencari kebahagiaan</span>
           </div>
-          <div className="pt-8">
+          <div className="pt-8 pb-8">
             {navigation.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 className={classNames(
                   item.current ? 'bg-gray-900 bg-opacity-20 text-white' : 'text-gray-300 hover:text-white  ',
-                  'block px-3 py-2 rounded-md text-base font-medium text-2xl',
+                  'block px-3 py-2 rounded-md text-base font-bold text-3xl',
                 )}
                 aria-current={item.current ? 'page' : undefined}
               >
                 {item.name}
               </a>
             ))}
+          </div>
+          <div>
+            {/* <p>Social Media</p> */}
+            <div className="pt-8 flex flex-row ">
+              <SocialMediaLogo className="fill-current text-white mr-4 w-6" />
+            </div>
           </div>
         </div>
       </div>
@@ -89,11 +97,10 @@ export default function Example() {
                 </Disclosure.Button>
               </div>
               <div className="">
-                <img src="/assets/logo/comikamedia-navbar.svg" className="" alt="logo komika" />
+                <ComikamediaNavbar className="h-12" />
               </div>
               <div className=" text-blue-500 flex flex-row  ">
-                <SvgFacebook className="text-primary w-8 h-8" />
-                <SvgInstagram className="text-primary w-8 h-8" />
+                <SocialMediaLogo className="fill-current text-primary mr-4 w-6" />
               </div>
             </div>
           </div>
