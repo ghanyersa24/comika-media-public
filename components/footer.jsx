@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-primary border-t border-accent-2 text-white">
       <div className="grid md:grid-cols-3 gap-4 h-72 py-8 ">
         <div className="flex items-center ">
-          <Comikamedia className="ml-16 lg:w-72 " />
+          <Comikamedia className="md:mx-8 lg:mx-16 mx-4 w-full " />
         </div>
         <div className="flex text-left justify-between  flex-col pt-8 ">
           <a
