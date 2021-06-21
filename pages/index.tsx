@@ -9,6 +9,7 @@ import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
 import Navbar from '../components/blog/navigation/navbar'
+import { client } from '../lib/clientRaw'
 
 export default function Index({ allPosts }) {
   const heroPost = allPosts[0]
@@ -33,6 +34,7 @@ export default function Index({ allPosts }) {
 }
 
 export async function getStaticProps() {
+  const res = await client.get('/article/')
   const allPosts = getAllPosts([
     'title',
     'date',
