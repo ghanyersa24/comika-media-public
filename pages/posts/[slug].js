@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
+import Head from 'next/head'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
 import Layout from '../../components/layout'
-import { getPostBySlug, getAllPosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
-import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
+import { client } from '../../lib/clientRaw'
+import { API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -27,7 +28,10 @@ export default function Post({ post, morePosts, preview }) {
             <article className="mb-32">
               <Head>
                 <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
+                  {post.title}
+                  {' '}
+                  | Next.js Blog Example with
+                  {CMS_NAME}
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
@@ -47,15 +51,18 @@ export default function Post({ post, morePosts, preview }) {
 }
 
 export async function getStaticProps({ params }) {
-  const post = getPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'author',
-    'content',
-    'ogImage',
-    'coverImage',
-  ])
+  console.log('🚀 ~ file: [slug].js ~ line 54 ~ getStaticProps ~ params', params)
+  const post = await client.get(`${API_ENDPOINT_ARTICLE}/${params.slug}`)
+  console.log('🚀 ~ file: [slug].js ~ line 55 ~ getStaticProps ~ post', post)
+  // const post = await client.get(params.slug, [
+  //   'title',
+  //   'date',
+  //   'slug',
+  //   'author',
+  //   'content',
+  //   'ogImage',
+  //   'coverImage',
+  // ])
   const content = await markdownToHtml(post.content || '')
 
   return {
@@ -69,16 +76,13 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug'])
-
+  const posts = await client.get(`${API_ENDPOINT_ARTICLE}/${['slug']}`)
   return {
-    paths: posts.map((post) => {
-      return {
-        params: {
-          slug: post.slug,
-        },
-      }
-    }),
+    paths: posts.map((post) => ({
+      params: {
+        slug: post.slug,
+      },
+    })),
     fallback: false,
   }
 }
