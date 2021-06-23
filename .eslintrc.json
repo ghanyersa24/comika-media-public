@@ -20,7 +20,8 @@
         "plugin:react/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "airbnb"
+        "airbnb",
+        "next"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -36,6 +37,8 @@
     ],
     "rules": {
         "linebreak-style": 0,
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off",
         "semi": [
             2,
             "never"

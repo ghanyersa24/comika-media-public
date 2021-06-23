@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 import Header from '../../components/header'
@@ -12,13 +13,31 @@ import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
 
-export default function Post({ post, morePosts, preview }) {
+type Post = {
+  'id': string,
+  'userId': string,
+  'title': string,
+  'slug': string,
+  'banner': string,
+  'isPremium': boolean,
+  'isPublish': boolean,
+  'content':string,
+  'createdAt': Date,
+  'updatedAt': Date,
+  'deletedAt': Date,
+  'UserId': Date
+}
+type Props = {
+  post: Post,
+  // morePosts: string[]
+}
+export default function DetailOfPost({ post }: Props):any {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
   return (
-    <Layout preview={preview}>
+    <Layout>
       <Container>
         <Header />
         {router.isFallback ? (
@@ -50,10 +69,8 @@ export default function Post({ post, morePosts, preview }) {
   )
 }
 
-export async function getStaticProps({ params }) {
-  console.log('🚀 ~ file: [slug].js ~ line 54 ~ getStaticProps ~ params', params)
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post = await client.get(`${API_ENDPOINT_ARTICLE}/${params.slug}`)
-  console.log('🚀 ~ file: [slug].js ~ line 55 ~ getStaticProps ~ post', post)
   // const post = await client.get(params.slug, [
   //   'title',
   //   'date',
@@ -75,7 +92,7 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await client.get(`${API_ENDPOINT_ARTICLE}`)
   // Get the paths we want to pre-render based on posts
   const paths = posts.map((post) => ({
