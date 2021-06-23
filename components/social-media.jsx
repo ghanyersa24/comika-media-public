@@ -14,7 +14,7 @@ export const SocialMediaLogo = ({ className }) => {
   return (
     <>
       {SocialMedia.map((icon) => (
-        <Link href={icon[0]}>
+        <Link href={icon[0]} key={icon[0]}>
           <a>{icon[1]}</a>
         </Link>
       ))}

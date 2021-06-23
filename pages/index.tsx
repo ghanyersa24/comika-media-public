@@ -10,10 +10,11 @@ import { getAllPosts } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
 import Navbar from '../components/blog/navigation/navbar'
 import { client } from '../lib/clientRaw'
+import { API_ENDPOINT_ARTICLE } from '../res/api-endpoint'
 
-export default function Index({ allPosts }) {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
+export default function Index({ data }) {
+  const morePosts = data
+  console.log('🚀 ~ file: index.tsx ~ line 17 ~ Index ~ morePosts', morePosts)
   return (
     <>
       <Layout>
@@ -34,17 +35,15 @@ export default function Index({ allPosts }) {
 }
 
 export async function getStaticProps() {
-  const res = await client.get('/article/')
-  const allPosts = getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'author',
-    'coverImage',
-    'excerpt',
-  ])
+  const data = await client.get(API_ENDPOINT_ARTICLE)
+  console.log('🚀 ~ file: index.tsx ~ line 39 ~ getStaticProps ~ res', data)
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
 
   return {
-    props: { allPosts },
+    props: { data }, // will be passed to the page component as props
   }
 }
