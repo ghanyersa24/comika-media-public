@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Head from 'next/head'
+import { GetStaticProps } from 'next'
 import Container from '../components/container'
 import ContainerPadding from '../components/container-padding'
 import MorePosts from '../components/more-posts'
@@ -34,7 +35,7 @@ export default function Index({ data }) {
   )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const data = await client.get(API_ENDPOINT_ARTICLE)
   console.log('🚀 ~ file: index.tsx ~ line 39 ~ getStaticProps ~ res', data)
   if (!data) {
