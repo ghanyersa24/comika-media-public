@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from 'react'
 
 function SvgSearch(props) {
   return (
-    <svg fill="none" viewBox="0 0 24 24" className={props.className} {...props}>
+    <svg fill="none" viewBox="0 0 24 24" {...props}>
       <g clipPath="url(#search_svg__clip0)">
         <mask
           id="search_svg__a"
@@ -25,7 +25,7 @@ function SvgSearch(props) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }
 
-export default SvgSearch;
+export default SvgSearch

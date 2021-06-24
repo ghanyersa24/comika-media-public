@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import {
-  Comikamedia, Facebook, Instagram, Youtube, Twitter,
+  Facebook, Instagram, Youtube, Twitter,
 } from './svg'
 
 export const SocialMediaLogo = ({ className }) => {
   const SocialMedia = [
-    ['/a', <Facebook className={className} />],
-    ['/b', <Instagram className={className} />],
-    ['/c', <Twitter className={className} />],
-    ['/d', <Youtube className={className} />],
+    ['/a', <Facebook className={className} key="1" />],
+    ['/b', <Instagram className={className} key="2" />],
+    ['/c', <Twitter className={className} key="3" />],
+    ['/d', <Youtube className={className} key="4" />],
   ]
   console.log('🚀 ~ file: social-media.jsx ~ line 2 ~ SocialMediaLogo ~ params')
   return (

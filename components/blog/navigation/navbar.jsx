@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Disclosure, Transition } from '@headlessui/react'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 
@@ -46,7 +45,8 @@ export const SideBar = ({ isShowing }) => (
         </div>
         <div className="divide-y pt-4 ">
           <div className="flex items-center flex-col  ">
-            {/* <img src="/assets/logo/comikamedia.svg" className="w-full px-2 " alt="logo komika" /> */}
+            {/* <img src="/assets/logo/comikamedia.svg"
+            className="w-full px-2 " alt="logo komika" /> */}
             <Comikamedia className="w-full px-2 " />
             <span className="py-4">Tempat mencari kebahagiaan</span>
           </div>

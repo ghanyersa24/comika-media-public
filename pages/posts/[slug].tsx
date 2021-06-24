@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import { GetStaticProps, GetStaticPaths } from 'next'
+import React from 'react'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 import Header from '../../components/header'
@@ -12,26 +13,9 @@ import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
+import { PropsDetailOfPost } from '../../type'
 
-type Post = {
-  'id': string,
-  'userId': string,
-  'title': string,
-  'slug': string,
-  'banner': string,
-  'isPremium': boolean,
-  'isPublish': boolean,
-  'content':string,
-  'createdAt': Date,
-  'updatedAt': Date,
-  'deletedAt': Date,
-  'UserId': Date
-}
-type Props = {
-  post: Post,
-  // morePosts: string[]
-}
-export default function DetailOfPost({ post }: Props):any {
+export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />

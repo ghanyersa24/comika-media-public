@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
+// import Link from 'next/link'
+// import Avatar from './avatar'
+// import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 
 export default function PostPreview({
   title,
   coverImage,
-  date,
-  excerpt,
+  // date,
+  // excerpt,
   // author,
   slug,
 }) {
