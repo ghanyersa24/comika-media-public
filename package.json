@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint --fix --ext .js,.jsx . src/ components/ pages/"
   },
   "dependencies": {
     "@headlessui/react": "^1.2.0",
