@@ -5,11 +5,14 @@ import Image from 'next/image'
 export default function CoverImage({
   title, src, slug, height, width,
 }) {
+  if (!src) {
+    return 'tanpa gambar'
+  }
   const image = (
     <Image
       src={src}
       alt={`Cover Image for ${title}`}
-      className={cn('shadow-sm', {
+      className={cn('shadow-sm rounded-md', {
         'hover:shadow-md transition-shadow duration-200': slug,
       })}
       layout="responsive"
