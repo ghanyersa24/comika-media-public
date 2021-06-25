@@ -1,5 +1,5 @@
 // import Link from 'next/link'
-// import Avatar from './avatar'
+import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 
@@ -18,18 +18,20 @@ export default function PostPreview({
           slug={slug}
           title={title}
           src={coverImage}
-          height={278}
-          width={556}
+          height={222}
+          width={345}
         />
       </div>
-      {/* <Avatar name={author.name} picture={author.picture} /> */}
-      <h3 className="text-xl mb-3 font-bold  leading-snug">
-        {/* <Link as={`/posts/${slug}`} href="/posts/[slug]"> */}
-        <a className="hover:underline">{title}</a>
-        {/* </Link> */}
-      </h3>
-      <div className="text-lg mb-4">
-        Selengkapnya...
+      <div className="px-4">
+        <Avatar name="dummy name" picture="https://awsimages.detik.net.id/community/media/visual/2021/05/27/presiden-jokowi_169.jpeg?w=700&q=90" />
+        <h3 className="text-xl mb-3 font-bold  leading-snug">
+          {/* <Link as={`/posts/${slug}`} href="/posts/[slug]"> */}
+          <a className="hover:underline">{title}</a>
+          {/* </Link> */}
+        </h3>
+        <div className="text-lg mb-4">
+          Selengkapnya...
+        </div>
       </div>
       {/* <div className="text-lg mb-4">
         <DateFormatter dateString={date} />

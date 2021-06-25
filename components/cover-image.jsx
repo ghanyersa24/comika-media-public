@@ -12,7 +12,7 @@ export default function CoverImage({
     <Image
       src={src}
       alt={`Cover Image for ${title}`}
-      className={cn('shadow-sm', {
+      className={cn('shadow-sm rounded-md', {
         'hover:shadow-md transition-shadow duration-200': slug,
       })}
       layout="responsive"
