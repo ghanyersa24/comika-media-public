@@ -12,6 +12,8 @@ module.exports = {
         success: '#0070f3',
         cyan: '#79FFE1',
         primary: '#006BC1',
+        primaryLight: '#1474C3',
+        primaryDark: '#0F60AA',
         textSecondary: '#515151',
       },
       spacing: { 28: '7rem' },
