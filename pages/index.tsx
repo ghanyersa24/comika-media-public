@@ -40,7 +40,7 @@ export default function Index({ data }:Props): React.ReactNode {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
   const data = await client.get(`${API_ENDPOINT_LIST_ARTICLE_LIMIT}`)
   console.log('🚀 ~ file: index.tsx ~ line 39 ~ getStaticProps ~ res', data)
   if (!data) {
