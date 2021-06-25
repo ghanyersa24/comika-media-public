@@ -10,7 +10,9 @@ module.exports = {
     staticFolder: '/static',
   },
   images: {
-    domains: ['miro.medium.com', 'service-comika.herokuapp.com'],
+    domains: ['miro.medium.com', 'service-comika.herokuapp.com',
+      'cdn-production-thumbor-vidio.akamaized.net', 'localhost',
+    ],
   },
   // eslint: {
   //   // Warning: Dangerously allow production builds to successfully complete even if

@@ -1,11 +1,9 @@
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
-import Image from 'next/image'
 
 export const Item = ({ url }) => (
   <div className="w-full ">
-    {/* <img src={url} alt="" className="w-full object-cover" /> */}
-    <Image src={url} alt="Gambar Intro" />
+    <img src={url} alt="Gambar Intro" className="w-full object-cover" />
   </div>
 )
 

@@ -11,8 +11,15 @@ import { client } from '../lib/clientRaw'
 import { API_ENDPOINT_ARTICLE } from '../res/api-endpoint'
 import { Post } from '../type'
 
-export default function Index(data :Post[]): React.ReactNode {
-  console.log('🚀 ~ file: index.tsx ~ line 17 ~ Index ~ morePosts', data)
+type Props= {
+  data:Post[]
+}
+export default function Index({ data }:Props): React.ReactNode {
+  // const tuple = [1, 2, 3, 4, 5]
+  // console.log('🚀 ~ file: index.tsx ~ line 16 ~ Index ~ tuple', tuple, tuple.length)
+  // const myArray: string[] = ['hello', 'world']
+  // console.log('🚀 ~ file: index.tsx ~ line 18 ~ Index ~ myArray', myArray, myArray.length)
+  console.log('🚀 ~ file: index.tsx ~ line 17 ~ Index ~ morePosts', data, data.length)
 
   return (
     <>
