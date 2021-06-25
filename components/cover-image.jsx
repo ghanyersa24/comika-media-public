@@ -5,6 +5,9 @@ import Image from 'next/image'
 export default function CoverImage({
   title, src, slug, height, width,
 }) {
+  if (!src) {
+    return 'tanpa gambar'
+  }
   const image = (
     <Image
       src={src}

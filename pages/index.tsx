@@ -8,7 +8,7 @@ import Intro from '../components/intro'
 import Layout from '../components/layout'
 import Navbar from '../components/blog/navigation/navbar'
 import { client } from '../lib/clientRaw'
-import { API_ENDPOINT_ARTICLE } from '../res/api-endpoint'
+import { API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../res/api-endpoint'
 import { Post } from '../type'
 
 type Props= {
@@ -41,7 +41,7 @@ export default function Index({ data }:Props): React.ReactNode {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await client.get(API_ENDPOINT_ARTICLE)
+  const data = await client.get(`${API_ENDPOINT_LIST_ARTICLE_LIMIT}`)
   console.log('🚀 ~ file: index.tsx ~ line 39 ~ getStaticProps ~ res', data)
   if (!data) {
     return {

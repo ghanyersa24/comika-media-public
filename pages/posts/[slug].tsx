@@ -12,7 +12,7 @@ import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
+import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../../res/api-endpoint'
 import { PropsDetailOfPost } from '../../type'
 
 export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode {
@@ -54,7 +54,9 @@ export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = await client.get(`${API_ENDPOINT_ARTICLE}/${params.slug}`)
+  console.log('🚀 ~ file: [slug].tsx ~ line 58 ~ constgetStaticProps:GetStaticProps= ~ post', params)
+  const post = await client.get(`${API_ENDPOINT_DETAIL_ARTICLE}/${params.slug}`)
+  console.log('🚀 ~ file: [slug].tsx ~ line 59 ~ constgetStaticProps:GetStaticProps= ~ post', post)
   // const post = await client.get(params.slug, [
   //   'title',
   //   'date',
@@ -77,7 +79,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await client.get(`${API_ENDPOINT_ARTICLE}`)
+  const posts = await client.get(`${API_ENDPOINT_LIST_ARTICLE_LIMIT}`)
+  console.log('🚀 ~ file: [slug].tsx ~ line 82 ~ constgetStaticPaths:GetStaticPaths= ~ posts', posts)
   // Get the paths we want to pre-render based on posts
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
