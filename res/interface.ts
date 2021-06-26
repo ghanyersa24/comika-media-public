@@ -2,12 +2,17 @@ export interface swrReturn {
   isLoading: boolean,
   isError?: boolean,
   error?: {
-    message:string
+    message: string
   },
   data: any,
   mutate: any
 }
-export interface Itime{
-  start : string,
-  end:string
+export interface Itime {
+  start: string,
+  end: string
+}
+
+export type Login = {
+  email: string,
+  password: string
 }

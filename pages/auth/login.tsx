@@ -1,8 +1,19 @@
-import { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
+import { Login } from '../../res/interface'
 
 export const LoginPage = ():ReactNode => {
-  console.log('🚀 ~ file: login.tsx ~ line 6 ~ LoginPage ~ LoginPage', LoginPage)
+  const [login, setLogin] = useState<Login|null>(null)
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      type, checked, name, value,
+    } = e.target
+    setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
+  }
+  const handleSubmitLogin = (loginData) => {
+    console.log('🚀 ~ file: login.tsx ~ line 15 ~ handleSubmitLogin ~ loginData', loginData)
+  }
+
   return (
     <div className="grid grid-cols-2  min-h-screen">
       <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-2/3 mx-auto place-content-center">
@@ -23,6 +34,7 @@ export const LoginPage = ():ReactNode => {
             <input
               className=" appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-3"
               type="text"
+              onChange={handleChangeValue}
               placeholder="Email"
               name="email"
               id="email"
@@ -40,6 +52,7 @@ export const LoginPage = ():ReactNode => {
               className=" appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-3"
               id="password"
               type="password"
+              onChange={handleChangeValue}
               placeholder="******************"
             />
           </label>
@@ -63,7 +76,11 @@ export const LoginPage = ():ReactNode => {
           </a>
 
         </div>
-        <button className="bg-primary hover:bg-primaryDark text-white font-bold px-6 py-4 rounded mt-8" type="button">
+        <button
+          className="bg-primary hover:bg-primaryDark text-white font-bold px-6 py-4 rounded mt-8"
+          onClick={() => handleSubmitLogin(login)}
+          type="button"
+        >
           Sign In
         </button>
 
