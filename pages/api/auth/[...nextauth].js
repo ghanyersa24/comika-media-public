@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 // For more information on each option (and a full list of options) go to
@@ -137,16 +138,8 @@ export default NextAuth({
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    async signIn(user, account, profile) {
-      console.log('🚀 ~ file: [...nextauth].js ~ line 141 ~ signIn ~ profile', profile)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 141 ~ signIn ~ account', account)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 141 ~ signIn ~ user', user)
-      return true
-    },
-    async jwt(token, user, account, profile, isNewUser) {
-      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ profile', profile)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', account)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', user)
+
+    async jwt(token, user) {
       // Add access_token to the token right after signin
       if (user?.token) {
         token.accessToken = user.token
