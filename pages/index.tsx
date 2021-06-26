@@ -2,6 +2,7 @@
 import React from 'react'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
+import { signIn, signOut, useSession } from 'next-auth/client'
 import ContainerPadding from '../components/container-padding'
 import MorePosts from '../components/more-posts'
 import Intro from '../components/intro'
