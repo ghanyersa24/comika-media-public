@@ -69,9 +69,9 @@ export default NextAuth({
         })
         const user = await res.json()
         // console.log('🚀 ~ file: [...nextauth].js ~ line 70 ~ authorize ~ user', user)
-
         // If no error and we have user data, return it
         if (res.ok && user) {
+          // {token="xx"}
           return user
         }
         // Return null if user data could not be retrieved
@@ -137,32 +137,43 @@ export default NextAuth({
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
+    async signIn(user, account, profile) {
+      console.log('🚀 ~ file: [...nextauth].js ~ line 141 ~ signIn ~ profile', profile)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 141 ~ signIn ~ account', account)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 141 ~ signIn ~ user', user)
+      return true
+    },
+    async jwt(token, user, account, profile, isNewUser) {
+      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ profile', profile)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', account)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', user)
+      // Add access_token to the token right after signin
+      if (user?.token) {
+        token.accessToken = user.token
+      }
+      return token
+    },
     // async signIn(user, account, profile) { return true },
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
-    async jwt(prevToken, token) {
-      console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ prevToken', token, prevToken)
-      // Initial call
-      if (prevToken) {
-        return {
-          accessToken: prevToken,
-        }
-      }
+    // async jwt(prevToken, token) {
+    //   // console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ token', token)
+    //   // console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ prevToken', prevToken)
+    //   // Initial call
+    //   if (token) {
+    //     return {
+    //       accessToken: token.token,
+    //     }
+    //   }
 
-      // Subsequent calls
-      return prevToken
-    },
+    //   // Subsequent calls
+    //   return prevToken
+    // },
     session: async (session, token) => {
-      console.log('here2')
-      console.log(token)
-      console.log(session)
-      if (!session?.user || !token?.account) {
-        return session
-      }
-
-      session.user.id = token.account.id
-      session.accessToken = token.account.accessToken
+      // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ token', token)
+      // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ session', session)
+      session.accessToken = token.accessToken
 
       return session
     },

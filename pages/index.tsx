@@ -2,7 +2,10 @@
 import React from 'react'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import {
+  signIn, signOut, useSession, getSession,
+} from 'next-auth/client'
+import jwt from 'next-auth/jwt'
 import ContainerPadding from '../components/container-padding'
 import MorePosts from '../components/more-posts'
 import Intro from '../components/intro'
@@ -13,9 +16,12 @@ import { API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../res/api-endpoint'
 import { Post } from '../type'
 
 type Props= {
-  data:Post[]
+  data:Post[],
+  session?:any
 }
 export default function Index({ data }:Props): React.ReactNode {
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: index.tsx ~ line 20 ~ Index ~ session', session)
   // const tuple = [1, 2, 3, 4, 5]
   // console.log('🚀 ~ file: index.tsx ~ line 16 ~ Index ~ tuple', tuple, tuple.length)
   // const myArray: string[] = ['hello', 'world']
@@ -24,25 +30,49 @@ export default function Index({ data }:Props): React.ReactNode {
 
   return (
     <>
-      <Layout>
-        <Head>
-          <title>Komika Media</title>
-        </Head>
-        {/* <Container> */}
-        <Navbar />
-        <Intro />
-        <ContainerPadding className="mt-12">
-          {data.length > 0 && <MorePosts posts={data} title="Konten Terpoluler" />}
-        </ContainerPadding>
-
-        {/* </Container> */}
-      </Layout>
+      <iframe src="/api/examples/jwt" />
+      {!session && (
+      <>
+        Not signed in
+        {' '}
+        <br />
+        <button onClick={() => signIn()}>Sign in</button>
+      </>
+      )}
+      {session && (
+      <>
+        Signed in as
+        {' '}
+        {session.user.email}
+        {' '}
+        <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+      )}
     </>
   )
+  // return (
+  //   <>
+  //     <Layout>
+  //       <Head>
+  //         <title>Komika Media</title>
+  //       </Head>
+  //       {/* <Container> */}
+  //       <Navbar />
+  //       <Intro />
+  //       <ContainerPadding className="mt-12">
+  //         {data.length > 0 && <MorePosts posts={data} title="Konten Terpoluler" />}
+  //       </ContainerPadding>
+
+  //       {/* </Container> */}
+  //     </Layout>
+  //   </>
+  // )
 }
 
-export const getServerSideProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async (ctx) => {
   const data = await client.get(`${API_ENDPOINT_LIST_ARTICLE_LIMIT}`)
+  const session = await getSession(ctx)
   console.log('🚀 ~ file: index.tsx ~ line 39 ~ getStaticProps ~ res', data)
   if (!data) {
     return {
@@ -51,6 +81,6 @@ export const getServerSideProps: GetStaticProps = async () => {
   }
 
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data, session }, // will be passed to the page component as props
   }
 }
