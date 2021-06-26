@@ -1,8 +1,10 @@
 /* eslint-disable no-param-reassign */
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
+import { ApiError } from './ApiError'
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
+
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers
   providers: [
@@ -55,6 +57,7 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log('🚀 ~ file: [...nextauth].js ~ line 58 ~ authorize ~ credentials', credentials)
         // console.log('🚀 ~ file: [...nextauth].js ~ line 57 ~ authorize ~ credentials',
         //   `${process.env.BASH_URL}/api/login`, credentials)
         // You need to provide your own logic here that takes the credentials
@@ -68,15 +71,17 @@ export default NextAuth({
           body: JSON.stringify(credentials),
           headers: { 'Content-Type': 'application/json' },
         })
+        console.log('🚀 ~ file: [...nextauth].js ~ line 72 ~ authorize ~ res', res)
         const user = await res.json()
-        // console.log('🚀 ~ file: [...nextauth].js ~ line 70 ~ authorize ~ user', user)
+        console.log('🚀 ~ file: [...nextauth].js ~ line 70 ~ authorize ~ user', user)
         // If no error and we have user data, return it
         if (res.ok && user) {
           // {token="xx"}
           return user
         }
         // Return null if user data could not be retrieved
-        return null
+        throw new Error(user.msg)
+        // return null
       },
     }),
   ],
@@ -127,8 +132,8 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
-    // signOut: '/auth/signout', // Displays form with sign out button
+    signIn: '/auth/signin', // Displays signin buttons
+    signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in

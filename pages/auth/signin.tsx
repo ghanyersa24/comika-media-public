@@ -1,11 +1,21 @@
 import React, { ReactNode, useState } from 'react'
 import { signIn } from 'next-auth/client'
+import { useRouter } from 'next/router'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
 
+// enum Severity {
+//   error='bg-red-200',
+//   success='bg-green-200',
+// }
+// type ErrorMsg ={
+//   0:Severity,
+//   1:string
+// }
 export const LoginPage = ():ReactNode => {
+  const router = useRouter()
   const [login, setLogin] = useState<Login|null>(null)
-  const [, set] = useState();
+  const [errorMsg, setErrorMsg] = useState<string>(null)
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
@@ -13,12 +23,14 @@ export const LoginPage = ():ReactNode => {
     setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
   }
   const handleSubmitLogin = (loginData) => {
-    signIn('credentials', { redirect: false, ...loginData })
+    signIn('credentials', { redirect: false, ...loginData, callbackUrl: 'http://localhost:3000/foo' })
       .then((result) => {
-        console.log('🚀 ~ file: signin.tsx ~ line 17 ~ .then ~ result', result)
-      })
-      .catch((error) => {
-        console.log('🚀 ~ file: signin.tsx ~ line 17 ~ handleSubmitLogin ~ error', error)
+        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
+        if (result?.error !== null) {
+          setErrorMsg(result.error)
+        } else {
+          router.push('/')
+        }
       })
   }
 
@@ -34,6 +46,11 @@ export const LoginPage = ():ReactNode => {
         </div>
 
         <div className="mb-4">
+          {errorMsg ? (
+            <div className="bg-red-200 p-2 mb-4 rounded">
+              {errorMsg}
+            </div>
+          ) : null}
           <label
             htmlFor="email"
             className="block text-gray-800  font-bold mb-2 "
