@@ -3,6 +3,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import {
   signIn, signOut, useSession, getSession,
 } from 'next-auth/client'
+import { Fragment } from 'react'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import Avatar from '../../avatar'
@@ -22,7 +23,7 @@ export const Profile = ({ src, name }) => (
     {({ open }) => (
       <>
         <div>
-          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
             <span className="sr-only">Open user menu</span>
             <img
               className="h-8 w-8 rounded-full"
@@ -47,41 +48,16 @@ export const Profile = ({ src, name }) => (
           >
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <button
                   className={classNames(
                     active ? 'bg-gray-100' : '',
-                    'block px-4 py-2 text-sm text-gray-700',
+                    'block w-full px-4 py-2 text-sm text-gray-700 text-left',
                   )}
-                >
-                  Your Profile
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100' : '',
-                    'block px-4 py-2 text-sm text-gray-700',
-                  )}
-                >
-                  Settings
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100' : '',
-                    'block px-4 py-2 text-sm text-gray-700',
-                  )}
+                  onClick={signOut}
+                  type="button"
                 >
                   Sign out
-                </a>
+                </button>
               )}
             </Menu.Item>
           </Menu.Items>
@@ -144,7 +120,7 @@ export const SideBar = ({ isShowing }) => (
           <div>
             {/* <p>Social Media</p> */}
             <div className="pt-8 flex flex-row ">
-              <SocialMediaLogo className="fill-current text-white mr-4 w-6" />
+              <SocialMediaLogo className="fill-current text-white mr-4 text-2xl " />
             </div>
           </div>
         </div>
@@ -178,20 +154,20 @@ export default function Navbar() {
                 <ComikamediaNavbar className="h-12" />
               </div>
               <div className=" text-blue-500 flex flex-row  ">
-                <SocialMediaLogo className="fill-current text-primary mr-4 w-6" />
+                <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
+                {session ? (
+                  <Profile
+                    name="dummy"
+                    src="https://awsimages.detik.net.id/community/media/visual/2021/05/27/presiden-jokowi_169.jpeg?w=700&q=90"
+                  />
+                )
+                  : (
+                    <button onClick={signIn} type="button">
+                      Login
+                    </button>
+                  )}
               </div>
-              <MyDropdown />
-              {session ? (
-                <Profile
-                  name="dummy"
-                  src="https://awsimages.detik.net.id/community/media/visual/2021/05/27/presiden-jokowi_169.jpeg?w=700&q=90"
-                />
-              )
-                : (
-                  <button onClick={signIn} type="button">
-                    Login
-                  </button>
-                )}
+
             </div>
           </div>
           <SideBar isShowing={open} />
