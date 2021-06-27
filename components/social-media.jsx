@@ -1,12 +1,9 @@
 import Link from 'next/link'
 import {
-  FaFacebookSquare, FaInstagramSquare, FaTwitterSquare,
+  FaFacebookSquare,
 } from 'react-icons/fa'
-import { IoLogoYoutube, IoLogoTwitter, IoLogoInstagram } from 'react-icons/io'
+import { IoLogoYoutube, IoLogoTwitter } from 'react-icons/io'
 import { RiInstagramFill } from 'react-icons/ri'
-import {
-  Facebook, Instagram, Youtube, Twitter,
-} from './svg'
 
 export const SocialMediaLogo = ({ className }) => {
   const SocialMedia = [

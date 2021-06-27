@@ -1,4 +1,4 @@
-import { parseISO, format, registerLocale } from 'date-fns'
+import { parseISO, format } from 'date-fns'
 import id from 'date-fns/locale/id'
 
 export default function DateFormatter({ dateString }) {

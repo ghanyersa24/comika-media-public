@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { ApiError } from './ApiError'
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 
