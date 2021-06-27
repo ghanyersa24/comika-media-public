@@ -80,7 +80,7 @@ export const SideBar = ({ isShowing }) => (
 
 export default function Example() {
   return (
-    <Disclosure as="nav" className="fixed z-30 bg-white w-screen">
+    <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
       {({ open }) => (
         <>
           <div className=" mx-auto px-6  lg:px-8 ">
