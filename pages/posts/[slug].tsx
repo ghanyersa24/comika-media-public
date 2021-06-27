@@ -27,7 +27,7 @@ export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode
         <PostTitle>Loading…</PostTitle>
       ) : (
         <>
-          <article className="mb-32 mt-16">
+          <article className="mb-32 mt-24">
             <Head>
               <title>
                 {post.title}
