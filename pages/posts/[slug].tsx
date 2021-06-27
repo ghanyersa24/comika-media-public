@@ -5,9 +5,8 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import React from 'react'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
-import Header from '../../components/header'
+// import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
-import Layout from '../../components/layout'
 import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
@@ -21,35 +20,30 @@ export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode
     return <ErrorPage statusCode={404} />
   }
   return (
-    <Layout>
-      <Container>
-        <Header />
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <article className="mb-32">
-              <Head>
-                <title>
-                  {post.title}
-                  {' '}
-                  | Next.js Blog Example with
-                  {CMS_NAME}
-                </title>
-                {/* <meta property="og:image" content={post.ogImage.url} /> */}
-              </Head>
-              <PostHeader
-                title={post.title}
-                coverImage={post.banner}
-                date={post.updatedAt}
-                // author={post.author}
-              />
-              <PostBody content={post.content} />
-            </article>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {/* <Header /> */}
+      {router.isFallback ? (
+        <PostTitle>Loading…</PostTitle>
+      ) : (
+        <>
+          <article className="mb-32 mt-24">
+            <Head>
+              <title>
+                {post.title}
+                {CMS_NAME}
+              </title>
+              {/* <meta property="og:image" content={post.ogImage.url} /> */}
+            </Head>
+            <PostHeader
+              title={post.title}
+              coverImage={post.banner}
+              date={post.updatedAt}
+            />
+            <PostBody content={post.content} />
+          </article>
+        </>
+      )}
+    </Container>
   )
 }
 

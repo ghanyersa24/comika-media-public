@@ -1,9 +1,21 @@
 import React, { ReactNode, useState } from 'react'
+import { signIn } from 'next-auth/client'
+import { useRouter } from 'next/router'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
 
+// enum Severity {
+//   error='bg-red-200',
+//   success='bg-green-200',
+// }
+// type ErrorMsg ={
+//   0:Severity,
+//   1:string
+// }
 export const LoginPage = ():ReactNode => {
+  const router = useRouter()
   const [login, setLogin] = useState<Login|null>(null)
+  const [errorMsg, setErrorMsg] = useState<string>(null)
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
@@ -11,7 +23,15 @@ export const LoginPage = ():ReactNode => {
     setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
   }
   const handleSubmitLogin = (loginData) => {
-    console.log('🚀 ~ file: login.tsx ~ line 15 ~ handleSubmitLogin ~ loginData', loginData)
+    signIn('credentials', { redirect: false, ...loginData, callbackUrl: 'http://localhost:3000/foo' })
+      .then((result) => {
+        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
+        if (result?.error !== null) {
+          setErrorMsg(result.error)
+        } else {
+          router.push('/')
+        }
+      })
   }
 
   return (
@@ -26,6 +46,11 @@ export const LoginPage = ():ReactNode => {
         </div>
 
         <div className="mb-4">
+          {errorMsg ? (
+            <div className="bg-red-200 p-2 mb-4 rounded">
+              {errorMsg}
+            </div>
+          ) : null}
           <label
             htmlFor="email"
             className="block text-gray-800  font-bold mb-2 "
@@ -52,6 +77,7 @@ export const LoginPage = ():ReactNode => {
               className=" appearance-none border rounded w-full py-2 px-3 text-grey-darker mt-3"
               id="password"
               type="password"
+              name="password"
               onChange={handleChangeValue}
               placeholder="******************"
             />

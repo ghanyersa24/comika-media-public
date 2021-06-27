@@ -35,7 +35,7 @@ export default function Footer() {
             Temukan kami di
           </a>
           <div className="flex flex-row">
-            <SocialMediaLogo className="fill-current text-white mr-4 w-8" />
+            <SocialMediaLogo className="fill-current text-white mr-4 text-2xl " />
           </div>
         </div>
       </div>

@@ -1,5 +1,9 @@
-import { Disclosure, Transition } from '@headlessui/react'
+import { Disclosure, Transition, Menu } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import {
+  signIn, signOut, useSession,
+} from 'next-auth/client'
+import { Fragment } from 'react'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 
@@ -13,7 +17,54 @@ const navigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
+export const Profile = ({ src, name }) => (
+  <Menu as="div" className="ml-3 relative">
+    {({ open }) => (
+      <>
+        <div>
+          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
+            <span className="sr-only">Open user menu</span>
+            <img
+              className="h-8 w-8 rounded-full"
+              src={src}
+              alt={`gambar ${name}`}
+            />
+          </Menu.Button>
+        </div>
+        <Transition
+          show={open}
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items
+            static
+            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'block w-full px-4 py-2 text-sm text-gray-700 text-left',
+                  )}
+                  onClick={signOut}
+                  type="button"
+                >
+                  Sign out
+                </button>
+              )}
+            </Menu.Item>
+          </Menu.Items>
+        </Transition>
+      </>
+    )}
+  </Menu>
+)
 export const SideBar = ({ isShowing }) => (
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
@@ -68,7 +119,7 @@ export const SideBar = ({ isShowing }) => (
           <div>
             {/* <p>Social Media</p> */}
             <div className="pt-8 flex flex-row ">
-              <SocialMediaLogo className="fill-current text-white mr-4 w-6" />
+              <SocialMediaLogo className="fill-current text-white mr-4 text-2xl " />
             </div>
           </div>
         </div>
@@ -78,9 +129,11 @@ export const SideBar = ({ isShowing }) => (
   </Transition>
 )
 
-export default function Example() {
+export default function Navbar() {
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', loading)
   return (
-    <Disclosure as="nav" className="fixed z-30 bg-white w-screen">
+    <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
       {({ open }) => (
         <>
           <div className=" mx-auto px-6  lg:px-8 ">
@@ -100,8 +153,20 @@ export default function Example() {
                 <ComikamediaNavbar className="h-12" />
               </div>
               <div className=" text-blue-500 flex flex-row  ">
-                <SocialMediaLogo className="fill-current text-primary mr-4 w-6" />
+                <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
+                {session ? (
+                  <Profile
+                    name="dummy"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  />
+                )
+                  : (
+                    <button onClick={signIn} type="button">
+                      Login
+                    </button>
+                  )}
               </div>
+
             </div>
           </div>
           <SideBar isShowing={open} />
