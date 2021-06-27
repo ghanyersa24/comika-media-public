@@ -1,7 +1,11 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import {
+  signIn, signOut, useSession, getSession,
+} from 'next-auth/client'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
+import Avatar from '../../avatar'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -13,7 +17,9 @@ const navigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
+export const Profile = ({ src, name }) => (
+  <img src={src} className="w-12 h-12 rounded-full mr-4" alt={name} />
+)
 export const SideBar = ({ isShowing }) => (
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
@@ -78,7 +84,9 @@ export const SideBar = ({ isShowing }) => (
   </Transition>
 )
 
-export default function Example() {
+export default function Navbar() {
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
       {({ open }) => (
@@ -102,6 +110,17 @@ export default function Example() {
               <div className=" text-blue-500 flex flex-row  ">
                 <SocialMediaLogo className="fill-current text-primary mr-4 w-6" />
               </div>
+              {session ? (
+                <Profile
+                  name="dummy"
+                  src="https://awsimages.detik.net.id/community/media/visual/2021/05/27/presiden-jokowi_169.jpeg?w=700&q=90"
+                />
+              )
+                : (
+                  <button onClick={signIn} type="button">
+                    Login
+                  </button>
+                )}
             </div>
           </div>
           <SideBar isShowing={open} />

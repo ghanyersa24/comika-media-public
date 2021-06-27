@@ -1,6 +1,3 @@
-import {
-  signIn, signOut, useSession, getSession,
-} from 'next-auth/client'
 import Footer from './footer'
 import Meta from './meta'
 import Navbar from './blog/navigation/navbar'
