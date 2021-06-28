@@ -4,6 +4,7 @@ import {
   signIn, signOut, useSession,
 } from 'next-auth/client'
 import { Fragment } from 'react'
+import Link from 'next/link'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 
@@ -150,7 +151,9 @@ export default function Navbar() {
                 </Disclosure.Button>
               </div>
               <div className="">
-                <ComikamediaNavbar className="h-12" />
+                <Link href="/">
+                  <a className="hover:underline"><ComikamediaNavbar className="h-12" /></a>
+                </Link>
               </div>
               <div className=" text-blue-500 flex flex-row  ">
                 <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
