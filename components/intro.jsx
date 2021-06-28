@@ -1,5 +1,6 @@
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
+import { Get as GetJumbotron } from '../service/jumbotron'
 
 export const Item = ({ url }) => (
   <div className="w-full ">
@@ -9,12 +10,16 @@ export const Item = ({ url }) => (
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 export default function Intro() {
+  const { data: jumbotrons, isLoading } = GetJumbotron()
+  if (isLoading) return <div className="w-full h-96 bg-gray-500 animate-pulse" />
+  const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isDesktop)
+  console.log('🚀 ~ file: intro.jsx ~ line 14 ~ Intro ~ data', jumbotrons)
   return (
     <section className="mb-4 mt-16">
       <AutoPlaySwipeableViews enableMouseEvents className="h-4/5" interval={7000}>
-        <Item url="https://cdn-production-thumbor-vidio.akamaized.net/wcfHB49qGZmrBNYaV0IQygpjzC4=/1336x480/filters:quality(75)/vidio-web-prod-headline/uploads/headline/premium_image/7763/vidio-community-cup-ea72d9.jpg" />
-        <Item url="https://cdn-production-thumbor-vidio.akamaized.net/_17v0x0yzEKcuvAYfQCNzaZjMyM=/1336x480/filters:quality(75)/vidio-web-prod-headline/uploads/headline/premium_image/8659/facetrix-6669a3.jpg" />
-        <Item url="https://cdn-production-thumbor-vidio.akamaized.net/nX53OMjUeqFwTvyIUS_41depbSs=/1336x480/filters:quality(75)/vidio-web-prod-headline/uploads/headline/premium_image/8918/the-break-upper-1c015c.jpg" />
+        {filteredJumbotrons.map((jumbotron) => (
+          <Item url={jumbotron.img} key={jumbotron.id} />
+        ))}
       </AutoPlaySwipeableViews>
     </section>
   )
