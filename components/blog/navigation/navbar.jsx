@@ -132,7 +132,7 @@ export const SideBar = ({ isShowing }) => (
 
 export default function Navbar() {
   const [session, loading] = useSession()
-  console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', loading)
+  console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
       {({ open }) => (

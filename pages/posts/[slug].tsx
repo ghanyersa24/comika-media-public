@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import React, { ReactElement, ReactNode } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -13,13 +13,30 @@ import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../../res/api-endpoint'
 import { PropsDetailOfPost } from '../../type'
-import { PostComment } from '../../components/blog/post-comment'
+import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
+import { Get, add as addPost } from '../../service/comments'
 
-export default function DetailOfPost({ post }:PropsDetailOfPost):ReactElement {
+export default function DetailOfPost({ post }: PropsDetailOfPost): ReactElement {
   const router = useRouter()
+  const [comment, setComment] = useState('')
+  const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
+  console.log('🚀 ~ file: [slug].tsx ~ line 23 ~ DetailOfPost ~ errorMsg', errorMsgPostAdd)
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+  const { data: comments, isLoading, mutate } = Get(post.slug)
+
+  const handleSubmitPostComment = async () => {
+    try {
+      await addPost(post.slug, {
+        comment,
+      })
+      mutate(); setComment(''); setErrorMsgPostAdd(null)
+    } catch (error) {
+      setErrorMsgPostAdd(error)
+    }
+  }
+
   return (
     <Container>
       {/* <Header /> */}
@@ -41,7 +58,20 @@ export default function DetailOfPost({ post }:PropsDetailOfPost):ReactElement {
               date={post.updatedAt}
             />
             <PostBody content={post.content} />
-            <PostComment slug={post.slug} />
+            <div className="max-w-2xl mx-auto">
+              <PostCommentList
+                comments={comments}
+                isLoading={isLoading}
+              />
+              <PostCommentAdd
+                onChange={(e) => setComment(e.target.value)}
+                isLoading={isLoading}
+                error={errorMsgPostAdd}
+                comment={comment}
+                onSubmit={handleSubmitPostComment}
+              />
+            </div>
+
           </article>
         </>
       )}
@@ -50,9 +80,7 @@ export default function DetailOfPost({ post }:PropsDetailOfPost):ReactElement {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log('🚀 ~ file: [slug].tsx ~ line 58 ~ constgetStaticProps:GetStaticProps= ~ post', params)
   const post = await client.get(`${API_ENDPOINT_DETAIL_ARTICLE}/${params.slug}`)
-  console.log('🚀 ~ file: [slug].tsx ~ line 59 ~ constgetStaticProps:GetStaticProps= ~ post', post)
   // const post = await client.get(params.slug, [
   //   'title',
   //   'date',
