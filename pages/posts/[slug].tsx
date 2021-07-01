@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import React from 'react'
+import React, { ReactElement, ReactNode } from 'react'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -13,8 +13,9 @@ import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../../res/api-endpoint'
 import { PropsDetailOfPost } from '../../type'
+import { PostComment } from '../../components/blog/post-comment'
 
-export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode {
+export default function DetailOfPost({ post }:PropsDetailOfPost):ReactElement {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -40,6 +41,7 @@ export default function DetailOfPost({ post }:PropsDetailOfPost):React.ReactNode
               date={post.updatedAt}
             />
             <PostBody content={post.content} />
+            <PostComment slug={post.slug} />
           </article>
         </>
       )}
