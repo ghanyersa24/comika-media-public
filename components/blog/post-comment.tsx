@@ -41,9 +41,13 @@ export const PostComment = ({ slug }: {slug:string}):ReactElement => {
   return (
     <div className="max-w-2xl mx-auto">
       <h6 className="text-4xl font-medium leading-10 text-primary mb-8">Komentar</h6>
-
       {content}
+      <h6 className="text-xl font-medium leading-10 text-primary mb-4 mt-8">Tulis Komentar</h6>
 
+      <textarea rows={5} className="inline-flex items-start justify-start pl-5  pt-4 w-full  border rounded-md border-gray-200" />
+      <div className="flex justify-end ">
+        <button type="button" className="bg-primary text-white px-4 py-2 rounded-md">Kirim</button>
+      </div>
     </div>
   )
 }
