@@ -46,7 +46,7 @@ export const PostComment = ({ slug }: {slug:string}):ReactElement => {
 
       <textarea rows={5} className="inline-flex items-start justify-start pl-5  pt-4 w-full  border rounded-md border-gray-200" />
       <div className="flex justify-end ">
-        <button type="button" className="bg-primary text-white px-4 py-2 rounded-md">Kirim</button>
+        <button type="button" className="btn-primary">Kirim</button>
       </div>
     </div>
   )
