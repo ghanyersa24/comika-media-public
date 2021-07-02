@@ -11,7 +11,7 @@ export interface swrReturn extends BaseFetch {
   isLoading: boolean,
   isError?: boolean,
 
-  mutate: any
+  mutate?: any
 }
 export interface Itime {
   start: string,
