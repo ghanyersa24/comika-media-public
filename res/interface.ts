@@ -37,12 +37,12 @@ export type comments ={
   'ArticleId': 'f3950e22-c609-4f7e-8d23-4fec9b52dd65',
   'UserId': '0734f6b2-6b4c-45b9-be8c-d1aaf6803348'
 }
-export type TypePostCommentComponent = BaseFetch &{
+export type TypePostCommentComponent = swrReturn &{
 
   comments:comments[],
 
 }
-export type TypePostCommentAdd = BaseFetch &{
+export type TypePostCommentAdd = swrReturn &{
   onChange:(e:any)=>void,
   onSubmit:()=>void,
   comment:string
