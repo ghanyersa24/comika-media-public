@@ -133,8 +133,8 @@ export const SideBar = ({ isShowing }) => (
 export default function Navbar() {
   const [session, loading] = useSession()
   useEffect(() => {
-    localStorage.setItem('komika-key', session?.accessToken)
-  }, [session])
+    if (!loading) localStorage.setItem('komika-key', session?.accessToken)
+  }, [session, loading])
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
