@@ -3,7 +3,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import {
   signIn, signOut, useSession,
 } from 'next-auth/client'
-import { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import Link from 'next/link'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
@@ -132,6 +132,9 @@ export const SideBar = ({ isShowing }) => (
 
 export default function Navbar() {
   const [session, loading] = useSession()
+  useEffect(() => {
+    localStorage.setItem('komika-key', session?.accessToken)
+  }, [session])
   console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
