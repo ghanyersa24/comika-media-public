@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import useSWR, { useSWRInfinite, mutate as mutateSwr } from 'swr'
+import useSWR, { } from 'swr'
 import { client } from '../lib/clientRaw'
 import { swrReturn } from '../res/interface'
 

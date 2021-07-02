@@ -2,13 +2,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseFetch {
-  isLoading: boolean,
   error?: {
     msg: string
   },
   data?: any,
 }
 export interface swrReturn extends BaseFetch {
+  isLoading: boolean,
   isError?: boolean,
 
   mutate: any
@@ -22,10 +22,8 @@ export type Login = {
   email: string,
   password: string
 }
-enum FetchStatus {
-  loading = 'loading',
-  error = 'error',
-  success = 'success'
+export type Signup = Login &{
+  name: string,
 }
 
 export type comments ={

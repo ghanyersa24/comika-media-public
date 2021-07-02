@@ -1,9 +1,8 @@
 import React, { ReactNode, useState } from 'react'
-import { signIn } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
-import { Login } from '../../res/interface'
-
+import { Signup } from '../../res/interface'
+import { SignUp } from '../../service/auth'
 // enum Severity {
 //   error='bg-red-200',
 //   success='bg-green-200',
@@ -14,24 +13,27 @@ import { Login } from '../../res/interface'
 // }
 export const LoginPage = ():ReactNode => {
   const router = useRouter()
-  const [login, setLogin] = useState<Login|null>(null)
+  const [signup, setSignup] = useState<Signup|null>(null)
   const [errorMsg, setErrorMsg] = useState<string>(null)
+  const [submitSignupStatus, setSubmitSignupStatus] = useState('')
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
     } = e.target
-    setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
+    setSignup({ ...signup, [name]: type === 'checkbox' ? checked : value })
   }
-  const handleSubmitLogin = (loginData) => {
-    signIn('credentials', { redirect: false, ...loginData, callbackUrl: 'http://localhost:3000/foo' })
-      .then((result) => {
-        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
-        if (result?.error !== null) {
-          setErrorMsg(result.error)
-        } else {
-          router.push('/')
-        }
-      })
+  const handleSubmitSignUp = async (loginData) => {
+    setErrorMsg('')
+    try {
+      setSubmitSignupStatus('loading')
+      const result = await SignUp(loginData)
+      console.log('🚀 ~ file: signup.tsx ~ line 29 ~ handleSubmitSignUp ~ result', result)
+      setSubmitSignupStatus('success')
+      router.push('/auth/signin')
+    } catch (error) {
+      setErrorMsg(error.msg)
+      setSubmitSignupStatus('error')
+    }
   }
 
   return (
@@ -51,6 +53,20 @@ export const LoginPage = ():ReactNode => {
               {errorMsg}
             </div>
           ) : null}
+          <label
+            htmlFor="name"
+            className="block text-gray-800  font-bold mb-2 "
+          >
+            Nama Lengkap
+            <input
+              className="w-full py-2 px-3  mt-3"
+              type="text"
+              onChange={handleChangeValue}
+              placeholder="Nama Lengkap"
+              name="name"
+              id="name"
+            />
+          </label>
           <label
             htmlFor="email"
             className="block text-gray-800  font-bold mb-2 mt-4 "
@@ -101,10 +117,11 @@ export const LoginPage = ():ReactNode => {
         </div>
         <button
           className="btn-primary font-bold px-6 py-4 mt-8"
-          onClick={() => handleSubmitLogin(login)}
+          onClick={() => handleSubmitSignUp(signup)}
           type="button"
+          disabled={submitSignupStatus === 'loading'}
         >
-          Sign In
+          {submitSignupStatus === 'loading' ? 'loading...' : 'Sign Up'}
         </button>
 
       </div>
