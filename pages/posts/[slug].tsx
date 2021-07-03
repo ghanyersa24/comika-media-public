@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetServerSideProps } from 'next'
 import React, { ReactElement, useState } from 'react'
+import { useSession, getSession } from 'next-auth/client'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -11,7 +12,7 @@ import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../../res/api-endpoint'
+import { API_ENDPOINT_DETAIL_ARTICLE } from '../../res/api-endpoint'
 import { PropsDetailOfPost } from '../../type'
 import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
 import { Get, add as addPost } from '../../service/comments'
@@ -79,8 +80,10 @@ export default function DetailOfPost({ post }: PropsDetailOfPost): ReactElement 
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = await client.get(`${API_ENDPOINT_DETAIL_ARTICLE}/${params.slug}`)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  const post = await client.get(`${API_ENDPOINT_DETAIL_ARTICLE}/${context.params.slug}`,
+    undefined, { token: session?.accessToken })
   // const post = await client.get(params.slug, [
   //   'title',
   //   'date',
@@ -100,17 +103,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     },
   }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await client.get(`${API_ENDPOINT_LIST_ARTICLE_LIMIT}`)
-  console.log('🚀 ~ file: [slug].tsx ~ line 82 ~ constgetStaticPaths:GetStaticPaths= ~ posts', posts)
-  // Get the paths we want to pre-render based on posts
-  const paths = posts.map((post) => ({
-    params: { slug: post.slug },
-  }))
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false }
 }

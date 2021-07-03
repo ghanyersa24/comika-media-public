@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import Head from 'next/head'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 
 import ContainerPadding from '../components/container-padding'
 import MorePosts from '../components/more-posts'
@@ -31,7 +31,7 @@ export default function Index({ data }:Props): React.ReactNode {
   )
 }
 
-export const getServerSideProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const data = await client.get(`${API_ENDPOINT_LIST_ARTICLE_LIMIT}`)
   if (!data) {
     return {

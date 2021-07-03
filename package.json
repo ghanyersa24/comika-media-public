@@ -5,7 +5,7 @@
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/"
+    "lint": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/ service/ res/ "
   },
   "dependencies": {
     "@headlessui/react": "^1.2.0",
