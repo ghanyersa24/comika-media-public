@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
+import { MdModeEdit } from 'react-icons/md'
 import { Profile } from '../../res/interface'
 
 type ProfileCardProps ={
@@ -27,6 +28,13 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
           />
           <button type="button" className="absolute text-3xl lg:text-4xl bottom-0 right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 ">
             <AiFillCamera />
+          </button>
+        </div>
+        <div>
+          <button type="button" className="border-2 border-primary text-primary rounded-md mt-8 px-4 py-2 hover:bg-gray-300 flex flex-row items-center">
+            <MdModeEdit className="mr-2 text-xl" />
+            {'  '}
+            Ubah Profile
           </button>
         </div>
       </div>
