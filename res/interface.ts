@@ -25,7 +25,18 @@ export type Login = {
 export type Signup = Login &{
   name: string,
 }
-
+export type Profile = Signup&{
+  role: 'admin',
+  phone: string,
+  address: string,
+  postalCode: string,
+  district: string,
+  city: string,
+  province: string,
+  createdAt: string,
+  updatedAt: string,
+  deletedAt: string,
+}
 export type comments ={
   'id': 'bb3cb8bf-ef5e-4f5b-9ed7-749990401045',
   'comment': 'waaah bagus nih gae',
