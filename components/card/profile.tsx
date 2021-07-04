@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react'
+import { AiFillCamera } from 'react-icons/ai'
 import { Profile } from '../../res/interface'
 
 type ProfileCardProps ={
@@ -17,8 +18,17 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
 
   return (
     <div className="w-full grid grid-cols-3 rounded-lg shadow-md ">
-      <div className="bg-gray-200 p-4 rounded-l-lg">
-        Photo
+      <div className="bg-gray-200 p-4 rounded-l-lg flex flex-col items-center pt-16  ">
+        <div className="relative w-32 lg:w-44 ">
+          <img
+            className="w-full rounded-full shadow "
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="gambar xx"
+          />
+          <button type="button" className="absolute text-3xl lg:text-4xl bottom-0 right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 ">
+            <AiFillCamera />
+          </button>
+        </div>
       </div>
       <div className="col-span-2 p-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 ">Data Diri</h2>
