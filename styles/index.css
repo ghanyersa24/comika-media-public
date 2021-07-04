@@ -26,6 +26,12 @@
   .btn {
     @apply py-2 px-4   font-semibold rounded-lg shadow-md hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-primaryLight focus:ring-opacity-75;
   }
+  .label-flex {
+    @apply border-b-2 flex items-center text-base leading-tight text-gray-400 mb-2 mt-4;
+    input {
+      @apply w-full py-2 px-3 text-right ml-8 border-0 text-black focus:ring-0 border-b-2 border-transparent rounded-none focus:border-primary;
+    }
+  }
 }
 
 @tailwind utilities;

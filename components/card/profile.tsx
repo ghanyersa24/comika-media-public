@@ -1,89 +1,170 @@
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { Profile } from '../../res/interface'
 
-export const ProfileCard = ({ email, name, phone }:Profile):ReactElement => {
-  console.log('🚀 ~ file: profile.tsx ~ line 8 ~ ProfileCard ~ ProfileCard')
+type ProfileCardProps ={
+  profileData:Profile,
+  // eslint-disable-next-line no-unused-vars
+  onChange(e: React.ChangeEvent<HTMLInputElement>):void
+}
+export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactElement => {
+  console.log('🚀 ~ file: profile.tsx ~ line 5 ~ ProfileCard ~ profileData', profileData)
+  const {
+    email, name, phone, address, postalCode, district, city, province,
+  } = profileData
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e)
+  }
+
   return (
-    <div className="w-full grid grid-cols-3">
-      <div className="bg-gray-200">
+    <div className="w-full grid grid-cols-3 rounded-lg shadow-md ">
+      <div className="bg-gray-200 p-4 rounded-l-lg">
         Photo
       </div>
-      <div className="col-span-2 p-4">
-        <h2>Data Diri</h2>
+      <div className="col-span-2 p-8">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4 ">Data Diri</h2>
         <label
-          htmlFor="email"
-          className="flex items-center text-gray-800  font-bold mb-2 mt-4 "
+          htmlFor="name"
+          className="label-flex "
         >
           Nama
           <input
-            className="w-full py-2 px-3 text-right ml-8 border-0"
+            className=""
             type="text"
             value={name}
             // onChange={handleChangeValue}
             placeholder="name"
             name="name"
             id="name"
+            onChange={handleChangeValue}
           />
         </label>
         <label
           htmlFor="email"
-          className="flex items-center text-gray-800  font-bold mb-2 mt-4 "
+          className="label-flex "
         >
           Email
           <input
-            className="w-full py-2 px-3 text-right ml-8 border-0"
+            className=""
             type="text"
             value={email}
             // onChange={handleChangeValue}
             placeholder="Email"
             name="email"
             id="email"
+            onChange={handleChangeValue}
           />
         </label>
         <label
-          htmlFor="email"
-          className="flex items-center text-gray-800  font-bold mb-2 mt-4 "
+          htmlFor="phone"
+          className="label-flex "
         >
           phone
           <input
-            className="w-full py-2 px-3 text-right ml-8 border-0"
+            className=""
             type="text"
             value={phone}
             // onChange={handleChangeValue}
             placeholder="phone"
             name="phone"
             id="phone"
+            onChange={handleChangeValue}
           />
         </label>
         <label
-          htmlFor="email"
-          className="flex items-center text-gray-800  font-bold mb-2 mt-4 "
+          htmlFor="x"
+          className="label-flex "
         >
           Tanggal Lahir X
           <input
-            className="w-full py-2 px-3 text-right ml-8 border-0"
+            className=""
             type="date"
             // value={phone}
             // onChange={handleChangeValue}
-            placeholder="Tanggal Lahir"
-            name="Tanggal Lahir"
-            id="Tanggal Lahir"
+            placeholder="x"
+            name="x"
+            id="x"
+            onChange={handleChangeValue}
           />
         </label>
-        <h2>Alamat</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-12">Alamat</h2>
         <label
-          htmlFor="email"
-          className="flex items-center text-gray-800  font-bold mb-2 mt-4 "
+          htmlFor="address"
+          className="label-flex "
         >
-          phone
+          address
           <input
-            className="w-full py-2 px-3 text-right ml-8 border-0"
+            className=""
             type="text"
-            value={phone}
+            value={address}
             // onChange={handleChangeValue}
-            placeholder="phone"
-            name="phone"
-            id="phone"
+            placeholder="address"
+            name="address"
+            id="address"
+            onChange={handleChangeValue}
+          />
+        </label>
+        <label
+          htmlFor="postalCode"
+          className="label-flex "
+        >
+          address
+          <input
+            className=""
+            type="text"
+            value={postalCode}
+            // onChange={handleChangeValue}
+            placeholder="postalCode"
+            name="postalCode"
+            id="postalCode"
+            onChange={handleChangeValue}
+          />
+        </label>
+        <label
+          htmlFor="district"
+          className="label-flex "
+        >
+          district
+          <input
+            className=""
+            type="text"
+            value={district}
+            // onChange={handleChangeValue}
+            placeholder="district"
+            name="district"
+            id="district"
+            onChange={handleChangeValue}
+          />
+        </label>
+        <label
+          htmlFor="city"
+          className="label-flex "
+        >
+          city
+          <input
+            className=""
+            type="text"
+            value={city}
+            // onChange={handleChangeValue}
+            placeholder="city"
+            name="city"
+            id="city"
+            onChange={handleChangeValue}
+          />
+        </label>
+        <label
+          htmlFor="province"
+          className="label-flex "
+        >
+          province
+          <input
+            className=""
+            type="text"
+            value={province}
+            // onChange={handleChangeValue}
+            placeholder="province"
+            name="province"
+            id="province"
+            onChange={handleChangeValue}
           />
         </label>
       </div>

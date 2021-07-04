@@ -20,13 +20,13 @@ export interface Itime {
 
 export type Login = {
   email: string,
-  password: string
+  password?: string
 }
 export type Signup = Login &{
   name: string,
 }
 export type Profile = Signup&{
-  role: 'admin',
+  role: string,
   phone: string,
   address: string,
   postalCode: string,
