@@ -3,13 +3,21 @@ import { AiFillCamera } from 'react-icons/ai'
 import { MdModeEdit } from 'react-icons/md'
 import { Profile } from '../../res/interface'
 
-type ProfileCardProps ={
-  profileData:Profile,
+type ProfileCardProps = {
+  profileData: Profile;
+  isDisabled: boolean;
   // eslint-disable-next-line no-unused-vars
-  onChange(e: React.ChangeEvent<HTMLInputElement>):void
-}
-export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactElement => {
-  console.log('🚀 ~ file: profile.tsx ~ line 5 ~ ProfileCard ~ profileData', profileData)
+  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+};
+export const ProfileCard = ({
+  profileData,
+  onChange,
+  isDisabled,
+}: ProfileCardProps): ReactElement => {
+  console.log(
+    '🚀 ~ file: profile.tsx ~ line 5 ~ ProfileCard ~ profileData',
+    profileData,
+  )
   const {
     email, name, phone, address, postalCode, district, city, province,
   } = profileData
@@ -26,12 +34,18 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt="gambar xx"
           />
-          <button type="button" className="absolute text-3xl lg:text-4xl bottom-0 right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 ">
+          <button
+            type="button"
+            className="absolute text-3xl lg:text-4xl bottom-0 right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 "
+          >
             <AiFillCamera />
           </button>
         </div>
         <div>
-          <button type="button" className="border-2 border-primary text-primary rounded-md mt-8 px-4 py-2 hover:bg-gray-300 flex flex-row items-center">
+          <button
+            type="button"
+            className="border-2 border-primary text-primary rounded-md mt-8 px-4 py-2 hover:bg-gray-300 flex flex-row items-center"
+          >
             <MdModeEdit className="mr-2 text-xl" />
             {'  '}
             Ubah Profile
@@ -40,10 +54,7 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
       </div>
       <div className="col-span-2 p-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 ">Data Diri</h2>
-        <label
-          htmlFor="name"
-          className="label-flex "
-        >
+        <label htmlFor="name" className="label-flex ">
           Nama
           <input
             className=""
@@ -53,13 +64,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="name"
             name="name"
             id="name"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="email"
-          className="label-flex "
-        >
+        <label htmlFor="email" className="label-flex ">
           Email
           <input
             className=""
@@ -69,13 +78,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="Email"
             name="email"
             id="email"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="phone"
-          className="label-flex "
-        >
+        <label htmlFor="phone" className="label-flex ">
           phone
           <input
             className=""
@@ -85,13 +92,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="phone"
             name="phone"
             id="phone"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="x"
-          className="label-flex "
-        >
+        <label htmlFor="x" className="label-flex ">
           Tanggal Lahir X
           <input
             className=""
@@ -101,14 +106,14 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="x"
             name="x"
             id="x"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-12">Alamat</h2>
-        <label
-          htmlFor="address"
-          className="label-flex "
-        >
+        <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-12">
+          Alamat
+        </h2>
+        <label htmlFor="address" className="label-flex ">
           address
           <input
             className=""
@@ -118,13 +123,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="address"
             name="address"
             id="address"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="postalCode"
-          className="label-flex "
-        >
+        <label htmlFor="postalCode" className="label-flex ">
           address
           <input
             className=""
@@ -134,13 +137,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="postalCode"
             name="postalCode"
             id="postalCode"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="district"
-          className="label-flex "
-        >
+        <label htmlFor="district" className="label-flex ">
           district
           <input
             className=""
@@ -150,13 +151,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="district"
             name="district"
             id="district"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="city"
-          className="label-flex "
-        >
+        <label htmlFor="city" className="label-flex ">
           city
           <input
             className=""
@@ -166,13 +165,11 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="city"
             name="city"
             id="city"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>
-        <label
-          htmlFor="province"
-          className="label-flex "
-        >
+        <label htmlFor="province" className="label-flex ">
           province
           <input
             className=""
@@ -182,6 +179,7 @@ export const ProfileCard = ({ profileData, onChange }:ProfileCardProps):ReactEle
             placeholder="province"
             name="province"
             id="province"
+            disabled={isDisabled}
             onChange={handleChangeValue}
           />
         </label>

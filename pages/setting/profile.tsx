@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react'
 import Container from '../../components/container-padding'
-import { ProfileCard } from '../../components/card/profile'
+import { ProfileCard } from '../../components/form/profile'
 
 export const Profile = ():ReactElement => {
   console.log('🚀 ~ file: profile.tsx ~ line 2 ~ Profile ~ params')
