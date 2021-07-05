@@ -5,14 +5,18 @@ import { Profile } from '../../res/interface'
 
 type ProfileCardProps = {
   profileData: Profile;
-  isDisabled: boolean;
+  canEdit: boolean;
+  onEdit():void,
+  onSubmit():void,
   // eslint-disable-next-line no-unused-vars
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
 };
 export const ProfileCard = ({
   profileData,
   onChange,
-  isDisabled,
+  canEdit,
+  onEdit,
+  onSubmit,
 }: ProfileCardProps): ReactElement => {
   console.log(
     '🚀 ~ file: profile.tsx ~ line 5 ~ ProfileCard ~ profileData',
@@ -41,9 +45,10 @@ export const ProfileCard = ({
             <AiFillCamera />
           </button>
         </div>
-        <div>
+        <div hidden={!canEdit}>
           <button
             type="button"
+            onClick={onEdit}
             className="border-2 border-primary text-primary rounded-md mt-8 px-4 py-2 hover:bg-gray-300 flex flex-row items-center"
           >
             <MdModeEdit className="mr-2 text-xl" />
@@ -64,7 +69,7 @@ export const ProfileCard = ({
             placeholder="name"
             name="name"
             id="name"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -78,7 +83,7 @@ export const ProfileCard = ({
             placeholder="Email"
             name="email"
             id="email"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -92,7 +97,7 @@ export const ProfileCard = ({
             placeholder="phone"
             name="phone"
             id="phone"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -106,7 +111,7 @@ export const ProfileCard = ({
             placeholder="x"
             name="x"
             id="x"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -123,7 +128,7 @@ export const ProfileCard = ({
             placeholder="address"
             name="address"
             id="address"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -137,7 +142,7 @@ export const ProfileCard = ({
             placeholder="postalCode"
             name="postalCode"
             id="postalCode"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -151,7 +156,7 @@ export const ProfileCard = ({
             placeholder="district"
             name="district"
             id="district"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -165,7 +170,7 @@ export const ProfileCard = ({
             placeholder="city"
             name="city"
             id="city"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
@@ -179,11 +184,20 @@ export const ProfileCard = ({
             placeholder="province"
             name="province"
             id="province"
-            disabled={isDisabled}
+            disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
+        <div className={!canEdit ? 'flex mt-8 justify-end ' : 'hidden'}>
+          <button onClick={onEdit} type="button" className=" px-4 py-2  rounded-md mr-4 border-primary border w-44 ">
+            Batal
+          </button>
+          <button onClick={onSubmit} type="button" className=" px-4 py-2 bg-primary text-white rounded-md w-44">
+            Simpan
+          </button>
+        </div>
       </div>
+
     </div>
   )
 }
