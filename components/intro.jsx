@@ -15,13 +15,13 @@ export const Item = ({ url, link }) => (
 
 )
 class Pagination extends React.Component {
-  handleClick = (event, index) => {
+  handleClick = (event) => {
     // eslint-disable-next-line react/destructuring-assignment
     this.props.onChangeIndex(event.target.value)
   };
 
   render() {
-    const { index, dots } = this.props
+    const { dots } = this.props
 
     const children = []
 
