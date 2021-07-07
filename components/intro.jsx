@@ -1,11 +1,14 @@
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
+import { Link } from 'next/link'
 import { Get as GetJumbotron } from '../service/jumbotron'
 
-export const Item = ({ url }) => (
-  <div className="w-full ">
-    <img src={url} alt="Gambar Intro" className="w-full object-cover" />
-  </div>
+export const Item = ({ url, link }) => (
+  <a href={link}>
+    <div className="w-full ">
+      <img src={url} alt="Gambar Intro" className="w-full object-cover" />
+    </div>
+  </a>
 )
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
@@ -18,7 +21,7 @@ export default function Intro() {
     <section className="mb-4 mt-16">
       <AutoPlaySwipeableViews enableMouseEvents className="h-4/5" interval={7000}>
         {filteredJumbotrons.map((jumbotron) => (
-          <Item url={jumbotron.img} key={jumbotron.id} />
+          <Item url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>
     </section>
