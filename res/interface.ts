@@ -73,7 +73,7 @@ export type Post = {
   'updatedAt': Date,
   'deletedAt': Date,
   'UserId': Date,
-  'creator': {
+  'Comika': {
     'id': number,
     'name': string,
     'photo': string,

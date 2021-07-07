@@ -20,7 +20,7 @@ export default function MorePosts({ posts, title }) {
             author={post.author}
             slug={post.slug}
             isPremium={post.isPremium}
-            creator={post.creator}
+            Comika={post.Comika}
           />
         ))}
       </div>

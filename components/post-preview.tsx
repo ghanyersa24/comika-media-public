@@ -8,7 +8,7 @@ import { Post } from '../res/interface'
 export default function PostPreview({
   title,
   banner,
-  creator,
+  Comika,
   // date,
   // excerpt,
   // author,
@@ -26,7 +26,7 @@ export default function PostPreview({
         />
       </div>
       <div className="px-4">
-        <Avatar className="text-lg font-medium leading-9 text-gray-600" name={creator.name} picture={creator.photo} />
+        <Avatar className="text-lg font-medium leading-9 text-gray-600" name={Comika.name} picture={Comika.photo} />
         <h3 className="text-xl mb-3 font-bold  leading-loose mt-4">
           <Link as={`/posts/${slug}`} href="/posts/[slug]">
             <a className="hover:underline text-gray-700 text-2xl line-clamp-2">{title}</a>

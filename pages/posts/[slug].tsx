@@ -57,7 +57,7 @@ export default function DetailOfPost({ post }: PropsDetailOfPost): ReactElement 
               title={post.title}
               coverImage={post.banner}
               date={post.updatedAt}
-              creator={post.creator}
+              Comika={post.Comika}
             />
             <PostBody content={post.content} />
             <div className="max-w-2xl mx-auto">

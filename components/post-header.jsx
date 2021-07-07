@@ -7,7 +7,7 @@ import CoverImage from './cover-image'
 import PostTitle from './post-title'
 
 export default function PostHeader({
-  title, coverImage, date, creator,
+  title, coverImage, date, Comika,
 }) {
   return (
     <>
@@ -15,7 +15,7 @@ export default function PostHeader({
       <div className=" md:mb-12 flex justify-between ">
         <div className="flex flex-row items-center">
           <div>
-            <Avatar className="text-primary text-lg font-medium leading-9 " name={creator.name} picture={creator.photo} />
+            <Avatar className="text-primary text-lg font-medium leading-9 " name={Comika.name} picture={Comika.photo} />
           </div>
           <div className="w-2 h-2 bg-gray-500 rounded-full mr-2 ml-4" />
           <div className=" text-lg  text-gray-500">
