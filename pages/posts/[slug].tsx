@@ -13,7 +13,7 @@ import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_DETAIL_ARTICLE } from '../../res/api-endpoint'
-import { PropsDetailOfPost } from '../../type'
+import { PropsDetailOfPost } from '../../res/interface'
 import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
 import { Get, add as addPost } from '../../service/comments'
 
@@ -57,6 +57,7 @@ export default function DetailOfPost({ post }: PropsDetailOfPost): ReactElement 
               title={post.title}
               coverImage={post.banner}
               date={post.updatedAt}
+              creator={post.creator}
             />
             <PostBody content={post.content} />
             <div className="max-w-2xl mx-auto">

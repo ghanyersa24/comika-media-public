@@ -8,12 +8,13 @@ import MorePosts from '../components/more-posts'
 import Intro from '../components/intro'
 import { client } from '../lib/clientRaw'
 import { API_ENDPOINT_LIST_ARTICLE_LIMIT } from '../res/api-endpoint'
-import { Post } from '../type'
+import { Post } from '../res/interface'
 
 type Props= {
   data:Post[],
 }
 export default function Index({ data }:Props): React.ReactNode {
+  console.log("🚀 ~ file: index.tsx ~ line 17 ~ Index ~ data", data)
   return (
     <>
       <Head>
