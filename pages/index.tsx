@@ -14,7 +14,7 @@ type Props= {
   data:Post[],
 }
 export default function Index({ data }:Props): React.ReactNode {
-  console.log("🚀 ~ file: index.tsx ~ line 17 ~ Index ~ data", data)
+  console.log('🚀 ~ file: index.tsx ~ line 17 ~ Index ~ data', data)
   return (
     <>
       <Head>
