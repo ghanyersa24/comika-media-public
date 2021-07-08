@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ReactElement } from 'react'
+import Image from 'next/image'
 import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
@@ -9,6 +10,7 @@ export default function PostPreview({
   title,
   banner,
   Comika,
+  isPremium,
   // date,
   // excerpt,
   // author,
@@ -16,7 +18,7 @@ export default function PostPreview({
 }:Post):ReactElement {
   return (
     <div className="text-textSecondary">
-      <div className="mb-5">
+      <div className="mb-5 relative">
         <CoverImage
           slug={slug}
           title={title}
@@ -24,6 +26,17 @@ export default function PostPreview({
           height={222}
           width={345}
         />
+        {isPremium ? (
+          <div className="w-16 h-16 absolute bottom-0 ml-2">
+            <Image
+              src="/assets/blog/subscribe/premium_badge.png"
+              alt="premium badge"
+              layout="responsive"
+              width={144}
+              height={144}
+            />
+          </div>
+        ) : null}
       </div>
       <div className="px-4">
         <Avatar className="text-lg font-medium leading-9 text-gray-600" name={Comika.name} picture={Comika.photo} />

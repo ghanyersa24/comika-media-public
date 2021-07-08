@@ -11,7 +11,7 @@ module.exports = {
   },
   images: {
     domains: ['miro.medium.com', 'service-comika.herokuapp.com',
-      'cdn-production-thumbor-vidio.akamaized.net', 'localhost',
+      'cdn-production-thumbor-vidio.akamaized.net', 'localhost', 'i2.wp.com', 'www.herworld.co.id', 'pbs.twimg.com',
     ],
   },
   // eslint: {
