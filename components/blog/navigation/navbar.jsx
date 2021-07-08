@@ -6,8 +6,10 @@ import {
 import React, { Fragment, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
+import { Get as GetProfile } from '../../../service/user-profile'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -28,11 +30,16 @@ export const Profile = ({ src, name }) => {
           <div>
             <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
               <span className="sr-only">Open user menu</span>
-              <img
-                className="h-8 w-8 rounded-full"
-                src={src}
-                alt={`gambar ${name}`}
-              />
+              <div className="h-8 w-8">
+                <Image
+                  className="rounded-full"
+                  src={src}
+                  alt={`gambar ${name}`}
+                  layout="responsive"
+                  width={60}
+                  height={60}
+                />
+              </div>
             </Menu.Button>
           </div>
           <Transition
@@ -153,6 +160,8 @@ export default function Navbar() {
   useEffect(() => {
     if (!loading) localStorage.setItem('komika-key', session?.accessToken)
   }, [session, loading])
+  const { data } = GetProfile()
+
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
@@ -180,8 +189,8 @@ export default function Navbar() {
                 <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
                 {session ? (
                   <Profile
-                    name="dummy"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    name={data.name}
+                    src={data.photo}
                   />
                 )
                   : (

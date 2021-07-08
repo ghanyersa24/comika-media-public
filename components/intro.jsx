@@ -29,7 +29,7 @@ class Pagination extends React.Component {
       children.push(
         // <PaginationDot key={i} index={i} active={i === index} onClick={this.handleClick} />,
         // eslint-disable-next-line jsx-a11y/control-has-associated-label
-        <button type="button" onClick={this.handleClick} value={i} className="rounded-full mx-1 shadow bg-white md:w-4 md:h-4 focus:bg-primary b-0 focus:ring-0 focus:outline-none " />,
+        <button type="button" key={i} onClick={this.handleClick} value={i} className="rounded-full mx-1 shadow bg-white md:w-4 md:h-4 focus:bg-primary b-0 focus:ring-0 focus:outline-none " />,
       )
     }
 
