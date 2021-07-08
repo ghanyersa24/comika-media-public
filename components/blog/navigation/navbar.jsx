@@ -30,15 +30,19 @@ export const Profile = ({ src, name }) => {
           <div>
             <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
               <span className="sr-only">Open user menu</span>
-              <div className="h-8 w-8">
-                <Image
-                  className="rounded-full"
-                  src={src}
-                  alt={`gambar ${name}`}
-                  layout="responsive"
-                  width={60}
-                  height={60}
-                />
+              <div className="h-8 w-8 rounded-full">
+                {src && name
+                  ? (
+                    <Image
+                      className="rounded-full"
+                      src={src}
+                      alt={`gambar ${name}`}
+                      layout="responsive"
+                      width={60}
+                      height={60}
+                    />
+                  ) : <div className="bg-gray-500 h-8 w-8 animate-pulse rounded-full" /> }
+
               </div>
             </Menu.Button>
           </div>
@@ -161,6 +165,7 @@ export default function Navbar() {
     if (!loading) localStorage.setItem('komika-key', session?.accessToken)
   }, [session, loading])
   const { data, isLoading } = GetProfile()
+  console.log('🚀 ~ file: navbar.jsx ~ line 164 ~ Navbar ~ data', data)
 
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
@@ -189,8 +194,8 @@ export default function Navbar() {
                 <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
                 {session && !isLoading ? (
                   <Profile
-                    name={data.name}
-                    src={data.photo}
+                    name={data?.name}
+                    src={data?.photo}
                   />
                 )
                   : (
