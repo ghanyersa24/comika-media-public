@@ -160,11 +160,11 @@ export const SideBar = ({ isShowing }) => (
 )
 
 export default function Navbar() {
-  const [session, loading] = useSession()
+  const [session] = useSession()
   useEffect(() => {
-    if (!loading) localStorage.setItem('komika-key', session?.accessToken)
-  }, [session, loading])
-  const { data, isLoading } = GetProfile()
+    localStorage.setItem('komika-key', session?.accessToken)
+  }, [session])
+  const { data } = GetProfile()
   console.log('🚀 ~ file: navbar.jsx ~ line 164 ~ Navbar ~ data', data)
 
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
@@ -192,7 +192,7 @@ export default function Navbar() {
               </div>
               <div className=" text-blue-500 flex flex-row pr-4  ">
                 <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
-                {session && !isLoading ? (
+                {session ? (
                   <Profile
                     name={data?.name}
                     src={data?.photo}
