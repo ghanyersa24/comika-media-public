@@ -185,7 +185,7 @@ export default function Navbar() {
                   <a className="hover:underline"><ComikamediaNavbar className="h-12" /></a>
                 </Link>
               </div>
-              <div className=" text-blue-500 flex flex-row mr-4  ">
+              <div className=" text-blue-500 flex flex-row pr-4  ">
                 <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
                 {session && !isLoading ? (
                   <Profile

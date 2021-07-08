@@ -57,7 +57,7 @@ export default function Intro() {
           <Item url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>
-      <div className="absolute bottom-16 flex left-16 w-full ">
+      <div className="absolute bottom-16 flex left-16 ">
         <Pagination
           dots={filteredJumbotrons.length}
           index={index}
