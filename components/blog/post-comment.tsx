@@ -25,11 +25,11 @@ export const PostCommentList = ({
   let content: ReactElement[] | ReactElement = <PostCommentLoading />
   if (comments && !isLoading) {
     content = comments.map(({
-      userId, comment, createdAt, id,
+      User, comment, createdAt, id,
     }) => (
       <div className="mb-8 " key={id}>
         <div className="flex-row justify-between content-center flex">
-          <Avatar className="text-lg font-medium leading-9 text-gray-700 mb-4 " name={userId} picture="https://awsimages.detik.net.id/community/media/visual/2021/05/27/presiden-jokowi_169.jpeg?w=700&q=90" />
+          <Avatar className="text-lg font-medium leading-9 text-gray-700 mb-4 " name={User.name} picture={User.photo} />
           <span className="text-lg font-medium leading-9 text-gray-700"><DateFormatter dateString={createdAt} /></span>
         </div>
         <p>
