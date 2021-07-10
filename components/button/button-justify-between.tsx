@@ -1,7 +1,7 @@
 import { ReactChild, ReactElement } from 'react'
 
 type ButtonJustifyBetweenProps={
-	leftcontent :string, rightIcon:ReactChild, onClick()
+leftcontent :string, rightIcon:ReactChild, onClick()
 }
 export const ButtonJustifyBetween = (
   { leftcontent, rightIcon, onClick }:ButtonJustifyBetweenProps,
