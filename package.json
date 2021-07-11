@@ -5,14 +5,14 @@
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/ service/ res/ "
+    "lint": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/ service/ res/ & tsc"
   },
   "dependencies": {
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
+    "@tailwindcss/line-clamp": "^0.2.1",
     "classnames": "2.2.6",
     "date-fns": "2.16.1",
-    "gray-matter": "^4.0.3",
     "next": "^11.0.0",
     "next-auth": "^3.27.0",
     "react": "^17.0.1",

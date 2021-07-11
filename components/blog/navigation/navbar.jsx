@@ -3,11 +3,18 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import {
   signIn, signOut, useSession,
 } from 'next-auth/client'
-import React, { Fragment, useEffect } from 'react'
+import React, {
+  Fragment, useEffect, useState,
+} from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import {
+  FaSearch,
+} from 'react-icons/fa'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
+import { Get as GetProfile } from '../../../service/user-profile'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -28,11 +35,20 @@ export const Profile = ({ src, name }) => {
           <div>
             <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
               <span className="sr-only">Open user menu</span>
-              <img
-                className="h-8 w-8 rounded-full"
-                src={src}
-                alt={`gambar ${name}`}
-              />
+              <div className="h-8 w-8 rounded-full">
+                {src && name
+                  ? (
+                    <Image
+                      className="rounded-full"
+                      src={src}
+                      alt={`gambar ${name}`}
+                      layout="responsive"
+                      width={60}
+                      height={60}
+                    />
+                  ) : <div className="bg-gray-500 h-8 w-8 animate-pulse rounded-full" /> }
+
+              </div>
             </Menu.Button>
           </div>
           <Transition
@@ -147,12 +163,52 @@ export const SideBar = ({ isShowing }) => (
 
   </Transition>
 )
+const SearchBar = ({ onChange, value, onSubmit }) => {
+  const [isInputOpen, setIsInputOpen] = useState(false)
+  return (
+    <div
+      className="relative mx-auto text-gray-600 mr-0  h-10"
+      onMouseOver={() => setIsInputOpen(true)}
+      onFocus={() => setIsInputOpen(true)}
+      // onMouseOut={() => setIsInputOpen(false)}
+      onMouseLeave={() => setIsInputOpen(false)}
+    >
+      {isInputOpen && (
+      <input
+        className=" border-2 border-gray-300 h-full bg-white px-5 pr-16 rounded-lg text-sm focus:outline-none"
+        type="search"
+        name="search"
+        placeholder="Search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      )}
+      <button
+        type="submit"
+        className="absolute right-0 mr-4 h-full "
+        onClick={onSubmit}
+      >
+        <div className="flex items-center">
+          <FaSearch className="fill-current text-primary text-xl mt-1" />
+        </div>
+      </button>
+    </div>
+  )
+}
 
 export default function Navbar() {
-  const [session, loading] = useSession()
+  const [session] = useSession()
+  const [search, setSearch] = useState('')
+  console.log('🚀 ~ file: navbar.jsx ~ line 202 ~ Navbar ~ search', search)
   useEffect(() => {
-    if (!loading) localStorage.setItem('komika-key', session?.accessToken)
-  }, [session, loading])
+    localStorage.setItem('komika-key', session?.accessToken)
+  }, [session])
+  const { data } = GetProfile()
+  console.log('🚀 ~ file: navbar.jsx ~ line 164 ~ Navbar ~ data', data)
+  const handleSubmit = () => {
+    console.log('🚀 ~ file: navbar.jsx ~ line 210 ~ handleSubmit ~ params')
+  }
+
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
@@ -176,12 +232,17 @@ export default function Navbar() {
                   <a className="hover:underline"><ComikamediaNavbar className="h-12" /></a>
                 </Link>
               </div>
-              <div className=" text-blue-500 flex flex-row  ">
-                <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
+              <div className=" text-blue-500 flex pr-4 items-center ">
+                <SearchBar
+                  onChange={(value) => setSearch(value)}
+                  value={search}
+                  onSubmit={handleSubmit}
+                />
+                <SocialMediaLogo className="fill-current text-primary mr-4 text-xl mt-1 " />
                 {session ? (
                   <Profile
-                    name="dummy"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    name={data?.name}
+                    src={data?.photo}
                   />
                 )
                   : (

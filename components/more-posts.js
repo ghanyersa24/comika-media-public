@@ -15,11 +15,12 @@ export default function MorePosts({ posts, title }) {
           <PostPreview
             key={post.slug}
             title={post.title}
-            coverImage={post.banner}
+            banner={post.banner}
             date={post.updatedAt}
             author={post.author}
             slug={post.slug}
             isPremium={post.isPremium}
+            Comika={post.Comika}
           />
         ))}
       </div>

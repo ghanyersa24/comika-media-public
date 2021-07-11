@@ -5,7 +5,7 @@ import { swrReturn } from '../res/interface'
 const URL = '/comment'
 // const urlDetail = '/admin/article'
 export function Get(slug:string):swrReturn {
-  const { data, error, mutate } = useSWR(`${URL}/${slug}`, client.get)
+  const { data, error, mutate } = useSWR(`${URL}/${slug}`, client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
   return {
     isLoading: (!error && !data),
     error,

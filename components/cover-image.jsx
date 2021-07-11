@@ -6,7 +6,7 @@ export default function CoverImage({
   title, src, slug, height, width,
 }) {
   if (!src) {
-    return 'tanpa gambar'
+    return <>Tanpa Gambar</>
   }
   const image = (
     <Image

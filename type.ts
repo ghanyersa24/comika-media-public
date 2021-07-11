@@ -11,6 +11,12 @@ export type Post = {
   'updatedAt': Date,
   'deletedAt': Date,
   'UserId': Date,
+  'Comika': {
+    'id': number,
+    'name': string,
+    'photo': string,
+    'verified': boolean
+}
 }
 export type PropsDetailOfPost = {
   post: Post,
