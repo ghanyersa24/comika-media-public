@@ -1,5 +1,5 @@
-import { ReactChild, ReactElement } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { ReactChild, ReactElement } from 'react'
+import { AiOutlineClockCircle } from 'react-icons/ai'
 
 type SubsribeItemProps = {
   className?: string;
@@ -25,10 +25,9 @@ export const SubsribeItem = ({
   onClick,
 }: SubsribeItemProps): ReactElement => {
   console.log(
-    "🚀 ~ file: subscribe-item.tsx ~ line 4 ~ SubsribeItem ~ SubsribeItem"
-  );
-  const classButton =
-    "mt-8 inline-flex items-center justify-center w-full bg-primary rounded hover:bg-primaryDark ";
+    '🚀 ~ file: subscribe-item.tsx ~ line 4 ~ SubsribeItem ~ SubsribeItem',
+  )
+  const classButton = 'mt-8 inline-flex items-center justify-center w-full bg-primary rounded hover:bg-primaryDark '
   return (
     <div
       className={`bg-white border-2 rounded-lg  mt-8 border-gray-200 relative ${className}`}
@@ -49,7 +48,7 @@ export const SubsribeItem = ({
         <button
           type="button"
           className={
-            (loading ? "cursor-not-allowed opacity-50 " : " ") + classButton
+            (loading ? 'cursor-not-allowed opacity-50 ' : ' ') + classButton
           }
           onClick={onClick}
         >
@@ -60,10 +59,10 @@ export const SubsribeItem = ({
         {children}
       </div>
     </div>
-  );
-};
-export default SubsribeItem;
+  )
+}
+export default SubsribeItem
 
 SubsribeItem.defaultProps = {
-  className: "",
-};
+  className: '',
+}

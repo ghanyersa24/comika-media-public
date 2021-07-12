@@ -1,8 +1,8 @@
-import React, { ReactNode, useState } from "react";
-import { signIn } from "next-auth/client";
-import { useRouter } from "next/router";
-import { ComikamediaNavbar, BackgroundLogin } from "../../components/svg";
-import { Login } from "../../res/interface";
+import React, { ReactNode, useState } from 'react'
+import { signIn } from 'next-auth/client'
+import { useRouter } from 'next/router'
+import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
+import { Login } from '../../res/interface'
 
 // enum Severity {
 //   error='bg-red-200',
@@ -13,27 +13,27 @@ import { Login } from "../../res/interface";
 //   1:string
 // }
 export const LoginPage = (): ReactNode => {
-  const router = useRouter();
-  const [login, setLogin] = useState<Login | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string>(null);
+  const router = useRouter()
+  const [login, setLogin] = useState<Login | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string>(null)
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { type, checked, name, value } = e.target;
-    setLogin({ ...login, [name]: type === "checkbox" ? checked : value });
-  };
+    const {
+      type, checked, name, value,
+    } = e.target
+    setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
+  }
   const handleSubmitLogin = (loginData) => {
-    const callbackUrl = router.query.callbackUrl;
-    signIn("credentials", { redirect: false, ...loginData, callbackUrl }).then(
+    const { callbackUrl } = router.query
+    signIn('credentials', { redirect: false, ...loginData, callbackUrl }).then(
       (result) => {
-        console.log("🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result", result);
+        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
         if (result?.error !== null) {
-          setErrorMsg(result.error);
-        } else {
-          if (callbackUrl) router.push("" + callbackUrl);
-          else router.push("/");
-        }
-      }
-    );
-  };
+          setErrorMsg(result.error)
+        } else if (callbackUrl) router.push(`${callbackUrl}`)
+        else router.push('/')
+      },
+    )
+  }
 
   return (
     <div className="grid grid-cols-2  min-h-screen">
@@ -113,6 +113,6 @@ export const LoginPage = (): ReactNode => {
         <BackgroundLogin className="" />
       </div>
     </div>
-  );
-};
-export default LoginPage;
+  )
+}
+export default LoginPage
