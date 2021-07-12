@@ -5,7 +5,7 @@ type ContainerPadding={
   children:ReactNode
 }
 export default function Container({ children, className }:ContainerPadding):any {
-  return <div className={`container mx-auto px-8 max-w-screen-xl ${className}`}>{children}</div>
+  return <div className={`container mx-auto px-4 sm:px-8 max-w-screen-xl ${className}`}>{children}</div>
 }
 
 Container.defaultProps = {

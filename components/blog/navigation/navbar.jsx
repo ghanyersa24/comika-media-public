@@ -20,7 +20,7 @@ const navigation = [
   { name: 'Home', href: '#', current: true },
   { name: 'Article', href: '#', current: false },
   { name: 'Store', href: '#', current: false },
-  { name: 'Subscribe', href: '#', current: false },
+  { name: 'Subscribe', href: '/subscribe', current: false },
   { name: 'Login', href: '/auth/signin', current: false },
 ]
 
@@ -230,7 +230,7 @@ export default function Navbar() {
               </div>
               <div className="">
                 <Link href="/">
-                  <a className="hover:underline hidden "><ComikamediaNavbar className="h-12" /></a>
+                  <a className="hover:underline hidden md:block "><ComikamediaNavbar className="h-12" /></a>
                 </Link>
               </div>
               <div className=" text-blue-500 flex sm:pr-4 items-center ">
