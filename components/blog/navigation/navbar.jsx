@@ -214,7 +214,7 @@ export default function Navbar() {
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
       {({ open }) => (
         <>
-          <div className=" mx-auto px-6  lg:px-8 ">
+          <div className=" mx-auto sm:px-6 pl-4 pr-2  lg:px-8 ">
             <div className=" flex items-center justify-between h-16">
               <div className=" inset-y-0 left-0 flex items-center">
                 {/* Mobile menu button */}
@@ -229,27 +229,29 @@ export default function Navbar() {
               </div>
               <div className="">
                 <Link href="/">
-                  <a className="hover:underline"><ComikamediaNavbar className="h-12" /></a>
+                  <a className="hover:underline hidden "><ComikamediaNavbar className="h-12" /></a>
                 </Link>
               </div>
-              <div className=" text-blue-500 flex pr-4 items-center ">
+              <div className=" text-blue-500 flex sm:pr-4 items-center ">
                 <SearchBar
                   onChange={(value) => setSearch(value)}
                   value={search}
                   onSubmit={handleSubmit}
                 />
-                <SocialMediaLogo className="fill-current text-primary mr-4 text-xl mt-1 " />
-                {session ? (
-                  <Profile
-                    name={data?.name}
-                    src={data?.photo}
-                  />
-                )
-                  : (
-                    <button onClick={signIn} type="button">
-                      Login
-                    </button>
-                  )}
+                <SocialMediaLogo className="fill-current text-primary mr-4 text-xl mt-1 hidden sm:block" />
+                <div className="hidden sm:block">
+                  {session ? (
+                    <Profile
+                      name={data?.name}
+                      src={data?.photo}
+                    />
+                  )
+                    : (
+                      <button onClick={signIn} type="button">
+                        Login
+                      </button>
+                    )}
+                </div>
               </div>
 
             </div>
