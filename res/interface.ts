@@ -86,5 +86,6 @@ export type Post = {
 }
 export type PropsDetailOfPost = {
   post: Post,
+  session:string[]
   // morePosts: string[]
 }

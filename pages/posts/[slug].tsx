@@ -3,7 +3,7 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 import React, { ReactElement, useState } from 'react'
-import { getSession } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/client'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -17,7 +17,8 @@ import { PropsDetailOfPost } from '../../res/interface'
 import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
 import { Get, add as addPost } from '../../service/comments'
 
-export default function DetailOfPost({ post }: PropsDetailOfPost): ReactElement {
+export default function DetailOfPost({ post, session }: PropsDetailOfPost): ReactElement {
+  console.log('🚀 ~ file: [slug].tsx ~ line 21 ~ DetailOfPost ~ session', session)
   const router = useRouter()
   const [comment, setComment] = useState('')
   const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
@@ -65,13 +66,15 @@ export default function DetailOfPost({ post }: PropsDetailOfPost): ReactElement 
                 comments={comments}
                 isLoading={isLoading}
               />
-              <PostCommentAdd
-                onChange={(e) => setComment(e.target.value)}
-                isLoading={isLoading}
-                error={errorMsgPostAdd}
-                comment={comment}
-                onSubmit={handleSubmitPostComment}
-              />
+              {session ? (
+                <PostCommentAdd
+                  onChange={(e) => setComment(e.target.value)}
+                  isLoading={isLoading}
+                  error={errorMsgPostAdd}
+                  comment={comment}
+                  onSubmit={handleSubmitPostComment}
+                />
+              ) : null}
             </div>
 
           </article>
@@ -102,6 +105,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ...post,
         content,
       },
+      session,
     },
   }
 }
