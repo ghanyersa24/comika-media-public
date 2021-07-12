@@ -1,8 +1,8 @@
-import React, { ReactNode, useState } from 'react'
-import { signIn } from 'next-auth/client'
-import { useRouter } from 'next/router'
-import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
-import { Login } from '../../res/interface'
+import React, { ReactNode, useState } from "react";
+import { signIn } from "next-auth/client";
+import { useRouter } from "next/router";
+import { ComikamediaNavbar, BackgroundLogin } from "../../components/svg";
+import { Login } from "../../res/interface";
 
 // enum Severity {
 //   error='bg-red-200',
@@ -12,27 +12,28 @@ import { Login } from '../../res/interface'
 //   0:Severity,
 //   1:string
 // }
-export const LoginPage = ():ReactNode => {
-  const router = useRouter()
-  const [login, setLogin] = useState<Login|null>(null)
-  const [errorMsg, setErrorMsg] = useState<string>(null)
+export const LoginPage = (): ReactNode => {
+  const router = useRouter();
+  const [login, setLogin] = useState<Login | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>(null);
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      type, checked, name, value,
-    } = e.target
-    setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
-  }
+    const { type, checked, name, value } = e.target;
+    setLogin({ ...login, [name]: type === "checkbox" ? checked : value });
+  };
   const handleSubmitLogin = (loginData) => {
-    signIn('credentials', { redirect: false, ...loginData, callbackUrl: 'http://localhost:3000/foo' })
-      .then((result) => {
-        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
+    const callbackUrl = router.query.callbackUrl;
+    signIn("credentials", { redirect: false, ...loginData, callbackUrl }).then(
+      (result) => {
+        console.log("🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result", result);
         if (result?.error !== null) {
-          setErrorMsg(result.error)
+          setErrorMsg(result.error);
         } else {
-          router.push('/')
+          if (callbackUrl) router.push("" + callbackUrl);
+          else router.push("/");
         }
-      })
-  }
+      }
+    );
+  };
 
   return (
     <div className="grid grid-cols-2  min-h-screen">
@@ -42,14 +43,14 @@ export const LoginPage = ():ReactNode => {
         </div>
         <div className="mb-8">
           <p className="text-3xl font-medium leading-9 text-gray-800">Login </p>
-          <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">Log in to Comicamedia</p>
+          <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">
+            Log in to Comicamedia
+          </p>
         </div>
 
         <div className="mb-4">
           {errorMsg ? (
-            <div className="bg-red-200 p-2 mb-4 rounded">
-              {errorMsg}
-            </div>
+            <div className="bg-red-200 p-2 mb-4 rounded">{errorMsg}</div>
           ) : null}
           <label
             htmlFor="email"
@@ -92,12 +93,13 @@ export const LoginPage = ():ReactNode => {
               className="leading-loose mr-2"
             />
             Remember Me
-
           </label>
-          <a className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker" href="/lupa-password">
+          <a
+            className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker"
+            href="/lupa-password"
+          >
             Forgot Password?
           </a>
-
         </div>
         <button
           className="btn-primary font-bold px-6 py-4 mt-8"
@@ -106,12 +108,11 @@ export const LoginPage = ():ReactNode => {
         >
           Sign In
         </button>
-
       </div>
       <div className="bg-primary overflow-hidden h-screen">
         <BackgroundLogin className="" />
       </div>
     </div>
-  )
-}
-export default LoginPage
+  );
+};
+export default LoginPage;
