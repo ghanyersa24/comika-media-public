@@ -1,46 +1,29 @@
 import React, { ReactNode, useState } from 'react'
-import { signIn } from 'next-auth/client'
 import { useRouter } from 'next/router'
-import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
-import { Login } from '../../res/interface'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
+import { CreateResetPassword } from '../../service/auth'
+import { BackgroundLogin } from '../../components/svg'
 
-// enum Severity {
-//   error='bg-red-200',
-//   success='bg-green-200',
-// }
-// type ErrorMsg ={
-//   0:Severity,
-//   1:string
-// }
 export const LoginPage = (): ReactNode => {
   const router = useRouter()
-  const [login, setLogin] = useState<Login | null>(null)
+  const [email, setEmail] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState<string>(null)
-  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      type, checked, name, value,
-    } = e.target
-    setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
-  }
-  const handleSubmitLogin = (loginData) => {
-    const { callbackUrl } = router.query
-    signIn('credentials', { redirect: false, ...loginData, callbackUrl }).then(
-      (result) => {
-        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
-        if (result?.error !== null) {
-          setErrorMsg(result.error)
-        } else if (callbackUrl) router.push(`${callbackUrl}`)
-        else router.push('/')
-      },
-    )
+
+  const handleSubmitLogin = async (loginData) => {
+    try {
+      await CreateResetPassword(loginData)
+      router.push('/auth/checkYourEmail')
+    } catch (error) {
+      setErrorMsg(error.msg)
+    }
   }
 
   return (
     <div className="grid grid-cols-2  min-h-screen">
       <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col min-w-max w-2/3 mx-auto place-content-center">
-        <div className="flex mb-8">
-          <ComikamediaNavbar className="w-2/3" />
-        </div>
+        <button type="button" className="py-4 pr-4 w-12 text-lg " onClick={() => router.back()}>
+          <AiOutlineArrowLeft />
+        </button>
         <div className="mb-8">
           <p className="text-3xl font-medium leading-9 text-gray-800">Forgot Password </p>
           <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">
@@ -50,7 +33,9 @@ export const LoginPage = (): ReactNode => {
 
         <div className="mb-4">
           {errorMsg ? (
-            <div className="bg-red-200 p-2 mb-4 rounded">{errorMsg}</div>
+            <div className="bg-red-200 p-2 mb-4 rounded">
+              {errorMsg}
+            </div>
           ) : null}
           <label
             htmlFor="email"
@@ -60,7 +45,7 @@ export const LoginPage = (): ReactNode => {
             <input
               className="w-full py-2 px-3  mt-3"
               type="text"
-              onChange={handleChangeValue}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               name="email"
               id="email"
@@ -70,11 +55,12 @@ export const LoginPage = (): ReactNode => {
 
         <button
           className="btn-primary font-bold px-6 py-4 mt-8"
-          onClick={() => handleSubmitLogin(login)}
+          onClick={() => handleSubmitLogin(email)}
           type="button"
         >
-          Sign In
+          Send
         </button>
+
       </div>
       <div className="bg-primary overflow-hidden h-screen">
         <BackgroundLogin className="" />
