@@ -38,7 +38,7 @@ export const LoginPage = ():ReactNode => {
 
   return (
     <div className="grid grid-cols-2  min-h-screen">
-      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-2/3 mx-auto place-content-center">
+      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col min-w-max w-2/3 mx-auto place-content-center">
         <div className="flex mb-8">
           <ComikamediaNavbar className="w-2/3" />
         </div>
