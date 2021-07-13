@@ -1,6 +1,7 @@
 import '../styles/index.css'
 import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'
+import { Provider } from 'next-auth/client'
 import Layout from '../components/layout'
 
 export default function MyApp({ Component, pageProps }) {
@@ -10,21 +11,28 @@ export default function MyApp({ Component, pageProps }) {
   const withOutLayout = ['auth']
   return (
     <>
-      <SWRConfig
-        value={{
-          refreshInterval: 1000 * 60 * 2,
-          revalidateOnFocus: false,
+      <Provider
+        session={pageProps.session}
+        options={{
+          clientMaxAge: 60,
+          keepAlive: 0,
         }}
       >
-        {withOutLayout.includes(urlComponent[1]) ? (
-          <Component {...pageProps} />
-        ) : (
-          <Layout url={urlComponent}>
+        <SWRConfig
+          value={{
+            refreshInterval: 1000 * 60 * 2,
+            revalidateOnFocus: false,
+          }}
+        >
+          {withOutLayout.includes(urlComponent[1]) ? (
             <Component {...pageProps} />
-          </Layout>
-        )}
-      </SWRConfig>
-
+          ) : (
+            <Layout url={urlComponent}>
+              <Component {...pageProps} />
+            </Layout>
+          )}
+        </SWRConfig>
+      </Provider>
     </>
   )
 }

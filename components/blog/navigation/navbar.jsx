@@ -198,14 +198,15 @@ const SearchBar = ({ onChange, value, onSubmit }) => {
 }
 
 export default function Navbar() {
-  const [session] = useSession()
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: navbar.jsx ~ line 202 ~ Navbar ~ session', loading, session)
   const [search, setSearch] = useState('')
-  console.log('🚀 ~ file: navbar.jsx ~ line 202 ~ Navbar ~ search', search)
   useEffect(() => {
-    localStorage.setItem('komika-key', session?.accessToken)
-  }, [session])
+    if (!loading) {
+      localStorage.setItem('komika-key', session?.accessToken)
+    }
+  }, [session, loading])
   const { data } = GetProfile()
-  console.log('🚀 ~ file: navbar.jsx ~ line 164 ~ Navbar ~ data', data)
   const handleSubmit = () => {
     console.log('🚀 ~ file: navbar.jsx ~ line 210 ~ handleSubmit ~ params')
   }
