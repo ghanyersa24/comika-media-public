@@ -1,9 +1,9 @@
 import React, { ReactNode, useState } from 'react'
 import { signIn } from 'next-auth/client'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
-
 // enum Severity {
 //   error='bg-red-200',
 //   success='bg-green-200',
@@ -37,7 +37,7 @@ export const LoginPage = (): ReactNode => {
 
   return (
     <div className="grid grid-cols-2  min-h-screen">
-      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-2/3 mx-auto place-content-center">
+      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col min-w-max w-2/3 mx-auto place-content-center">
         <div className="flex mb-8">
           <ComikamediaNavbar className="w-2/3" />
         </div>
@@ -94,12 +94,14 @@ export const LoginPage = (): ReactNode => {
             />
             Remember Me
           </label>
-          <a
-            className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker"
-            href="/lupa-password"
-          >
-            Forgot Password?
-          </a>
+          <Link href="/auth/forget">
+            <a
+              className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker"
+            >
+              Forgot Password?
+            </a>
+          </Link>
+
         </div>
         <button
           className="btn-primary font-bold px-6 py-4 mt-8"
