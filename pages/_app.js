@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   console.log('🚀 ~ file: _app.js ~ line 8 ~ MyApp ~ urlComponent', urlComponent)
-  const withOutLayout = ['auth', 'agent']
+  const withOutLayout = ['auth', 'agent','test']
   return (
     <>
       <Provider
