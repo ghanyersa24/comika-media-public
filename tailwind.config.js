@@ -40,7 +40,7 @@ module.exports = {
       },
     },
     screens: {
-      hp: '357px',
+      hp: '359px',
       ...defaultTheme.screens,
     },
   },

@@ -5,13 +5,13 @@ export default function MorePosts({ posts, title, description }) {
     <section>
       <div>
 
-        <h2 className="text-xl md:text-5xl font-medium tracking-tighter leading-tight text-primary">
+        <h2 className="text-base md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight text-primary">
           {/* <div className="bg-primary mr-2 w-2 inline-block "> &nbsp;</div> */}
           {title}
         </h2>
-        <p className="text-xs leading-normal text-gray-600 mb-4">{description}</p>
+        <p className="text-xs md:text-base lg:text-lg leading-normal text-gray-600 mb-4 lg:mb-8">{description}</p>
       </div>
-      <div className="grid grid-cols-2 gap-x-2 md:grid-cols-3 md:gap-x-4 lg:gap-x-8 gap-y-12 md:gap-y-16 mb-32">
+      <div className="grid grid-cols-1 hp:grid-cols-2 xs:grid-cols-2 gap-x-4 md:grid-cols-3 md:gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-16 mb-32">
         {posts.map((post) => (
           <PostPreview
             key={post.slug}

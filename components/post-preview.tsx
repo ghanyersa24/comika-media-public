@@ -18,7 +18,7 @@ export default function PostPreview({
 }:Post):ReactElement {
   return (
     <div className="text-textSecondary">
-      <div className="mb-5 relative">
+      <div className="xs:mb-5 mb-2 relative">
         <CoverImage
           slug={slug}
           title={title}
@@ -38,16 +38,19 @@ export default function PostPreview({
           </div>
         ) : null}
       </div>
-      <div className="px-4">
-        <Avatar className="text-lg font-medium leading-9 text-gray-600" name={Comika.name} picture={Comika.photo} />
-        <h3 className="text-xl mb-3 font-bold  leading-loose mt-4">
+      <div className="xs:px-4 divide-y">
+        <h3 className=" mb-3 font-bold  xs:leading-loose xs:mt-4 ">
           <Link as={`/posts/${slug}`} href="/posts/[slug]">
-            <a className="hover:underline text-gray-700 text-2xl line-clamp-2">{title}</a>
+            <a className="hover:underline text-gray-700 md:text-2xl text-sm line-clamp-2">{title}</a>
           </Link>
         </h3>
-        <div className="text-sm leading-tight text-gray-500">
-          Selengkapnya...
-        </div>
+        <Avatar
+          className="xs:text-lg text-sm font-medium pt-2  text-gray-600"
+          name={Comika.name}
+          picture={Comika.photo}
+          date="17 Juni 2021"
+          read="10m read"
+        />
       </div>
       {/* <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
