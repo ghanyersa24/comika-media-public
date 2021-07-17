@@ -23,8 +23,8 @@ export default function PostPreview({
           slug={slug}
           title={title}
           src={banner}
-          height={222}
-          width={345}
+          height={75}
+          width={153}
         />
         {isPremium ? (
           <div className="w-16 h-16 absolute bottom-0 ml-2">

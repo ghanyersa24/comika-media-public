@@ -1,4 +1,6 @@
 /* eslint-disable global-require */
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
@@ -37,6 +39,7 @@ module.exports = {
     },
     screens: {
       hp: '357px',
+      ...defaultTheme.screens,
     },
   },
   plugins: [

@@ -23,6 +23,7 @@ export default function Index(
     lastestArticles, pupularArticles, anotherArticles, isMobile,
   }:Props,
 ): React.ReactNode {
+  console.log('🚀 ~ file: index.tsx ~ line 26 ~ isMobile', isMobile)
   return (
     <Layout isMobile={isMobile}>
       <Head>
@@ -36,10 +37,10 @@ export default function Index(
         </>
       ) : <IntroDekstop />}
 
-      <ContainerPadding className="mt-12">
-        {lastestArticles.length > 0 && <MorePosts posts={lastestArticles} title="Artikel Terbaru" />}
-        {pupularArticles.length > 0 && <MorePosts posts={pupularArticles} title="Artikel Terpopuler" />}
-        {anotherArticles.length > 0 && <MorePosts posts={anotherArticles} title="Artikel Lainya" />}
+      <ContainerPadding className="mt-8 md:mt-12">
+        {lastestArticles.length > 0 && <MorePosts posts={lastestArticles} title="Artikel Terbaru" description="Terbaru di minggu ini" />}
+        {pupularArticles.length > 0 && <MorePosts posts={pupularArticles} title="Artikel Terpopuler" description="Terpopuler di minggu ini" />}
+        {anotherArticles.length > 0 && <MorePosts posts={anotherArticles} title="Artikel Lainya" description="Lainya di minggu ini" />}
       </ContainerPadding>
     </Layout>
   )
