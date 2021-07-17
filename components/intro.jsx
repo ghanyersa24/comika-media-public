@@ -86,7 +86,7 @@ export function IntroMobile() {
   if (isLoading) return <div />
   const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isPhone)
   return (
-    <section className="mb-4 hp:-mt-36  -mt-32 relative">
+    <section className="mb-4 hp:-mt-36  -mt-28 relative">
       <AutoPlaySwipeableViews
         enableMouseEvents
         className="px-3"
