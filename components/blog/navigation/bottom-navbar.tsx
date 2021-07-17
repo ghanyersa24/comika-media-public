@@ -10,7 +10,7 @@ type ButtonItemType = {
   icon:any,
   url:string,
   isActive:boolean
-  }
+}
 export const ButtonItem = ({
   icon, url, isActive,
 }:ButtonItemType):ReactElement => (

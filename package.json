@@ -5,6 +5,7 @@
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
+    "lint-q": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/ service/ res/ --quiet & tsc",
     "lint": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/ service/ res/ & tsc"
   },
   "dependencies": {

@@ -58,7 +58,7 @@
         "aspects": ["invalidHref", "preferButton"]
       }
     ],
-    "no-use-before-define": ["error", { "ignoreTypeReferences": true }]
+    "no-use-before-define": "off"
   },
   "overrides": [
     {
