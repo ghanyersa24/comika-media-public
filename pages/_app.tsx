@@ -9,7 +9,6 @@ function MyApp({ Component, pageProps }: AppProps):ReactElement {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   console.log('🚀 ~ file: _app.js ~ line 8 ~ MyApp ~ urlComponent', urlComponent)
-  const withOutLayout = ['auth', 'agent', 'test']
   return (
     <>
       <Provider

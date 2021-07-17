@@ -20,7 +20,7 @@ export const Mobile = ({ children }) => (
     <Meta />
     <div className="min-h-screen ">
       {/* <Alert preview={preview} /> */}
-      <main>{children}</main>
+      <main className=" ">{children}</main>
     </div>
     <BottomNavbar />
     <Footer />

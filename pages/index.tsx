@@ -10,6 +10,7 @@ import { client } from '../lib/clientRaw'
 import { API_ENDPOINT_LIST_ARTICLE } from '../res/api-endpoint'
 import { Post } from '../res/interface'
 import Layout from '../components/layout'
+import SearchNavigation from '../components/blog/navigation/search-navigation-mobile'
 
 type Props= {
   lastestArticles:Post[],
@@ -28,13 +29,17 @@ export default function Index(
         <title>Komika Media</title>
       </Head>
       {/* <Container> */}
-
-      <Intro />
-      <ContainerPadding className="mt-12">
+      {isMobile ? (
+        <>
+          <SearchNavigation />
+        </>
+      ) : null}
+      {/* <Intro /> */}
+      {/* <ContainerPadding className="mt-12">
         {lastestArticles.length > 0 && <MorePosts posts={lastestArticles} title="Artikel Terbaru" />}
         {pupularArticles.length > 0 && <MorePosts posts={pupularArticles} title="Artikel Terpopuler" />}
         {anotherArticles.length > 0 && <MorePosts posts={anotherArticles} title="Artikel Lainya" />}
-      </ContainerPadding>
+      </ContainerPadding> */}
 
       {/* </Container> */}
     </Layout>
