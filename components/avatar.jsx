@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Image from 'next/image'
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs'
 
