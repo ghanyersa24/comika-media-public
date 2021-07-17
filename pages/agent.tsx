@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 
 interface Props {
   userAgent?: string;
+  isMobile
 }
 
 const Page: NextPage<Props> = ({ userAgent, isMobile }) => {

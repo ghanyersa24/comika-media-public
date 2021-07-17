@@ -2,9 +2,11 @@ import '../styles/index.css'
 import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'
 import { Provider } from 'next-auth/client'
+import type { AppProps /* , AppContext */ } from 'next/app'
+import { ReactElement } from 'react'
 import Layout from '../components/layout'
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps):ReactElement {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   console.log('🚀 ~ file: _app.js ~ line 8 ~ MyApp ~ urlComponent', urlComponent)
@@ -36,3 +38,4 @@ export default function MyApp({ Component, pageProps }) {
     </>
   )
 }
+export default MyApp
