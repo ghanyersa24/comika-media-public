@@ -6,7 +6,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <meta name="theme-color" content="#006BC1" />
+        </Head>
         <body>
           <Main />
           <NextScript />

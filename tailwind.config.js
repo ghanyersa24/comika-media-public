@@ -35,8 +35,12 @@ module.exports = {
         md: '0 8px 30px rgba(0, 0, 0, 0.12)',
       },
     },
+    screens: {
+      hp: '357px',
+    },
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
   ],
+
 }

@@ -5,7 +5,7 @@ import { GetServerSideProps } from 'next'
 
 import ContainerPadding from '../components/container-padding'
 import MorePosts from '../components/more-posts'
-import Intro from '../components/intro'
+import { IntroDekstop, IntroMobile } from '../components/intro'
 import { client } from '../lib/clientRaw'
 import { API_ENDPOINT_LIST_ARTICLE } from '../res/api-endpoint'
 import { Post } from '../res/interface'
@@ -32,16 +32,15 @@ export default function Index(
       {isMobile ? (
         <>
           <SearchNavigation />
+          <IntroMobile />
         </>
-      ) : null}
-      {/* <Intro /> */}
-      {/* <ContainerPadding className="mt-12">
+      ) : <IntroDekstop />}
+
+      <ContainerPadding className="mt-12">
         {lastestArticles.length > 0 && <MorePosts posts={lastestArticles} title="Artikel Terbaru" />}
         {pupularArticles.length > 0 && <MorePosts posts={pupularArticles} title="Artikel Terpopuler" />}
         {anotherArticles.length > 0 && <MorePosts posts={anotherArticles} title="Artikel Lainya" />}
-      </ContainerPadding> */}
-
-      {/* </Container> */}
+      </ContainerPadding>
     </Layout>
   )
 }
