@@ -2,7 +2,8 @@ import Footer from './footer'
 import Meta from './meta'
 import Navbar from './blog/navigation/navbar'
 
-export default function Layout({ children }) {
+// eslint-disable-next-line no-unused-vars
+export default function Layout({ children, url }) {
   return (
     <>
       <Meta />
