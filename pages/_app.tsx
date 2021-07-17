@@ -4,7 +4,6 @@ import { SWRConfig } from 'swr'
 import { Provider } from 'next-auth/client'
 import type { AppProps /* , AppContext */ } from 'next/app'
 import { ReactElement } from 'react'
-import Layout from '../components/layout'
 
 function MyApp({ Component, pageProps }: AppProps):ReactElement {
   const router = useRouter()
@@ -26,13 +25,9 @@ function MyApp({ Component, pageProps }: AppProps):ReactElement {
             revalidateOnFocus: false,
           }}
         >
-          {withOutLayout.includes(urlComponent[1]) ? (
-            <Component {...pageProps} />
-          ) : (
-            <Layout url={urlComponent}>
-              <Component {...pageProps} />
-            </Layout>
-          )}
+
+          <Component {...pageProps} />
+
         </SWRConfig>
       </Provider>
     </>
