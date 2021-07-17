@@ -5,7 +5,7 @@ export default function MorePosts({ posts, title, description }) {
     <section>
       <div>
 
-        <h2 className="text-base md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight text-primary">
+        <h2 className="text-xl md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight text-primary">
           {/* <div className="bg-primary mr-2 w-2 inline-block "> &nbsp;</div> */}
           {title}
         </h2>
