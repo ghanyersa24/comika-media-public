@@ -23,7 +23,7 @@ export const Mobile = ({ children }) => (
       <main className=" ">{children}</main>
     </div>
     <BottomNavbar />
-    <Footer />
+    {/* <Footer /> */}
   </>
 )
 // eslint-disable-next-line no-unused-vars

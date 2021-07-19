@@ -53,7 +53,7 @@ export const BottomNavbar = ():ReactElement => {
 
   return (
 
-    <div className="w-full h-screen">
+    <div className="w-full">
       <section id="bottom-navigation" className="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow">
         <section id="bottom-navigation" className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow">
           <div id="tabs" className="flex justify-between ">

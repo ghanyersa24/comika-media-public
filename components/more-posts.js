@@ -2,7 +2,7 @@ import PostPreview from './post-preview'
 
 export default function MorePosts({ posts, title, description }) {
   return (
-    <section>
+    <section className=" mb-16 lg:mb-32">
       <div>
 
         <h2 className="text-xl md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight text-primary">
@@ -11,7 +11,7 @@ export default function MorePosts({ posts, title, description }) {
         </h2>
         <p className="text-xs md:text-base lg:text-lg leading-normal text-gray-600 mb-4 lg:mb-8">{description}</p>
       </div>
-      <div className="grid grid-cols-1 hp:grid-cols-2 xs:grid-cols-2 gap-x-4 md:grid-cols-3 md:gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-16 mb-32">
+      <div className="grid grid-cols-1 hp:grid-cols-2 xs:grid-cols-2 gap-x-4 md:grid-cols-3 md:gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-16">
         {posts.map((post) => (
           <PostPreview
             key={post.slug}
