@@ -2,10 +2,10 @@ import PostPreview from './post-preview'
 
 export default function MorePosts({ posts, title, description }) {
   return (
-    <section className=" mb-16 lg:mb-32">
+    <section className=" mb-16 lg:mb-24">
       <div>
 
-        <h2 className="text-xl md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight text-primary">
+        <h2 className="text-xl md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight md:leading-normal text-primary">
           {/* <div className="bg-primary mr-2 w-2 inline-block "> &nbsp;</div> */}
           {title}
         </h2>
