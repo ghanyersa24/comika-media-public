@@ -17,16 +17,13 @@ export default function Avatar({
           height={60}
         />
       </div>
-      <div className="flex-grow text-xs lg:text-base text-gray-800">
+      <div className="flex-grow  ">
         <p className="leading-tight line-clamp-1">{name}</p>
         <div className="flex item-center  ">
           <p className="mr-1">{date}</p>
           {/* <p className="mr-1">•</p> */}
           {/* <p className="">{read}</p> */}
         </div>
-      </div>
-      <div>
-        <BsBookmark className="text-xl " />
       </div>
     </div>
   )
