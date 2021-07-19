@@ -7,7 +7,7 @@ import { getSession } from 'next-auth/client'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
-import PostHeader from '../../components/post-header'
+import { PostHeaderDekstop, PostHeaderMobile } from '../../components/post-header'
 import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
@@ -34,7 +34,7 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
             </title>
             {/* <meta property="og:image" content={post.ogImage.url} /> */}
           </Head>
-          <PostHeader
+          <PostHeaderDekstop
             title={title}
             coverImage={banner}
             date={updatedAt}
@@ -55,24 +55,25 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
   } = post
   return (
     (
-      <Container>
-        <article className="mb-32 mt-24">
-          <Head>
-            <title>
-              {title}
-              {CMS_NAME}
-            </title>
-            {/* <meta property="og:image" content={post.ogImage.url} /> */}
-          </Head>
-          <PostHeader
-            title={title}
-            coverImage={banner}
-            date={updatedAt}
-            Comika={Comika}
-          />
+
+      <article className="mb-32 mt-24">
+        <Head>
+          <title>
+            {title}
+            {CMS_NAME}
+          </title>
+          {/* <meta property="og:image" content={post.ogImage.url} /> */}
+        </Head>
+        <PostHeaderMobile
+          title={title}
+          coverImage={banner}
+          date={updatedAt}
+          Comika={Comika}
+        />
+        <div className="mx-4">
           <PostBody content={content} />
-        </article>
-      </Container>
+        </div>
+      </article>
 
     )
   )
