@@ -3,69 +3,104 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import {
   signIn, signOut, useSession,
 } from 'next-auth/client'
-import React, { Fragment, useEffect } from 'react'
+import React, {
+  Fragment, useEffect, useState,
+} from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+import {
+  FaSearch,
+} from 'react-icons/fa'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
+import { Get as GetProfile } from '../../../service/user-profile'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
   { name: 'Article', href: '#', current: false },
   { name: 'Store', href: '#', current: false },
-  { name: 'Subscribe', href: '#', current: false },
+  { name: 'Subscribe', href: '/subscribe', current: false },
+  { name: 'Login', href: '/auth/signin', current: false },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-export const Profile = ({ src, name }) => (
-  <Menu as="div" className="ml-3 relative">
-    {({ open }) => (
-      <>
-        <div>
-          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
-            <span className="sr-only">Open user menu</span>
-            <img
-              className="h-8 w-8 rounded-full"
-              src={src}
-              alt={`gambar ${name}`}
-            />
-          </Menu.Button>
-        </div>
-        <Transition
-          show={open}
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items
-            static
-            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+export const Profile = ({ src, name }) => {
+  const router = useRouter()
+  return (
+    <Menu as="div" className="ml-3 relative">
+      {({ open }) => (
+        <>
+          <div>
+            <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
+              <span className="sr-only">Open user menu</span>
+              <div className="h-8 w-8 rounded-full">
+                {src && name
+                  ? (
+                    <Image
+                      className="rounded-full"
+                      src={src}
+                      alt={`gambar ${name}`}
+                      layout="responsive"
+                      width={60}
+                      height={60}
+                    />
+                  ) : <div className="bg-gray-500 h-8 w-8 animate-pulse rounded-full" /> }
+
+              </div>
+            </Menu.Button>
+          </div>
+          <Transition
+            show={open}
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={classNames(
-                    active ? 'bg-gray-100' : '',
-                    'block w-full px-4 py-2 text-sm text-gray-700 text-left',
-                  )}
-                  onClick={signOut}
-                  type="button"
-                >
-                  Sign out
-                </button>
-              )}
-            </Menu.Item>
-          </Menu.Items>
-        </Transition>
-      </>
-    )}
-  </Menu>
-)
+            <Menu.Items
+              static
+              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            >
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={classNames(
+                      active ? 'bg-gray-100' : '',
+                      'block w-full px-4 py-2 text-sm text-gray-700 text-left',
+                    )}
+                    onClick={() => router.push('/setting/profile')}
+                    type="button"
+                  >
+                    Profile
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={classNames(
+                      active ? 'bg-gray-100' : '',
+                      'block w-full px-4 py-2 text-sm text-gray-700 text-left',
+                    )}
+                    onClick={signOut}
+                    type="button"
+                  >
+                    Sign out
+                  </button>
+                )}
+              </Menu.Item>
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
+    </Menu>
+  )
+}
 export const SideBar = ({ isShowing }) => (
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
@@ -129,18 +164,59 @@ export const SideBar = ({ isShowing }) => (
 
   </Transition>
 )
+const SearchBar = ({ onChange, value, onSubmit }) => {
+  const [isInputOpen, setIsInputOpen] = useState(false)
+  return (
+    <div
+      className="relative mx-auto text-gray-600 mr-0  h-10"
+      onMouseOver={() => setIsInputOpen(true)}
+      onFocus={() => setIsInputOpen(true)}
+      // onMouseOut={() => setIsInputOpen(false)}
+      onMouseLeave={() => setIsInputOpen(false)}
+    >
+      {isInputOpen && (
+      <input
+        className=" border-2 border-gray-300 h-full bg-white px-5 pr-16 rounded-lg text-sm focus:outline-none"
+        type="search"
+        name="search"
+        placeholder="Search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      )}
+      <button
+        type="submit"
+        className="absolute right-0 mr-4 h-full "
+        onClick={onSubmit}
+      >
+        <div className="flex items-center">
+          <FaSearch className="fill-current text-primary text-xl mt-1" />
+        </div>
+      </button>
+    </div>
+  )
+}
 
 export default function Navbar() {
   const [session, loading] = useSession()
+  console.log('🚀 ~ file: navbar.jsx ~ line 202 ~ Navbar ~ session', loading, session)
+  const [search, setSearch] = useState('')
   useEffect(() => {
-    if (!loading) localStorage.setItem('komika-key', session?.accessToken)
+    if (!loading) {
+      localStorage.setItem('komika-key', session?.accessToken)
+    }
   }, [session, loading])
+  const { data } = GetProfile()
+  const handleSubmit = () => {
+    console.log('🚀 ~ file: navbar.jsx ~ line 210 ~ handleSubmit ~ params')
+  }
+
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed z-30 bg-white w-screen top-0">
       {({ open }) => (
         <>
-          <div className=" mx-auto px-6  lg:px-8 ">
+          <div className=" mx-auto sm:px-6 pl-4 pr-2  lg:px-8 ">
             <div className=" flex items-center justify-between h-16">
               <div className=" inset-y-0 left-0 flex items-center">
                 {/* Mobile menu button */}
@@ -155,22 +231,29 @@ export default function Navbar() {
               </div>
               <div className="">
                 <Link href="/">
-                  <a className="hover:underline"><ComikamediaNavbar className="h-12" /></a>
+                  <a className="hover:underline hidden md:block "><ComikamediaNavbar className="h-12" /></a>
                 </Link>
               </div>
-              <div className=" text-blue-500 flex flex-row  ">
-                <SocialMediaLogo className="fill-current text-primary mr-2 text-xl mt-1 " />
-                {session ? (
-                  <Profile
-                    name="dummy"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  />
-                )
-                  : (
-                    <button onClick={signIn} type="button">
-                      Login
-                    </button>
-                  )}
+              <div className=" text-blue-500 flex sm:pr-4 items-center ">
+                <SearchBar
+                  onChange={(value) => setSearch(value)}
+                  value={search}
+                  onSubmit={handleSubmit}
+                />
+                <SocialMediaLogo className="fill-current text-primary mr-4 text-xl mt-1 hidden sm:block" />
+                <div className="hidden sm:block">
+                  {session ? (
+                    <Profile
+                      name={data?.name}
+                      src={data?.photo}
+                    />
+                  )
+                    : (
+                      <button onClick={signIn} type="button">
+                        Login
+                      </button>
+                    )}
+                </div>
               </div>
 
             </div>

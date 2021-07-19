@@ -1,8 +1,30 @@
-export default function Avatar({ name, picture, className }) {
+/* eslint-disable no-unused-vars */
+import Image from 'next/image'
+import { BsBookmarkFill, BsBookmark } from 'react-icons/bs'
+
+export default function Avatar({
+  name, picture, className, date = null, read = null,
+}) {
   return (
     <div className={`flex items-center ${className}`}>
-      <img src={picture} className="w-12 h-12 rounded-full mr-4" alt={name} />
-      <div className="">{name}</div>
+      <div className="xs:w-12 xs:h-12 w-8 h-8  xs:mr-4 mr-2">
+        <Image
+          src={picture}
+          alt={`photo profil ${name}`}
+          layout="responsive"
+          className="rounded-full"
+          width={60}
+          height={60}
+        />
+      </div>
+      <div className="flex-grow  ">
+        <p className="leading-tight line-clamp-1">{name}</p>
+        <div className="flex item-center  ">
+          <p className="mr-1">{date}</p>
+          {/* <p className="mr-1">•</p> */}
+          {/* <p className="">{read}</p> */}
+        </div>
+      </div>
     </div>
   )
 }

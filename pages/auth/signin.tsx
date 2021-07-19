@@ -1,9 +1,9 @@
 import React, { ReactNode, useState } from 'react'
 import { signIn } from 'next-auth/client'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
-
 // enum Severity {
 //   error='bg-red-200',
 //   success='bg-green-200',
@@ -12,9 +12,9 @@ import { Login } from '../../res/interface'
 //   0:Severity,
 //   1:string
 // }
-export const LoginPage = ():ReactNode => {
+export const LoginPage = (): ReactNode => {
   const router = useRouter()
-  const [login, setLogin] = useState<Login|null>(null)
+  const [login, setLogin] = useState<Login | null>(null)
   const [errorMsg, setErrorMsg] = useState<string>(null)
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -23,33 +23,34 @@ export const LoginPage = ():ReactNode => {
     setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
   }
   const handleSubmitLogin = (loginData) => {
-    signIn('credentials', { redirect: false, ...loginData, callbackUrl: 'http://localhost:3000/foo' })
-      .then((result) => {
+    const { callbackUrl } = router.query
+    signIn('credentials', { redirect: false, ...loginData, callbackUrl }).then(
+      (result) => {
         console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
         if (result?.error !== null) {
           setErrorMsg(result.error)
-        } else {
-          router.push('/')
-        }
-      })
+        } else if (callbackUrl) router.push(`${callbackUrl}`)
+        else router.push('/')
+      },
+    )
   }
 
   return (
     <div className="grid grid-cols-2  min-h-screen">
-      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-2/3 mx-auto place-content-center">
+      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col min-w-max w-2/3 mx-auto place-content-center">
         <div className="flex mb-8">
           <ComikamediaNavbar className="w-2/3" />
         </div>
         <div className="mb-8">
           <p className="text-3xl font-medium leading-9 text-gray-800">Login </p>
-          <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">Log in to Comicamedia</p>
+          <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">
+            Log in to Comicamedia
+          </p>
         </div>
 
         <div className="mb-4">
           {errorMsg ? (
-            <div className="bg-red-200 p-2 mb-4 rounded">
-              {errorMsg}
-            </div>
+            <div className="bg-red-200 p-2 mb-4 rounded">{errorMsg}</div>
           ) : null}
           <label
             htmlFor="email"
@@ -92,11 +93,14 @@ export const LoginPage = ():ReactNode => {
               className="leading-loose mr-2"
             />
             Remember Me
-
           </label>
-          <a className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker" href="/lupa-password">
-            Forgot Password?
-          </a>
+          <Link href="/auth/forget">
+            <a
+              className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker"
+            >
+              Forgot Password?
+            </a>
+          </Link>
 
         </div>
         <button
@@ -106,7 +110,6 @@ export const LoginPage = ():ReactNode => {
         >
           Sign In
         </button>
-
       </div>
       <div className="bg-primary overflow-hidden h-screen">
         <BackgroundLogin className="" />

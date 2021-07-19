@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
@@ -12,7 +17,7 @@ module.exports = {
         success: '#0070f3',
         cyan: '#79FFE1',
         primary: '#006BC1',
-        primaryLight: '#1474C3',
+        primaryLight: '#0080FF',
         primaryDark: '#0F60AA',
         textSecondary: '#515151',
       },
@@ -34,5 +39,13 @@ module.exports = {
         md: '0 8px 30px rgba(0, 0, 0, 0.12)',
       },
     },
+    screens: {
+      hp: '359px',
+      ...defaultTheme.screens,
+    },
   },
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
+
 }
