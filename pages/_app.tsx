@@ -2,13 +2,13 @@ import '../styles/index.css'
 import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'
 import { Provider } from 'next-auth/client'
-import Layout from '../components/layout'
+import type { AppProps /* , AppContext */ } from 'next/app'
+import { ReactElement } from 'react'
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps):ReactElement {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   console.log('🚀 ~ file: _app.js ~ line 8 ~ MyApp ~ urlComponent', urlComponent)
-  const withOutLayout = ['auth']
   return (
     <>
       <Provider
@@ -24,15 +24,12 @@ export default function MyApp({ Component, pageProps }) {
             revalidateOnFocus: false,
           }}
         >
-          {withOutLayout.includes(urlComponent[1]) ? (
-            <Component {...pageProps} />
-          ) : (
-            <Layout url={urlComponent}>
-              <Component {...pageProps} />
-            </Layout>
-          )}
+
+          <Component {...pageProps} />
+
         </SWRConfig>
       </Provider>
     </>
   )
 }
+export default MyApp

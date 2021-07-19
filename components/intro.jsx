@@ -2,6 +2,7 @@ import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { Get as GetJumbotron } from '../service/jumbotron'
 
 export const Item = ({ url, link }) => (
@@ -37,13 +38,12 @@ class Pagination extends React.Component {
   }
 }
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
-export default function Intro() {
+
+export function IntroDekstop() {
   const [index, setIndex] = useState(0)
-  console.log('🚀 ~ file: intro.jsx ~ line 41 ~ Intro ~ index', index)
   const { data: jumbotrons, isLoading } = GetJumbotron()
   if (isLoading) return <div className="w-full h-96 bg-gray-500 animate-pulse" />
   const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isDesktop)
-  console.log('🚀 ~ file: intro.jsx ~ line 14 ~ Intro ~ data', jumbotrons)
   return (
     <section className="mb-4 mt-16 relative">
       <AutoPlaySwipeableViews
@@ -55,6 +55,48 @@ export default function Intro() {
       >
         {filteredJumbotrons.map((jumbotron) => (
           <Item url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
+        ))}
+      </AutoPlaySwipeableViews>
+      <div className="absolute bottom-16 flex left-16 ">
+        <Pagination
+          dots={filteredJumbotrons.length}
+          index={index}
+          onChangeIndex={(i) => {
+            setIndex(i)
+          }}
+        />
+      </div>
+    </section>
+  )
+}
+export const ItemMobile = ({ url, link }) => (
+  <Link href={link}>
+    <a>
+      <div className="w-full">
+        <Image height={184} width={350} layout="responsive" src={url} alt="Gambar Intro" className="object-cover rounded-lg" />
+      </div>
+    </a>
+  </Link>
+
+)
+export function IntroMobile() {
+  const [index, setIndex] = useState(0)
+  const { data: jumbotrons, isLoading } = GetJumbotron()
+  console.log('🚀 ~ file: intro.jsx ~ line 84 ~ IntroMobile ~ jumbotrons', jumbotrons)
+  if (isLoading) return <div />
+  const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isPhone)
+  return (
+    <section className="mb-4 hp:-mt-36  -mt-28 relative">
+      <AutoPlaySwipeableViews
+        enableMouseEvents
+        className="px-3"
+        interval={7000}
+        index={Number(index)}
+        onChangeIndex={(i) => setIndex(i)}
+        slideClassName="px-1"
+      >
+        {filteredJumbotrons.map((jumbotron) => (
+          <ItemMobile url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>
       <div className="absolute bottom-16 flex left-16 ">

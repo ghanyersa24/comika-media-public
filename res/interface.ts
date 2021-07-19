@@ -84,8 +84,11 @@ export type Post = {
     'verified': boolean
 }
 }
-export type PropsDetailOfPost = {
+export type Layout ={
+  isMobile:boolean,
+}
+export type PropsDetailOfPost =Layout& {
   post: Post,
-  session:string[]
+  session:string[],
   // morePosts: string[]
 }

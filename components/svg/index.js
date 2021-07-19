@@ -1,5 +1,6 @@
 export { default as ComikamediaNavbar } from './ComikamediaNavbar'
 export { default as Comikamedia } from './Comikamedia'
+export { default as ComikamediaThin } from './ComikamediaThin'
 export { default as Facebook } from './Facebook'
 export { default as Instagram } from './Instagram'
 export { default as Search } from './Search'
