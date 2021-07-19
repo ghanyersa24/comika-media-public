@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs'
 
 export default function Avatar({
-  name, picture, className, date, read,
+  name, picture, className, date = null, read = null,
 }) {
   return (
     <div className={`flex items-center ${className}`}>

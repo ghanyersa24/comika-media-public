@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { BsBookmark } from 'react-icons/bs'
 import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
+import { CoverImageDekstop } from './cover-image'
 import { Post } from '../res/interface'
 
 export default function PostPreview({
@@ -20,7 +20,7 @@ export default function PostPreview({
   return (
     <div className="text-textSecondary">
       <div className="xs:mb-5 mb-2 relative">
-        <CoverImage
+        <CoverImageDekstop
           slug={slug}
           title={title}
           src={banner}
