@@ -56,7 +56,7 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
   return (
     (
 
-      <article className="mb-32 mt-24">
+      <article className="mb-32">
         <Head>
           <title>
             {title}
@@ -70,7 +70,7 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
           date={updatedAt}
           Comika={Comika}
         />
-        <div className="mx-4">
+        <div className="mx-4 mt-8">
           <PostBody content={content} />
         </div>
       </article>
