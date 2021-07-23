@@ -78,6 +78,7 @@ export type Post = {
   'updatedAt': Date,
   'deletedAt': Date,
   'UserId': Date,
+  'withFlayer': boolean,
   'Comika': {
     'id': number,
     'name': string,

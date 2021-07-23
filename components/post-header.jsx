@@ -2,6 +2,7 @@ import {
   AiOutlineShareAlt, AiFillEye,
 } from 'react-icons/ai'
 import { BiArrowBack } from 'react-icons/bi'
+import Router from 'next/router'
 import Avatar from './avatar'
 import DateFormatter from './date-formatter'
 import { CoverImageDekstop, CoverImageMobile } from './cover-image'
@@ -56,9 +57,9 @@ export function PostHeaderMobile({
   return (
     <div className="">
       <div className="sm:mx-0 relative">
-        <div className="bg-white p-2 absolute top-0 z-20 mt-6 ml-6 text-xl rounded-lg shadow">
+        <button onClick={Router.back()} type="button" className="bg-white p-2 absolute top-0 z-20 mt-6 ml-6 text-xl rounded-lg shadow">
           <BiArrowBack />
-        </div>
+        </button>
         <div className="relaive z-10 ">
           <CoverImageMobile title={title} src={coverImage} height={720} width={720} />
         </div>

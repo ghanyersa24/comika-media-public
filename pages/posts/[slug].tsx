@@ -79,12 +79,26 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
   )
 }
 
+const OverlayStopArticle = ({ isShow }) => {
+  if (isShow) {
+    return (
+      <>
+        <div className=" lg:max-w-2xl mx-2 lg:mx-auto bg-gradient-to-b  from-transparent via-white to-white  absolute inset-x-0 bottom-0 flex flex-col justify-end items-center pb-8">
+          <h4 className="text-primary text-3xl font-medium leading-9 mt-52 ">Jadilah Bagian dari Kami!</h4>
+          <p className="text-lg leading-loose text-gray-700 text-center ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comikamedia.id</p>
+          <img className=" w-full " src="/assets/blog/subscribe/subscribe.png" />
+        </div>
+
+      </>
+    )
+  }
+  return null
+}
 export default function DetailOfPost({ post, session, isMobile }: PropsDetailOfPost): ReactElement {
-  console.log('🚀 ~ file: [slug].tsx ~ line 21 ~ DetailOfPost ~ session', session, isMobile)
+  console.log('🚀 ~ file: [slug].tsx ~ line 98 ~ DetailOfPost ~ post', post)
   const router = useRouter()
   const [comment, setComment] = useState('')
   const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
-  console.log('🚀 ~ file: [slug].tsx ~ line 23 ~ DetailOfPost ~ errorMsg', errorMsgPostAdd)
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -109,8 +123,11 @@ export default function DetailOfPost({ post, session, isMobile }: PropsDetailOfP
         <PostTitle>Loading…</PostTitle>
       ) : (
         <>
-          {isMobile ? <Mobile post={post} /> : <Dekstop post={post} />}
-          <div className="max-w-2xl mx-auto">
+          <div className="relative pb-36 lg:pb-40 ">
+            {isMobile ? <Mobile post={post} /> : <Dekstop post={post} />}
+            { post?.withFlayer ? <OverlayStopArticle isShow /> : null}
+          </div>
+          <div className="max-w-2xl mx-auto px-4 pb-24">
             <PostCommentList
               comments={comments}
               isLoading={isLoading}

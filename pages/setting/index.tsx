@@ -6,8 +6,7 @@ import { MdAccountCircle } from 'react-icons/md'
 import { RiFileHistoryFill } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Get as GetProfile, UpdateProfile } from '../../service/user-profile'
-import { Profile as ProfileType } from '../../res/interface'
+import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
 
 export const MenuItem = ({ icon, name, href }
@@ -29,7 +28,7 @@ const navigation = [
 ]
 export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   console.log('🚀 ~ file: index.tsx ~ line 4 ~ Setting ~ Setting', isMobile)
-  const { data, isLoading, mutate } = GetProfile()
+  const { data, isLoading } = GetProfile()
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
