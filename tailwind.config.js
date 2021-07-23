@@ -20,6 +20,8 @@ module.exports = {
         primaryLight: '#0080FF',
         primaryDark: '#0F60AA',
         textSecondary: '#515151',
+        warning: '#EDAA21',
+        bgGray: '#F8FAFF',
       },
       spacing: { 28: '7rem' },
       letterSpacing: {

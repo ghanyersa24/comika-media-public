@@ -30,7 +30,7 @@ export const ProfileCard = ({
   }
 
   return (
-    <div className="w-full grid grid-cols-3 rounded-lg shadow-md mb-16 ">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-3 rounded-lg shadow-md mb-16 ">
       <div className="bg-gray-200 p-4 rounded-l-lg flex flex-col items-center pt-16  ">
         <div className="relative w-32 lg:w-44 ">
           <img
@@ -57,7 +57,7 @@ export const ProfileCard = ({
           </button>
         </div>
       </div>
-      <div className="col-span-2 p-8">
+      <div className="col-span-2 p-6 lg:p-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center ">
           Data Diri
           {!profileData ? <AiOutlineLoading className="animate-spin h-5 w-5 ml-3" /> : null}

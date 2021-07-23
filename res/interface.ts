@@ -36,6 +36,7 @@ export type Profile = Signup&{
   createdAt: string,
   updatedAt: string,
   deletedAt: string,
+  photo:string
 }
 export type comments ={
   'id': 'bb3cb8bf-ef5e-4f5b-9ed7-749990401045',
