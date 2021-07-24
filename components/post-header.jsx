@@ -57,7 +57,7 @@ export function PostHeaderMobile({
   return (
     <div className="">
       <div className="sm:mx-0 relative">
-        <button onClick={Router.back()} type="button" className="bg-white p-2 absolute top-0 z-20 mt-6 ml-6 text-xl rounded-lg shadow">
+        <button onClick={() => Router.back()} type="button" className="bg-white p-2 absolute top-0 z-20 mt-6 ml-6 text-xl rounded-lg shadow">
           <BiArrowBack />
         </button>
         <div className="relaive z-10 ">
