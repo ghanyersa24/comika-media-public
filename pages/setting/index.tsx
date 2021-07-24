@@ -6,6 +6,9 @@ import { MdAccountCircle } from 'react-icons/md'
 import { RiFileHistoryFill } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
+import {
+  signIn,
+} from 'next-auth/client'
 import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
 
@@ -72,7 +75,12 @@ export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
             </div>
           </div>
         </div>
-      ) : 'anda belum login'}
+      ) : (
+        <div className="p-4">
+          <h1 className="text-2xl text-warning ">Anda Belum Login</h1>
+          {signIn() }
+        </div>
+      ) }
     </Layout>
 
   )
