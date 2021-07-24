@@ -7,7 +7,7 @@ import { RiFileHistoryFill } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  signIn,
+  signIn, useSession,
 } from 'next-auth/client'
 import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
@@ -31,39 +31,44 @@ const navigation = [
 ]
 export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   console.log('🚀 ~ file: index.tsx ~ line 4 ~ Setting ~ Setting', isMobile)
+  const [session] = useSession()
+
   const { data, isLoading } = GetProfile()
+  console.log('🚀 ~ file: index.tsx ~ line 35 ~ Setting ~ data', data)
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
   return (
     <Layout isMobile={isMobile}>
-      {data ? (
+      {session ? (
         <div className="h-screen">
           <div className="bg-primary h-64">
             <div className="text-xl text-white flex justify-end pb-4 pt-4">
               <AiFillBell />
             </div>
             <div className="px-4">
-              <div className="flex space-x-3 items-start justify-end">
-                <div className="w-16 mt-1">
-                  <Image
-                    src={data.photo}
-                    alt="photo profil "
-                    layout="responsive"
-                    className="rounded-full"
-                    width={120}
-                    height={120}
-                  />
-                </div>
-                <div className="flex flex-col items-start justify-end w-3/4 h-full ">
-                  <p className="text-xl font-bold leading-relaxed text-white">{data.name}</p>
-                  <p className="text-xs leading-normal text-white">{data.phone}</p>
-                  <p className="text-xs leading-normal text-white">{data.email}</p>
-                  <div className="py-2 mt-4 px-4 bg-warning rounded">
-                    <p className="text-xs leading-normal text-white">Upgrade Premium</p>
+              {data ? (
+                <div className="flex space-x-3 items-start justify-end">
+                  <div className="w-16 mt-1">
+                    <Image
+                      src={data.photo}
+                      alt="photo profil "
+                      layout="responsive"
+                      className="rounded-full"
+                      width={120}
+                      height={120}
+                    />
+                  </div>
+                  <div className="flex flex-col items-start justify-end w-3/4 h-full ">
+                    <p className="text-xl font-bold leading-relaxed text-white">{data.name}</p>
+                    <p className="text-xs leading-normal text-white">{data.phone}</p>
+                    <p className="text-xs leading-normal text-white">{data.email}</p>
+                    <div className="py-2 mt-4 px-4 bg-warning rounded">
+                      <p className="text-xs leading-normal text-white">Upgrade Premium</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : 'loading'}
             </div>
           </div>
           <div className="-mt-16 bg-bgGray rounded-xl px-4 py-8 pb-24  ">
