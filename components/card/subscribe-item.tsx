@@ -27,21 +27,21 @@ export const SubsribeItem = ({
   console.log(
     '🚀 ~ file: subscribe-item.tsx ~ line 4 ~ SubsribeItem ~ SubsribeItem',
   )
-  const classButton = 'mt-8 inline-flex items-center justify-center w-full bg-primary rounded hover:bg-primaryDark '
+  const classButton = 'lg:mt-8 mt-4 inline-flex items-center justify-center w-full bg-primary rounded hover:bg-primaryDark '
   return (
     <div
       className={`bg-white border-2 rounded-lg  mt-8 border-gray-200 relative ${className}`}
     >
       <div
-        className={`rounded-tl-lg rounded-tr-lg h-3 -m-0.5 ${headBgColor}`}
+        className={`rounded-t-lg h-3 relative -top-1   ${headBgColor}`}
       />
       <div className="p-8">
-        <p className="text-3xl font-bold  text-primary">{title}</p>
-        <p className="text-3xl font-medium mt-4  text-gray-700">
+        <p className=" text-2xl lg:text-3xl font-bold  text-primary">{title}</p>
+        <p className="text-2xl lg:text-3xl font-medium lg:mt-4  text-gray-700">
           Rp
           {price}
         </p>
-        <p className="text-lg font-medium mt-4  text-gray-500">
+        <p className=" text-base lg:text-lg font-medium lg:mt-4  text-gray-500">
           <AiOutlineClockCircle className="inline mr-2" />
           {until}
         </p>
