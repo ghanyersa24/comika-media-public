@@ -38,6 +38,8 @@ export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
+  if (!session) { signIn() }
+
   return (
     <Layout isMobile={isMobile}>
       {session ? (
@@ -83,7 +85,6 @@ export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
       ) : (
         <div className="p-4">
           <h1 className="text-2xl text-warning ">Anda Belum Login</h1>
-          {signIn() }
         </div>
       ) }
     </Layout>
