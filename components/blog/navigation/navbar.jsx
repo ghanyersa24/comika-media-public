@@ -4,7 +4,7 @@ import {
   signIn, signOut, useSession,
 } from 'next-auth/client'
 import React, {
-  Fragment, useEffect, useState,
+  Fragment, useState,
 } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -198,14 +198,8 @@ const SearchBar = ({ onChange, value, onSubmit }) => {
 }
 
 export default function Navbar() {
-  const [session, loading] = useSession()
-  console.log('🚀 ~ file: navbar.jsx ~ line 202 ~ Navbar ~ session', loading, session)
+  const [session] = useSession()
   const [search, setSearch] = useState('')
-  useEffect(() => {
-    if (!loading) {
-      localStorage.setItem('komika-key', session?.accessToken)
-    }
-  }, [session, loading])
   const { data } = GetProfile()
   const handleSubmit = () => {
     console.log('🚀 ~ file: navbar.jsx ~ line 210 ~ handleSubmit ~ params')
