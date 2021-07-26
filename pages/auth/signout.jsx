@@ -1,11 +1,13 @@
 import {
   signOut,
 } from 'next-auth/client'
+import React, { useEffect } from 'react'
 
 export const Signout = () => {
-  localStorage.setItem('komika-key', null)
   signOut({ callbackUrl: '/' })
-
+  useEffect(() => {
+    localStorage.setItem('komika-key', null)
+  }, [])
   return (
     <>Keluar...</>
   )
