@@ -36,9 +36,10 @@ export const LoginPage = (): ReactNode => {
   }
 
   return (
-    <div className="grid grid-cols-2  min-h-screen">
-      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col min-w-max w-2/3 mx-auto place-content-center">
-        <div className="flex mb-8">
+    <div className="grid lg:grid-cols-2  min-h-screen relative bg-primary lg:bg-white">
+      <BackgroundLogin className="block lg:hidden" />
+      <div className="bg-white absolute bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col min-w-max w-full lg:w-2/3 mx-auto place-content-center">
+        <div className="hidden  lg:flex mb-8">
           <ComikamediaNavbar className="w-2/3" />
         </div>
         <div className="mb-8">
@@ -111,7 +112,7 @@ export const LoginPage = (): ReactNode => {
           Sign In
         </button>
       </div>
-      <div className="bg-primary overflow-hidden h-screen">
+      <div className="bg-primary overflow-hidden hidden lg:block h-screen">
         <BackgroundLogin className="" />
       </div>
     </div>
