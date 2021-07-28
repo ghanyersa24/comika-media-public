@@ -5,6 +5,7 @@ import { ProfileCard } from '../../components/form/profile'
 import { Get as GetProfile, UpdateProfile } from '../../service/user-profile'
 import { Profile as ProfileType } from '../../res/interface'
 import Layout from '../../components/layout'
+import { BackNavbar } from '../../components/blog/navigation/backnavbar'
 
 export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   console.log('🚀 ~ file: profile.tsx ~ line 10 ~ Profile ~ isMobile', isMobile)
@@ -40,6 +41,7 @@ export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   }
   return (
     <Layout isMobile={isMobile}>
+      <BackNavbar title="Detail Akun" className="bg-primary text-white" />
       <div className="container mx-auto xs:px-4 lg:px-4 sm:px-8 max-w-screen-xl lg:mt-24">
         {errorMsg ? (
           <div className="bg-red-200 p-2 mb-4 rounded">
