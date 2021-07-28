@@ -9,6 +9,7 @@ import Link from 'next/link'
 import {
   signIn, useSession,
 } from 'next-auth/client'
+import Router from 'next/router'
 import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
 
@@ -44,8 +45,8 @@ export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
     <Layout isMobile={isMobile}>
       {session ? (
         <div className="h-screen">
-          <div className="bg-primary h-64">
-            <div className="text-xl text-white flex justify-end pb-4 pt-4">
+          <div className="bg-primary  pb-24">
+            <div className="text-2xl text-white flex justify-end pb-4 pt-4 pr-4">
               <AiFillBell />
             </div>
             <div className="px-4">
@@ -65,9 +66,9 @@ export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
                     <p className="text-xl font-bold leading-relaxed text-white">{data.name}</p>
                     <p className="text-xs leading-normal text-white">{data.phone}</p>
                     <p className="text-xs leading-normal text-white">{data.email}</p>
-                    <div className="py-2 mt-4 px-4 bg-warning rounded">
+                    <button type="button" onClick={() => Router.push('subscribe')} className="py-2 mt-4 px-4 bg-warning rounded">
                       <p className="text-xs leading-normal text-white">Upgrade Premium</p>
-                    </div>
+                    </button>
                   </div>
                 </div>
               ) : 'loading'}
