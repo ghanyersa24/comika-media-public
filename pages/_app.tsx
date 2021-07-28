@@ -4,13 +4,15 @@ import { SWRConfig } from 'swr'
 import { Provider } from 'next-auth/client'
 import type { AppProps /* , AppContext */ } from 'next/app'
 import { ReactElement } from 'react'
+import { Provider as ReduxProvider } from 'react-redux'
+import { store } from '../store'
 
 function MyApp({ Component, pageProps }: AppProps):ReactElement {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   console.log('🚀 ~ file: _app.js ~ line 8 ~ MyApp ~ urlComponent', urlComponent)
   return (
-    <>
+    <ReduxProvider store={store}>
       <Provider
         session={pageProps.session}
         options={{
@@ -29,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps):ReactElement {
 
         </SWRConfig>
       </Provider>
-    </>
+    </ReduxProvider>
   )
 }
 export default MyApp

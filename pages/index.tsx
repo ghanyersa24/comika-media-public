@@ -1,8 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
-import React from 'react'
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 
+import React, { } from 'react'
 import ContainerPadding from '../components/container-padding'
 import MorePosts from '../components/more-posts'
 import { IntroDekstop, IntroMobile } from '../components/intro'
@@ -23,7 +23,6 @@ export default function Index(
     lastestArticles, pupularArticles, anotherArticles, isMobile,
   }:Props,
 ): React.ReactNode {
-  console.log('🚀 ~ file: index.tsx ~ line 26 ~ isMobile', isMobile)
   return (
     <Layout isMobile={isMobile}>
       <Head>
