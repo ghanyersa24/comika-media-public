@@ -28,7 +28,7 @@ export default function PostPreview({
           width={153}
         />
         {isPremium ? (
-          <div className="w-16 h-16 absolute bottom-0 ml-2">
+          <div className="lg:w-16 lg:h-16 w-8 h-8 absolute bottom-0 lg:ml-2">
             <Image
               src="/assets/blog/subscribe/premium_badge.png"
               alt="premium badge"
