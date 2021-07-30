@@ -11,6 +11,7 @@ import Layout from '../../../components/layout'
 import { SearchBar } from '../../../components/blog/navigation/search-bar'
 
 import MorePosts from '../../../components/more-posts'
+import BackgroundArticlePage from '../../../components/svg/BackgroundArticlePage'
 
 type Props= {
   searchArticles:Post[],
@@ -31,6 +32,7 @@ export default function Index(
       {/* <Container> */}
       {isMobile ? (
         <div className="bg-primary pt-4 pb-20 text-center ">
+          <BackgroundArticlePage className="absolute -top-4" />
           <h1 className="text-xl font-bold leading-relaxed text-white">Artikel</h1>
         </div>
       ) : <IntroDekstop />}
