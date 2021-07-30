@@ -3,20 +3,17 @@ import { useRouter } from 'next/router'
 
 const navigations = [
   {
-    name: 'All', url: '',
+    name: 'All', url: 'createdAt',
   },
   {
-    name: 'Most populer', url: 'most-populer',
-  },
-  {
-    name: 'Latest', url: 'latest',
+    name: 'Most populer', url: 'popular',
   },
 ]
 
 export const ButtonItem = ({
   label, url, isActive,
 }) => (
-  <Link href={`/artikel/${url}`}>
+  <Link href={`/article?orderBy=${url}`}>
     <a className={isActive
       ? 'h-full text-base leading-tight text-gray-800'
       : 'h-full text-base leading-tight text-gray-400 '}
@@ -26,10 +23,9 @@ export const ButtonItem = ({
   </Link>
 
 )
-export const OrderBy = () => {
-  const router = useRouter()
-  const urlComponent = router.route.split('/')
-  const subUrlAdmin = urlComponent?.[2] || ''
+export const OrderBy = ({ orderBy }) => {
+  console.log('🚀 ~ file: ordering-by.jsx ~ line 27 ~ OrderBy ~ orderBy', orderBy)
+
   return (
     <div className="">
       <div className="flex items-center justify-start flex-1 h-full rounded-lg">
@@ -38,7 +34,7 @@ export const OrderBy = () => {
             <ButtonItem
               label={navigation.name}
               url={navigation.url}
-              isActive={navigation.url === subUrlAdmin}
+              isActive={navigation.url === orderBy}
               key={navigation.name}
             />
           ))}
