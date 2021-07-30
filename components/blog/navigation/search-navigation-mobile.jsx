@@ -6,8 +6,12 @@ import React, { useState } from 'react'
 import { ComikamediaThin } from '../../svg'
 
 export const App = () => {
-  console.log('🚀 ~ file: search-navigation-mobile.jsx ~ line 14 ~ App ~ App')
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('a')
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    Router.push(`/search/${search}`)
+  }
+
   return (
     <div className="bg-primary hp:pb-40 md:bg-red-400 pb-32 pt-4 ">
       <div className="flex justify-between mb-4 px-4 ">
@@ -21,12 +25,17 @@ export const App = () => {
       </div>
       <div className="w-full px-4">
         <div className="flex items-center justify-start  pl-3  bg-primaryLight bg-opacity-25 rounded">
-          <div className="flex items-center justify-end w-full ">
-            <button type="button" onClick={() => Router.push(`/search/${search}`)} className="">
+          <form className="flex items-center justify-end w-full " onSubmit={handleSubmit}>
+            <button type="submit" className="">
               <AiOutlineSearch className="text-white text-2xl" />
             </button>
-            <input onChange={(e) => setSearch(e.target.value)} className="ml-2 text-base bg-transparent  leading-normal border-transparent focus:ring-0 text-white w-full h-9" />
-          </div>
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+              type="text"
+              className="ml-2 text-base bg-transparent  leading-normal border-transparent focus:ring-0 text-white w-full h-9"
+            />
+          </form>
         </div>
       </div>
     </div>
