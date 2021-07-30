@@ -37,7 +37,7 @@ export default function Index(
         </div>
       ) : <IntroDekstop />}
 
-      <div className=" -mt-16 rounded-xl bg-white min-h-screen px-4 pt-8 ">
+      <div className=" -mt-16 rounded-xl bg-white min-h-screen px-4 pt-8 relative ">
         <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500" searchValue={slug as string} />
         <div className="mt-8">
           {searchArticles.length > 0 && <MorePosts posts={searchArticles} title="Hasil Pencarian" description={`Kata kunci  "${slug}"`} />}
