@@ -14,7 +14,7 @@ type ButtonItemType = {
 export const ButtonItem = ({
   icon, url, isActive,
 }:ButtonItemType):ReactElement => (
-  <Link href={url || '/'}>
+  <Link href={`/${url}`}>
     <a className="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center pt-2 pb-1">
       <div className={isActive
         ? 'text-2xl w-full flex justify-center text-primary mt-2 mb-0 '
@@ -32,7 +32,7 @@ const navigations = [
     name: 'Home', url: '', icon: <AiFillHome />,
   },
   {
-    name: 'Article', url: 'test', icon: <RiArticleFill />,
+    name: 'Article', url: 'article', icon: <RiArticleFill />,
   },
   {
     name: 'Store', url: 'store', icon: <MdShoppingBasket />,

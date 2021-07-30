@@ -9,7 +9,7 @@ export const App = () => {
   const [search, setSearch] = useState('a')
   const handleSubmit = (e) => {
     e.preventDefault()
-    Router.push(`/search/${search}`)
+    Router.push(`/article/search/${search}`)
   }
 
   return (
