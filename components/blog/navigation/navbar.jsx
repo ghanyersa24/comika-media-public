@@ -15,6 +15,7 @@ import {
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { Get as GetProfile } from '../../../service/user-profile'
+import { SearchBar } from './search-bar'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -164,10 +165,10 @@ export const SideBar = ({ isShowing }) => (
 
   </Transition>
 )
-const SearchBar = ({ onChange, value, onSubmit }) => {
+const SearchBarX = ({ onChange, value, onSubmit }) => {
   const [isInputOpen, setIsInputOpen] = useState(false)
   return (
-    <div
+    <form
       className="relative mx-auto text-gray-600 mr-0  h-10"
       onMouseOver={() => setIsInputOpen(true)}
       onFocus={() => setIsInputOpen(true)}
@@ -193,7 +194,7 @@ const SearchBar = ({ onChange, value, onSubmit }) => {
           <FaSearch className="fill-current text-primary text-xl mt-1" />
         </div>
       </button>
-    </div>
+    </form>
   )
 }
 
@@ -229,11 +230,7 @@ export default function Navbar() {
                 </Link>
               </div>
               <div className=" text-blue-500 flex sm:pr-4 items-center ">
-                <SearchBar
-                  onChange={(value) => setSearch(value)}
-                  value={search}
-                  onSubmit={handleSubmit}
-                />
+                <SearchBar className="" isMobile={false} searchValue="xxx" />
                 <SocialMediaLogo className="fill-current text-primary mr-4 text-xl mt-1 hidden sm:block" />
                 <div className="hidden sm:block">
                   {session ? (
