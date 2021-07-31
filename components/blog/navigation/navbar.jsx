@@ -4,14 +4,11 @@ import {
   signIn, signOut, useSession,
 } from 'next-auth/client'
 import React, {
-  Fragment, useState,
+  Fragment,
 } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import {
-  FaSearch,
-} from 'react-icons/fa'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { Get as GetProfile } from '../../../service/user-profile'
@@ -165,46 +162,10 @@ export const SideBar = ({ isShowing }) => (
 
   </Transition>
 )
-const SearchBarX = ({ onChange, value, onSubmit }) => {
-  const [isInputOpen, setIsInputOpen] = useState(false)
-  return (
-    <form
-      className="relative mx-auto text-gray-600 mr-0  h-10"
-      onMouseOver={() => setIsInputOpen(true)}
-      onFocus={() => setIsInputOpen(true)}
-      // onMouseOut={() => setIsInputOpen(false)}
-      onMouseLeave={() => setIsInputOpen(false)}
-    >
-      {isInputOpen && (
-      <input
-        className=" border-2 border-gray-300 h-full bg-white px-5 pr-16 rounded-lg text-sm focus:outline-none"
-        type="search"
-        name="search"
-        placeholder="Search"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-      )}
-      <button
-        type="submit"
-        className="absolute right-0 mr-4 h-full "
-        onClick={onSubmit}
-      >
-        <div className="flex items-center">
-          <FaSearch className="fill-current text-primary text-xl mt-1" />
-        </div>
-      </button>
-    </form>
-  )
-}
 
 export default function Navbar() {
   const [session] = useSession()
-  const [search, setSearch] = useState('')
   const { data } = GetProfile()
-  const handleSubmit = () => {
-    console.log('🚀 ~ file: navbar.jsx ~ line 210 ~ handleSubmit ~ params')
-  }
 
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (

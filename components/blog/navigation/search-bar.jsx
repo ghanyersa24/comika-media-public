@@ -35,7 +35,7 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
         name="search"
         placeholder="Search"
         value={searchValue}
-        onEmptied={(e) => console.log('x')}
+        onEmptied={() => console.log('x')}
         onChange={onChange}
       />
       )}
