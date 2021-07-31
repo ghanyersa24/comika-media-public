@@ -14,6 +14,7 @@ import Layout from '../../components/layout'
 import { SearchBar } from '../../components/blog/navigation/search-bar'
 import { OrderBy } from '../../components/blog/navigation/ordering-by'
 import BackgroundArticlePage from '../../components/svg/BackgroundArticlePage'
+import ContainerPadding from '../../components/container-padding'
 
 const titleDescription = {
   popular: {
@@ -24,12 +25,12 @@ const titleDescription = {
   },
 }
 type Props= {
-  lastestArticles:Post[],
+  articles:Post[],
   isMobile:boolean
 }
 export default function Index(
   {
-    lastestArticles, isMobile,
+    articles, isMobile,
   }:Props,
 ): React.ReactNode {
   const router = useRouter()
@@ -49,19 +50,19 @@ export default function Index(
         </div>
       ) : <IntroDekstop />}
 
-      <div className=" -mt-16 rounded-xl bg-white min-h-screen px-4 pt-8 relative">
+      <ContainerPadding className="-mt-16 rounded-xl bg-white relative pt-8  lg:mt-8 mb-24">
         <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />
         <OrderBy orderBy={selectedOrderBy} />
         <div className="mt-4">
-          {lastestArticles.length > 0 && (
+          {articles.length > 0 && (
           <MorePosts
-            posts={lastestArticles}
+            posts={articles}
             title={selectedTitleDescription.title}
             description={selectedTitleDescription.description}
           />
           )}
         </div>
-      </div>
+      </ContainerPadding>
     </Layout>
   )
 }
@@ -69,13 +70,13 @@ export default function Index(
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log('🚀 ~ file: index.tsx ~ line 50 ~ constgetServerSideProps:GetServerSideProps= ~ context', context)
   const orderBy = context.query?.orderBy || 'createdAt'
-  const lastestArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=${orderBy}&ordering=DESC&limit=${10}&page=${1}`)
+  const articles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=${orderBy}&ordering=DESC&limit=${10}&page=${1}`)
   const UA = context.req.headers['user-agent']
   const isMobile = Boolean(UA.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
 
-  if (!lastestArticles) {
+  if (!articles) {
     return {
       notFound: true,
     }
@@ -83,7 +84,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // will be passed to the page component as props
   return {
     props: {
-      lastestArticles, isMobile,
+      articles, isMobile,
     },
   }
 }
