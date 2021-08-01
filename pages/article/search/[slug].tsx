@@ -28,7 +28,7 @@ export default function Index(
   return (
     <Layout isMobile={isMobile}>
       <Head>
-        <title>Komika Media</title>
+        <title>Comika Media</title>
       </Head>
       {/* <Container> */}
       {isMobile ? (
