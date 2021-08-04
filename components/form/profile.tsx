@@ -105,7 +105,7 @@ export const ProfileCard = ({
           />
         </label>
         <label htmlFor="x" className="label-flex ">
-          Tanggal Lahir X
+          Tanggal Lahir
           <input
             className=""
             type="date"
