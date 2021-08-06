@@ -11,7 +11,7 @@ import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_LIST_ARTICLE } from '../../res/api-endpoint'
 import { Post } from '../../res/interface'
 import Layout from '../../components/layout'
-import { SearchBar } from '../../components/blog/navigation/search-bar'
+// import { SearchBar } from '../../components/blog/navigation/search-bar'
 import { OrderBy } from '../../components/blog/navigation/ordering-by'
 import BackgroundArticlePage from '../../components/svg/BackgroundArticlePage'
 import ContainerPadding from '../../components/container-padding'
@@ -51,7 +51,7 @@ export default function Index(
       ) : <IntroDekstop />}
 
       <ContainerPadding className="-mt-16 rounded-xl bg-white relative pt-8  lg:mt-8 mb-24">
-        <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />
+        {/* <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" /> */}
         <OrderBy orderBy={selectedOrderBy} />
         <div className="mt-4">
           {articles.length > 0 && (
