@@ -5,7 +5,6 @@ import { Comikamedia } from './svg'
 const navigation = [
   { name: 'Artikel', href: '/article', current: true },
   { name: 'Store', href: '/store', current: false },
-  { name: 'Kontak kami', href: '/', current: false },
 ]
 export default function Footer() {
   return (
