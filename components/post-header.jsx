@@ -22,7 +22,7 @@ export const SocialMediaShareButton = ({ size }) => {
     setHref(window.location.href)
   }, [])
   const handleCopy = () => {
-    navigator.clipboard.writeText('Copy this text to clipboard')
+    navigator.clipboard.writeText(href)
   }
   const handleShared = (type) => {
     console.log('🚀 ~ file: post-header.jsx ~ line 31 ~ handleShared ~ handleShared', type)
