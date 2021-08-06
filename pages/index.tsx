@@ -46,14 +46,17 @@ export default function Index(
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const lastestArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${6}&page=${1}`)
-  const pupularArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=popular&ordering=DESC&limit=${6}&page=${1}`)
-  const anotherArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${6}&page=${2}`)
-
   const UA = context.req.headers['user-agent']
   const isMobile = Boolean(UA.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
+  let limit = 15
+  if (isMobile) {
+    limit = 12
+  }
+  const lastestArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${1}`)
+  const pupularArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`)
+  const anotherArticles = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${2}`)
 
   if (!lastestArticles) {
     return {
