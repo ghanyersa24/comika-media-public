@@ -12,16 +12,17 @@ import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_DETAIL_ARTICLE } from '../../res/api-endpoint'
+import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_LIST_ARTICLE } from '../../res/api-endpoint'
 import { PropsDetailOfPost, Post } from '../../res/interface'
 import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
 import { Get, add as addPost } from '../../service/comments'
 import Layout from '../../components/layout'
+import { MorePosts } from '../../components/more-posts'
 
 export const Dekstop = ({ post }:{post:Post}):ReactElement => {
   console.log('🚀 ~ file: [slug].tsx ~ line 49 ~ Dekstop ~ Dekstop', Dekstop)
   const {
-    title, banner, updatedAt, Comika, content,
+    title, banner, updatedAt, Comika, content, viewer,
   } = post
   return (
     (
@@ -39,6 +40,8 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
             coverImage={banner}
             date={updatedAt}
             Comika={Comika}
+            views={viewer}
+
           />
           <PostBody content={content} />
         </article>
@@ -51,7 +54,7 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
 export const Mobile = ({ post }:{post:Post}):ReactElement => {
   console.log('🚀 ~ file: [slug].tsx ~ line 78 ~ Mobile ~ Mobile')
   const {
-    title, banner, updatedAt, Comika, content,
+    title, banner, updatedAt, Comika, content, viewer,
   } = post
   return (
     (
@@ -69,6 +72,8 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
           coverImage={banner}
           date={updatedAt}
           Comika={Comika}
+          views={viewer}
+
         />
         <div className="mx-4 mt-8">
           <PostBody content={content} />
@@ -94,7 +99,9 @@ const OverlayStopArticle = ({ isShow }) => {
   }
   return null
 }
-export default function DetailOfPost({ post, session, isMobile }: PropsDetailOfPost): ReactElement {
+export default function DetailOfPost({
+  post, session, isMobile, relatedArticle,
+}: PropsDetailOfPost): ReactElement {
   console.log('🚀 ~ file: [slug].tsx ~ line 98 ~ DetailOfPost ~ post', post)
   const router = useRouter()
   const [comment, setComment] = useState('')
@@ -113,6 +120,9 @@ export default function DetailOfPost({ post, session, isMobile }: PropsDetailOfP
     } catch (error) {
       setErrorMsgPostAdd(error)
     }
+  }
+  const handleLoadMore = () => {
+    console.log('🚀 ~ file: [slug].tsx ~ line 127 ~ handleLoadMore ~ handleLoadMore')
   }
 
   return (
@@ -142,6 +152,12 @@ export default function DetailOfPost({ post, session, isMobile }: PropsDetailOfP
               />
             ) : null}
           </div>
+          <Container className="mt-8 md:mt-12 mb-24">
+            {relatedArticle.length > 0 && <MorePosts posts={relatedArticle} title="Rekomendasi Artikel" description="Rekomendasi Artikel untuk anda" />}
+            <div className="text-right mt-8">
+              <button type="button" onClick={handleLoadMore} className="text-base px-2 md:text-lg leading-tight text-primary ">Lihat artikel lainnya</button>
+            </div>
+          </Container>
         </>
       )}
 
@@ -158,6 +174,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isMobile = Boolean(UA.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
+  let limit = 3
+  if (isMobile) {
+    limit = 2
+  }
+  const relatedArticle = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`)
+
   const content = await markdownToHtml(post.content || '')
 
   return {
@@ -167,6 +189,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         content,
       },
       session,
+      relatedArticle,
       isMobile,
     },
   }

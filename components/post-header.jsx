@@ -49,7 +49,7 @@ export const SocialMediaShareButton = ({ size }) => {
   )
 }
 export function PostHeaderDekstop({
-  title, coverImage, date, Comika,
+  title, coverImage, date, Comika, views,
 }) {
   return (
     <>
@@ -68,7 +68,7 @@ export function PostHeaderDekstop({
         <div className="text-lg font-medium leading-9 text-gray-500 flex">
           <button type="button" className="inline-flex space-x-1.5 items-center justify-end w-16 h-9 mr-4 ">
             <AiFillEye />
-            <p>263</p>
+            <p>{views}</p>
           </button>
           {/* <button type="button"
           className="inline-flex space-x-1.5 items-center justify-end w-16 h-9">
@@ -94,7 +94,7 @@ export function PostHeaderDekstop({
 }
 
 export function PostHeaderMobile({
-  title, coverImage, date, Comika,
+  title, coverImage, date, Comika, views,
 }) {
   return (
     <div className="">
@@ -118,7 +118,7 @@ export function PostHeaderMobile({
           <div className="text-lg font-medium leading-9 text-gray-500 flex justify-between">
             <div className="inline-flex space-x-1.5 items-center justify-start w-16 h-9">
               <AiFillEye />
-              <p>263</p>
+              <p>{views}</p>
             </div>
             <SocialMediaShareButton size={24} />
           </div>

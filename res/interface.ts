@@ -79,6 +79,8 @@ export type Post = {
   'deletedAt': Date,
   'UserId': Date,
   'withFlayer': boolean,
+  'viewer': string,
+  'shared': string,
   'Comika': {
     'id': number,
     'name': string,
@@ -92,5 +94,6 @@ export type Layout ={
 export type PropsDetailOfPost =Layout& {
   post: Post,
   session:string[],
+  relatedArticle:Post[]
   // morePosts: string[]
 }
