@@ -1,7 +1,11 @@
-import { EXAMPLE_PATH } from '../lib/constants'
+import Link from 'next/link'
 import { SocialMediaLogo } from './social-media'
 import { Comikamedia } from './svg'
 
+const navigation = [
+  { name: 'Artikel', href: '/article', current: true },
+  { name: 'Store', href: '/store', current: false },
+]
 export default function Footer() {
   return (
     <footer className="bg-primary border-t border-accent-2 text-white">
@@ -10,30 +14,21 @@ export default function Footer() {
           <Comikamedia className="md:mx-8 lg:mx-16 mx-4 w-full " />
         </div>
         <div className="flex text-left justify-between  flex-col pt-8 ">
-          <a
-            href="https://nextjs.org/docs/basic-features/pages"
-            className="font-bold hover:underline"
-          >
-            Konten
-          </a>
-          <a
-            href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-            className="font-bold hover:underline"
-          >
-            Store
-          </a>
-          <a
-            href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-            className="font-bold hover:underline"
-          >
-            Kontak kami
-          </a>
-          <a
-            href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-            className="font-bold hover:underline"
+          {navigation.map((item) => (
+            <Link href={item.href} key={item.name}>
+              <a
+                className="font-bold hover:underline"
+                aria-current={item.current ? 'page' : undefined}
+              >
+                {item.name}
+              </a>
+            </Link>
+          ))}
+          <h5
+            className="font-bold"
           >
             Temukan kami di
-          </a>
+          </h5>
           <div className="flex flex-row">
             <SocialMediaLogo className="fill-current text-white mr-4 text-2xl " />
           </div>

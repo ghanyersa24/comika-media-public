@@ -1,11 +1,7 @@
 import { Disclosure, Transition, Menu } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import {
-  signIn, signOut, useSession,
-} from 'next-auth/client'
-import React, {
-  Fragment,
-} from 'react'
+import { signIn, useSession } from 'next-auth/client'
+import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -16,10 +12,9 @@ import { SearchBar } from './search-bar'
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
-  { name: 'Article', href: '#', current: false },
-  { name: 'Store', href: '#', current: false },
+  { name: 'Artikel', href: '/article', current: false },
+  { name: 'Store', href: '/store', current: false },
   { name: 'Subscribe', href: '/subscribe', current: false },
-  { name: 'Login', href: '/auth/signin', current: false },
 ]
 
 function classNames(...classes) {
@@ -35,18 +30,18 @@ export const Profile = ({ src, name }) => {
             <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
               <span className="sr-only">Open user menu</span>
               <div className="h-8 w-8 rounded-full">
-                {src && name
-                  ? (
-                    <Image
-                      className="rounded-full"
-                      src={src}
-                      alt={`gambar ${name}`}
-                      layout="responsive"
-                      width={60}
-                      height={60}
-                    />
-                  ) : <div className="bg-gray-500 h-8 w-8 animate-pulse rounded-full" /> }
-
+                {src && name ? (
+                  <Image
+                    className="rounded-full"
+                    src={src}
+                    alt={`gambar ${name}`}
+                    layout="responsive"
+                    width={60}
+                    height={60}
+                  />
+                ) : (
+                  <div className="bg-gray-500 h-8 w-8 animate-pulse rounded-full" />
+                )}
               </div>
             </Menu.Button>
           </div>
@@ -85,7 +80,21 @@ export const Profile = ({ src, name }) => {
                       active ? 'bg-gray-100' : '',
                       'block w-full px-4 py-2 text-sm text-gray-700 text-left',
                     )}
-                    onClick={signOut}
+                    onClick={() => router.push('/auth/jangan_lupa_lagi')}
+                    type="button"
+                  >
+                    Ubah Password
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={classNames(
+                      active ? 'bg-gray-100' : '',
+                      'block w-full px-4 py-2 text-sm text-gray-700 text-left',
+                    )}
+                    onClick={() => router.push('/auth/signout')}
                     type="button"
                   >
                     Sign out
@@ -99,7 +108,7 @@ export const Profile = ({ src, name }) => {
     </Menu>
   )
 }
-export const SideBar = ({ isShowing }) => (
+export const SideBar = ({ isShowing, session }) => (
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
     {/* Background overlay */}
@@ -137,18 +146,32 @@ export const SideBar = ({ isShowing }) => (
           </div>
           <div className="pt-8 pb-8">
             {navigation.map((item) => (
+              <Link href={item.href} key={item.name}>
+                <a
+                  className={classNames(
+                    item.current
+                      ? 'bg-gray-900 bg-opacity-20 text-white'
+                      : 'text-gray-300 hover:text-white  ',
+                    'block px-3 py-2 rounded-md text-base font-bold text-3xl',
+                  )}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.name}
+                </a>
+              </Link>
+            ))}
+
+            <Link href={session ? '/auth/signout' : '/auth/signin'} key="auth">
               <a
-                key={item.name}
-                href={item.href}
                 className={classNames(
-                  item.current ? 'bg-gray-900 bg-opacity-20 text-white' : 'text-gray-300 hover:text-white  ',
+                  'text-gray-300 hover:text-white  ',
                   'block px-3 py-2 rounded-md text-base font-bold text-3xl',
                 )}
-                aria-current={item.current ? 'page' : undefined}
               >
-                {item.name}
+                {session ? 'Logout' : 'Login'}
               </a>
-            ))}
+            </Link>
+
           </div>
           <div>
             {/* <p>Social Media</p> */}
@@ -159,7 +182,6 @@ export const SideBar = ({ isShowing }) => (
         </div>
       </div>
     </Transition.Child>
-
   </Transition>
 )
 
@@ -176,10 +198,11 @@ export default function Navbar() {
             <div className=" flex items-center justify-between h-16">
               <div className=" inset-y-0 left-0 flex items-center">
                 {/* Mobile menu button */}
-                <Disclosure.Button className={classNames(
-                  open ? 'text-gray-900' : 'text-gray-500',
-                  'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
-                )}
+                <Disclosure.Button
+                  className={classNames(
+                    open ? 'text-gray-900' : 'text-gray-500',
+                    'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                  )}
                 >
                   <span className="sr-only">Open main menu</span>
                   <MenuIcon className="block h-6 w-6" aria-hidden="true" />
@@ -187,30 +210,27 @@ export default function Navbar() {
               </div>
               <div className="">
                 <Link href="/">
-                  <a className="hover:underline hidden md:block "><ComikamediaNavbar className="h-12" /></a>
+                  <a className="hover:underline hidden md:block ">
+                    <ComikamediaNavbar className="h-12" />
+                  </a>
                 </Link>
               </div>
               <div className=" text-blue-500 flex sm:pr-4 items-center ">
-                <SearchBar className="" isMobile={false} searchValue="xxx" />
+                <SearchBar className="" isMobile={false} searchValue="" />
                 <SocialMediaLogo className="fill-current text-primary mr-4 text-xl mt-1 hidden sm:block" />
                 <div className="hidden sm:block">
                   {session ? (
-                    <Profile
-                      name={data?.name}
-                      src={data?.photo}
-                    />
-                  )
-                    : (
-                      <button onClick={signIn} type="button">
-                        Login
-                      </button>
-                    )}
+                    <Profile name={data?.name} src={data?.photo} />
+                  ) : (
+                    <button onClick={signIn} type="button">
+                      Login
+                    </button>
+                  )}
                 </div>
               </div>
-
             </div>
           </div>
-          <SideBar isShowing={open} />
+          <SideBar isShowing={open} session={session} />
         </>
       )}
     </Disclosure>

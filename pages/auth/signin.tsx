@@ -2,6 +2,8 @@ import React, { ReactNode, useState } from 'react'
 import { signIn } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { FaSpinner } from 'react-icons/fa'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
 // enum Severity {
@@ -16,29 +18,35 @@ export const LoginPage = (): ReactNode => {
   const router = useRouter()
   const [login, setLogin] = useState<Login | null>(null)
   const [errorMsg, setErrorMsg] = useState<string>(null)
+  const [isPasswordShown, setIsPasswordShown] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
     } = e.target
     setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
   }
-  const handleSubmitLogin = (loginData) => {
+  const handleSubmitLogin = (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setErrorMsg(null)
     const { callbackUrl } = router.query
-    signIn('credentials', { redirect: false, ...loginData, callbackUrl }).then(
+    const callbackUrlString = callbackUrl as string
+    signIn('credentials', { redirect: false, ...login, callbackUrlString }).then(
       (result) => {
         console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
         if (result?.error !== null) {
           setErrorMsg(result.error)
+          setIsLoading(false)
         } else if (callbackUrl) router.push(`${callbackUrl}`)
         else router.push('/')
       },
     )
   }
-
   return (
     <div className="grid lg:grid-cols-2  min-h-screen relative bg-primary lg:bg-white">
       <BackgroundLogin className="block lg:hidden" />
-      <div className="bg-white absolute bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col lg:min-w-max w-full lg:w-2/3 mx-auto place-content-center">
+      <form onSubmit={handleSubmitLogin} className="bg-white absolute bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col lg:min-w-max w-full lg:w-2/3 mx-auto place-content-center">
         <div className="hidden  lg:flex mb-8">
           <ComikamediaNavbar className="w-2/3" />
         </div>
@@ -69,17 +77,24 @@ export const LoginPage = (): ReactNode => {
           </label>
           <label
             htmlFor="Password"
-            className="block text-gray-800  font-bold mb-2 mt-4"
+            className="block text-gray-800  font-bold mb-2 mt-4 relative"
           >
             Password
             <input
               className="w-full py-2 px-3  mt-3"
               id="password"
-              type="password"
+              type={isPasswordShown ? 'text' : 'password'}
               name="password"
               onChange={handleChangeValue}
               placeholder="******************"
             />
+            <button
+              type="button"
+              className="absolute right-4 bottom-3"
+              onClick={() => setIsPasswordShown(!isPasswordShown)}
+            >
+              {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </button>
           </label>
         </div>
 
@@ -105,13 +120,13 @@ export const LoginPage = (): ReactNode => {
 
         </div>
         <button
-          className="btn-primary font-bold px-6 py-4 mt-8"
-          onClick={() => handleSubmitLogin(login)}
-          type="button"
+          className="btn-primary font-bold px-6 py-4 mt-8 flex  justify-center"
+          type="submit"
         >
+          {isLoading && <FaSpinner className="animate-spin h-5 w-5 mr-3" /> }
           Sign In
         </button>
-      </div>
+      </form>
       <div className="bg-primary overflow-hidden hidden lg:block h-screen">
         <BackgroundLogin className="" />
       </div>

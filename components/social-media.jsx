@@ -1,24 +1,20 @@
-import Link from 'next/link'
-import {
-  FaFacebookSquare,
-} from 'react-icons/fa'
 import { IoLogoYoutube, IoLogoTwitter } from 'react-icons/io'
+import { SiTiktok } from 'react-icons/si'
 import { RiInstagramFill } from 'react-icons/ri'
 
 export const SocialMediaLogo = ({ className }) => {
   const SocialMedia = [
-    ['/a', <FaFacebookSquare className={className} key="1" />],
-    ['/b', <RiInstagramFill className={className} key="2" />],
-    ['/c', <IoLogoTwitter className={className} key="3" />],
-    ['/d', <IoLogoYoutube className={className} key="4" />],
+    ['https://www.instagram.com/comikamedia/', <RiInstagramFill className={className} key="2" />],
+    ['https://www.youtube.com/channel/UCVhSjM95YlVkMkQNCzjAm3A', <IoLogoYoutube className={className} key="4" />],
+    ['https://twitter.com/comikamedia', <IoLogoTwitter className={className} key="3" />],
+    ['https://www.tiktok.com/@comikamedia', <SiTiktok className={className} key="1" />],
   ]
-  console.log('🚀 ~ file: social-media.jsx ~ line 2 ~ SocialMediaLogo ~ params')
   return (
     <>
       {SocialMedia.map((icon) => (
-        <Link href={icon[0]} key={icon[0]}>
-          <a>{icon[1]}</a>
-        </Link>
+        <a target="_blank" href={icon[0]} key={icon[0]} rel="noreferrer">
+          {icon[1]}
+        </a>
       ))}
     </>
   )
