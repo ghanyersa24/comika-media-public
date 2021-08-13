@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
+import { FaSpinner } from 'react-icons/fa'
 import { CreateResetPassword } from '../../service/auth'
 import { BackgroundLogin } from '../../components/svg'
 
@@ -8,13 +9,17 @@ export const LoginPage = (): ReactNode => {
   const router = useRouter()
   const [email, setEmail] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState<string>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmitLogin = async (loginData) => {
     try {
+      setIsLoading(true)
       await CreateResetPassword(loginData)
       router.push('/auth/checkYourEmail')
+      setIsLoading(false)
     } catch (error) {
       setErrorMsg(error.msg)
+      setIsLoading(false)
     }
   }
 
@@ -54,10 +59,11 @@ export const LoginPage = (): ReactNode => {
         </div>
 
         <button
-          className="btn-primary font-bold px-6 py-4 mt-8"
+          className="btn-primary font-bold px-6 py-4 mt-8 flex  justify-center"
           onClick={() => handleSubmitLogin(email)}
           type="button"
         >
+          {isLoading && <FaSpinner className="animate-spin h-5 w-5 mr-3" /> }
           Send
         </button>
 

@@ -12,7 +12,7 @@ import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_LIST_ARTICLE } from '../../res/api-endpoint'
+import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
 import { PropsDetailOfPost, Post } from '../../res/interface'
 import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
 import { Get, add as addPost } from '../../service/comments'
@@ -178,7 +178,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (isMobile) {
     limit = 2
   }
-  const relatedArticle = await client.get(`${API_ENDPOINT_LIST_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`)
+  const relatedArticle = await client.get(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`)
 
   const content = await markdownToHtml(post.content || '')
 

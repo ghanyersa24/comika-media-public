@@ -1,22 +1,44 @@
 import Link from 'next/link'
-import { ReactElement } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import Image from 'next/image'
-import { BsBookmark } from 'react-icons/bs'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+import { FaSpinner } from 'react-icons/fa'
+import {
+  useSession, signIn,
+} from 'next-auth/client'
 import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
 import { CoverImageDekstop } from './cover-image'
 import { Post } from '../res/interface'
+import { client } from '../lib/clientRaw'
+
+type PostPreviewProps= {
+  post : Post, mutate
+}
 
 export default function PostPreview({
-  title,
-  banner,
-  Comika,
-  isPremium,
-  // date,
-  // excerpt,
-  // author,
-  slug,
-}: Post): ReactElement {
+  post, mutate,
+}: PostPreviewProps): ReactElement {
+  const {
+    slug, title, banner, isPremium, Comika, bookmarked,
+  } = post
+  const [isBookmarkLoading, setIsBookmarkLoading] = useState(false)
+  const [prevBookmark, setPrevBookmark] = useState(bookmarked)
+  const [session] = useSession()
+  const handleBookmark = async () => {
+    if (!session) signIn()
+    setIsBookmarkLoading(true)
+    setPrevBookmark(bookmarked)
+    await client.post(`/article/bookmark/${slug}`, [])
+    mutate()
+  }
+  useEffect(() => {
+    if (bookmarked !== prevBookmark) {
+      setIsBookmarkLoading(false)
+    }
+  }, [bookmarked])
+  const isBookmarked = bookmarked === '1'
+
   return (
     <div className="text-textSecondary">
       <div className="xs:mb-5 mb-2 relative">
@@ -55,8 +77,14 @@ export default function PostPreview({
             date="17 Juni 2021"
             read="10m read"
           />
-          <div>
-            <BsBookmark className="text-xl md:text-2xl lg:text-3xl " />
+          <div className="text-xl md:text-2xl lg:text-3xl">
+            {isBookmarkLoading ? <FaSpinner className="animate-spin mr-2" /> : (
+              <button type="button" onClick={handleBookmark}>
+                {isBookmarked
+                  ? <BsBookmarkFill className="  " />
+                  : <BsBookmark className=" " />}
+              </button>
+            )}
           </div>
         </div>
       </div>

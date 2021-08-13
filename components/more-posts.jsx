@@ -1,19 +1,22 @@
 import PostPreview from './post-preview'
 
-export const Posts = ({ posts }) => (
+const skeleton = [1, 2, 3, 4, 5, 6]
+export const Posts = ({ posts, mutate }) => (
   <>
-    {posts.map((post) => (
+    {posts ? posts.map((post) => (
       <PostPreview
+        post={post}
         key={post.slug}
-        title={post.title}
-        banner={post.banner}
-        date={post.updatedAt}
-        author={post.author}
-        slug={post.slug}
-        isPremium={post.isPremium}
-        Comika={post.Comika}
+        mutate={mutate}
       />
-    ))}
+    ))
+      : skeleton.map((key) => (
+        <div className="rounded-xl" key={key}>
+          <div className="w-full h-28 lg:h-48 animate-pulse bg-gray-200 " />
+          <div className="mt-2 lg:mt-4 h-8  animate-pulse bg-gray-200  " />
+          <div className="mt-2 h-8  animate-pulse bg-gray-200  " />
+        </div>
+      ))}
   </>
 )
 export const PostsContainer = ({ children }) => (
@@ -41,7 +44,7 @@ export const TitlePost = ({ title, description }) => (
 )
 
 export function MorePosts({
-  posts, title, description, className = ' mb-16 lg:mb-24',
+  posts, title, description, className = ' mb-16 lg:mb-24', mutate,
 }) {
   return (
     <section className={className}>
@@ -61,7 +64,7 @@ export function MorePosts({
 
       </div>
       <PostsContainer>
-        <Posts posts={posts} />
+        <Posts posts={posts} mutate={mutate} />
       </PostsContainer>
     </section>
   )

@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import { useRouter } from 'next/router'
+import { FaSpinner } from 'react-icons/fa'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Signup } from '../../res/interface'
 import { SignUp } from '../../service/auth'
@@ -22,12 +23,12 @@ export const LoginPage = ():ReactNode => {
     } = e.target
     setSignup({ ...signup, [name]: type === 'checkbox' ? checked : value })
   }
-  const handleSubmitSignUp = async (loginData) => {
+  const handleSubmitSignUp = async (e) => {
+    e.preventDefault()
     setErrorMsg('')
     try {
       setSubmitSignupStatus('loading')
-      const result = await SignUp(loginData)
-      console.log('🚀 ~ file: signup.tsx ~ line 29 ~ handleSubmitSignUp ~ result', result)
+      await SignUp(signup)
       setSubmitSignupStatus('success')
       router.push('/auth/signin')
     } catch (error) {
@@ -39,7 +40,7 @@ export const LoginPage = ():ReactNode => {
   return (
     <div className="grid lg:grid-cols-2  min-h-screen relative bg-primary lg:bg-white">
       <BackgroundLogin className="block lg:hidden" />
-      <div className="bg-white absolute right-0 left-0 bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col lg:min-w-max  lg:w-2/3 mx-auto place-content-center">
+      <form onSubmit={handleSubmitSignUp} className="bg-white absolute right-0 left-0 bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col lg:min-w-max  lg:w-2/3 mx-auto place-content-center">
         <div className="hidden  lg:flex mb-8">
           <ComikamediaNavbar className="w-2/3" />
         </div>
@@ -117,15 +118,14 @@ export const LoginPage = ():ReactNode => {
 
         </div>
         <button
-          className="btn-primary font-bold px-6 py-4 mt-8"
-          onClick={() => handleSubmitSignUp(signup)}
-          type="button"
-          disabled={submitSignupStatus === 'loading'}
+          className="btn-primary font-bold px-6 py-4 mt-8 flex  justify-center"
+          type="submit"
         >
-          {submitSignupStatus === 'loading' ? 'loading...' : 'Sign Up'}
+          {submitSignupStatus === 'loading' && <FaSpinner className="animate-spin h-5 w-5 mr-3" /> }
+          Submit
         </button>
 
-      </div>
+      </form>
       <div className="bg-primary overflow-hidden hidden lg:block h-screen">
         <BackgroundLogin className="" />
       </div>
