@@ -12,7 +12,7 @@ module.exports = {
   images: {
     domains: ['miro.medium.com', 'service-comika.herokuapp.com', 'awsimages.detik.net.id',
       'cdn-production-thumbor-vidio.akamaized.net', 'localhost', 'i2.wp.com', 'www.herworld.co.id', 'pbs.twimg.com',
-      '1.bp.blogspot.com', 'i.ytimg.com', 'babussalambuana.com', 'i.graphicmama.com', 'via.placeholder.com', 'i.imgur.com',
+      '1.bp.blogspot.com', 'i.ytimg.com', 'babussalambuana.com', 'api.comika.media', 'i.graphicmama.com', 'via.placeholder.com', 'i.imgur.com',
     ],
   },
   eslint: {

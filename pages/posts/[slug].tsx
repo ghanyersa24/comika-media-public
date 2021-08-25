@@ -22,7 +22,7 @@ import { MorePosts } from '../../components/more-posts'
 export const Dekstop = ({ post }:{post:Post}):ReactElement => {
   console.log('🚀 ~ file: [slug].tsx ~ line 49 ~ Dekstop ~ Dekstop', Dekstop)
   const {
-    title, banner, updatedAt, Comika, content, viewer,
+    title, banner, updatedAt, Comika, content, viewer, attribution,
   } = post
   return (
     (
@@ -41,6 +41,7 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
             date={updatedAt}
             Comika={Comika}
             views={viewer}
+            attribution={attribution}
 
           />
           <PostBody content={content} />
@@ -122,7 +123,7 @@ export default function DetailOfPost({
     }
   }
   const handleLoadMore = () => {
-    console.log('🚀 ~ file: [slug].tsx ~ line 127 ~ handleLoadMore ~ handleLoadMore')
+    router.push('/article')
   }
 
   return (
