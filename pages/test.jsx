@@ -1,13 +1,15 @@
-import { BottomNavbar } from '../components/blog/navigation/bottom-navbar'
+import { ItemStore } from '../components/card/item-store'
 
 export const App = () => {
   console.log('🚀 ~ file: tes.jsx ~ line 4 ~ App ~ App')
   return (
-    <div>
+    <div className="px-4 bg-gray-100 h-screen">
       komponent
-      <BottomNavbar />
+      <ItemStore />
+      <ItemStore />
+      <ItemStore />
     </div>
   )
 }
 
-export default BottomNavbar
+export default App
