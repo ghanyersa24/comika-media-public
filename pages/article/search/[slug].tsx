@@ -6,7 +6,7 @@ import React, { } from 'react'
 import { useSWRInfinite } from 'swr'
 import { IntroDekstop } from '../../../components/intro'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../../../res/string'
-import { API_ENDPOINT_LIST_ARTICLE } from '../../../res/api-endpoint'
+import { API_ENDPOINT_ARTICLE } from '../../../res/api-endpoint'
 import { client } from '../../../lib/clientRaw'
 
 import Layout from '../../../components/layout'
@@ -14,7 +14,7 @@ import { SearchBar } from '../../../components/blog/navigation/search-bar'
 import ContainerPadding from '../../../components/container-padding'
 import { RenderMoreArticle } from '../../../components/blog/more-articles'
 
-import { TitlePost } from '../../../components/more-posts'
+import { MorePosts } from '../../../components/more-posts'
 import BackgroundArticlePage from '../../../components/svg/BackgroundArticlePage'
 
 import { LoadMoreButton } from '../../../components/blog/button/load-more'
@@ -35,10 +35,10 @@ export default function Index(
   // pagination
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_ENDPOINT_LIST_ARTICLE}?search=${slug}&limit=${limit}&page=${1 + pageIndex}`
+    return `${API_ENDPOINT_ARTICLE}?search=${slug}&limit=${limit}&page=${1 + pageIndex}`
   }
   const {
-    data: articles, size, setSize, isValidating,
+    data: articles, size, setSize, isValidating, mutate,
   } = useSWRInfinite(getKey, client.get)
   const handleLoadMore = () => {
     setSize(size + 1)
@@ -60,13 +60,13 @@ export default function Index(
       <ContainerPadding className="-mt-16 rounded-xl bg-white relative pt-8  lg:mt-8 mb-24">
         {isMobile && <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />}
         <div className="mt-4">
-
-          <TitlePost
+          <MorePosts
             title="Hasil Pencarian"
             description={`Kata kunci  "${slug}"`}
+            posts={articles?.[0]}
+            mutate={mutate}
           />
-          <RenderMoreArticle data={articles} />
-
+          <RenderMoreArticle data={articles?.slice(1)} mutate={mutate} />
           <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} />
 
         </div>

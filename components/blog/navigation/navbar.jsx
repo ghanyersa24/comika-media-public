@@ -141,8 +141,8 @@ export const SideBar = ({ isShowing, session }) => (
           <div className="flex items-center flex-col  ">
             {/* <img src="/assets/logo/comikamedia.svg"
             className="w-full px-2 " alt="logo komika" /> */}
-            <Comikamedia className="w-full px-2 " />
-            <span className="py-4">Tempat mencari kebahagiaan</span>
+            <Comikamedia className="w-full px-4 " />
+            <span className="py-4 text-lg text-gray-300 font-medium ">Tempat mencari kebahagiaan</span>
           </div>
           <div className="pt-8 pb-8">
             {navigation.map((item) => (
@@ -152,7 +152,7 @@ export const SideBar = ({ isShowing, session }) => (
                     item.current
                       ? 'bg-gray-900 bg-opacity-20 text-white'
                       : 'text-gray-300 hover:text-white  ',
-                    'block px-3 py-2 rounded-md text-base font-bold text-3xl',
+                    'block px-3 py-2 rounded-md text-base font-bold md:text-3xl',
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
@@ -173,9 +173,10 @@ export const SideBar = ({ isShowing, session }) => (
             </Link>
 
           </div>
-          <div>
+          <div className="px-3">
             {/* <p>Social Media</p> */}
-            <div className="pt-8 flex flex-row ">
+            <div className="py-4 text-lg text-gray-300 font-medium ">Social Media</div>
+            <div className="flex flex-row">
               <SocialMediaLogo className="fill-current text-white mr-4 text-2xl " />
             </div>
           </div>

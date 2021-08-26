@@ -22,6 +22,11 @@ export type Login = {
   email: string,
   password?: string
 }
+export type ForgetPassword = {
+  password: string
+  passwordConfirmation: string
+  token: string
+}
 export type Signup = Login &{
   name: string,
 }
@@ -81,6 +86,7 @@ export type Post = {
   'withFlayer': boolean,
   'viewer': string,
   'shared': string,
+  'bookmarked': string,
   'Comika': {
     'id': number,
     'name': string,

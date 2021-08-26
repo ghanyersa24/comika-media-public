@@ -49,7 +49,7 @@ export const SocialMediaShareButton = ({ size }) => {
   )
 }
 export function PostHeaderDekstop({
-  title, coverImage, date, Comika, views,
+  title, coverImage, date, Comika, views, attribution,
 }) {
   return (
     <>
@@ -80,6 +80,11 @@ export function PostHeaderDekstop({
       </div>
       <div className="mb-8 md:mb-16 sm:mx-0">
         <CoverImageDekstop title={title} src={coverImage} height={620} width={1240} />
+        <p className="text-lg font-medium leading-9 text-justify text-gray-500">
+          Source :
+          <br />
+          {attribution}
+        </p>
       </div>
       <div className="max-w-2xl mx-auto">
         {/* <div className="block md:hidden mb-6">

@@ -27,10 +27,17 @@
     @apply py-2 px-4   font-semibold rounded-lg shadow-md hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-primaryLight focus:ring-opacity-75;
   }
   .label-flex {
-    @apply lg:border-b-2 flex flex-col lg:flex-row lg:items-center text-base leading-tight text-gray-400 mb-2 mt-4 justify-between ;
+    @apply lg:border-b-2 flex flex-col lg:flex-row lg:items-center text-base leading-tight text-gray-400 mb-2 mt-4 justify-between;
     input {
-      @apply  mt-2 lg:mt-0 w-full leading-normal lg:w-2/3 py-2 px-3 lg:text-right lg:ml-8  lg:inline lg:border-0 text-black lg:focus:ring-0 lg:border-b-2 lg:border-transparent lg:rounded-none focus:border-primary;
+      @apply mt-2 lg:mt-0 w-full leading-normal lg:w-2/3 py-2 px-3 lg:text-right lg:ml-8  lg:inline lg:border-0 text-black lg:focus:ring-0 lg:border-b-2 lg:border-transparent lg:rounded-none focus:border-primary;
     }
+  }
+
+  .h2-text-gray-light {
+    @apply font-medium text-white tracking-widest text-sm mb-3;
+  }
+  .text-gray-light {
+    @apply text-gray-200 hover:text-white;
   }
 }
 

@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 export const Signout = () => {
   signOut({ callbackUrl: '/' })
   useEffect(() => {
-    localStorage.setItem('komika-key', null)
+    localStorage.removeItem('komika-key')
   }, [])
   return (
     <div className="flex justify-center items-center h-screen">

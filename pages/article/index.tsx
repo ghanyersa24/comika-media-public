@@ -6,10 +6,10 @@ import { useSWRInfinite } from 'swr'
 import React, { } from 'react'
 import { useRouter } from 'next/router'
 import { title } from 'process'
-import { TitlePost } from '../../components/more-posts'
+import { MorePosts } from '../../components/more-posts'
 import { IntroDekstop } from '../../components/intro'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_LIST_ARTICLE } from '../../res/api-endpoint'
+import { API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../../res/string'
 import Layout from '../../components/layout'
 import { SearchBar } from '../../components/blog/navigation/search-bar'
@@ -44,10 +44,10 @@ export default function Index(
   // pagination
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_ENDPOINT_LIST_ARTICLE}?orderBy=${orderBy}&ordering=DESC&limit=${limit}&page=${pageIndex}`
+    return `${API_ENDPOINT_ARTICLE}?orderBy=${orderBy}&ordering=DESC&limit=${limit}&page=${1 + pageIndex}`
   }
   const {
-    data: moreArticles, size, setSize, isValidating,
+    data: moreArticles, size, setSize, isValidating, mutate,
   } = useSWRInfinite(getKey, client.get)
   const handleLoadMore = () => {
     setSize(size + 1)
@@ -70,11 +70,13 @@ export default function Index(
         {isMobile && <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />}
         <OrderBy orderBy={selectedOrderBy} />
         <div className="mt-4">
-          <TitlePost
+          <MorePosts
             title={selectedTitleDescription.title}
             description={selectedTitleDescription.description}
+            posts={moreArticles?.[0]}
+            mutate={mutate}
           />
-          <RenderMoreArticle data={moreArticles} />
+          <RenderMoreArticle data={moreArticles?.slice(1)} mutate={mutate} />
         </div>
         <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} />
       </ContainerPadding>
