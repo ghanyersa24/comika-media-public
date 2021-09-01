@@ -27,7 +27,7 @@ export const SubsribeItem = ({
   console.log(
     '🚀 ~ file: subscribe-item.tsx ~ line 4 ~ SubsribeItem ~ SubsribeItem',
   )
-  const classButton = 'lg:mt-8 mt-4 inline-flex items-center justify-center w-full bg-primary rounded hover:bg-primaryDark '
+  const classButton = 'lg:mt-8 mt-4 inline-flex items-center justify-center w-full bg-primary rounded-md hover:bg-primaryDark '
   return (
     <div
       className={`bg-white border-2 rounded-lg  mt-8 border-gray-200 relative ${className}`}
@@ -52,7 +52,7 @@ export const SubsribeItem = ({
           }
           onClick={onClick}
         >
-          <p className="flex-1 h-full text-2xl leading-loose text-center text-white">
+          <p className="flex-1 h-full text-xl py-1 leading-loose text-center text-white">
             {buttonText}
           </p>
         </button>

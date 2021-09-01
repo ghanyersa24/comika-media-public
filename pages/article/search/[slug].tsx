@@ -2,7 +2,7 @@
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSWRInfinite } from 'swr'
 import { IntroDekstop } from '../../../components/intro'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../../../res/string'
@@ -44,6 +44,12 @@ export default function Index(
     setSize(size + 1)
   }
 
+  const myRef = useRef(null)
+  const executeScroll = () => myRef.current.scrollIntoView()
+  useEffect(() => {
+    if (!isMobile)executeScroll()
+  }, [articles])
+
   return (
     <Layout isMobile={isMobile}>
       <Head>
@@ -59,7 +65,7 @@ export default function Index(
 
       <ContainerPadding className="-mt-16 rounded-xl bg-white relative pt-8  lg:mt-8 mb-24">
         {isMobile && <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />}
-        <div className="mt-4">
+        <div className="mt-4" ref={myRef}>
           <MorePosts
             title="Hasil Pencarian"
             description={`Kata kunci  "${slug}"`}

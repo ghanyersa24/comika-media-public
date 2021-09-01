@@ -5,11 +5,12 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { Get as GetJumbotron } from '../service/jumbotron'
 
-export const Item = ({ url, link }) => (
+export const ItemDekstop = ({ url, link }) => (
   <Link href={link}>
     <a>
       <div className="w-full ">
-        <img src={url} alt="Gambar Intro" className="w-full object-cover" />
+        {/* <img src={url} alt="Gambar Intro" className="w-full object-cover" /> */}
+        <Image height={511} width={1519} layout="responsive" src={url} alt="Gambar Intro" className="w-full object-cover" />
       </div>
     </a>
   </Link>
@@ -54,7 +55,7 @@ export function IntroDekstop() {
         onChangeIndex={(i) => setIndex(i)}
       >
         {filteredJumbotrons.map((jumbotron) => (
-          <Item url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
+          <ItemDekstop url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>
       <div className="absolute bottom-16 flex left-16 ">

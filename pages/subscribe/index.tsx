@@ -3,6 +3,7 @@ import { ReactElement, useState } from 'react'
 import { TiTick } from 'react-icons/ti'
 import SwipeableViews from 'react-swipeable-views'
 import { GetServerSideProps } from 'next'
+import { signIn, useSession } from 'next-auth/client'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
 import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
@@ -28,7 +29,8 @@ const SubscriptionMobile = ({ content: contents }) => (
 )
 
 export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
-  console.log('🚀 ~ file: index.tsx ~ line 10 ~ Subscribe ~ Subscribe')
+  const [session] = useSession()
+  if (!session) { signIn() }
   // eslint-disable-next-line no-unused-vars
   const [errorMsgSubscribe, setErrorMsgSubscribe] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -181,7 +183,7 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
 
   )
   return (
-    <div className="lg:mt-24 sm:px-8 max-w-screen-xl mx-auto min-h-screen">
+    <div className="lg:my-24 sm:px-8 max-w-screen-xl mx-auto min-h-screen">
       <div className="md:block hidden">
         <p className="text-4xl font-medium leading-10 text-center text-blue-900">
           Mengapa kamu harus subscribe?

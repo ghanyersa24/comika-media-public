@@ -30,11 +30,11 @@ export const TitlePost = ({ title, description }) => (
     {title && description
       ? (
         <>
-          <h2 className="text-xl md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight md:leading-normal text-primary">
+          <h2 className="title">
             {/* <div className="bg-primary mr-2 w-2 inline-block "> &nbsp;</div> */}
             {title}
           </h2>
-          <p className="text-xs md:text-base lg:text-lg leading-normal text-gray-600 mb-4 lg:mb-8">
+          <p className="title-description">
             {description}
           </p>
         </>
@@ -44,25 +44,11 @@ export const TitlePost = ({ title, description }) => (
 )
 
 export function MorePosts({
-  posts, title, description, className = ' mb-16 lg:mb-24', mutate,
+  posts, title, description, className = ' my-8 lg:my-16', mutate,
 }) {
   return (
     <section className={className}>
-      <div>
-        {title && description
-          ? (
-            <>
-              <h2 className="text-xl md:text-xl lg:text-5xl font-medium tracking-tighter leading-tight md:leading-normal text-primary">
-                {/* <div className="bg-primary mr-2 w-2 inline-block "> &nbsp;</div> */}
-                {title}
-              </h2>
-              <p className="text-xs md:text-base lg:text-lg leading-normal text-gray-600 mb-4 lg:mb-8">
-                {description}
-              </p>
-            </>
-          ) : null}
-
-      </div>
+      <TitlePost title={title} description={description} />
       <PostsContainer>
         <Posts posts={posts} mutate={mutate} />
       </PostsContainer>

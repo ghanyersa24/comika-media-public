@@ -1,55 +1,17 @@
 import {
-  AiFillEye, AiFillCopy,
+  AiFillEye, AiOutlineShareAlt,
 } from 'react-icons/ai'
 import { BiArrowBack } from 'react-icons/bi'
 import Router from 'next/router'
-import {
-  FacebookShareButton, WhatsappShareButton, TwitterShareButton, LineShareButton,
-  WhatsappIcon,
-  FacebookIcon, TwitterIcon, LineIcon,
-} from 'react-share'
-import React, { useState, useEffect } from 'react'
+import React, { } from 'react'
 
 import Avatar from './avatar'
 import DateFormatter from './date-formatter'
 import { CoverImageDekstop, CoverImageMobile } from './cover-image'
 import PostTitle from './post-title'
 
-export const SocialMediaShareButton = ({ size }) => {
-  const [href, setHref] = useState('')
-  console.log('🚀 ~ file: post-header.jsx ~ line 22 ~ href', href)
-  useEffect(() => {
-    setHref(window.location.href)
-  }, [])
-  const handleCopy = () => {
-    navigator.clipboard.writeText(href)
-  }
-  const handleShared = (type) => {
-    console.log('🚀 ~ file: post-header.jsx ~ line 31 ~ handleShared ~ handleShared', type)
-  }
-
-  return (
-    <span className="flex items-center">
-      <WhatsappShareButton url={href} quote="quote" onShareWindowClose={() => handleShared('wa')}>
-        <WhatsappIcon size={size} round className="mr-2" />
-      </WhatsappShareButton>
-      <FacebookShareButton url={href} quote="quote" onShareWindowClose={() => handleShared('fb')}>
-        <FacebookIcon size={size} round className="mr-2" />
-      </FacebookShareButton>
-      <TwitterShareButton url={href} quote="quote" onShareWindowClose={() => handleShared('tw')}>
-        <TwitterIcon size={size} round className="mr-2" />
-      </TwitterShareButton>
-      <LineShareButton url={href} quote="quote" onShareWindowClose={() => handleShared('line')}>
-        <LineIcon size={size} round className="mr-2" />
-      </LineShareButton>
-      <button className="bg-primary text-white text-xl rounded-full flex items-center justify-center" type="button" style={{ height: size, width: size }} onClick={() => handleCopy()}>
-        <AiFillCopy style={{ fontSize: size - 8 }} />
-      </button>
-    </span>
-  )
-}
 export function PostHeaderDekstop({
-  title, coverImage, date, Comika, views, attribution,
+  title, coverImage, date, Comika, views, attribution, shared,
 }) {
   return (
     <>
@@ -66,25 +28,33 @@ export function PostHeaderDekstop({
           </div>
         </div>
         <div className="text-lg font-medium leading-9 text-gray-500 flex">
-          <button type="button" className="inline-flex space-x-1.5 items-center justify-end w-16 h-9 mr-4 ">
+          <div className="inline-flex space-x-1.5 items-center justify-end w-16 h-9  ">
             <AiFillEye />
             <p>{views}</p>
-          </button>
+          </div>
+          <div className="inline-flex space-x-1.5 items-center justify-end w-16 h-9 ">
+            <AiOutlineShareAlt />
+            <p>{shared}</p>
+          </div>
           {/* <button type="button"
           className="inline-flex space-x-1.5 items-center justify-end w-16 h-9">
             <AiOutlineShareAlt />
             <p>263</p>
           </button> */}
-          <SocialMediaShareButton size={32} />
+          {/* <SocialMediaShareButton size={32} /> */}
         </div>
       </div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
+      <div className="mb-8 md:mb-12 sm:mx-0">
         <CoverImageDekstop title={title} src={coverImage} height={620} width={1240} />
-        <p className="text-lg font-medium leading-9 text-justify text-gray-500">
-          Source :
-          <br />
-          {attribution}
-        </p>
+        {
+          attribution !== '' && (
+          <p className="text-lg font-medium leading-9 text-justify text-gray-500">
+            Source :
+            {'  '}
+            {attribution}
+          </p>
+          )
+        }
       </div>
       <div className="max-w-2xl mx-auto">
         {/* <div className="block md:hidden mb-6">
@@ -99,7 +69,7 @@ export function PostHeaderDekstop({
 }
 
 export function PostHeaderMobile({
-  title, coverImage, date, Comika, views,
+  title, coverImage, date, Comika, views, shared,
 }) {
   return (
     <div className="">
@@ -120,12 +90,15 @@ export function PostHeaderMobile({
             <div className="w-1.5 h-1.5 bg-gray-500 rounded-full mr-2 ml-4 inline-block " />
             {Comika.name}
           </div>
-          <div className="text-lg font-medium leading-9 text-gray-500 flex justify-between">
-            <div className="inline-flex space-x-1.5 items-center justify-start w-16 h-9">
+          <div className="text-lg font-medium leading-9 text-gray-500 flex ">
+            <div className="inline-flex space-x-1.5 items-center justify-start w-16 h-9  ">
               <AiFillEye />
               <p>{views}</p>
             </div>
-            <SocialMediaShareButton size={24} />
+            <div className="inline-flex space-x-1.5 items-center justify-start w-16 h-9 ">
+              <AiOutlineShareAlt />
+              <p>{shared}</p>
+            </div>
           </div>
         </div>
       </div>
