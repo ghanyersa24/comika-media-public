@@ -120,7 +120,7 @@ export const SideBar = ({ isShowing, session }) => (
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="fixed z-40 top-0 h-screen w-full bg-black bg-opacity-80 " />
+      <Disclosure.Button className="fixed z-40 top-0 h-screen w-full bg-black bg-opacity-80 " />
     </Transition.Child>
     {/* Sliding sidebar */}
     <Transition.Child
@@ -144,7 +144,7 @@ export const SideBar = ({ isShowing, session }) => (
             <Comikamedia className="w-full px-4 " />
             <span className="py-4 text-lg text-gray-300 font-medium ">Tempat mencari kebahagiaan</span>
           </div>
-          <div className="pt-8 pb-8">
+          <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
             {navigation.map((item) => (
               <Link href={item.href} key={item.name}>
                 <a
@@ -152,7 +152,7 @@ export const SideBar = ({ isShowing, session }) => (
                     item.current
                       ? 'bg-gray-900 bg-opacity-20 text-white'
                       : 'text-gray-300 hover:text-white  ',
-                    'block px-3 py-2 rounded-md text-base font-bold md:text-3xl',
+                    'block px-3 py-2 rounded-md ',
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
@@ -165,7 +165,7 @@ export const SideBar = ({ isShowing, session }) => (
               <a
                 className={classNames(
                   'text-gray-300 hover:text-white  ',
-                  'block px-3 py-2 rounded-md text-base font-bold text-3xl',
+                  'block px-3 py-2 rounded-md',
                 )}
               >
                 {session ? 'Logout' : 'Login'}

@@ -3,7 +3,6 @@ import { IoLogoYoutube, IoLogoTwitter } from 'react-icons/io'
 import { SiTiktok } from 'react-icons/si'
 import { RiInstagramFill } from 'react-icons/ri'
 import { Comikamedia } from './svg'
-import { SocialMediaLogo } from './social-media'
 
 const navigation = [
   { name: 'Artikel', href: '/article', current: true },
@@ -108,13 +107,14 @@ export const Footer = () => (
       </div>
     </div>
     <div className="bg-primaryDark">
-      <div className="container mx-auto py-4 px-5 flex flex-between flex-col sm:flex-row ">
-        <p className="text-sm text-center sm:text-left text-gray-light">
+      <div className="container mx-auto py-4 px-5 flex justify-center flex-col sm:flex-row  text-white text-lg">
+        {/* <p className="text-sm text-center sm:text-left text-gray-light">
           © 2021 Komika Media — @danang_tp
         </p>
         <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start ">
           <SocialMediaLogo className=" mr-2 text-xl text-gray-light" />
-        </span>
+        </span> */}
+        © 2021 Comika Media
       </div>
     </div>
   </footer>

@@ -22,6 +22,7 @@ module.exports = {
         textSecondary: '#515151',
         warning: '#EDAA21',
         bgGray: '#F8FAFF',
+        bgGrayLight: '#FAFAFA',
       },
       spacing: { 28: '7rem' },
       letterSpacing: {
@@ -37,17 +38,27 @@ module.exports = {
         '8xl': '6.25rem',
       },
       boxShadow: {
-        sm: '0 5px 10px rgba(0, 0, 0, 0.12)',
-        md: '0 8px 30px rgba(0, 0, 0, 0.12)',
+        // sm: '0 5px 10px rgba(0, 0, 0, 0.12)',
+        // md: '0 8px 30px rgba(0, 0, 0, 0.12)',
       },
     },
     screens: {
       hp: '359px',
+      hp2: '376px',
       ...defaultTheme.screens,
     },
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
   ],
+  variants: {
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+    },
+  },
 
 }

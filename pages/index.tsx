@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 import useSWR, { useSWRInfinite } from 'swr'
 import React, { } from 'react'
+import router from 'next/router'
 import ContainerPadding from '../components/container-padding'
 import {
   MorePosts, TitlePost,
@@ -14,6 +15,9 @@ import Layout from '../components/layout'
 import SearchNavigation from '../components/blog/navigation/search-navigation-mobile'
 import { RenderMoreArticle } from '../components/blog/more-articles'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../res/string'
+import { SubsribeBanner } from '../components/banner/subscribe-banner'
+import { ItemStore } from '../components/items/item-store'
+import { ContainerStore } from '../components/container/container-store'
 
 type Props= {
   isMobile:boolean,
@@ -51,9 +55,33 @@ export default function Index(
         </>
       ) : <IntroDekstop />}
 
-      <ContainerPadding className="mt-8 md:mt-12 mb-24">
+      <ContainerPadding className="mt-8 md:mt-12 mb-24 ">
         <MorePosts posts={lastestArticles} mutate={mutateLastestArticles} title="Artikel Terbaru" description="Terbaru di minggu ini" />
+        <SubsribeBanner
+          isShow
+          onClick={() => router.push('/subscribe')}
+          isMobile={isMobile}
+          src={isMobile ? '/assets/blog/subscribe/Subscribe_Kecil.png' : '/assets/svg/Subscribe_Kecil.svg'}
+        />
+        <ContainerStore
+          className="mb-8"
+          title="Digital produk"
+          titleDescription="Produk populer minggu ini"
+        >
+          <ItemStore onClick />
+          <ItemStore onClick />
+          <ItemStore onClick />
+        </ContainerStore>
         <MorePosts posts={pupularArticles} mutate={mutatePopularArticles} title="Artikel Terpopuler" description="Terpopuler di minggu ini" />
+        <ContainerStore
+          className="mb-8"
+          title="Digital produk"
+          titleDescription="Produk populer minggu ini"
+        >
+          <ItemStore onClick />
+          <ItemStore onClick />
+          <ItemStore onClick />
+        </ContainerStore>
         <TitlePost title="Artikel Lainya" description="Lainya di minggu ini" />
         <RenderMoreArticle data={moreArticles} mutate={mutateMoreArticles} />
 

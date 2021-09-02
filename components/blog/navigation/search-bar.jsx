@@ -30,7 +30,7 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
     >
       {isInputOpen && (
       <input
-        className=" border-2 border-gray-300 h-full bg-white px-5 pr-16 rounded-lg text-sm focus:outline-none"
+        className="absolute right-0 border-2 border-gray-300 h-full bg-white px-5 pr-16 rounded-lg text-sm focus:outline-none"
         type="search"
         name="search"
         placeholder="Search"

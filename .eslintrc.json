@@ -30,6 +30,7 @@
     "react/no-unescaped-entities": "off",
     "@next/next/no-page-custom-font": "off",
     "semi": [2, "never"],
+    "no-tabs": 0,
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       1,

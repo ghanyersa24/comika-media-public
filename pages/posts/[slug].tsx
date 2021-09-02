@@ -1,9 +1,11 @@
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 import React, { ReactElement, useState } from 'react'
 import { getSession } from 'next-auth/client'
+import useSWR from 'swr'
+import classnames from 'classnames'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -18,16 +20,19 @@ import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comm
 import { Get, add as addPost } from '../../service/comments'
 import Layout from '../../components/layout'
 import { MorePosts } from '../../components/more-posts'
+import { SocialMediaShareButton } from '../../components/functional/button/social-media-share-button'
+import { BookmarkButton } from '../../components/functional/button/bookmark'
+import { LikeButton } from '../../components/functional/button/like'
 
 export const Dekstop = ({ post }:{post:Post}):ReactElement => {
   console.log('🚀 ~ file: [slug].tsx ~ line 49 ~ Dekstop ~ Dekstop', Dekstop)
   const {
-    title, banner, updatedAt, Comika, content, viewer, attribution,
+    title, banner, updatedAt, Comika, content, viewer, attribution, shared,
   } = post
   return (
     (
       <Container>
-        <article className="mb-32 mt-24">
+        <article className="md:my-16">
           <Head>
             <title>
               {title}
@@ -41,6 +46,7 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
             date={updatedAt}
             Comika={Comika}
             views={viewer}
+            shared={shared}
             attribution={attribution}
 
           />
@@ -55,12 +61,12 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
 export const Mobile = ({ post }:{post:Post}):ReactElement => {
   console.log('🚀 ~ file: [slug].tsx ~ line 78 ~ Mobile ~ Mobile')
   const {
-    title, banner, updatedAt, Comika, content, viewer,
+    title, banner, updatedAt, Comika, content, viewer, shared,
   } = post
   return (
     (
 
-      <article className="mb-32">
+      <article className="mb-16">
         <Head>
           <title>
             {title}
@@ -74,6 +80,7 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
           date={updatedAt}
           Comika={Comika}
           views={viewer}
+          shared={shared}
 
         />
         <div className="mx-4 mt-8">
@@ -92,7 +99,9 @@ const OverlayStopArticle = ({ isShow }) => {
         <div className=" lg:max-w-2xl mx-2 lg:mx-auto bg-gradient-to-b  from-transparent via-white to-white  absolute inset-x-0 bottom-0 flex flex-col justify-end items-center pb-8">
           <h4 className="text-primary text-3xl font-medium leading-9 mt-52 ">Jadilah Bagian dari Kami!</h4>
           <p className="text-lg leading-loose text-gray-700 text-center ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comikamedia.id</p>
-          <img className=" w-full " src="/assets/blog/subscribe/subscribe.png" />
+          <button type="button" className="text-xl" onClick={() => Router.push('/subscribe')}>
+            <img className=" w-full " src="/assets/svg/Subscribe_Kecil.svg" />
+          </button>
         </div>
 
       </>
@@ -100,21 +109,28 @@ const OverlayStopArticle = ({ isShow }) => {
   }
   return null
 }
+
 export default function DetailOfPost({
-  post, session, isMobile, relatedArticle,
+  post, session, isMobile,
 }: PropsDetailOfPost): ReactElement {
-  console.log('🚀 ~ file: [slug].tsx ~ line 98 ~ DetailOfPost ~ post', post)
+  let limit = 3
+  if (isMobile) {
+    limit = 2
+  }
+
+  const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { initialData: post })
+  const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
   const router = useRouter()
   const [comment, setComment] = useState('')
   const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
-  if (!router.isFallback && !post?.slug) {
+  if (!router.isFallback && !postClient?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  const { data: comments, isLoading, mutate } = Get(post.slug)
+  const { data: comments, isLoading, mutate } = Get(postClient.slug)
 
   const handleSubmitPostComment = async () => {
     try {
-      await addPost(post.slug, {
+      await addPost(postClient.slug, {
         comment,
       })
       mutate(); setComment(''); setErrorMsgPostAdd(null)
@@ -134,27 +150,58 @@ export default function DetailOfPost({
         <PostTitle>Loading…</PostTitle>
       ) : (
         <>
-          <div className="relative pb-36 lg:pb-40 ">
-            {isMobile ? <Mobile post={post} /> : <Dekstop post={post} />}
-            { post?.withFlayer ? <OverlayStopArticle isShow /> : null}
+          <div className={classnames(
+            'relative ', {
+              'pb-36 md:pb-40': postClient?.withFlayer,
+            },
+          )}
+          >
+            {isMobile ? <Mobile post={postClient} /> : <Dekstop post={postClient} />}
+            { postClient?.withFlayer ? <OverlayStopArticle isShow /> : null}
           </div>
-          <div className="max-w-2xl mx-auto px-4 pb-24">
-            <PostCommentList
-              comments={comments}
-              isLoading={isLoading}
-            />
-            {session ? (
-              <PostCommentAdd
-                onChange={(e) => setComment(e.target.value)}
+          <div className="md:max-w-2xl mx-4 md:mx-auto">
+
+            <div className=" divide-y inline-block md:my-12 mb-8 ">
+              <div className="pb-4">
+                <SocialMediaShareButton size={32} slug={postClient.slug} />
+              </div>
+              <div className="pt-4 flex items-center">
+                <LikeButton
+                  slug={postClient.slug}
+                  liked={postClient.liked}
+                  mutate={() => mutatePost()}
+                />
+                <span className="md:text-base text-sm">{postClient.likes}</span>
+                <BookmarkButton
+                  slug={postClient.slug}
+                  bookmarked={postClient.bookmarked}
+                  mutate={() => mutatePost()}
+                  className="ml-4"
+                />
+
+              </div>
+            </div>
+
+            <div className="px-4 pb-24">
+              <PostCommentList
+                comments={comments}
                 isLoading={isLoading}
-                error={errorMsgPostAdd}
-                comment={comment}
-                onSubmit={handleSubmitPostComment}
               />
-            ) : null}
+              {session ? (
+                <PostCommentAdd
+                  onChange={(e) => setComment(e.target.value)}
+                  isLoading={isLoading}
+                  error={errorMsgPostAdd}
+                  comment={comment}
+                  onSubmit={handleSubmitPostComment}
+                />
+              ) : null}
+            </div>
+
           </div>
+
           <Container className="mt-8 md:mt-12 mb-24">
-            {relatedArticle.length > 0 && <MorePosts posts={relatedArticle} title="Rekomendasi Artikel" description="Rekomendasi Artikel untuk anda" />}
+            {relatedArticle?.length > 0 && <MorePosts mutate={() => mutateRelatedArticle()} posts={relatedArticle} title="Rekomendasi Artikel" description="Rekomendasi Artikel untuk anda" />}
             <div className="text-right mt-8">
               <button type="button" onClick={handleLoadMore} className="text-base px-2 md:text-lg leading-tight text-primary ">Lihat artikel lainnya</button>
             </div>
@@ -175,11 +222,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isMobile = Boolean(UA.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
-  let limit = 3
-  if (isMobile) {
-    limit = 2
-  }
-  const relatedArticle = await client.get(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`)
 
   const content = await markdownToHtml(post.content || '')
 
@@ -190,7 +232,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         content,
       },
       session,
-      relatedArticle,
       isMobile,
     },
   }
