@@ -105,31 +105,3 @@ export type PropsDetailOfPost =Layout& {
   relatedArticle:Post[]
   // morePosts: string[]
 }
-
-export type ItemStoreType ={
-  'rupiah': string,
-  'id': string,
-  'name': string,
-  'slug': string,
-  'categoryId': string,
-  'description': string,
-  'price': string,
-  'createdAt': string,
-  'updatedAt': string,
-  'deletedAt': null,
-  'Category': {
-      'name': string,
-      'type': string
-  },
-  'images': [
-      {
-          'url': string,
-          'store_product_sources': {
-              'createdAt': string,
-              'updatedAt': string,
-              'ProductId': string,
-              'SourceId': string
-          }
-      }
-  ]
-}

@@ -10,7 +10,7 @@ import {
 } from '../components/more-posts'
 import { IntroDekstop, IntroMobile } from '../components/intro'
 import { client } from '../lib/clientRaw'
-import { API_ENDPOINT_ARTICLE, API_ENDPOINT_STORE } from '../res/api-endpoint'
+import { API_ENDPOINT_ARTICLE } from '../res/api-endpoint'
 import Layout from '../components/layout'
 import SearchNavigation from '../components/blog/navigation/search-navigation-mobile'
 import { RenderMoreArticle } from '../components/blog/more-articles'
@@ -18,7 +18,6 @@ import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../res/string'
 import { SubsribeBanner } from '../components/banner/subscribe-banner'
 import { ItemStore } from '../components/items/item-store'
 import { ContainerStore } from '../components/container/container-store'
-import { ItemStoreType } from '../res/interface'
 
 type Props= {
   isMobile:boolean,
@@ -32,9 +31,6 @@ export default function Index(
 ): React.ReactNode {
   const { data: lastestArticles, mutate: mutateLastestArticles } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${1}`, client.get)
   const { data: pupularArticles, mutate: mutatePopularArticles } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
-  const { data: digitalStores, mutate: mutatePopularStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=1`, client.get)
-  const { data: merchandiseStores, mutate: mutateMerchandiseStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=3`, client.get)
-  console.log('🚀 ~ file: index.tsx ~ line 35 ~ PupularStores', digitalStores)
   // pagination
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
@@ -59,7 +55,7 @@ export default function Index(
         </>
       ) : <IntroDekstop />}
 
-      <ContainerPadding className="mt-8 mb-24 md:mt-12 ">
+      <ContainerPadding className="mt-8 md:mt-12 mb-24 ">
         <MorePosts posts={lastestArticles} mutate={mutateLastestArticles} title="Artikel Terbaru" description="Terbaru di minggu ini" />
         <SubsribeBanner
           isShow
@@ -72,44 +68,29 @@ export default function Index(
           title="Digital produk"
           titleDescription="Produk populer minggu ini"
         >
-          {digitalStores?.map((popularStore) => (
-            <ItemStore
-              onClick={() => router.push(`/product/${popularStore.slug}`)}
-              key={popularStore.id}
-              imageUrl={popularStore.images[0]?.url}
-              title={popularStore.name}
-              price={popularStore.price}
-              type={popularStore.Category.name}
-            />
-          ))}
+          <ItemStore onClick />
+          <ItemStore onClick />
+          <ItemStore onClick />
         </ContainerStore>
         <MorePosts posts={pupularArticles} mutate={mutatePopularArticles} title="Artikel Terpopuler" description="Terpopuler di minggu ini" />
         <ContainerStore
           className="mb-8"
-          title="Merchandise"
+          title="Digital produk"
           titleDescription="Produk populer minggu ini"
         >
-          {merchandiseStores?.map((popularStore) => (
-            <ItemStore
-              key={popularStore.id}
-              imageUrl={popularStore.images[0]?.url}
-              title={popularStore.name}
-              price={popularStore.price}
-              type={popularStore.Category.name}
-              onClick={() => router.push(`/product/${popularStore.slug}`)}
-
-            />
-          ))}
+          <ItemStore onClick />
+          <ItemStore onClick />
+          <ItemStore onClick />
         </ContainerStore>
         <TitlePost title="Artikel Lainya" description="Lainya di minggu ini" />
         <RenderMoreArticle data={moreArticles} mutate={mutateMoreArticles} />
 
-        <div className="mt-8 text-right">
+        <div className="text-right mt-8">
           <button
             type="button"
             onClick={handleLoadMore}
             disabled={isValidating}
-            className="px-2 text-base leading-tight md:text-lg text-primary "
+            className="text-base px-2 md:text-lg leading-tight text-primary "
           >
             {isValidating ? 'loading' : 'Lihat artikel lainnya'}
           </button>
