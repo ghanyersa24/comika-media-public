@@ -22,7 +22,7 @@ module.exports = {
         textSecondary: '#515151',
         warning: '#EDAA21',
         bgGray: '#F8FAFF',
-        bgGrayLight: '#FAFAFA',
+        bgGrayLight: '#F9F9F9',
       },
       spacing: { 28: '7rem' },
       letterSpacing: {
@@ -56,7 +56,7 @@ module.exports = {
   ],
   variants: {
     extend: {
-      backgroundColor: ['checked'],
+      backgroundColor: ['checked', 'active'],
       borderColor: ['checked'],
     },
   },

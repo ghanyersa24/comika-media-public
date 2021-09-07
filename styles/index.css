@@ -31,6 +31,9 @@
   blockquote p {
     display: inline;
   }
+  button {
+    @apply focus:outline-none focus:ring-4 focus:ring-primaryLight focus:ring-opacity-25;
+  }
 }
 @layer components {
   .btn-primary {

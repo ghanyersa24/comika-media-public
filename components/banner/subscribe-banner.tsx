@@ -13,7 +13,7 @@ export const SubsribeBanner:FunctionComponent<SubsribeBannerType> = ({
 }): ReactElement => {
   if (isShow) {
     return (
-      <button type="button" onClick={onClick} className="w-full py-4">
+      <button type="button" onClick={onClick} className="w-full py-4 lg:py-8">
         <Image
           src={src}
           alt="Subsribe Banner"
