@@ -9,7 +9,7 @@ export const Shipment = (params) => {
   console.log('🚀 ~ file: shipment.tsx ~ line 2 ~ Shipment ~ params', params)
   return (
     <div className="pt-16 pb-44 bg-bgGrayLight">
-      <TopNavbarWithBackButton />
+      <TopNavbarWithBackButton title="Pesanan" />
       <div className="flex px-6 py-4 m-4 bg-white rounded-lg shadow-md">
         <IoMdPin className="flex-shrink-0 mr-4 text-2xl text-primary" />
         <div className="flex-shrink">

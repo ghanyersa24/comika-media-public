@@ -45,7 +45,7 @@ export const ProfileCard = ({
 
   return (
     <div className="grid w-full grid-cols-1 mb-16 rounded-lg shadow-md lg:grid-cols-3 ">
-      <div className="flex flex-col items-center p-4 pt-16 bg-gray-200 rounded-l-lg ">
+      <div className="flex flex-col items-center px-4 py-8 pt-16 mt-4 bg-gray-200 rounded-l-lg ">
         <div className="relative w-32 lg:w-44 ">
           {/* <img
             className="w-full rounded-full shadow "
@@ -53,7 +53,7 @@ export const ProfileCard = ({
             alt="gambar xx"
           /> */}
 
-          <img alt="gambar" src={imagePreviewUrl || photo} className="rounded-full shadow w-44 h-44 " />
+          <img alt="gambar" src={imagePreviewUrl || photo} className="w-32 h-32 rounded-full shadow lg:w-44 lg:h-44 " />
           <input
             className="hidden"
             id="file-upload"
@@ -64,7 +64,7 @@ export const ProfileCard = ({
           />
           <label
             htmlFor="file-upload"
-            className="absolute bottom-0 text-3xl cursor-pointer lg:text-4xl right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 "
+            className="absolute bottom-0 p-0.5 text-3xl  rounded cursor-pointer lg:text-4xl right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 "
           >
             <AiFillCamera />
           </label>
