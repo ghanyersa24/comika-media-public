@@ -43,12 +43,12 @@ export const Shipment = (params) => {
       </div>
       <div className="px-6 py-4 m-4 ">
         <div className="flex justify-between">
-          <p className="text-sm leading-normal text-gray-400">Subtotal untuk produk</p>
-          <p className="text-sm leading-normal text-black">Rp137.400</p>
+          <p className="leading-normal text-gray-400 ">Subtotal untuk produk</p>
+          <p className="leading-normal text-black ">Rp137.400</p>
         </div>
         <div className="flex justify-between">
-          <p className="text-sm leading-normal text-gray-400">Subtotal pengiriman</p>
-          <p className="text-sm leading-normal text-black">Rp 0</p>
+          <p className="leading-normal text-gray-400 ">Subtotal pengiriman</p>
+          <p className="leading-normal text-black ">Rp 0</p>
         </div>
       </div>
       <BottomFixedSummaryStore />
