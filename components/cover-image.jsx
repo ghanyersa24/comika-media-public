@@ -16,6 +16,8 @@ export function CoverImageDekstop({
         'hover:shadow-md transition-shadow duration-200': slug,
       })}
       layout="responsive"
+      placeholder="blur"
+      blurDataURL="https://via.placeholder.com/10"
       width={width}
       height={height}
     />
@@ -52,7 +54,7 @@ export function CoverImageMobile({
     />
   )
   return (
-    <div className="sm:mx-0 bg-red-400">
+    <div className="bg-red-400 sm:mx-0">
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>{image}</a>
