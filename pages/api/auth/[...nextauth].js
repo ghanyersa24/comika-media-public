@@ -162,7 +162,7 @@ export default NextAuth({
           && profile.email.endsWith('@gmail.com')) {
         return true
       }
-      return false
+      return true
     },
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
