@@ -143,14 +143,27 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
 
-    async jwt(token, user) {
+    async jwt(token, user, account) {
+      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', account)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ token', token)
       // Add access_token to the token right after signin
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken
+      }
       if (user?.token) {
         token.accessToken = user.token
       }
       return token
     },
-    // async signIn(user, account, profile) { return true },
+    async signIn(user, account, profile) {
+      console.log('🚀 ~ file: [...nextauth].js ~ line 154 ~ signIn ~ user', user)
+      if (account.provider === 'google'
+          && profile.verified_email === true
+          && profile.email.endsWith('@gmail.com')) {
+        return true
+      }
+      return false
+    },
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
@@ -169,7 +182,7 @@ export default NextAuth({
     // },
     session: async (session, token) => {
       // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ token', token)
-      // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ session', session)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ session', session)
       session.accessToken = token.accessToken
 
       return session

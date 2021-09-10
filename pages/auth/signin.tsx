@@ -1,12 +1,12 @@
 import React, { ReactNode, useState } from 'react'
 import {
   signIn,
-  getProviders,
+  getProviders, useSession,
 } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { FaSpinner } from 'react-icons/fa'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { FaFacebookF, FaSpinner, FaGooglePlusG } from 'react-icons/fa'
+import { AiFillEye, AiFillEyeInvisible,  } from 'react-icons/ai'
 import { GetServerSideProps } from 'next'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
@@ -26,6 +26,9 @@ export const LoginPage = ({ providers }): ReactNode => {
   const [errorMsg, setErrorMsg] = useState<string>(null)
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: signin.tsx ~ line 30 ~ LoginPage ~ session', session)
+  // if (session) router.push('/')
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
@@ -45,7 +48,7 @@ export const LoginPage = ({ providers }): ReactNode => {
           setErrorMsg(result.error)
           setIsLoading(false)
         } else if (callbackUrl) router.push(`${callbackUrl}`)
-        else router.push('/')
+        // else router.push('/')
       },
     )
   }
@@ -102,10 +105,6 @@ export const LoginPage = ({ providers }): ReactNode => {
               {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
             </button>
           </label>
-          <div>
-            <button type="button" onClick={() => signIn('google')}>Google</button>
-            <button type="button" onClick={() => signIn('facebook')}>Facebook</button>
-          </div>
         </div>
 
         <div className="flex items-center justify-between mt-4">
@@ -136,6 +135,19 @@ export const LoginPage = ({ providers }): ReactNode => {
           {isLoading && <FaSpinner className="w-5 h-5 mr-3 animate-spin" /> }
           Sign In
         </button>
+        <div className="py-2 font-bold text-center text-gray-800 text-opacity-50">
+          Or
+        </div>
+        <div className="flex mt-2">
+          <button type="button" className="flex items-center justify-center w-1/2 py-2 mx-1 border-2 rounded-md border-primary text-primary hover:bg-blue-50" onClick={() => signIn('facebook')}>
+            <FaFacebookF className="mr-2 text-xl" />
+            Facebook
+          </button>
+          <button type="button" className="flex items-center justify-center w-1/2 py-2 mx-1 text-red-700 border-2 border-red-700 rounded-md hover:bg-blue-50" onClick={() => signIn('google')}>
+            <FaGooglePlusG className="mr-2 text-2xl" />
+            Google
+          </button>
+        </div>
       </form>
       <div className="hidden h-screen overflow-hidden bg-primary lg:block">
         <BackgroundLogin className="" />
