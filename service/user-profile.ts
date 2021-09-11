@@ -1,5 +1,6 @@
 import useSWR, { } from 'swr'
 import { client } from '../lib/clientRaw'
+import clientFormData from '../lib/clientFormData'
 import { swrReturn, Profile, BaseFetch } from '../res/interface'
 
 const URL = '/account/me'
@@ -16,7 +17,7 @@ export function Get():swrReturn {
 export default Get
 
 export const UpdateProfile = async (postData: Profile) :Promise <BaseFetch> => {
-  const data = await client.put('/account/update-profile', postData)
+  const data = await clientFormData.put('/account/update-profile', postData)
   return data
 }
 

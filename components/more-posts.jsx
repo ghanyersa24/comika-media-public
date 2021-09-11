@@ -11,10 +11,15 @@ export const Posts = ({ posts, mutate }) => (
       />
     ))
       : skeleton.map((key) => (
-        <div className="rounded-xl" key={key}>
-          <div className="w-full h-28 lg:h-48 animate-pulse bg-gray-200 " />
-          <div className="mt-2 lg:mt-4 h-8  animate-pulse bg-gray-200  " />
-          <div className="mt-2 h-8  animate-pulse bg-gray-200  " />
+        <div className="divide-y-2 divide-gray-300 rounded-xl" key={key}>
+          <div className="mb-3">
+            <div className="w-full h-20 bg-gray-200 lg:h-48 animate-pulse " />
+            <div className="h-4 my-2 bg-gray-200 lg:mt-4 animate-pulse " />
+            <div className="h-4 mb-2 bg-gray-200 lg:mt-4 animate-pulse " />
+          </div>
+          <div className="pt-3">
+            <div className="h-6 bg-gray-200 animate-pulse " />
+          </div>
         </div>
       ))}
   </>
@@ -31,7 +36,7 @@ export const TitlePost = ({ title, description }) => (
       ? (
         <>
           <h2 className="title">
-            {/* <div className="bg-primary mr-2 w-2 inline-block "> &nbsp;</div> */}
+            {/* <div className="inline-block w-2 mr-2 bg-primary "> &nbsp;</div> */}
             {title}
           </h2>
           <p className="title-description">
@@ -44,7 +49,7 @@ export const TitlePost = ({ title, description }) => (
 )
 
 export function MorePosts({
-  posts, title, description, className = ' my-8 lg:my-16', mutate,
+  posts, title, description, className = 'my-8 lg:my-16', mutate,
 }) {
   return (
     <section className={className}>

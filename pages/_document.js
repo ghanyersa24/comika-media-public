@@ -8,6 +8,8 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content="#006BC1" />
+          <script async src="https://www.instagram.com/embed.js" />
+          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8" />
         </Head>
         <body>
           <Main />

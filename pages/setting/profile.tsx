@@ -5,7 +5,7 @@ import { ProfileCard } from '../../components/form/profile'
 import { Get as GetProfile, UpdateProfile } from '../../service/user-profile'
 import { Profile as ProfileType } from '../../res/interface'
 import Layout from '../../components/layout'
-import { BackNavbar } from '../../components/blog/navigation/backnavbar'
+import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 
 export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   console.log('🚀 ~ file: profile.tsx ~ line 10 ~ Profile ~ isMobile', isMobile)
@@ -19,42 +19,38 @@ export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
     if (data && !isLoading) setProfileData(data)
   }, [data, isLoading])
   const handleEdit = () => {
+    setErrorMsg(null)
     setCanEdit(!canEdit)
   }
   const handleSubmit = async () => {
     try {
+      setErrorMsg(null)
       const result = await UpdateProfile(profileData)
       mutate()
       setCanEdit(true)
       console.log('🚀 ~ file: profile.tsx ~ line 24 ~ handleSubmit ~ result', result)
-      setErrorMsg(null)
     } catch (error) {
       setErrorMsg(error.msg)
     }
   }
 
-  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      type, checked, name, value,
-    } = e.target
-    setProfileData({ ...profileData, [name]: type === 'checkbox' ? checked : value })
+  const handleChangeValue = (name, value) => {
+    setProfileData({ ...profileData, [name]: value })
   }
   return (
     <Layout isMobile={isMobile}>
-      <BackNavbar title="Detail Akun" className="bg-primary text-white" />
-      <div className="container mx-auto xs:px-4 lg:px-4 sm:px-8 max-w-screen-xl lg:mt-24">
-        {errorMsg ? (
-          <div className="bg-red-200 p-2 mb-4 rounded">
-            {errorMsg}
-          </div>
-        ) : null}
+      <TopNavbarWithBackButton title="Detail Akun" />
+      <div className="container max-w-screen-xl mx-auto xs:px-4 lg:px-4 sm:px-8 lg:mt-24">
+
         <ProfileCard
           profileData={profileData}
           onChange={handleChangeValue}
           canEdit={canEdit}
           onEdit={handleEdit}
           onSubmit={handleSubmit}
+          errorMsg={errorMsg}
         />
+
       </div>
     </Layout>
 

@@ -1,15 +1,16 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { AiFillCamera, AiOutlineLoading } from 'react-icons/ai'
 import { MdModeEdit } from 'react-icons/md'
 import { Profile } from '../../res/interface'
 
 type ProfileCardProps = {
-  profileData: Profile;
-  canEdit: boolean;
+  profileData: Profile,
+  canEdit: boolean,
   onEdit():void,
+  errorMsg:string,
   onSubmit():void,
   // eslint-disable-next-line no-unused-vars
-  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onChange(string, any): void;
 };
 export const ProfileCard = ({
   profileData,
@@ -17,39 +18,62 @@ export const ProfileCard = ({
   canEdit,
   onEdit,
   onSubmit,
+  errorMsg,
 }: ProfileCardProps): ReactElement => {
-  console.log(
-    '🚀 ~ file: profile.tsx ~ line 5 ~ ProfileCard ~ profileData',
-    profileData,
-  )
   const {
-    email, name, phone, address, postalCode, district, city, province,
+    email, name, phone, address, postalCode, district, city, province, photo,
   } = profileData || {}
+  console.log('🚀 ~ file: profile.tsx ~ line 26 ~ profileData', profileData)
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e)
+    const {
+      // eslint-disable-next-line no-shadow
+      type, checked, name, value, files,
+    } = e.target
+    console.log('🚀 ~ file: profile.tsx ~ line 37 ~ handleChangeValue ~ files', files)
+    if (type === 'checkbox')onChange(name, checked)
+    else if (files?.length != null) {
+      const reader = new FileReader()
+      const file = files[0]
+      reader.onloadend = () => {
+        onChange(name, file)
+        setImagePreviewUrl(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    } else onChange(name, value)
   }
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-3 rounded-lg shadow-md mb-16 ">
-      <div className="bg-gray-200 p-4 rounded-l-lg flex flex-col items-center pt-16  ">
+    <div className="grid w-full grid-cols-1 mb-16 rounded-lg shadow-md lg:grid-cols-3 ">
+      <div className="flex flex-col items-center px-4 py-8 pt-16 mt-4 bg-gray-200 rounded-l-lg ">
         <div className="relative w-32 lg:w-44 ">
-          <img
+          {/* <img
             className="w-full rounded-full shadow "
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt="gambar xx"
+          /> */}
+
+          <img alt="gambar" src={imagePreviewUrl || photo} className="w-32 h-32 rounded-full shadow lg:w-44 lg:h-44 " />
+          <input
+            className="hidden"
+            id="file-upload"
+            type="file"
+            disabled={canEdit}
+            name="photo"
+            onChange={handleChangeValue}
           />
-          <button
-            type="button"
-            className="absolute text-3xl lg:text-4xl bottom-0 right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 "
+          <label
+            htmlFor="file-upload"
+            className="absolute bottom-0 p-0.5 text-3xl  rounded cursor-pointer lg:text-4xl right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 "
           >
             <AiFillCamera />
-          </button>
+          </label>
         </div>
         <div hidden={!canEdit}>
           <button
             type="button"
             onClick={onEdit}
-            className="border-2 border-primary text-primary rounded-md mt-8 px-4 py-2 hover:bg-gray-300 flex flex-row items-center"
+            className="flex flex-row items-center px-4 py-2 mt-8 border-2 rounded-md border-primary text-primary hover:bg-gray-300"
           >
             <MdModeEdit className="mr-2 text-xl" />
             {'  '}
@@ -58,9 +82,9 @@ export const ProfileCard = ({
         </div>
       </div>
       <div className="col-span-2 p-6 lg:p-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center ">
+        <h2 className="flex items-center mb-4 text-xl font-semibold text-gray-900 ">
           Data Diri
-          {!profileData ? <AiOutlineLoading className="animate-spin h-5 w-5 ml-3" /> : null}
+          {!profileData ? <AiOutlineLoading className="w-5 h-5 ml-3 animate-spin" /> : null}
         </h2>
         <label htmlFor="name" className="label-flex ">
           Nama
@@ -104,21 +128,21 @@ export const ProfileCard = ({
             onChange={handleChangeValue}
           />
         </label>
-        <label htmlFor="x" className="label-flex ">
+        <label htmlFor="birthdate" className="label-flex ">
           Tanggal Lahir
           <input
             className=""
             type="date"
             // value={phone}
             // onChange={handleChangeValue}
-            placeholder="x"
-            name="x"
-            id="x"
+            placeholder=""
+            name="birthdate"
+            id="birthdate"
             disabled={canEdit}
             onChange={handleChangeValue}
           />
         </label>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-12">
+        <h2 className="mt-12 mb-4 text-xl font-semibold text-gray-900">
           Alamat
         </h2>
         <label htmlFor="address" className="label-flex ">
@@ -136,7 +160,7 @@ export const ProfileCard = ({
           />
         </label>
         <label htmlFor="postalCode" className="label-flex ">
-          address
+          Kode Pos
           <input
             className=""
             type="text"
@@ -191,11 +215,16 @@ export const ProfileCard = ({
             onChange={handleChangeValue}
           />
         </label>
+        {errorMsg ? (
+          <div className="p-2 mb-4 bg-red-200 rounded">
+            {errorMsg}
+          </div>
+        ) : null}
         <div className={!canEdit ? 'flex mt-8 justify-end ' : 'hidden'}>
-          <button onClick={onEdit} type="button" className=" px-4 py-2  rounded-md mr-4 border-primary border w-44 ">
+          <button onClick={onEdit} type="button" className="px-4 py-2 mr-4 border rounded-md border-primary w-44">
             Batal
           </button>
-          <button onClick={onSubmit} type="button" className=" px-4 py-2 bg-primary text-white rounded-md w-44">
+          <button onClick={onSubmit} type="button" className="px-4 py-2 text-white rounded-md bg-primary w-44">
             Simpan
           </button>
         </div>
