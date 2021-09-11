@@ -56,9 +56,6 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        console.log('🚀 ~ file: [...nextauth].js ~ line 58 ~ authorize ~ credentials', credentials)
-        // console.log('🚀 ~ file: [...nextauth].js ~ line 57 ~ authorize ~ credentials',
-        //   `${process.env.BASH_URL}/api/login`, credentials)
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid.
@@ -70,9 +67,7 @@ export default NextAuth({
           body: JSON.stringify(credentials),
           headers: { 'Content-Type': 'application/json' },
         })
-        console.log('🚀 ~ file: [...nextauth].js ~ line 72 ~ authorize ~ res', res)
         const user = await res.json()
-        console.log('🚀 ~ file: [...nextauth].js ~ line 70 ~ authorize ~ user', user)
         // If no error and we have user data, return it
         if (res.ok && user) {
           // {token="xx"}
@@ -144,9 +139,6 @@ export default NextAuth({
   callbacks: {
 
     async jwt(token, user, account) {
-      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ user', user)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', account)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ token', token)
       // Add access_token to the token right after signin
       // credential native
       if (user?.comikaToken) {
@@ -157,13 +149,9 @@ export default NextAuth({
       return token
     },
     async signIn(token, user, account, profile) {
-      console.log('🚀 ~ file: [...nextauth].js ~ line 160 ~ signIn ~ profile', profile)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 160 ~ signIn ~ account', account)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 154 ~ signIn ~ user', user)
       if (user.provider === 'google'
       && account.verified_email === true
       && account.email.endsWith('@gmail.com')) {
-        console.log('🚀 ~ file: [...nextauth].js ~ line 163 ~ signIn ~ google')
         const credentials = {
           email: account.email,
           name: account.name,
@@ -177,7 +165,6 @@ export default NextAuth({
         })
         const responseSocialite = await res.json()
         if (res.ok && responseSocialite?.token) {
-          console.log('🚀 ~ file: [...nextauth].js ~ line 183 ~ &&profile.email.endsWith ~ responseSocialite', responseSocialite)
           token.comikaToken = responseSocialite.token
           return true
         }
@@ -189,8 +176,6 @@ export default NextAuth({
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
     // async jwt(prevToken, token) {
-    //   // console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ token', token)
-    //   // console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ prevToken', prevToken)
     //   // Initial call
     //   if (token) {
     //     return {
@@ -202,8 +187,6 @@ export default NextAuth({
     //   return prevToken
     // },
     session: async (session, token) => {
-      console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ token', token)
-      console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ session', session)
       session.accessToken = token.accessToken
 
       return session
