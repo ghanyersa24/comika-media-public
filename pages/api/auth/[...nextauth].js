@@ -144,14 +144,14 @@ export default NextAuth({
   callbacks: {
 
     async jwt(token, user, account) {
+      console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ user', user)
       console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ account', account)
       console.log('🚀 ~ file: [...nextauth].js ~ line 147 ~ jwt ~ token', token)
       // Add access_token to the token right after signin
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken
-      }
       // credential native
-      if (user?.token) {
+      if (user?.comikaToken) {
+        token.accessToken = user.comikaToken
+      } else if (user?.token) {
         token.accessToken = user.token
       }
       return token
@@ -177,10 +177,10 @@ export default NextAuth({
         })
         const responseSocialite = await res.json()
         if (res.ok && responseSocialite?.token) {
-          token.accessToken = responseSocialite.token
+          console.log('🚀 ~ file: [...nextauth].js ~ line 183 ~ &&profile.email.endsWith ~ responseSocialite', responseSocialite)
+          token.comikaToken = responseSocialite.token
           return true
         }
-        console.log('🚀 ~ file: [...nextauth].js ~ line 183 ~ &&profile.email.endsWith ~ responseSocialite', responseSocialite)
         return `/auth/signin?errorNextAuth=login melalui google gagal karena ${responseSocialite.msg}`
       }
       return true
@@ -202,7 +202,7 @@ export default NextAuth({
     //   return prevToken
     // },
     session: async (session, token) => {
-      // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ token', token)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ token', token)
       console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ session', session)
       session.accessToken = token.accessToken
 
