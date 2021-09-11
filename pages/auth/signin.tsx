@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import {
   signIn,
   getProviders, useSession,
@@ -6,7 +6,7 @@ import {
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebookF, FaSpinner, FaGooglePlusG } from 'react-icons/fa'
-import { AiFillEye, AiFillEyeInvisible,  } from 'react-icons/ai'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { GetServerSideProps } from 'next'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
@@ -22,8 +22,9 @@ import { Login } from '../../res/interface'
 export const LoginPage = ({ providers }): ReactNode => {
   console.log('🚀 ~ file: signin.tsx ~ line 23 ~ LoginPage ~ providers', providers)
   const router = useRouter()
+  console.log('🚀 ~ file: signin.tsx ~ line 25 ~ LoginPage ~ router', router)
   const [login, setLogin] = useState<Login | null>(null)
-  const [errorMsg, setErrorMsg] = useState<string>(null)
+  const [errorMsg, setErrorMsg] = useState<string>(router?.query?.errorNextAuth as string)
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [session, loading] = useSession()
@@ -48,14 +49,14 @@ export const LoginPage = ({ providers }): ReactNode => {
           setErrorMsg(result.error)
           setIsLoading(false)
         } else if (callbackUrl) router.push(`${callbackUrl}`)
-        // else router.push('/')
+        else router.push('/')
       },
     )
   }
   return (
     <div className="relative grid min-h-screen lg:grid-cols-2 bg-primary lg:bg-white">
-      <BackgroundLogin className="block lg:hidden" />
-      <form onSubmit={handleSubmitLogin} className="absolute bottom-0 flex flex-col w-full px-8 pt-6 pb-8 mx-auto bg-white lg:static rounded-t-2xl lg:rounded lg:mb-4 lg:min-w-max lg:w-2/3 place-content-center">
+      <BackgroundLogin className="fixed block lg:hidden" />
+      <form onSubmit={handleSubmitLogin} className="absolute bottom-0 flex flex-col w-full px-8 pt-6 pb-8 mx-auto overflow-auto bg-white lg:static rounded-t-2xl lg:rounded lg:mb-4 lg:w-2/3 place-content-center">
         <div className="hidden mb-8 lg:flex">
           <ComikamediaNavbar className="w-2/3" />
         </div>
@@ -68,7 +69,7 @@ export const LoginPage = ({ providers }): ReactNode => {
 
         <div className="mb-4">
           {errorMsg ? (
-            <div className="p-2 mb-4 bg-red-200 rounded">{errorMsg}</div>
+            <div className="max-w-full p-2 mb-4 bg-red-200 rounded">{errorMsg}</div>
           ) : null}
           <label
             htmlFor="email"
@@ -139,18 +140,26 @@ export const LoginPage = ({ providers }): ReactNode => {
           Or
         </div>
         <div className="flex mt-2">
-          <button type="button" className="flex items-center justify-center w-1/2 py-2 mx-1 border-2 rounded-md border-primary text-primary hover:bg-blue-50" onClick={() => signIn('facebook')}>
+          <button
+            type="button"
+            className="btn-secondary border-primary text-primary "
+            onClick={() => signIn('facebook')}
+          >
             <FaFacebookF className="mr-2 text-xl" />
             Facebook
           </button>
-          <button type="button" className="flex items-center justify-center w-1/2 py-2 mx-1 text-red-700 border-2 border-red-700 rounded-md hover:bg-blue-50" onClick={() => signIn('google')}>
+          <button
+            type="button"
+            className="text-red-700 border-2 border-red-700 btn-secondary "
+            onClick={() => signIn('google')}
+          >
             <FaGooglePlusG className="mr-2 text-2xl" />
             Google
           </button>
         </div>
       </form>
-      <div className="hidden h-screen overflow-hidden bg-primary lg:block">
-        <BackgroundLogin className="" />
+      <div className="relative hidden h-auto overflow-hidden bg-primary lg:block">
+        <BackgroundLogin className="absolute " />
       </div>
     </div>
   )

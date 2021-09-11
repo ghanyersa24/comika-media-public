@@ -150,17 +150,38 @@ export default NextAuth({
       if (account?.accessToken) {
         token.accessToken = account.accessToken
       }
+      // credential native
       if (user?.token) {
         token.accessToken = user.token
       }
       return token
     },
-    async signIn(user, account, profile) {
+    async signIn(token, user, account, profile) {
+      console.log('🚀 ~ file: [...nextauth].js ~ line 160 ~ signIn ~ profile', profile)
+      console.log('🚀 ~ file: [...nextauth].js ~ line 160 ~ signIn ~ account', account)
       console.log('🚀 ~ file: [...nextauth].js ~ line 154 ~ signIn ~ user', user)
-      if (account.provider === 'google'
-          && profile.verified_email === true
-          && profile.email.endsWith('@gmail.com')) {
-        return true
+      if (user.provider === 'google'
+      && account.verified_email === true
+      && account.email.endsWith('@gmail.com')) {
+        console.log('🚀 ~ file: [...nextauth].js ~ line 163 ~ signIn ~ google')
+        const credentials = {
+          email: account.email,
+          name: account.name,
+          secretId: account.id,
+          photo: account.picture,
+        }
+        const res = await fetch(`${process.env.BASH_URL}/login-socialite`, {
+          method: 'POST',
+          body: JSON.stringify(credentials),
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const responseSocialite = await res.json()
+        if (res.ok && responseSocialite?.token) {
+          token.accessToken = responseSocialite.token
+          return true
+        }
+        console.log('🚀 ~ file: [...nextauth].js ~ line 183 ~ &&profile.email.endsWith ~ responseSocialite', responseSocialite)
+        return `/auth/signin?errorNextAuth=login melalui google gagal karena ${responseSocialite.msg}`
       }
       return true
     },
