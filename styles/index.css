@@ -39,6 +39,9 @@
   .btn-primary {
     @apply py-2 px-4 bg-primary text-white font-semibold rounded-lg hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-primaryLight focus:ring-opacity-75;
   }
+  .btn-secondary {
+    @apply flex items-center justify-center w-1/2 py-2 mx-1 border-2 rounded-md hover:bg-blue-50;
+  }
   .btn {
     @apply py-2 px-4   font-semibold rounded-lg shadow-md hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-primaryLight focus:ring-opacity-75;
   }

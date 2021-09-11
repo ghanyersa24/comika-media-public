@@ -24,18 +24,18 @@ export default NextAuth({
     //   },
     // }),
     // */
-    // Providers.Facebook({
-    //   clientId: process.env.FACEBOOK_ID,
-    //   clientSecret: process.env.FACEBOOK_SECRET,
-    // }),
+    Providers.Facebook({
+      clientId: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+    }),
     // Providers.GitHub({
     //   clientId: process.env.GITHUB_ID,
     //   clientSecret: process.env.GITHUB_SECRET,
     // }),
-    // Providers.Google({
-    //   clientId: process.env.GOOGLE_ID,
-    //   clientSecret: process.env.GOOGLE_SECRET,
-    // }),
+    Providers.Google({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
     // Providers.Twitter({
     //   clientId: process.env.TWITTER_ID,
     //   clientSecret: process.env.TWITTER_SECRET,
@@ -56,9 +56,6 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        console.log('🚀 ~ file: [...nextauth].js ~ line 58 ~ authorize ~ credentials', credentials)
-        // console.log('🚀 ~ file: [...nextauth].js ~ line 57 ~ authorize ~ credentials',
-        //   `${process.env.BASH_URL}/api/login`, credentials)
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid.
@@ -70,9 +67,7 @@ export default NextAuth({
           body: JSON.stringify(credentials),
           headers: { 'Content-Type': 'application/json' },
         })
-        console.log('🚀 ~ file: [...nextauth].js ~ line 72 ~ authorize ~ res', res)
         const user = await res.json()
-        console.log('🚀 ~ file: [...nextauth].js ~ line 70 ~ authorize ~ user', user)
         // If no error and we have user data, return it
         if (res.ok && user) {
           // {token="xx"}
@@ -143,20 +138,44 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
 
-    async jwt(token, user) {
+    async jwt(token, user, account) {
       // Add access_token to the token right after signin
-      if (user?.token) {
+      // credential native
+      if (user?.comikaToken) {
+        token.accessToken = user.comikaToken
+      } else if (user?.token) {
         token.accessToken = user.token
       }
       return token
     },
-    // async signIn(user, account, profile) { return true },
+    async signIn(token, user, account, profile) {
+      if (user.provider === 'google'
+      && account.verified_email === true
+      && account.email.endsWith('@gmail.com')) {
+        const credentials = {
+          email: account.email,
+          name: account.name,
+          secretId: account.id,
+          photo: account.picture,
+        }
+        const res = await fetch(`${process.env.BASH_URL}/login-socialite`, {
+          method: 'POST',
+          body: JSON.stringify(credentials),
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const responseSocialite = await res.json()
+        if (res.ok && responseSocialite?.token) {
+          token.comikaToken = responseSocialite.token
+          return true
+        }
+        return `/auth/signin?errorNextAuth=login melalui google gagal karena ${responseSocialite.msg}`
+      }
+      return true
+    },
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
     // async jwt(prevToken, token) {
-    //   // console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ token', token)
-    //   // console.log('🚀 ~ file: [...nextauth].js ~ line 145 ~ jwt ~ prevToken', prevToken)
     //   // Initial call
     //   if (token) {
     //     return {
@@ -168,8 +187,6 @@ export default NextAuth({
     //   return prevToken
     // },
     session: async (session, token) => {
-      // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ token', token)
-      // console.log('🚀 ~ file: [...nextauth].js ~ line 157 ~ session: ~ session', session)
       session.accessToken = token.accessToken
 
       return session
