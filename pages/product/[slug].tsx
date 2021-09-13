@@ -40,7 +40,7 @@ export const Product:FunctionComponent<props> = ({ isMobile, itemstore }) => {
         {itemstore.images.length ? itemstore.images.map((image) => (
           <ImageProduct url={image.url} key={image.url} />
         ))
-          : <ImageProduct url="https://via.placeholder.com/62x62" />}
+          : <ImageProduct url="/background/download.webp" />}
 
       </SwipeableViews>
 

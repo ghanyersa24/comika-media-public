@@ -36,20 +36,20 @@ export const LoginPage = ({ providers }): ReactNode => {
     } = e.target
     setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
   }
+  const { callbackUrl } = router.query
+  const callbackUrlString = callbackUrl as string || '/'
+
   const handleSubmitLogin = (e) => {
     e.preventDefault()
     setIsLoading(true)
     setErrorMsg(null)
-    const { callbackUrl } = router.query
-    const callbackUrlString = callbackUrl as string
     signIn('credentials', { redirect: false, ...login, callbackUrlString }).then(
       (result) => {
         console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
         if (result?.error !== null) {
           setErrorMsg(result.error)
           setIsLoading(false)
-        } else if (callbackUrl) router.push(`${callbackUrl}`)
-        else router.push('/')
+        } else router.push(`${callbackUrlString}`)
       },
     )
   }
@@ -139,11 +139,11 @@ export const LoginPage = ({ providers }): ReactNode => {
         <div className="py-2 font-bold text-center text-gray-800 text-opacity-50">
           Or
         </div>
-        <div className="flex mt-2">
+        <div className="flex my-2">
           <button
             type="button"
             className="btn-secondary border-primary text-primary "
-            onClick={() => signIn('facebook')}
+            onClick={() => signIn('facebook', { redirect: true })}
           >
             <FaFacebookF className="mr-2 text-xl" />
             Facebook
@@ -151,12 +151,18 @@ export const LoginPage = ({ providers }): ReactNode => {
           <button
             type="button"
             className="text-red-700 border-2 border-red-700 btn-secondary "
-            onClick={() => signIn('google')}
+            onClick={() => signIn('google', { callbackUrl: callbackUrlString })}
           >
             <FaGooglePlusG className="mr-2 text-2xl" />
             Google
           </button>
         </div>
+        <p className="py-4 text-sm leading-relaxed text-center text-gray-500">
+          Don’t have an account?
+          <Link href="/auth/signup">
+            <a className="font-bold text-primary"> Sign up</a>
+          </Link>
+        </p>
       </form>
       <div className="relative hidden h-auto overflow-hidden bg-primary lg:block">
         <BackgroundLogin className="absolute " />

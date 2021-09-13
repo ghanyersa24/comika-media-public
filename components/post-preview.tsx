@@ -19,17 +19,17 @@ export default function PostPreview({
   } = post
 
   return (
-    <div className="text-textSecondary">
-      <div className="xs:mb-5 mb-2 relative">
+    <div className="md:rounded-lg md:shadow-md text-textSecondary">
+      <div className="relative mb-2 xs:mb-5">
         <CoverImageDekstop
           slug={slug}
           title={title}
           src={banner}
-          height={75}
-          width={153}
+          height={230}
+          width={345}
         />
         {isPremium ? (
-          <div className="lg:w-16 lg:h-16 w-8 h-8 absolute bottom-0 lg:ml-2">
+          <div className="absolute bottom-0 w-8 h-8 lg:w-16 lg:h-16 lg:ml-2">
             <Image
               src="/assets/blog/subscribe/premium_badge.png"
               alt="premium badge"
@@ -40,17 +40,17 @@ export default function PostPreview({
           </div>
         ) : null}
       </div>
-      <div className="xs:px-4 divide-y">
-        <h3 className=" mb-3 font-bold  xs:leading-loose xs:mt-4 ">
+      <div className="divide-y xs:px-4 md:px-4 md:pb-2 ">
+        <h3 className="mb-3 font-bold xs:leading-loose xs:mt-4 md:py-2">
           <Link as={`/posts/${slug}`} href="/posts/[slug]">
-            <a className="hover:underline text-gray-700 md:text-2xl text-sm line-clamp-2">
+            <a className="text-sm text-gray-700 hover:underline md:text-2xl line-clamp-2">
               {title}
             </a>
           </Link>
         </h3>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between md:py-2">
           <Avatar
-            className="text-xs md:text-base lg:text-lg font-medium pt-2  text-gray-800"
+            className="pt-2 text-xs font-medium text-gray-800 md:text-base lg:text-lg"
             name={Comika.name}
             picture={Comika.photo}
             date="17 Juni 2021"
@@ -59,10 +59,10 @@ export default function PostPreview({
           <BookmarkButton bookmarked={bookmarked} slug={slug} mutate={mutate} />
         </div>
       </div>
-      {/* <div className="text-lg mb-4">
+      {/* <div className="mb-4 text-lg">
         <DateFormatter dateString={date} />
       </div> */}
-      {/* <p className="text-lg leading-relaxed mb-4">{excerpt}</p> */}
+      {/* <p className="mb-4 text-lg leading-relaxed">{excerpt}</p> */}
     </div>
   )
 }

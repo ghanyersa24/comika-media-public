@@ -13,7 +13,7 @@ export default function Avatar({
     <div className={`flex items-center ${className}`}>
       <div className="w-8 h-8 mr-2 xs:w-12 xs:h-12 xs:mr-4">
         <Image
-          src={picture || 'https://via.placeholder.com/10'}
+          src={picture || '/background/download.webp'}
           alt={`photo profil ${name}`}
           layout="responsive"
           className="rounded-full"
