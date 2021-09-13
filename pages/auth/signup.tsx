@@ -16,7 +16,6 @@ import { SignUp } from '../../service/auth'
 export const LoginPage = ():ReactNode => {
   const router = useRouter()
   const [signup, setSignup] = useState<Signup|null>(null)
-  const [errorMsg, setErrorMsg] = useState<string>(null)
   const [submitSignupStatus, setSubmitSignupStatus] = useState('')
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -26,14 +25,12 @@ export const LoginPage = ():ReactNode => {
   }
   const handleSubmitSignUp = async (e) => {
     e.preventDefault()
-    setErrorMsg('')
     try {
       setSubmitSignupStatus('loading')
       await SignUp(signup)
       setSubmitSignupStatus('success')
       router.push('/auth/signin')
     } catch (error) {
-      setErrorMsg(error.msg)
       setSubmitSignupStatus('error')
     }
   }
@@ -51,11 +48,6 @@ export const LoginPage = ():ReactNode => {
         </div>
 
         <div className="mb-4">
-          {errorMsg ? (
-            <div className="p-2 mb-4 bg-red-200 rounded">
-              {errorMsg}
-            </div>
-          ) : null}
           <label
             htmlFor="name"
             className="block mb-2 font-bold text-gray-800 "

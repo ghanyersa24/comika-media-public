@@ -24,7 +24,7 @@ const titleDescription = {
     title: 'Terpopular', description: 'Artikel terpopuler saat ini',
   },
   createdAt: {
-    title: 'Semua Artikel', description: 'Semua artikel yang ada di komika',
+    title: 'Semua Artikel', description: 'Semua artikel yang ada di Comika Media',
   },
 }
 type Props= {
@@ -56,7 +56,7 @@ export default function Index(
   return (
     <Layout isMobile={isMobile}>
       <Head>
-        <title>Komika Media</title>
+        <title>Comika Media</title>
       </Head>
       {/* <Container> */}
       {isMobile ? (

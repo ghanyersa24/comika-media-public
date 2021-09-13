@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { AiFillCamera, AiOutlineLoading } from 'react-icons/ai'
 import { MdModeEdit } from 'react-icons/md'
 import { Profile } from '../../res/interface'
@@ -7,7 +7,6 @@ type ProfileCardProps = {
   profileData: Profile,
   canEdit: boolean,
   onEdit():void,
-  errorMsg:string,
   onSubmit():void,
   // eslint-disable-next-line no-unused-vars
   onChange(string, any): void;
@@ -18,10 +17,10 @@ export const ProfileCard = ({
   canEdit,
   onEdit,
   onSubmit,
-  errorMsg,
+
 }: ProfileCardProps): ReactElement => {
   const {
-    email, name, phone, address, postalCode, district, city, province, photo,
+    email, name, phone, address, postalCode, district, city, province, photo, birthdate,
   } = profileData || {}
   console.log('🚀 ~ file: profile.tsx ~ line 26 ~ profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
@@ -54,18 +53,19 @@ export const ProfileCard = ({
           /> */}
 
           <img alt="gambar" src={imagePreviewUrl || photo} className="w-32 h-32 rounded-full shadow lg:w-44 lg:h-44 " />
-          <input
-            className="hidden"
-            id="file-upload"
-            type="file"
-            disabled={canEdit}
-            name="photo"
-            onChange={handleChangeValue}
-          />
+
           <label
             htmlFor="file-upload"
             className="absolute bottom-0 p-0.5 text-3xl  rounded cursor-pointer lg:text-4xl right-3 lg:bottom-3 lg:right-2 text-primary hover:text-blue-900 "
           >
+            <input
+              className="hidden"
+              id="file-upload"
+              type="file"
+              disabled={canEdit}
+              name="photo"
+              onChange={handleChangeValue}
+            />
             <AiFillCamera />
           </label>
         </div>
@@ -133,7 +133,7 @@ export const ProfileCard = ({
           <input
             className=""
             type="date"
-            // value={phone}
+            value={birthdate}
             // onChange={handleChangeValue}
             placeholder=""
             name="birthdate"
@@ -215,11 +215,6 @@ export const ProfileCard = ({
             onChange={handleChangeValue}
           />
         </label>
-        {errorMsg ? (
-          <div className="p-2 mb-4 bg-red-200 rounded">
-            {errorMsg}
-          </div>
-        ) : null}
         <div className={!canEdit ? 'flex mt-8 justify-end ' : 'hidden'}>
           <button onClick={onEdit} type="button" className="px-4 py-2 mr-4 border rounded-md border-primary w-44">
             Batal

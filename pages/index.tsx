@@ -49,7 +49,7 @@ export default function Index(
   return (
     <Layout isMobile={isMobile}>
       <Head>
-        <title>Komika Media</title>
+        <title>Comika Media</title>
       </Head>
       {/* <Container> */}
       {isMobile ? (
@@ -75,22 +75,13 @@ export default function Index(
           <ItemStores digitalStores={digitalStores} isMobile={isMobile} />
         </ContainerStore>
         <MorePosts posts={pupularArticles} mutate={mutatePopularArticles} title="Artikel Terpopuler" description="Terpopuler di minggu ini" />
-        <ContainerStore
-          className="mb-8"
-          title="Merchandise"
-          titleDescription="Produk populer minggu ini"
-        >
-          {merchandiseStores?.map((popularStore) => (
-            <ItemStoreMobile
-              key={popularStore.id}
-              imageUrl={popularStore.images[0]?.url}
-              title={popularStore.name}
-              price={popularStore.price}
-              type={popularStore.Category.name}
-              onClick={() => router.push(`/product/${popularStore.slug}`)}
 
-            />
-          ))}
+        <ContainerStore
+          className="my-8"
+          title="Merchandise"
+          titleDescription="Merchandise populer minggu ini"
+        >
+          <ItemStores digitalStores={merchandiseStores} isMobile={isMobile} />
         </ContainerStore>
         <TitlePost title="Artikel Lainya" description="Lainya di minggu ini" />
         <RenderMoreArticle data={moreArticles} mutate={mutateMoreArticles} />

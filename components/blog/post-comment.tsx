@@ -4,14 +4,14 @@ import DateFormatter from '../date-formatter'
 import { TypePostCommentComponent, TypePostCommentAdd } from '../../res/interface'
 
 export const PostCommentLoading = (): ReactElement => (
-  <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-    <div className="animate-pulse flex space-x-4">
-      <div className="rounded-full bg-blue-400 h-12 w-12" />
-      <div className="flex-1 space-y-4 py-1">
-        <div className="h-4 bg-blue-400 rounded w-3/4" />
+  <div className="w-full max-w-sm p-4 mx-auto border border-blue-300 rounded-md shadow">
+    <div className="flex space-x-4 animate-pulse">
+      <div className="w-12 h-12 bg-blue-400 rounded-full" />
+      <div className="flex-1 py-1 space-y-4">
+        <div className="w-3/4 h-4 bg-blue-400 rounded" />
         <div className="space-y-2">
           <div className="h-4 bg-blue-400 rounded" />
-          <div className="h-4 bg-blue-400 rounded w-5/6" />
+          <div className="w-5/6 h-4 bg-blue-400 rounded" />
         </div>
       </div>
     </div>
@@ -28,8 +28,8 @@ export const PostCommentList = ({
       User, comment, createdAt, id,
     }) => (
       <div className="mb-8 " key={id}>
-        <div className="flex-row justify-between content-center flex">
-          <Avatar className="text-lg font-medium leading-9 text-gray-700 mb-4 " name={User.name} picture={User.photo} />
+        <div className="flex flex-row content-center justify-between">
+          <Avatar className="mb-4 text-lg font-medium leading-9 text-gray-700 " name={User.name} picture={User.photo} />
           <span className="text-lg font-medium leading-9 text-gray-700"><DateFormatter dateString={createdAt} /></span>
         </div>
         <p>
@@ -42,7 +42,7 @@ export const PostCommentList = ({
   }
   return (
     <>
-      <h6 className="text-4xl font-medium leading-10 text-primary mb-8">Komentar</h6>
+      <h6 className="mb-8 text-4xl font-medium leading-10 text-primary">Komentar</h6>
       {content}
     </>
 
@@ -50,19 +50,15 @@ export const PostCommentList = ({
 }
 
 export const PostCommentAdd = ({
-  isLoading, onChange, onSubmit, error, comment,
-}:TypePostCommentAdd):ReactElement => {
-  console.log('🚀 ~ file: post-comment.tsx ~ line 54 ~ status', isLoading, error)
-  return (
-    <>
-      <h6 className="text-xl font-medium leading-10 text-primary mb-4 mt-8">Tulis Komentar</h6>
-      {error?.msg}
-      <textarea value={comment} onChange={onChange} rows={5} className="inline-flex items-start justify-start pl-5  pt-4 w-full  border rounded-md border-gray-200" />
-      <div className="flex justify-end ">
-        <button type="button" className="btn-primary" onClick={onSubmit}>Kirim</button>
-      </div>
-    </>
-  )
-}
+  isLoading, onChange, onSubmit, comment,
+}:TypePostCommentAdd):ReactElement => (
+  <>
+    <h6 className="mt-8 mb-4 text-xl font-medium leading-10 text-primary">Tulis Komentar</h6>
+    <textarea value={comment} onChange={onChange} rows={5} className="inline-flex items-start justify-start w-full pt-4 pl-5 border border-gray-200 rounded-md" />
+    <div className="flex justify-end ">
+      <button type="button" className="btn-primary" onClick={onSubmit}>Kirim</button>
+    </div>
+  </>
+)
 
 export default PostCommentList

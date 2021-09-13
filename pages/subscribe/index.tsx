@@ -32,7 +32,6 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const [session] = useSession()
   if (!session) { signIn() }
   // eslint-disable-next-line no-unused-vars
-  const [errorMsgSubscribe, setErrorMsgSubscribe] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleSubscribe = async (subscribePlan: string) => {
@@ -52,7 +51,6 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
     } catch (error) {
       console.log(error)
       setIsLoading(false)
-      setErrorMsgSubscribe(error.message)
     }
   }
   const SubscriptionContent = ([
@@ -183,8 +181,8 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
 
   )
   return (
-    <div className="lg:my-24 sm:px-8 max-w-screen-xl mx-auto min-h-screen">
-      <div className="md:block hidden">
+    <div className="max-w-screen-xl min-h-screen mx-auto lg:my-24 sm:px-8">
+      <div className="hidden md:block">
         <p className="text-4xl font-medium leading-10 text-center text-blue-900">
           Mengapa kamu harus subscribe?
         </p>
@@ -193,7 +191,7 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
           bekarya
         </p>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {isMobile ? <SubscriptionMobile content={SubscriptionContent} /> : SubscriptionContent}
       </div>
     </div>

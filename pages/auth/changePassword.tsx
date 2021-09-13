@@ -17,7 +17,6 @@ import { client } from '../../lib/clientRaw'
 export const LoginPage = (): ReactNode => {
   const router = useRouter()
   const [postData, setLogin] = useState<{password:string, passwordConfirmation:string} | null>(null)
-  const [errorMsg, setErrorMsg] = useState<string>(router?.query?.errorNextAuth as string)
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   // if (session) router.push('/')
@@ -31,13 +30,11 @@ export const LoginPage = (): ReactNode => {
   const handleSubmitLogin = async (e) => {
     e.preventDefault()
     setIsLoading(true)
-    setErrorMsg(null)
     try {
       await client.put('/account/change-password', postData)
       setIsLoading(false)
       router.back()
     } catch (error) {
-      setErrorMsg(error.msg)
       setIsLoading(false)
     }
   }
@@ -56,9 +53,6 @@ export const LoginPage = (): ReactNode => {
         </div>
 
         <div className="mb-4">
-          {errorMsg ? (
-            <div className="max-w-full p-2 mb-4 bg-red-200 rounded">{errorMsg}</div>
-          ) : null}
           <label
             htmlFor="Password"
             className="relative block mt-4 mb-2 font-bold text-gray-800"

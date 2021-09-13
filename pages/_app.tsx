@@ -5,7 +5,10 @@ import { Provider } from 'next-auth/client'
 import type { AppProps /* , AppContext */ } from 'next/app'
 import { ReactElement } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
 import { store } from '../store'
+
+import 'react-toastify/dist/ReactToastify.css'
 
 function MyApp({ Component, pageProps }: AppProps):ReactElement {
   const router = useRouter()
@@ -26,8 +29,8 @@ function MyApp({ Component, pageProps }: AppProps):ReactElement {
             revalidateOnFocus: false,
           }}
         >
-
           <Component {...pageProps} />
+          <ToastContainer />
 
         </SWRConfig>
       </Provider>
