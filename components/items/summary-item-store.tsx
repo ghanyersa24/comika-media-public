@@ -9,7 +9,7 @@ const SummaryItemStore = (props) => {
           height={82}
           width={82}
           layout="fixed"
-          src="https://via.placeholder.com/62x62"
+          src="/background/download.webp"
           alt="Gambar "
           className="rounded-lg"
         />

@@ -17,7 +17,7 @@ export function CoverImageDekstop({
       })}
       layout="responsive"
       placeholder="blur"
-      blurDataURL="https://via.placeholder.com/10"
+      blurDataURL="/background/download.webp"
       width={width}
       height={height}
     />
@@ -48,6 +48,8 @@ export function CoverImageMobile({
       className={cn('shadow-sm', {
         'hover:shadow-md transition-shadow duration-200': slug,
       })}
+      placeholder="blur"
+      blurDataURL="/background/download.webp"
       layout="responsive"
       width={width}
       height={height}

@@ -9,8 +9,17 @@ export const ItemDekstop = ({ url, link }) => (
   <Link href={link}>
     <a>
       <div className="w-full ">
-        {/* <img src={url} alt="Gambar Intro" className="w-full object-cover" /> */}
-        <Image height={511} width={1519} layout="responsive" src={url} alt="Gambar Intro" className="w-full object-cover" />
+        {/* <img src={url} alt="Gambar Intro" className="object-cover w-full" /> */}
+        <Image
+          height={480}
+          placeholder="blur"
+          blurDataURL="/background/download.webp"
+          width={1440}
+          layout="responsive"
+          src={url || '/background/download.webp'}
+          alt="Gambar Intro"
+          className="object-cover w-full"
+        />
       </div>
     </a>
   </Link>
@@ -31,7 +40,7 @@ class Pagination extends React.Component {
       children.push(
         // <PaginationDot key={i} index={i} active={i === index} onClick={this.handleClick} />,
         // eslint-disable-next-line jsx-a11y/control-has-associated-label
-        <button type="button" key={i} onClick={this.handleClick} value={i} className="rounded-full mx-1 shadow bg-white md:w-4 md:h-4 focus:bg-primary b-0 focus:ring-0 focus:outline-none " />,
+        <button type="button" key={i} onClick={this.handleClick} value={i} className="mx-1 bg-white rounded-full shadow md:w-4 md:h-4 focus:bg-primary b-0 focus:ring-0 focus:outline-none " />,
       )
     }
 
@@ -43,10 +52,10 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 export function IntroDekstop() {
   const [index, setIndex] = useState(0)
   const { data: jumbotrons, isLoading } = GetJumbotron()
-  if (isLoading) return <div className="w-full h-96 bg-gray-500 animate-pulse" />
+  if (isLoading) return <ItemDekstop url={null} link="/" />
   const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isDesktop)
   return (
-    <section className="mb-4 mt-16 relative">
+    <section className="relative mt-16 mb-4">
       <AutoPlaySwipeableViews
         enableMouseEvents
         className="h-4/5"
@@ -58,7 +67,7 @@ export function IntroDekstop() {
           <ItemDekstop url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>
-      <div className="absolute bottom-16 flex left-16 ">
+      <div className="absolute flex bottom-16 left-16 ">
         <Pagination
           dots={filteredJumbotrons.length}
           index={index}
@@ -74,7 +83,16 @@ export const ItemMobile = ({ url, link }) => (
   <Link href={link}>
     <a>
       <div className="w-full">
-        <Image height={184} width={350} layout="responsive" src={url} alt="Gambar Intro" className="object-cover rounded-lg" />
+        <Image
+          height={184}
+          width={350}
+          layout="responsive"
+          placeholder="blur"
+          blurDataURL="/background/download.webp"
+          src={url || '/background/download.webp'}
+          alt="Gambar Intro"
+          className="object-cover rounded-lg"
+        />
       </div>
     </a>
   </Link>
@@ -84,10 +102,9 @@ export function IntroMobile() {
   const [index, setIndex] = useState(0)
   const { data: jumbotrons, isLoading } = GetJumbotron()
   console.log('🚀 ~ file: intro.jsx ~ line 84 ~ IntroMobile ~ jumbotrons', jumbotrons)
-  if (isLoading) return <div />
-  const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isPhone)
+  const filteredJumbotrons = jumbotrons?.filter((jumbotron) => jumbotron.isPhone)
   return (
-    <section className="mb-4 hp:-mt-36  -mt-28 relative">
+    <section className="relative mb-4 hp:-mt-36 -mt-28">
       <AutoPlaySwipeableViews
         enableMouseEvents
         className="px-3"
@@ -96,13 +113,13 @@ export function IntroMobile() {
         onChangeIndex={(i) => setIndex(i)}
         slideClassName="px-1"
       >
-        {filteredJumbotrons.map((jumbotron) => (
+        {isLoading ? <ItemMobile url={null} link="/" /> : filteredJumbotrons.map((jumbotron) => (
           <ItemMobile url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>
-      <div className="absolute bottom-16 flex left-16 ">
+      <div className="absolute flex bottom-16 left-16 ">
         <Pagination
-          dots={filteredJumbotrons.length}
+          dots={filteredJumbotrons?.length || 1}
           index={index}
           onChangeIndex={(i) => {
             setIndex(i)

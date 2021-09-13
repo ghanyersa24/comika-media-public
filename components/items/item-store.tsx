@@ -12,7 +12,7 @@ type props = {
 }
 export const ItemStoreMobile: FunctionComponent<props> = ({
   onClick,
-  imageUrl = 'https://via.placeholder.com/62x62',
+  imageUrl = '/background/download.webp',
   title = 'null',
   price = 'null',
   type,
@@ -20,8 +20,8 @@ export const ItemStoreMobile: FunctionComponent<props> = ({
   <button type="button" onClick={onClick} className="flex w-full h-24 my-2 bg-white rounded-lg shadow hover:bg-gray-100">
     <div className="flex-initial w-24 h-24">
       <Image
-        height={82}
-        width={82}
+        height={328}
+        width={328}
         layout="responsive"
         src={imageUrl}
         alt="Gambar "
@@ -40,29 +40,29 @@ export const ItemStoreMobile: FunctionComponent<props> = ({
 
 export const ItemStoreDekstop: FunctionComponent<props> = ({
   onClick,
-  imageUrl = 'https://via.placeholder.com/62x62',
+  imageUrl = '/background/download.webp',
   title = 'null',
   price = 'null',
   type,
 }) => (
-  <button type="button" onClick={onClick} className="mb-4 rounded-lg shadow-lg hover:shadow-xl">
-    <div className="flex flex-col w-full bg-white rounded-lg hover:bg-gray-100">
+  <button type="button" onClick={onClick} className="p-2 mb-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50">
+    <div className="flex flex-col w-full ">
       <div className="w-full">
         <Image
-          height={82}
-          width={82}
+          height={328}
+          width={328}
           layout="responsive"
           src={imageUrl}
           alt="Gambar "
-          className="rounded-t-lg "
+          className="rounded-lg "
         />
       </div>
-      <div className="flex px-4 py-4">
+      <div className="flex py-4">
         <div className="flex flex-col items-start">
-          <div className="text-lg font-medium leading-9 text-black text-opacity-90">
+          <div className="text-2xl font-medium leading-9 text-black text-opacity-90">
             {title}
           </div>
-          <div className="text-base font-medium leading-tight text-gray-500">{price}</div>
+          <div className="text-lg font-medium leading-normal text-primary">{price}</div>
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@ export const ItemStores: FunctionComponent<{
       />
     ))
       : (
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 hp:grid-cols-2 xs:grid-cols-2 gap-x-4 md:grid-cols-3 md:gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-16">
           { digitalStores?.map((popularStore) => (
             <ItemStoreDekstop
               onClick={() => router.push(`/product/${popularStore.slug}`)}
