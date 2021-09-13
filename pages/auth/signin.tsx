@@ -1,11 +1,16 @@
-import React, { ReactNode, useState } from 'react'
-import { signIn } from 'next-auth/client'
+import React, { ReactNode, useEffect, useState } from 'react'
+import {
+  signIn,
+  getProviders, useSession,
+} from 'next-auth/client'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { FaSpinner } from 'react-icons/fa'
+import { FaFacebookF, FaSpinner, FaGooglePlusG } from 'react-icons/fa'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { GetServerSideProps } from 'next'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Login } from '../../res/interface'
+
 // enum Severity {
 //   error='bg-red-200',
 //   success='bg-green-200',
@@ -14,12 +19,17 @@ import { Login } from '../../res/interface'
 //   0:Severity,
 //   1:string
 // }
-export const LoginPage = (): ReactNode => {
+export const LoginPage = ({ providers }): ReactNode => {
+  console.log('🚀 ~ file: signin.tsx ~ line 23 ~ LoginPage ~ providers', providers)
   const router = useRouter()
+  console.log('🚀 ~ file: signin.tsx ~ line 25 ~ LoginPage ~ router', router)
   const [login, setLogin] = useState<Login | null>(null)
-  const [errorMsg, setErrorMsg] = useState<string>(null)
+  const [errorMsg, setErrorMsg] = useState<string>(router?.query?.errorNextAuth as string)
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: signin.tsx ~ line 30 ~ LoginPage ~ session', session)
+  // if (session) router.push('/')
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
@@ -44,10 +54,10 @@ export const LoginPage = (): ReactNode => {
     )
   }
   return (
-    <div className="grid lg:grid-cols-2  min-h-screen relative bg-primary lg:bg-white">
-      <BackgroundLogin className="block lg:hidden" />
-      <form onSubmit={handleSubmitLogin} className="bg-white absolute bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col lg:min-w-max w-full lg:w-2/3 mx-auto place-content-center">
-        <div className="hidden  lg:flex mb-8">
+    <div className="relative grid min-h-screen lg:grid-cols-2 bg-primary lg:bg-white">
+      <BackgroundLogin className="fixed block lg:hidden" />
+      <form onSubmit={handleSubmitLogin} className="absolute bottom-0 flex flex-col w-full px-8 pt-6 pb-8 mx-auto overflow-auto bg-white lg:static rounded-t-2xl lg:rounded lg:mb-4 lg:w-2/3 place-content-center">
+        <div className="hidden mb-8 lg:flex">
           <ComikamediaNavbar className="w-2/3" />
         </div>
         <div className="mb-8">
@@ -59,15 +69,15 @@ export const LoginPage = (): ReactNode => {
 
         <div className="mb-4">
           {errorMsg ? (
-            <div className="bg-red-200 p-2 mb-4 rounded">{errorMsg}</div>
+            <div className="max-w-full p-2 mb-4 bg-red-200 rounded">{errorMsg}</div>
           ) : null}
           <label
             htmlFor="email"
-            className="block text-gray-800  font-bold mb-2 mt-4 "
+            className="block mt-4 mb-2 font-bold text-gray-800 "
           >
             Email
             <input
-              className="w-full py-2 px-3  mt-3"
+              className="w-full px-3 py-2 mt-3"
               type="text"
               onChange={handleChangeValue}
               placeholder="Email"
@@ -77,11 +87,11 @@ export const LoginPage = (): ReactNode => {
           </label>
           <label
             htmlFor="Password"
-            className="block text-gray-800  font-bold mb-2 mt-4 relative"
+            className="relative block mt-4 mb-2 font-bold text-gray-800"
           >
             Password
             <input
-              className="w-full py-2 px-3  mt-3"
+              className="w-full px-3 py-2 mt-3"
               id="password"
               type={isPasswordShown ? 'text' : 'password'}
               name="password"
@@ -101,18 +111,18 @@ export const LoginPage = (): ReactNode => {
         <div className="flex items-center justify-between mt-4">
           <label
             htmlFor="rememberMe"
-            className="block  text-gray-800  font-bold "
+            className="block font-bold text-gray-800 "
           >
             <input
               type="checkbox"
               id="rememberMe"
-              className="leading-loose mr-2"
+              className="mr-2 leading-loose"
             />
             Remember Me
           </label>
           <Link href="/auth/forget">
             <a
-              className="inline-block align-baseline font-bold  text-blue hover:text-blue-darker"
+              className="inline-block font-bold align-baseline text-blue hover:text-blue-darker"
             >
               Forgot Password?
             </a>
@@ -120,17 +130,46 @@ export const LoginPage = (): ReactNode => {
 
         </div>
         <button
-          className="btn-primary font-bold px-6 py-4 mt-8 flex  justify-center"
+          className="flex justify-center px-6 py-4 mt-8 font-bold btn-primary"
           type="submit"
         >
-          {isLoading && <FaSpinner className="animate-spin h-5 w-5 mr-3" /> }
+          {isLoading && <FaSpinner className="w-5 h-5 mr-3 animate-spin" /> }
           Sign In
         </button>
+        <div className="py-2 font-bold text-center text-gray-800 text-opacity-50">
+          Or
+        </div>
+        <div className="flex mt-2">
+          <button
+            type="button"
+            className="btn-secondary border-primary text-primary "
+            onClick={() => signIn('facebook')}
+          >
+            <FaFacebookF className="mr-2 text-xl" />
+            Facebook
+          </button>
+          <button
+            type="button"
+            className="text-red-700 border-2 border-red-700 btn-secondary "
+            onClick={() => signIn('google')}
+          >
+            <FaGooglePlusG className="mr-2 text-2xl" />
+            Google
+          </button>
+        </div>
       </form>
-      <div className="bg-primary overflow-hidden hidden lg:block h-screen">
-        <BackgroundLogin className="" />
+      <div className="relative hidden h-auto overflow-hidden bg-primary lg:block">
+        <BackgroundLogin className="absolute " />
       </div>
     </div>
   )
+}
+
+// This is the recommended way for Next.js 9.3 or newer
+export const getServerSideProps: GetServerSideProps = async () => {
+  const providers = await getProviders()
+  return {
+    props: { providers },
+  }
 }
 export default LoginPage
