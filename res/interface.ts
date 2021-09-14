@@ -133,3 +133,16 @@ export type ItemStoreType ={
       }
   ]
 }
+
+export type address ={
+  'id': string,
+  'name': string,
+  'address': string,
+  'provinceId': number,
+  'province': string,
+  'cityId': number,
+  'city': string,
+  'type': string,
+  'postalCode': string,
+  'phone': string
+}

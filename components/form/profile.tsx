@@ -11,25 +11,23 @@ type ProfileCardProps = {
   // eslint-disable-next-line no-unused-vars
   onChange(string, any): void;
 };
+
 export const ProfileCard = ({
   profileData,
   onChange,
   canEdit,
   onEdit,
   onSubmit,
-
 }: ProfileCardProps): ReactElement => {
   const {
     email, name, phone, address, postalCode, district, city, province, photo, birthdate,
   } = profileData || {}
-  console.log('🚀 ~ file: profile.tsx ~ line 26 ~ profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       // eslint-disable-next-line no-shadow
       type, checked, name, value, files,
     } = e.target
-    console.log('🚀 ~ file: profile.tsx ~ line 37 ~ handleChangeValue ~ files', files)
     if (type === 'checkbox')onChange(name, checked)
     else if (files?.length != null) {
       const reader = new FileReader()
