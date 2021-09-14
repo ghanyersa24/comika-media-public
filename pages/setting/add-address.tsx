@@ -26,9 +26,7 @@ const City = (props) => {
 }
 
 const App = ():ReactElement => {
-  console.log('App -> App', App)
   const { data: provinces, error, mutate } = useSWR('/store/ongkir/master-province', client.get)
-  console.log('province', provinces)
   return (
     <div className="pt-10">
       <TopNavbarWithBackButton title="Tambah Alamat Baru" />
