@@ -23,6 +23,7 @@ module.exports = {
         warning: '#EDAA21',
         bgGray: '#F8FAFF',
         bgGrayLight: '#F9F9F9',
+        bgBlueLight: '#F8FAFF',
       },
       spacing: { 28: '7rem' },
       letterSpacing: {

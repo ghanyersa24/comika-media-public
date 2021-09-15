@@ -1,13 +1,16 @@
 import { useRouter } from 'next/router'
-import { ReactElement, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { TiTick } from 'react-icons/ti'
 import SwipeableViews from 'react-swipeable-views'
 import { GetServerSideProps } from 'next'
 import { signIn, useSession } from 'next-auth/client'
+import { toast } from 'react-toastify'
+import Image from 'next/image'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
 import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
 import { subscribe } from '../../service/subscribe'
+import Layout from '../../components/layout'
 
 const SubscriptionMobile = ({ content: contents }) => (
   <section className="">
@@ -30,27 +33,33 @@ const SubscriptionMobile = ({ content: contents }) => (
 
 export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const [session] = useSession()
-  if (!session) { signIn() }
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleSubscribe = async (subscribePlan: string) => {
-    try {
-      setIsLoading(true)
-      console.log()
-      const key = localStorage.getItem('komika-key')
-      if (key !== 'undefined') {
-        localStorage.getItem('komika-key')
-        // eslint-disable-next-line no-unused-vars
-        const { msg, data } = await subscribe(subscribePlan)
-        window.open(data.redirect_url)
-      } else {
-        router.push('/auth/signin')
+    if (!session) {
+      toast.info('Harap Login terlebih dahulu', {
+        position: 'bottom-right',
+        onClose: () => signIn(),
+      })
+    } else {
+      try {
+        setIsLoading(true)
+        console.log()
+        const key = localStorage.getItem('komika-key')
+        if (key !== 'undefined') {
+          localStorage.getItem('komika-key')
+          // eslint-disable-next-line no-unused-vars
+          const { msg, data } = await subscribe(subscribePlan)
+          window.open(data.redirect_url)
+        } else {
+          router.push('/auth/signin')
+        }
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error)
+        setIsLoading(false)
       }
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error)
-      setIsLoading(false)
     }
   }
   const SubscriptionContent = ([
@@ -180,21 +189,41 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   ]
 
   )
+  if (isMobile) {
+    return (
+      <Layout isMobile>
+        <div className="relative bg-primary">
+          <p className="py-6 text-xl font-bold leading-relaxed text-center text-white ">Subscribe</p>
+          <img
+            src="/background/Group48393.svg"
+            className="absolute top-0 left-0 z-0 h-20"
+          />
+          <div className="relative max-w-screen-xl min-h-screen pb-16 mx-auto lg:my-24 sm:px-8 bg-bgBlueLight rounded-t-xl">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+              <SubscriptionMobile content={SubscriptionContent} />
+            </div>
+          </div>
+        </div>
+      </Layout>
+    )
+  }
   return (
-    <div className="max-w-screen-xl min-h-screen mx-auto lg:my-24 sm:px-8">
-      <div className="hidden md:block">
-        <p className="text-4xl font-medium leading-10 text-center text-blue-900">
-          Mengapa kamu harus subscribe?
-        </p>
-        <p className="text-2xl leading-loose text-center text-gray-500">
-          Karena dengan kamu subcribe kamu telah membantu kami agar tetap terus
-          bekarya
-        </p>
+    <Layout isMobile={false}>
+      <div className="max-w-screen-xl min-h-screen mx-auto mt-8 lg:my-24 sm:px-8">
+        <div className="hidden md:block">
+          <p className="text-4xl font-medium leading-10 text-center text-blue-900">
+            Mengapa kamu harus subscribe?
+          </p>
+          <p className="text-2xl leading-loose text-center text-gray-500">
+            Karena dengan kamu subcribe kamu telah membantu kami agar tetap terus
+            bekarya
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          { SubscriptionContent}
+        </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        {isMobile ? <SubscriptionMobile content={SubscriptionContent} /> : SubscriptionContent}
-      </div>
-    </div>
+    </Layout>
   )
 }
 
