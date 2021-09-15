@@ -63,7 +63,7 @@ export const LoginPage = ({ providers }): ReactNode => {
         <div className="mb-8">
           <p className="text-3xl font-medium leading-9 text-gray-800">Login </p>
           <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">
-            Log in to Comicamedia
+            Log in to Comika Media
           </p>
         </div>
 
