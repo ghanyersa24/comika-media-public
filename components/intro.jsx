@@ -53,7 +53,7 @@ export function IntroDekstop() {
   const [index, setIndex] = useState(0)
   const { data: jumbotrons, isLoading } = GetJumbotron()
   if (isLoading) return <ItemDekstop url={null} link="/" />
-  const filteredJumbotrons = jumbotrons.filter((jumbotron) => jumbotron.isDesktop)
+  const filteredJumbotrons = jumbotrons?.filter((jumbotron) => jumbotron.isDesktop)
   return (
     <section className="relative mt-16 mb-4">
       <AutoPlaySwipeableViews
