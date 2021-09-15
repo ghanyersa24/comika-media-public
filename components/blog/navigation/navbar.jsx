@@ -11,7 +11,7 @@ import { Get as GetProfile } from '../../../service/user-profile'
 import { SearchBar } from './search-bar'
 
 const navigation = [
-  { name: 'Home', href: '#', current: true },
+  { name: 'Home', href: '/', current: true },
   { name: 'Artikel', href: '/article', current: false },
   { name: 'Store', href: '/store', current: false },
   { name: 'Subscribe', href: '/subscribe', current: false },
