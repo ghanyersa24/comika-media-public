@@ -12,7 +12,7 @@ export function CoverImageDekstop({
     <Image
       src={src}
       alt={`Cover Image for ${title}`}
-      className={cn('shadow-sm rounded-md', {
+      className={cn('shadow-sm rounded-md object-cover', {
         'hover:shadow-md transition-shadow duration-200': slug,
       })}
       layout="responsive"
@@ -45,7 +45,7 @@ export function CoverImageMobile({
     <Image
       src={src}
       alt={`Cover Image for ${title}`}
-      className={cn('shadow-sm', {
+      className={cn('shadow-sm object-cover', {
         'hover:shadow-md transition-shadow duration-200': slug,
       })}
       placeholder="blur"

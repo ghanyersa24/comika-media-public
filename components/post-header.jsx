@@ -16,7 +16,7 @@ export function PostHeaderDekstop({
   return (
     <>
       <PostTitle>{title}</PostTitle>
-      <div className="flex justify-between  md:mb-12">
+      <div className="flex justify-between md:mb-12">
         <div className="flex flex-row items-center">
           <div>
             <Avatar className="text-lg font-medium leading-9 text-primary " name={Comika.name} picture={Comika.photo} />
@@ -76,7 +76,7 @@ export function PostHeaderMobile({
           <BiArrowBack />
         </button>
         <div className="z-10 relaive ">
-          <CoverImageMobile title={title} src={coverImage} height={720} width={720} />
+          <CoverImageMobile title={title} src={coverImage} height={2} width={3} />
         </div>
 
         <div className="relative z-20 px-4 py-2 mx-5 -mt-16 bg-white rounded-lg shadow">
