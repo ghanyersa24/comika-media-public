@@ -35,13 +35,13 @@ export const SubsribeItem = ({
       <div
         className={`rounded-t-lg h-3 relative -top-1   ${headBgColor}`}
       />
-      <div className="p-8">
-        <p className=" text-2xl lg:text-3xl font-bold  text-primary">{title}</p>
-        <p className="text-2xl lg:text-3xl font-medium lg:mt-4  text-gray-700">
+      <div className="p-4 md:p-8">
+        <p className="text-2xl font-bold lg:text-3xl text-primary">{title}</p>
+        <p className="text-2xl font-medium text-gray-700 lg:text-3xl lg:mt-4">
           Rp
           {price}
         </p>
-        <p className=" text-base lg:text-lg font-medium lg:mt-4  text-gray-500">
+        <p className="text-base font-medium text-gray-500 lg:text-lg lg:mt-4">
           <AiOutlineClockCircle className="inline mr-2" />
           {until}
         </p>
@@ -52,7 +52,7 @@ export const SubsribeItem = ({
           }
           onClick={onClick}
         >
-          <p className="flex-1 h-full text-xl py-1 leading-loose text-center text-white">
+          <p className="flex-1 h-full py-1 text-xl leading-loose text-center text-white">
             {buttonText}
           </p>
         </button>

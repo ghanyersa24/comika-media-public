@@ -9,10 +9,10 @@ export const ListCustomPrefix = (
   }:ListCustomPrefixProps,
 ):ReactElement => (
   <div className={className}>
-    <p className="lg:text-2xl text-xl leading-loose text-gray-700 mt-2">{label}</p>
+    <p className="mt-2 text-lg leading-loose text-gray-700 lg:text-2xl">{label}</p>
     <ul className=".list-inside list-none">
       {contents.map((content) => (
-        <li className="text-lg lg:leading-loose text-gray-500" key={content}>
+        <li className="text-base text-gray-500 md:text-lg lg:leading-loose" key={content}>
           {prefixIcon}
           {content}
         </li>
