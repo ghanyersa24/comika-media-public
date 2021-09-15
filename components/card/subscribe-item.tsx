@@ -35,7 +35,7 @@ export const SubsribeItem = ({
       <div
         className={`rounded-t-lg h-3 relative -top-1   ${headBgColor}`}
       />
-      <div className="p-4 md:p-8">
+      <div className="p-6 md:p-8">
         <p className="text-2xl font-bold lg:text-3xl text-primary">{title}</p>
         <p className="text-2xl font-medium text-gray-700 lg:text-3xl lg:mt-4">
           Rp
