@@ -5,12 +5,11 @@ import SwipeableViews from 'react-swipeable-views'
 import { GetServerSideProps } from 'next'
 import { signIn, useSession } from 'next-auth/client'
 import { toast } from 'react-toastify'
-import Image from 'next/image'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
 import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
-import { subscribe } from '../../service/subscribe'
 import Layout from '../../components/layout'
+import { client } from '../../lib/clientRaw'
 
 const SubscriptionMobile = ({ content: contents }) => (
   <section className="">
@@ -50,15 +49,16 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
         if (key !== 'undefined') {
           localStorage.getItem('komika-key')
           // eslint-disable-next-line no-unused-vars
-          const { msg, data } = await subscribe(subscribePlan)
+          const { msg, data } = await client.post('/payment/subscribe', { package: subscribePlan })
           window.open(data.redirect_url)
         } else {
           router.push('/auth/signin')
         }
         setIsLoading(false)
       } catch (error) {
-        console.log(error)
-        setIsLoading(false)
+        setTimeout(() => {
+          if (error.msg === 'silahkan lengkapi data profile terlebih dahulu') router.push('/setting/profile')
+        }, 3000)
       }
     }
   }
