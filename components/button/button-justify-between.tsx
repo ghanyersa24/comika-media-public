@@ -9,7 +9,7 @@ export const ButtonJustifyBetween = (
   <button
     type="button"
     onClick={onClick}
-    className="flex justify-between flex-1 w-full h-full py-2 pl-4 text-base leading-loose text-center text-gray-700 border-t-2 border-gray-200 hover:bg-gray-100 lg:text-2xl"
+    className="flex justify-between flex-1 w-full h-full py-2 pl-4 text-base leading-loose text-center text-gray-700 border-t-2 border-gray-200 hover:bg-gray-100 md:text-xl"
   >
     <span className="">
       {leftcontent}
