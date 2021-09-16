@@ -11,7 +11,7 @@ import { Get as GetProfile } from '../../../service/user-profile'
 import { SearchBar } from './search-bar'
 
 const navigation = [
-  { name: 'Home', href: '#', current: true },
+  { name: 'Home', href: '/', current: true },
   { name: 'Artikel', href: '/article', current: false },
   { name: 'Store', href: '/store', current: false },
   { name: 'Subscribe', href: '/subscribe', current: false },
@@ -139,8 +139,7 @@ export const SideBar = ({ isShowing, session }) => (
         </div>
         <div className="pt-4 divide-y ">
           <div className="flex flex-col items-center ">
-            {/* <img src="/assets/logo/comikamedia.svg"
-            className="w-full px-2 " alt="logo komika" /> */}
+
             <Comikamedia className="w-full px-4 " />
             <span className="py-4 text-lg font-medium text-gray-300 ">Tempat mencari kebahagiaan</span>
           </div>
@@ -188,14 +187,14 @@ export const SideBar = ({ isShowing, session }) => (
 
 export default function Navbar() {
   const [session] = useSession()
-  const { data } = GetProfile()
+  const { data } = session ? GetProfile() : { data: null }
 
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
       {({ open }) => (
         <>
-          <div className="pl-4 pr-2 mx-auto  sm:px-6 lg:px-8">
+          <div className="pl-4 pr-2 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 ">
               <div className="inset-y-0 left-0 flex items-center ">
                 {/* Mobile menu button */}
@@ -216,7 +215,7 @@ export default function Navbar() {
                   </a>
                 </Link>
               </div>
-              <div className="flex items-center text-blue-500  sm:pr-4">
+              <div className="flex items-center text-blue-500 sm:pr-4">
                 <SearchBar className="" isMobile={false} searchValue="" />
                 <SocialMediaLogo className="hidden mt-1 mr-4 text-xl fill-current text-primary sm:block" />
                 <div className="hidden sm:block">

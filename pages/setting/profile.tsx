@@ -13,24 +13,21 @@ export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   const { data, isLoading, mutate } = GetProfile()
   const [canEdit, setCanEdit] = useState(true)
   const [profileData, setProfileData] = useState<ProfileType|null>()
-  const [errorMsg, setErrorMsg] = useState<string>(null)
 
   useEffect(() => {
     if (data && !isLoading) setProfileData(data)
   }, [data, isLoading])
   const handleEdit = () => {
-    setErrorMsg(null)
     setCanEdit(!canEdit)
   }
   const handleSubmit = async () => {
     try {
-      setErrorMsg(null)
       const result = await UpdateProfile(profileData)
       mutate()
       setCanEdit(true)
       console.log('🚀 ~ file: profile.tsx ~ line 24 ~ handleSubmit ~ result', result)
     } catch (error) {
-      setErrorMsg(error.msg)
+      console.log('handleSubmit -> error', error)
     }
   }
 
@@ -48,7 +45,6 @@ export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
           canEdit={canEdit}
           onEdit={handleEdit}
           onSubmit={handleSubmit}
-          errorMsg={errorMsg}
         />
 
       </div>

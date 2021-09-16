@@ -1,7 +1,8 @@
 import Image from 'next/image'
+import { ReactElement } from 'react'
 
-const SummaryItemStore = (props) => {
-  console.log('🚀 ~ file: summary-item-store.tsx ~ line 2 ~ SummaryItemStore ~ props', props)
+const SummaryItemStore = ():ReactElement => {
+  console.log('SummaryItemStore')
   return (
     <div className="flex">
       <div className="flex-initial">

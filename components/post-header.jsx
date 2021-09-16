@@ -16,18 +16,18 @@ export function PostHeaderDekstop({
   return (
     <>
       <PostTitle>{title}</PostTitle>
-      <div className=" md:mb-12 flex justify-between ">
+      <div className="flex justify-between md:mb-12">
         <div className="flex flex-row items-center">
           <div>
-            <Avatar className="text-primary text-lg font-medium leading-9 " name={Comika.name} picture={Comika.photo} />
+            <Avatar className="text-lg font-medium leading-9 text-primary " name={Comika.name} picture={Comika.photo} />
           </div>
-          <div className="w-2 h-2 bg-gray-500 rounded-full mr-2 ml-4" />
-          <div className=" text-lg  text-gray-500">
+          <div className="w-2 h-2 ml-4 mr-2 bg-gray-500 rounded-full" />
+          <div className="text-lg text-gray-500 ">
             Diterbitkan pada
             <span className="ml-2"><DateFormatter dateString={date} /></span>
           </div>
         </div>
-        <div className="text-lg font-medium leading-9 text-gray-500 flex">
+        <div className="flex text-lg font-medium leading-9 text-gray-500">
           <div className="inline-flex space-x-1.5 items-center justify-end w-16 h-9  ">
             <AiFillEye />
             <p>{views}</p>
@@ -57,12 +57,10 @@ export function PostHeaderDekstop({
         }
       </div>
       <div className="max-w-2xl mx-auto">
-        {/* <div className="block md:hidden mb-6">
+        {/* <div className="block mb-6 md:hidden">
           <Avatar name={author.name} picture={author.picture} />
         </div> */}
-        <div className="mb-6 text-lg">
-          <DateFormatter dateString={date} />
-        </div>
+
       </div>
     </>
   )
@@ -73,24 +71,24 @@ export function PostHeaderMobile({
 }) {
   return (
     <div className="">
-      <div className="sm:mx-0 relative">
-        <button onClick={() => Router.back()} type="button" className="bg-white p-2 absolute top-0 z-20 mt-6 ml-6 text-xl rounded-lg shadow">
+      <div className="relative sm:mx-0">
+        <button onClick={() => Router.back()} type="button" className="absolute top-0 z-20 p-2 mt-6 ml-6 text-xl bg-white rounded-lg shadow">
           <BiArrowBack />
         </button>
-        <div className="relaive z-10 ">
-          <CoverImageMobile title={title} src={coverImage} height={720} width={720} />
+        <div className="z-10 relaive ">
+          <CoverImageMobile title={title} src={coverImage} height={2} width={3} />
         </div>
 
-        <div className="bg-white shadow rounded-lg relative z-20 -mt-16 mx-5 px-4 py-2">
+        <div className="relative z-20 px-4 py-2 mx-5 -mt-16 bg-white rounded-lg shadow">
           <h1 className="text-lg font-bold leading-relaxed text-gray-800">
             {title}
           </h1>
-          <div className="text-base leading-loose text-gray-500 mt-2 ">
+          <div className="mt-2 text-base leading-loose text-gray-500 ">
             <DateFormatter dateString={date} />
             <div className="w-1.5 h-1.5 bg-gray-500 rounded-full mr-2 ml-4 inline-block " />
             {Comika.name}
           </div>
-          <div className="text-lg font-medium leading-9 text-gray-500 flex ">
+          <div className="flex text-lg font-medium leading-9 text-gray-500 ">
             <div className="inline-flex space-x-1.5 items-center justify-start w-16 h-9  ">
               <AiFillEye />
               <p>{views}</p>

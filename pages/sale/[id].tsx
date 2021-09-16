@@ -1,5 +1,7 @@
-export const Product = (params) => {
-  console.log('Product', params)
+import { ReactElement } from 'react'
+
+export const Product = ():ReactElement => {
+  console.log('Product')
 
   return (
     <div>

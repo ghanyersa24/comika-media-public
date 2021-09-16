@@ -7,9 +7,7 @@ import { BiArrowBack } from 'react-icons/bi'
 import { IoMdBasket } from 'react-icons/io'
 import SwipeableViews from 'react-swipeable-views'
 import { client } from '../../lib/clientRaw'
-import markdownToHtml from '../../lib/markdownToHtml'
 import { API_ENDPOINT_STORE } from '../../res/api-endpoint'
-import Layout from '../../components/layout'
 import { ItemStoreType } from '../../res/interface'
 
 type props = {

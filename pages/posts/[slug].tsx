@@ -48,7 +48,6 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
             views={viewer}
             shared={shared}
             attribution={attribution}
-
           />
           <PostBody content={content} />
         </article>
@@ -96,11 +95,11 @@ const OverlayStopArticle = ({ isShow }) => {
   if (isShow) {
     return (
       <>
-        <div className=" lg:max-w-2xl mx-2 lg:mx-auto bg-gradient-to-b  from-transparent via-white to-white  absolute inset-x-0 bottom-0 flex flex-col justify-end items-center pb-8">
-          <h4 className="text-primary text-3xl font-medium leading-9 mt-52 ">Jadilah Bagian dari Kami!</h4>
-          <p className="text-lg leading-loose text-gray-700 text-center ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comikamedia.id</p>
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end pb-8 mx-2  lg:max-w-2xl lg:mx-auto bg-gradient-to-b from-transparent via-white to-white">
+          <h4 className="text-3xl font-medium leading-9 text-primary mt-52 ">Jadilah Bagian dari Kami!</h4>
+          <p className="text-lg leading-loose text-center text-gray-700 ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comikamedia.id</p>
           <button type="button" className="text-xl" onClick={() => Router.push('/subscribe')}>
-            <img className=" w-full " src="/assets/svg/Subscribe_Kecil.svg" />
+            <img className="w-full " src="/assets/svg/Subscribe_Kecil.svg" />
           </button>
         </div>
 
@@ -159,19 +158,19 @@ export default function DetailOfPost({
             {isMobile ? <Mobile post={postClient} /> : <Dekstop post={postClient} />}
             { postClient?.withFlayer ? <OverlayStopArticle isShow /> : null}
           </div>
-          <div className="md:max-w-2xl mx-4 md:mx-auto">
+          <div className="mx-4 md:max-w-2xl md:mx-auto">
 
-            <div className=" divide-y inline-block md:my-12 mb-8 ">
+            <div className="inline-block mb-8 divide-y  md:my-12">
               <div className="pb-4">
                 <SocialMediaShareButton size={32} slug={postClient.slug} />
               </div>
-              <div className="pt-4 flex items-center">
+              <div className="flex items-center pt-4">
                 <LikeButton
                   slug={postClient.slug}
                   liked={postClient.liked}
                   mutate={() => mutatePost()}
                 />
-                <span className="md:text-base text-sm">{postClient.likes}</span>
+                <span className="text-sm md:text-base">{postClient.likes}</span>
                 <BookmarkButton
                   slug={postClient.slug}
                   bookmarked={postClient.bookmarked}
@@ -200,10 +199,10 @@ export default function DetailOfPost({
 
           </div>
 
-          <Container className="mt-8 md:mt-12 mb-24">
+          <Container className="mt-8 mb-24 md:mt-12">
             {relatedArticle?.length > 0 && <MorePosts mutate={() => mutateRelatedArticle()} posts={relatedArticle} title="Rekomendasi Artikel" description="Rekomendasi Artikel untuk anda" />}
-            <div className="text-right mt-8">
-              <button type="button" onClick={handleLoadMore} className="text-base px-2 md:text-lg leading-tight text-primary ">Lihat artikel lainnya</button>
+            <div className="mt-8 text-right">
+              <button type="button" onClick={handleLoadMore} className="px-2 text-base leading-tight md:text-lg text-primary ">Lihat artikel lainnya</button>
             </div>
           </Container>
         </>
