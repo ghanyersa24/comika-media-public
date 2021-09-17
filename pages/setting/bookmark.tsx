@@ -1,14 +1,9 @@
 import { useRouter } from 'next/router'
-import React, { ReactElement, useState } from 'react'
-import { TiTick } from 'react-icons/ti'
-import SwipeableViews from 'react-swipeable-views'
+import React, { ReactElement } from 'react'
 import { GetServerSideProps } from 'next'
-import { signIn, useSession } from 'next-auth/client'
-import { toast } from 'react-toastify'
+import { getSession, signIn } from 'next-auth/client'
 import useSWR from 'swr'
-import { SubsribeItem } from '../../components/card/subscribe-item'
-import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
-import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
+import { toast } from 'react-toastify'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_BOOKMARKED_ARTICLE } from '../../res/api-endpoint'
@@ -16,24 +11,6 @@ import { MorePosts } from '../../components/more-posts'
 import ContainerPadding from '../../components/container-padding'
 import { IntroDekstop } from '../../components/intro'
 
-const SubscriptionMobile = ({ content: contents }) => (
-  <section className="">
-    <SwipeableViews
-      enableMouseEvents
-      className="px-3"
-      slideClassName="px-1 overflow-hidden "
-    >
-      {contents.map((item) => (
-        <div key={Math.random()}>
-          {item}
-        </div>
-      ))}
-      {/* <div>1</div>
-      <div>2</div>
-      <div>3</div> */}
-    </SwipeableViews>
-  </section>
-)
 const EmptyBookmark = ({ onClick }) => (
   <div className="flex flex-col items-center self-center w-full mt-24 mb-12">
     <img
@@ -46,18 +23,20 @@ const EmptyBookmark = ({ onClick }) => (
   </div>
 )
 
-export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement => {
-  const [session] = useSession()
+export const BookmarkedArticle = ({ isMobile, session }:
+  {isMobile:boolean, session:string[]}): ReactElement => {
   // eslint-disable-next-line no-unused-vars
   const { data: bookmarkedArticles, mutate: mutateBookmarkedArticles } = useSWR(`${API_ENDPOINT_BOOKMARKED_ARTICLE}`, client.get)
-  console.log('lastestArticles', bookmarkedArticles)
-
-  const [isLoading, setIsLoading] = useState(false)
+  if (!session) {
+    toast.info('Harap Login terlebih dahulu', {
+      position: 'bottom-right',
+      onClose: () => signIn(),
+    })
+  }
   const router = useRouter()
   const handleClickAddBookmark = () => {
     router.push('/article')
   }
-
   if (isMobile) {
     return (
       <Layout isMobile>
@@ -92,6 +71,8 @@ export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const UA = context.req.headers['user-agent']
+  const session = await getSession(context)
+
   const isMobile = Boolean(UA.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
@@ -100,6 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       isMobile,
+      session,
     },
   }
 }
