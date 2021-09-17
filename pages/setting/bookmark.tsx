@@ -14,6 +14,7 @@ import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_BOOKMARKED_ARTICLE } from '../../res/api-endpoint'
 import { MorePosts } from '../../components/more-posts'
 import ContainerPadding from '../../components/container-padding'
+import { IntroDekstop } from '../../components/intro'
 
 const SubscriptionMobile = ({ content: contents }) => (
   <section className="">
@@ -61,20 +62,10 @@ export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement
   }
   return (
     <Layout isMobile={false}>
-      <div className="max-w-screen-xl min-h-screen mx-auto mt-8 lg:my-24 sm:px-8">
-        <div className="hidden md:block">
-          <p className="text-4xl font-medium leading-10 text-center text-blue-900">
-            Mengapa kamu harus subscribe?
-          </p>
-          <p className="text-2xl leading-loose text-center text-gray-500">
-            Karena dengan kamu subcribe kamu telah membantu kami agar tetap terus
-            bekarya
-          </p>
-        </div>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          ddd
-        </div>
-      </div>
+      <IntroDekstop />
+      <ContainerPadding className="relative min-h-screen pt-0.5 ">
+        <MorePosts posts={bookmarkedArticles} mutate={mutateBookmarkedArticles} title="Bookmark Artikel" description="Artikel yang telah anda simpan" />
+      </ContainerPadding>
     </Layout>
   )
 }
