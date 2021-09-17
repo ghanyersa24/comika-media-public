@@ -34,6 +34,17 @@ const SubscriptionMobile = ({ content: contents }) => (
     </SwipeableViews>
   </section>
 )
+const EmptyBookmark = ({ onClick }) => (
+  <div className="flex flex-col items-center self-center w-full mt-24 mb-12">
+    <img
+      src="/assets/info/mejakosong.svg"
+      className="w-1/2 "
+    />
+    <span className="mt-20 text-xl font-medium text-center text-primary ">Bookmark belum tersedia</span>
+    <span className="max-w-xs mt-6 text-base text-center text-primary">Baca artikel dan simpan artikel yang kamu sukai disini</span>
+    <button onClick={onClick} type="button" className="mt-16 btn-primary">Tambah Artikel</button>
+  </div>
+)
 
 export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const [session] = useSession()
@@ -43,6 +54,9 @@ export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement
 
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const handleClickAddBookmark = () => {
+    router.push('/article')
+  }
 
   if (isMobile) {
     return (
@@ -54,7 +68,10 @@ export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement
             className="absolute top-0 left-0 z-0 h-20"
           />
           <ContainerPadding className="relative min-h-screen pt-0.5 bg-bgBlueLight rounded-t-xl">
-            <MorePosts posts={bookmarkedArticles} mutate={mutateBookmarkedArticles} title="Bookmark Artikel" description="Artikel yang telah anda simpan" />
+            {bookmarkedArticles?.length !== 0 ? <MorePosts posts={bookmarkedArticles} mutate={mutateBookmarkedArticles} title="Bookmark Artikel" description="Artikel yang telah anda simpan" />
+              : (
+                <EmptyBookmark onClick={handleClickAddBookmark} />
+              )}
           </ContainerPadding>
         </div>
       </Layout>
@@ -64,7 +81,10 @@ export const BookmarkedArticle = ({ isMobile }:{isMobile:boolean}): ReactElement
     <Layout isMobile={false}>
       <IntroDekstop />
       <ContainerPadding className="relative min-h-screen pt-0.5 ">
-        <MorePosts posts={bookmarkedArticles} mutate={mutateBookmarkedArticles} title="Bookmark Artikel" description="Artikel yang telah anda simpan" />
+        {bookmarkedArticles?.length !== 0 ? <MorePosts posts={bookmarkedArticles} mutate={mutateBookmarkedArticles} title="Bookmark Artikel" description="Artikel yang telah anda simpan" />
+          : (
+            <EmptyBookmark onClick={handleClickAddBookmark} />
+          )}
       </ContainerPadding>
     </Layout>
   )
