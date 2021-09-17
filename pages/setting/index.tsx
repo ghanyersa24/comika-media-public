@@ -7,7 +7,8 @@ import { RiFileHistoryFill } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  signIn, useSession,
+  getSession,
+  signIn,
 } from 'next-auth/client'
 import Router from 'next/router'
 import { Get as GetProfile } from '../../service/user-profile'
@@ -30,12 +31,9 @@ const navigation = [
   { name: 'Riwayat Bacaan', href: '#', icon: <RiFileHistoryFill /> },
   { name: 'Riwayat Belanja', href: '#', icon: <AiFillShopping /> },
 ]
-export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
-  console.log('🚀 ~ file: index.tsx ~ line 4 ~ Setting ~ Setting', isMobile)
-  const [session] = useSession()
-
+export const Setting = ({ isMobile, session }:
+  {isMobile:boolean, session:string[]}):ReactElement => {
   const { data, isLoading } = GetProfile()
-  console.log('🚀 ~ file: index.tsx ~ line 35 ~ Setting ~ data', data)
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
@@ -95,6 +93,8 @@ export const Setting = ({ isMobile }:{isMobile:boolean}):ReactElement => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const UA = context.req.headers['user-agent']
+  const session = await getSession(context)
+
   const isMobile = Boolean(UA.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
@@ -103,6 +103,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       isMobile,
+      session,
     },
   }
 }
