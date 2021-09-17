@@ -193,7 +193,7 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
     return (
       <Layout isMobile>
         <div className="relative bg-primary">
-          <p className="py-6 text-xl font-bold leading-relaxed text-center text-white ">Subscribe</p>
+          <p className="pt-6 pb-4 text-xl font-bold leading-relaxed text-center text-white ">Subscribe</p>
           <img
             src="/background/Group48393.svg"
             className="absolute top-0 left-0 z-0 h-20"
