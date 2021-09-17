@@ -27,9 +27,7 @@ export const LoginPage = ({ providers }): ReactNode => {
   const [errorMsg, setErrorMsg] = useState<string>(router?.query?.errorNextAuth as string)
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [session, loading] = useSession()
-  console.log('🚀 ~ file: signin.tsx ~ line 30 ~ LoginPage ~ session', session)
-  // if (session) router.push('/')
+  
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
