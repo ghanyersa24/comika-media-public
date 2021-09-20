@@ -7,7 +7,7 @@ import React, { } from 'react'
 
 import Avatar from './avatar'
 import DateFormatter from './date-formatter'
-import { CoverImageDekstop, CoverImageMobile } from './cover-image'
+import { ImageInstrinsic, ImageResponsive } from './cover-image'
 import PostTitle from './post-title'
 
 export function PostHeaderDekstop({
@@ -45,7 +45,7 @@ export function PostHeaderDekstop({
         </div>
       </div>
       <div className="mb-8 md:mb-12 sm:mx-0">
-        <CoverImageDekstop title={title} src={coverImage} height={620} width={1240} />
+        <ImageInstrinsic title={title} src={coverImage} height={620} width={1240} />
         {
           attribution !== '' && (
           <p className="text-lg font-medium leading-9 text-justify text-gray-500">
@@ -76,7 +76,7 @@ export function PostHeaderMobile({
           <BiArrowBack />
         </button>
         <div className="z-10 relaive ">
-          <CoverImageMobile title={title} src={coverImage} height={2} width={3} />
+          <ImageResponsive title={title} src={coverImage} height={2} width={3} />
         </div>
 
         <div className="relative z-20 px-4 py-2 mx-5 -mt-16 bg-white rounded-lg shadow">

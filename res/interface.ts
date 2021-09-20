@@ -31,16 +31,17 @@ export type Signup = Login &{
   name: string,
 }
 export type Profile = Signup&{
-  role: string,
+  role?: string,
   phone: string,
   address: string,
+  birthdate: string,
   postalCode: string,
   district: string,
   city: string,
   province: string,
-  createdAt: string,
-  updatedAt: string,
-  deletedAt: string,
+  createdAt?: string,
+  updatedAt?: string,
+  deletedAt?: string,
   photo:string
 }
 export type comments ={

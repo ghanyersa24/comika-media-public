@@ -5,6 +5,7 @@ import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { MdShoppingBasket, MdNotifications } from 'react-icons/md'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { Get as GetProfile } from '../../../service/user-profile'
@@ -216,9 +217,15 @@ export default function Navbar() {
                   </a>
                 </Link>
               </div>
-              <div className="flex items-center text-blue-500 sm:pr-4">
+              <div className="flex items-center text-primary sm:pr-4">
                 <SearchBar className="" isMobile={false} searchValue="" />
-                <SocialMediaLogo className="hidden mt-1 mr-4 text-xl fill-current text-primary sm:block" />
+                <button type="button" className="">
+                  <MdShoppingBasket className="mr-4 text-2xl" />
+                </button>
+                <button type="button" className="">
+                  <MdNotifications className="mr-4 text-2xl " />
+                </button>
+                {/* <SocialMediaLogo className="hidden mt-1 mr-4 text-xl fill-current text-primary sm:block" /> */}
                 <div className="hidden sm:block">
                   {session ? (
                     <Profile name={data?.name} src={data?.photo} />

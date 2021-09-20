@@ -8,19 +8,13 @@ import Layout from '../../components/layout'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 
 export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
-  console.log('🚀 ~ file: profile.tsx ~ line 10 ~ Profile ~ isMobile', isMobile)
-  console.log('🚀 ~ file: profile.tsx ~ line 2 ~ Profile ~ params')
-  const { data, isLoading, mutate } = GetProfile()
+  const { data, mutate } = GetProfile()
   const [canEdit, setCanEdit] = useState(true)
-  const [profileData, setProfileData] = useState<ProfileType|null>()
 
-  useEffect(() => {
-    if (data && !isLoading) setProfileData(data)
-  }, [data, isLoading])
   const handleEdit = () => {
     setCanEdit(!canEdit)
   }
-  const handleSubmit = async () => {
+  const handleSubmit = async (profileData) => {
     try {
       const result = await UpdateProfile(profileData)
       mutate()
@@ -31,17 +25,13 @@ export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
     }
   }
 
-  const handleChangeValue = (name, value) => {
-    setProfileData({ ...profileData, [name]: value })
-  }
   return (
     <Layout isMobile={isMobile}>
       <TopNavbarWithBackButton title="Detail Akun" />
       <div className="container max-w-screen-xl mx-auto xs:px-4 lg:px-4 sm:px-8 lg:mt-24">
 
         <ProfileCard
-          profileData={profileData}
-          onChange={handleChangeValue}
+          profileData={data}
           canEdit={canEdit}
           onEdit={handleEdit}
           onSubmit={handleSubmit}

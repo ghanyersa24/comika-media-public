@@ -6,13 +6,13 @@ import React, { useState } from 'react'
 export const SearchBarMobile = ({ onChange, onSubmit, searchValue }) => (
   <form className="flex items-center justify-end w-full " onSubmit={onSubmit}>
     <button type="submit" className="">
-      <AiOutlineSearch className=" text-2xl" />
+      <AiOutlineSearch className="text-2xl " />
     </button>
     <input
       onChange={onChange}
       value={searchValue}
       type="text"
-      className="ml-2 text-base bg-transparent  leading-normal border-transparent focus:ring-0 w-full h-9"
+      className="w-full ml-2 text-base leading-normal bg-transparent border-transparent focus:ring-0 h-9"
     />
   </form>
 )
@@ -21,7 +21,7 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
   const [isInputOpen, setIsInputOpen] = useState(false)
   return (
     <form
-      className="relative mx-auto text-gray-600 mr-0  h-10"
+      className="relative h-10 mx-auto mr-0 text-gray-600"
       onMouseOver={() => setIsInputOpen(true)}
       onFocus={() => setIsInputOpen(true)}
       onSubmit={onSubmit}
@@ -30,7 +30,7 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
     >
       {isInputOpen && (
       <input
-        className="absolute right-0 border-2 border-gray-300 h-full bg-white px-5 pr-16 rounded-lg text-sm focus:outline-none"
+        className="absolute right-0 h-full px-5 pr-16 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
         type="search"
         name="search"
         placeholder="Search"
@@ -41,11 +41,11 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
       )}
       <button
         type="submit"
-        className="absolute right-0 mr-4 h-full "
+        className="absolute right-0 h-full mr-4 "
         onClick={onSubmit}
       >
         <div className="flex items-center">
-          <FaSearch className="fill-current text-primary text-xl mt-1" />
+          <FaSearch className="text-xl fill-current text-primary" />
         </div>
       </button>
     </form>
