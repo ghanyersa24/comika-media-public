@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export function ImageInstrinsic({
-  title, src, slug, height, width,
+  title, src, slug, height, width, sizes = '100vw',
 }) {
   if (!src) {
     return <>Tanpa Gambar</>
@@ -16,7 +16,7 @@ export function ImageInstrinsic({
       layout="responsive"
       width={width}
       height={height}
-      sizes="(min-width: 768px) 256px, (min-width: 1024px) 384px, 128px" // 128px used if width < 768px
+      sizes={sizes} // 128px used if width < 768px
     />
   )
   return (

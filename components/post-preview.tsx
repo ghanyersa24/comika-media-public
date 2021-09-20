@@ -27,6 +27,7 @@ export default function PostPreview({
           src={banner}
           height={2}
           width={3}
+          sizes="(min-width: 768px) 256px, (min-width: 1024px) 384px, 128px"
         />
         {isPremium ? (
           <div className="absolute bottom-0 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:ml-2">
