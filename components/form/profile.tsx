@@ -4,10 +4,10 @@ import React, { ReactElement, useState } from 'react'
 import { AiFillCamera, AiOutlineLoading } from 'react-icons/ai'
 import { MdModeEdit } from 'react-icons/md'
 import {
-  Formik, Field, Form, FormikHelpers, getFieldProps, useField, useFormikContext,
+  Formik, Field, Form, FormikHelpers, useField, useFormikContext,
 } from 'formik'
 import useSWR from 'swr'
-import { Profile, address as addressType } from '../../res/interface'
+import { Profile } from '../../res/interface'
 import { client } from '../../lib/clientRaw'
 
 type ProfileCardProps = {
@@ -22,21 +22,29 @@ type ProfileCardProps = {
 const City = (props) => {
   const {
     values,
-  } = useFormikContext()
-  console.log('City -> values', values)
-  const { data: provinces, error, mutate } = useSWR('/store/ongkir/master-province', client.get)
+  } = useFormikContext<Profile>()
   const [field] = useField(props)
-  const { disabled } = props
-  console.log('City -> disabled', disabled)
-  const { data: city, isValidating } = useSWR('/store/ongkir/master-city?province=', client.get)
+  const { data: city } = useSWR(`/store/ongkir/master-city?province=${values?.provinceId}`, client.get)
   return (
-    <>
-      <select {...props} {...field} disabled={isValidating || disabled}>
-        {city?.map((p) => (
-          <option value={p.city_id} key={p.city_id}>{`${p.type} ${p.city_name}`}</option>
-        ))}
-      </select>
-    </>
+    <select {...props} {...field}>
+      {city?.map((p) => (
+        <option value={p.city_id} key={p.city_id}>{`${p.type} ${p.city_name}`}</option>
+      ))}
+    </select>
+  )
+}
+const Subdistrict = (props) => {
+  const {
+    values,
+  } = useFormikContext<Profile>()
+  const [field] = useField(props)
+  const { data: subdistrict } = useSWR(`/store/ongkir/master-subdistrict?city=${values?.cityId}`, client.get)
+  return (
+    <select {...props} {...field}>
+      {subdistrict?.map((p) => (
+        <option value={p.subdistrict_id} key={p.subdistrict_id}>{`${p.subdistrict_name}`}</option>
+      ))}
+    </select>
   )
 }
 
@@ -51,7 +59,8 @@ export const ProfileCard = ({
   } = profileData || {}
   console.log('profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
-  const { data: provinces, error, mutate } = useSWR('/store/ongkir/master-province', client.get)
+  const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
+  console.log('provinces', provinces)
 
   return (
     <Formik
@@ -143,19 +152,24 @@ export const ProfileCard = ({
             <h2 className="mt-12 mb-4 text-xl font-semibold text-gray-900">
               Alamat
             </h2>
-            <label htmlFor="province" className="label-flex">
+            <label htmlFor="provinceId" className="label-flex">
               Provinsi
-              <Field id="province" name="province" as="select" className="label-flex" disabled={canEdit}>
+              <Field id="provinceId" name="provinceId" as="select" className="label-flex" disabled={canEdit}>
                 {provinces?.map((p) => (
-                  <option value={p.province} key={p.province_id} className="">{p.province}</option>
+                  <option value={p.province_id} key={p.province_id} className="">{p.province}</option>
                 ))}
               </Field>
             </label>
 
-            {/* <label htmlFor="cityId" className="label-flex">
+            <label htmlFor="cityId" className="label-flex">
               Kabupaten atau Kota
               <City name="cityId" as="select" disabled={canEdit} />
-            </label> */}
+            </label>
+
+            <label htmlFor="subdistrictId" className="label-flex">
+              Kecamatan
+              <Subdistrict name="subdistrictId" as="select" disabled={canEdit} />
+            </label>
 
             <label htmlFor="address" className="label-flex">
               Alamat

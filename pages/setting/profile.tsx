@@ -1,9 +1,8 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import React, { ReactElement, useState } from 'react'
 
 import { GetServerSideProps } from 'next'
 import { ProfileCard } from '../../components/form/profile'
 import { Get as GetProfile, UpdateProfile } from '../../service/user-profile'
-import { Profile as ProfileType } from '../../res/interface'
 import Layout from '../../components/layout'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 

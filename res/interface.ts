@@ -30,15 +30,11 @@ export type ForgetPassword = {
 export type Signup = Login &{
   name: string,
 }
-export type Profile = Signup&{
+export type Profile = Signup&address&{
   role?: string,
   phone: string,
   address: string,
   birthdate: string,
-  postalCode: string,
-  district: string,
-  city: string,
-  province: string,
   createdAt?: string,
   updatedAt?: string,
   deletedAt?: string,
