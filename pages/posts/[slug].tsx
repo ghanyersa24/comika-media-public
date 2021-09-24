@@ -118,8 +118,10 @@ export default function DetailOfPost({
     limit = 2
   }
   useEffect(() => {
-    window.instgrm.Embeds.process()
-    twttr.widgets.load()
+    if (window?.instgrm?.Embeds && twttr?.widgets) {
+      window.instgrm.Embeds.process()
+      twttr.widgets.load()
+    }
   }, [])
   const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { initialData: post })
   const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
@@ -147,7 +149,14 @@ export default function DetailOfPost({
 
   return (
     <Layout isMobile={isMobile}>
-      {/* <Header /> */}
+      <Script
+        id="embedig"
+        src="https://www.instagram.com/embed.js"
+      />
+      <Script
+        src="https://platform.twitter.com/widgets.js"
+        charSet="utf-8"
+      />
       {router.isFallback ? (
         <PostTitle>Loading…</PostTitle>
       ) : (
