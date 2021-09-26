@@ -66,7 +66,14 @@ export type TypePostCommentAdd = swrReturn &{
   comment:string
 
 }
-
+export type subscribeType = {
+  'rupiah': string,
+  'description': string[],
+  'id': string,
+  'name': string,
+  'price': number,
+  'longTime': number
+}
 export type Post = {
   'id': string,
   'userId': string,

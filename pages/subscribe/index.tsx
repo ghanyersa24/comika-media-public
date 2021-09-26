@@ -12,6 +12,7 @@ import { ButtonJustifyBetween } from '../../components/button/button-justify-bet
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
+import { subscribeType } from '../../res/interface'
 
 const SubscriptionMobile = ({ content: contents }) => (
   <section className="">
@@ -31,14 +32,7 @@ const SubscriptionMobile = ({ content: contents }) => (
     </SwipeableViews>
   </section>
 )
-type subscribeType = {
-  'rupiah': string,
-  'description': string[],
-  'id': string,
-  'name': string,
-  'price': number,
-  'longTime': number
-}
+
 export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get)
   console.log('package', subscribes)
