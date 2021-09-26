@@ -5,11 +5,13 @@ import SwipeableViews from 'react-swipeable-views'
 import { GetServerSideProps } from 'next'
 import { signIn, useSession } from 'next-auth/client'
 import { toast } from 'react-toastify'
+import useSWR from 'swr'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
 import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
+import { API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
 
 const SubscriptionMobile = ({ content: contents }) => (
   <section className="">
@@ -29,8 +31,18 @@ const SubscriptionMobile = ({ content: contents }) => (
     </SwipeableViews>
   </section>
 )
-
+type subscribeType = {
+  'rupiah': string,
+  'description': string[],
+  'id': string,
+  'name': string,
+  'price': number,
+  'longTime': number
+}
 export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
+  const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get)
+  console.log('package', subscribes)
+
   const [session] = useSession()
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
@@ -62,133 +74,29 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
       }
     }
   }
-  const SubscriptionContent = ([
+  const shortedSubsribe = subscribes.sort((a, b) => a.price - b.price)
+  const bgColor = ['bg-gray-300', 'bg-primary', 'bg-yellow-400']
+  const SubscriptionContent = shortedSubsribe.map((subscribe, index) => (
     <SubsribeItem
       onClick={() => isLoading || handleSubscribe('weekly')}
       loading={isLoading}
-      title="Satu Paham"
-      price="29.900"
-      until="Berlaku untuk 7 Hari"
+      title={subscribe.name}
+      price={subscribe.rupiah}
+      until={`Berlaku untuk ${subscribe.longTime} Hari`}
       buttonText="Subscribe Harian"
-      headBgColor="bg-gray-300"
+      headBgColor={bgColor[index]}
       key={1}
     >
       <div className="mt-4">
         <ListCustomPrefix
           prefixIcon={<TiTick className="inline" />}
           label="Keunggulan"
-          content={[
-            'Bebas baca artikel tanpa jeda',
-            'Simpan artikel sampai dengan 10 artikel',
-          ]}
+          content={subscribe.description}
         />
-        <ListCustomPrefix
-          prefixIcon={<TiTick className="inline" />}
-          label="Perlu tau"
-          content={[
-            'Paket ini berlaku untuk 7 hari',
-            'Hanya dapat digunakan 1 device',
-          ]}
-        />
-        <div className="mt-8">
-          <ButtonJustifyBetween
-            leftcontent="Cara pakai"
-            rightIcon=">"
-            onClick={() => null}
-          />
-          <ButtonJustifyBetween
-            leftcontent="Syarat dan ketentuan"
-            rightIcon=">"
-            onClick={() => null}
-          />
-        </div>
       </div>
-    </SubsribeItem>,
-    <SubsribeItem
-      onClick={() => isLoading || handleSubscribe('monthly')}
-      loading={isLoading}
-      title="Satu Rasa"
-      price="124.900"
-      until="Berlaku untuk 1 Bulan"
-      buttonText="Subscribe Bulanan"
-      headBgColor="bg-primary"
-      key={2}
-    >
-      <div className="mt-4">
-        <ListCustomPrefix
-          prefixIcon={<TiTick className="inline" />}
-          label="Keunggulan"
-          content={[
-            'Bebas baca artikel tanpa jeda',
-            'Simpan artikel sampai dengan 10 artikel',
-          ]}
-        />
-        <ListCustomPrefix
-          prefixIcon={<TiTick className="inline" />}
-          label="Perlu tau"
-          content={[
-            'Paket ini berlaku untuk 30 hari',
-            'Hanya dapat digunakan 1 device',
-          ]}
-        />
-        <div className="mt-8">
-          <ButtonJustifyBetween
-            leftcontent="Cara pakai"
-            rightIcon=">"
-            onClick={() => null}
-          />
-          <ButtonJustifyBetween
-            leftcontent="Syarat dan ketentuan"
-            rightIcon=">"
-            onClick={() => null}
-          />
-        </div>
-      </div>
-    </SubsribeItem>,
-    <SubsribeItem
-      onClick={() => isLoading || handleSubscribe('yearly')}
-      loading={isLoading}
-      title="Satu Jiwa"
-      price="1.499.900"
-      until="Berlaku untuk 1 Tahun"
-      buttonText="Subscribe Tahunan"
-      headBgColor="bg-yellow-400"
-      key={3}
-    >
-      <div className="mt-4">
-        <ListCustomPrefix
-          prefixIcon={<TiTick className="inline" />}
-          label="Keunggulan"
-          content={[
-            'Bebas baca artikel tanpa jeda',
-            'Simpan artikel sampai dengan 10 artikel',
-          ]}
-        />
-        <ListCustomPrefix
-          prefixIcon={<TiTick className="inline" />}
-          label="Perlu tau"
-          content={[
-            'Paket ini berlaku untuk 1 Tahun',
-            'Hanya dapat digunakan 1 device',
-          ]}
-        />
-        <div className="mt-8">
-          <ButtonJustifyBetween
-            leftcontent="Cara pakai"
-            rightIcon=">"
-            onClick={() => null}
-          />
-          <ButtonJustifyBetween
-            leftcontent="Syarat dan ketentuan"
-            rightIcon=">"
-            onClick={() => null}
-          />
-        </div>
-      </div>
-    </SubsribeItem>,
-  ]
+    </SubsribeItem>
+  ))
 
-  )
   if (isMobile) {
     return (
       <Layout isMobile>
