@@ -77,7 +77,7 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
       title={subscribe.name}
       price={subscribe.rupiah}
       until={`Berlaku untuk ${subscribe.longTime} Hari`}
-      buttonText="Subscribe Harian"
+      buttonText="Subscribe"
       headBgColor={bgColor[index]}
       key={1}
     >
