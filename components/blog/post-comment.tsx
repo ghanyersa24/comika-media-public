@@ -27,15 +27,15 @@ export const PostCommentList = ({
     content = comments.map(({
       User, comment, createdAt, id,
     }) => (
-      <div className="mb-8 " key={id}>
+      <div className="p-4 mb-8 bg-gray-100 rounded-xl " key={id}>
         <div className="flex flex-row content-center justify-between">
           <Avatar className="mb-4 text-base font-medium leading-9 text-gray-700 md:text-lg " name={User.name} picture={User.photo} />
           <span className="text-sm leading-9 text-gray-500 md:font-medium md:text-base"><DateFormatterRelative dateString={createdAt} /></span>
         </div>
-        <p>
-          "
+        <p className="md:text-lg">
+
           {comment}
-          "
+
         </p>
       </div>
     ))

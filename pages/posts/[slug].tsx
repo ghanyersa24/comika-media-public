@@ -193,7 +193,7 @@ export default function DetailOfPost({
               </div>
             </div>
 
-            <div className="pb-24 md:px-4">
+            <div className="pb-24">
               <PostCommentList
                 comments={comments}
                 isLoading={isLoading}
