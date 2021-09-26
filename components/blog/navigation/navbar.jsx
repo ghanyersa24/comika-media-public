@@ -12,11 +12,11 @@ import { Get as GetProfile } from '../../../service/user-profile'
 import { SearchBar } from './search-bar'
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Artikel', href: '/article', current: false },
-  { name: 'Store', href: '/store', current: false },
-  { name: 'Subscribe', href: '/subscribe', current: false },
-  { name: 'Bookmark', href: '/setting/bookmark', current: false },
+  { name: 'Home', href: '', current: true },
+  { name: 'Artikel', href: 'article', current: false },
+  { name: 'Store', href: 'store', current: false },
+  { name: 'Subscribe', href: 'subscribe', current: false },
+  { name: 'Bookmark', href: 'setting/bookmark', current: false },
 ]
 
 function classNames(...classes) {
@@ -110,7 +110,7 @@ export const Profile = ({ src, name }) => {
     </Menu>
   )
 }
-export const SideBar = ({ isShowing, session }) => (
+export const SideBar = ({ isShowing, session, subUrlAdmin }) => (
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
     {/* Background overlay */}
@@ -147,10 +147,10 @@ export const SideBar = ({ isShowing, session }) => (
           </div>
           <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
             {navigation.map((item) => (
-              <Link href={item.href} key={item.name}>
+              <Link href={`/${item.href}`} key={item.name}>
                 <a
                   className={classNames(
-                    item.current
+                    item.href === subUrlAdmin
                       ? 'bg-gray-900 bg-opacity-20 text-white'
                       : 'text-gray-300 hover:text-white  ',
                     'block px-3 py-2 rounded-md ',
@@ -190,6 +190,10 @@ export const SideBar = ({ isShowing, session }) => (
 export default function Navbar() {
   const [session] = useSession()
   const { data } = session ? GetProfile() : { data: null }
+  const router = useRouter()
+  const urlComponent = router.route.split('/')
+  const subUrlAdmin = urlComponent?.[1] || ''
+  console.log('Navbar -> subUrlAdmin', subUrlAdmin)
 
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
@@ -238,7 +242,7 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <SideBar isShowing={open} session={session} />
+          <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
         </>
       )}
     </Disclosure>

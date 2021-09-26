@@ -68,9 +68,9 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
       }
     }
   }
-  const shortedSubsribe = subscribes.sort((a, b) => a.price - b.price)
+  const shortedSubsribe = subscribes?.sort((a, b) => a.price - b.price)
   const bgColor = ['bg-gray-300', 'bg-primary', 'bg-yellow-400']
-  const SubscriptionContent = shortedSubsribe.map((subscribe, index) => (
+  const SubscriptionContent = shortedSubsribe ? shortedSubsribe.map((subscribe, index) => (
     <SubsribeItem
       onClick={() => isLoading || handleSubscribe('weekly')}
       loading={isLoading}
@@ -89,7 +89,7 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
         />
       </div>
     </SubsribeItem>
-  ))
+  )) : []
 
   if (isMobile) {
     return (
