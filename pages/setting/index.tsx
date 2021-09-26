@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
 import { AiFillBell, AiFillShopping } from 'react-icons/ai'
 import { BsBookmarkFill } from 'react-icons/bs'
@@ -7,12 +6,15 @@ import { RiFileHistoryFill } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  getSession,
   signIn,
+  useSession,
 } from 'next-auth/client'
 import Router from 'next/router'
+import mobile from 'is-mobile'
 import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
+
+const isMobile = mobile()
 
 export const MenuItem = ({ icon, name, href }
   :{icon:any, name:string, href:string}) :ReactElement => (
@@ -31,13 +33,14 @@ const navigation = [
   { name: 'Riwayat Bacaan', href: '#', icon: <RiFileHistoryFill /> },
   { name: 'Riwayat Belanja', href: '#', icon: <AiFillShopping /> },
 ]
-export const Setting = ({ isMobile, session }:
-  {isMobile:boolean, session:string[]}):ReactElement => {
+export const Setting = ():ReactElement => {
+  const [session] = useSession()
+
   const { data, isLoading } = GetProfile()
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
-  if (!session) { signIn() }
+  if (!session) { return <button type="button" className="btn-primary" onClick={() => signIn()}>Masuk sekarang</button> }
 
   return (
     <Layout isMobile={isMobile}>
@@ -89,23 +92,6 @@ export const Setting = ({ isMobile, session }:
     </Layout>
 
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const UA = context.req.headers['user-agent']
-  const session = await getSession(context)
-
-  const isMobile = Boolean(UA.match(
-    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
-  ))
-
-  // will be passed to the page component as props
-  return {
-    props: {
-      isMobile,
-      session,
-    },
-  }
 }
 
 export default Setting

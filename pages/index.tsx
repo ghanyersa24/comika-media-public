@@ -13,7 +13,7 @@ import {
 import { client } from '../lib/clientRaw'
 import { API_ENDPOINT_ARTICLE, API_ENDPOINT_STORE } from '../res/api-endpoint'
 import Layout from '../components/layout'
-import SearchNavigation from '../components/blog/navigation/search-navigation-mobile'
+
 import { RenderMoreArticle } from '../components/blog/more-articles'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../res/string'
 import { SubsribeBanner } from '../components/banner/subscribe-banner'
@@ -21,8 +21,10 @@ import { ItemStores } from '../components/items/item-store'
 import { ContainerStore } from '../components/container/container-store'
 import { ItemStoreType } from '../res/interface'
 
-const IntroDekstop = dynamic(() => import('../components/intro/intro-dekstop') as any)
-const IntroMobile = dynamic(() => import('../components/intro/intro-mobile') as any)
+const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile') as any, { ssr: false })
+
+const IntroDekstop = dynamic(() => import('../components/intro/intro-dekstop') as any, { ssr: false })
+const IntroMobile = dynamic(() => import('../components/intro/intro-mobile') as any, { ssr: false })
 
 const isMobile = mobile()
 export default function Index(): React.ReactNode {
