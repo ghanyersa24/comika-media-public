@@ -98,7 +98,7 @@ const OverlayStopArticle = ({ isShow }) => {
       <>
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end pb-8 mx-2 lg:max-w-2xl lg:mx-auto bg-gradient-to-b from-transparent via-white to-white">
           <h4 className="text-3xl font-medium leading-9 text-primary mt-52 ">Jadilah Bagian dari Kami!</h4>
-          <p className="text-lg leading-loose text-center text-gray-700 ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comikamedia.id</p>
+          <p className="text-lg leading-loose text-center text-gray-700 ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comika.media</p>
           <button type="button" className="text-xl" onClick={() => Router.push('/subscribe')}>
             <img className="w-full " src="/assets/svg/Subscribe_Kecil.svg" />
           </button>
