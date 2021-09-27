@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import Avatar from '../avatar'
-import DateFormatter from '../date-formatter'
+import { DateFormatterRelative } from '../date-formatter'
 import { TypePostCommentComponent, TypePostCommentAdd } from '../../res/interface'
 
 export const PostCommentLoading = (): ReactElement => (
@@ -27,22 +27,22 @@ export const PostCommentList = ({
     content = comments.map(({
       User, comment, createdAt, id,
     }) => (
-      <div className="mb-8 " key={id}>
+      <div className="p-4 mb-8 bg-gray-100 rounded-xl " key={id}>
         <div className="flex flex-row content-center justify-between">
-          <Avatar className="mb-4 text-lg font-medium leading-9 text-gray-700 " name={User.name} picture={User.photo} />
-          <span className="text-lg font-medium leading-9 text-gray-700"><DateFormatter dateString={createdAt} /></span>
+          <Avatar className="mb-4 text-base font-medium leading-9 text-gray-700 md:text-lg " name={User.name} picture={User.photo} />
+          <span className="text-sm leading-9 text-gray-500 md:font-medium md:text-base"><DateFormatterRelative dateString={createdAt} /></span>
         </div>
-        <p>
-          "
+        <p className="md:text-lg">
+
           {comment}
-          "
+
         </p>
       </div>
     ))
   }
   return (
     <>
-      <h6 className="mb-8 text-4xl font-medium leading-10 text-primary">Komentar</h6>
+      <h6 className="mb-4 text-xl font-medium leading-10 md:mb-8 md:text-4xl text-primary">Komentar</h6>
       {content}
     </>
 

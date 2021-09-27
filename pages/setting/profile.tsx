@@ -1,12 +1,15 @@
 import React, { ReactElement, useState } from 'react'
 
 import { GetServerSideProps } from 'next'
+import mobile from 'is-mobile'
 import { ProfileCard } from '../../components/form/profile'
 import { Get as GetProfile, UpdateProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 
-export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
+const isMobile = mobile()
+
+export const Profile = ():ReactElement => {
   const { data, mutate } = GetProfile()
   const [canEdit, setCanEdit] = useState(true)
 
@@ -42,17 +45,4 @@ export const Profile = ({ isMobile }:{isMobile:boolean}):ReactElement => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const UA = context.req.headers['user-agent']
-  const isMobile = Boolean(UA.match(
-    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
-  ))
-
-  // will be passed to the page component as props
-  return {
-    props: {
-      isMobile,
-    },
-  }
-}
 export default Profile
