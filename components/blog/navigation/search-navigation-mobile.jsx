@@ -1,22 +1,22 @@
 import Link from 'next/link'
 import { MdShoppingCart, MdNotifications } from 'react-icons/md'
 import React from 'react'
-import { ComikamediaThin } from '../../svg'
+import { Comikamedia } from '../../svg'
 import { SearchBar } from './search-bar'
 
 export const App = () => (
-  <div className="bg-primary hp:pb-40 md:bg-red-400 pb-32 pt-4 ">
-    <div className="flex justify-between mb-4 px-4 ">
+  <div className="pt-4 pb-32 bg-primary hp:pb-40 md:bg-red-400 ">
+    <div className="flex justify-between px-4 mb-4 ">
       <Link href="/">
-        <a className="hover:underline block "><ComikamediaThin className="h-9" /></a>
+        <a className="block hover:underline "><Comikamedia className="h-5" /></a>
       </Link>
-      <div className="flex  text-xl text-white items-center">
+      <div className="flex items-center text-xl text-white">
         <MdShoppingCart />
         <MdNotifications />
       </div>
     </div>
     <div className="w-full px-4">
-      <SearchBar className="bg-primaryLight bg-opacity-25 text-white" />
+      <SearchBar className="text-white bg-opacity-25 bg-primaryLight" />
     </div>
   </div>
 )
