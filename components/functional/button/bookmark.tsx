@@ -2,7 +2,6 @@ import {
   ReactElement, useState, useEffect, FunctionComponent,
 } from 'react'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
-import { FaSpinner } from 'react-icons/fa'
 import {
   useSession, signIn,
 } from 'next-auth/client'
@@ -38,11 +37,11 @@ export const BookmarkButton : FunctionComponent <BookmarkButtonType> = ({
 
   return (
     <div className={`text-xl md:text-2xl lg:text-3xl ${className}`}>
-      {isBookmarkLoading ? <FaSpinner className="animate-spin mr-2" /> : (
+      {isBookmarkLoading ? <BsBookmarkFill className="animate-pulse" /> : (
         <button type="button" onClick={handleBookmark}>
           {isBookmarked
-            ? <BsBookmarkFill className="  " />
-            : <BsBookmark className=" " />}
+            ? <BsBookmarkFill className="" />
+            : <BsBookmark className="" />}
         </button>
       )}
     </div>

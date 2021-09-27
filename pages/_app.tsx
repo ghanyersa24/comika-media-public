@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps):ReactElement {
         session={pageProps.session}
         options={{
           clientMaxAge: 60,
-          keepAlive: 0,
+          keepAlive: 5 * 10,
         }}
       >
         <SWRConfig

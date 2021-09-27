@@ -5,16 +5,19 @@ import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { MdShoppingBasket, MdNotifications } from 'react-icons/md'
+import { toast } from 'react-toastify'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { Get as GetProfile } from '../../../service/user-profile'
 import { SearchBar } from './search-bar'
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Artikel', href: '/article', current: false },
-  { name: 'Store', href: '/store', current: false },
-  { name: 'Subscribe', href: '/subscribe', current: false },
+  { name: 'Home', href: '', current: true },
+  { name: 'Artikel', href: 'article', current: false },
+  // { name: 'Store', href: 'store', current: false },
+  { name: 'Subscribe', href: 'subscribe', current: false },
+  { name: 'Bookmark', href: 'setting/bookmark', current: false },
 ]
 
 function classNames(...classes) {
@@ -108,7 +111,7 @@ export const Profile = ({ src, name }) => {
     </Menu>
   )
 }
-export const SideBar = ({ isShowing, session }) => (
+export const SideBar = ({ isShowing, session, subUrlAdmin }) => (
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
     {/* Background overlay */}
@@ -125,13 +128,11 @@ export const SideBar = ({ isShowing, session }) => (
     {/* Sliding sidebar */}
     <Transition.Child
       enter="duration-200 ease-out"
-      enterFrom="opacity-0 scale-95"
       enterTo="opacity-100 scale-100"
       leave="duration-100 ease-in"
-      leaveFrom="opacity-100 scale-100"
-      leaveTo="opacity-0 scale-95"
+      leaveTo="opacity-0 scale-100"
     >
-      <div className="fixed top-0 z-50 w-full min-h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary ">
+      <div className="fixed top-0 w-full h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary " style={{ zIndex: 9999 }}>
         <div className="flex justify-end">
           <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <XIcon className="block w-6 h-6" aria-hidden="true" />
@@ -145,10 +146,10 @@ export const SideBar = ({ isShowing, session }) => (
           </div>
           <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
             {navigation.map((item) => (
-              <Link href={item.href} key={item.name}>
+              <Link href={`/${item.href}`} key={item.name}>
                 <a
                   className={classNames(
-                    item.current
+                    item.href === subUrlAdmin
                       ? 'bg-gray-900 bg-opacity-20 text-white'
                       : 'text-gray-300 hover:text-white  ',
                     'block px-3 py-2 rounded-md ',
@@ -188,12 +189,18 @@ export const SideBar = ({ isShowing, session }) => (
 export default function Navbar() {
   const [session] = useSession()
   const { data } = session ? GetProfile() : { data: null }
+  const router = useRouter()
+  const urlComponent = router.route.split('/')
+  const subUrlAdmin = urlComponent?.[1] || ''
+  console.log('Navbar -> subUrlAdmin', subUrlAdmin)
 
   // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
       {({ open }) => (
         <>
+          <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
+
           <div className="pl-4 pr-2 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 ">
               <div className="inset-y-0 left-0 flex items-center ">
@@ -211,14 +218,32 @@ export default function Navbar() {
               <div className="">
                 <Link href="/">
                   <a className="hidden hover:underline md:block ">
-                    <ComikamediaNavbar className="h-12" />
+                    <ComikamediaNavbar className="h-8" />
                   </a>
                 </Link>
               </div>
-              <div className="flex items-center text-blue-500 sm:pr-4">
+              <div className="flex items-center text-primary sm:pr-4">
                 <SearchBar className="" isMobile={false} searchValue="" />
-                <SocialMediaLogo className="hidden mt-1 mr-4 text-xl fill-current text-primary sm:block" />
-                <div className="hidden sm:block">
+                <button
+                  type="button"
+                  className=""
+                  onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
+                    position: 'bottom-right',
+                  })}
+                >
+                  <MdShoppingBasket className="mx-2 text-2xl" />
+                </button>
+                <button
+                  type="button"
+                  className=""
+                  onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
+                    position: 'bottom-right',
+                  })}
+                >
+                  <MdNotifications className="mx-2 text-2xl " />
+                </button>
+                {/* <SocialMediaLogo className="hidden mt-1 mr-4 text-xl fill-current text-primary sm:block" /> */}
+                <div className="hidden ml-2 sm:block">
                   {session ? (
                     <Profile name={data?.name} src={data?.photo} />
                   ) : (
@@ -230,7 +255,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <SideBar isShowing={open} session={session} />
         </>
       )}
     </Disclosure>

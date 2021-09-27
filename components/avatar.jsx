@@ -15,10 +15,10 @@ export default function Avatar({
         <Image
           src={picture || '/background/download.webp'}
           alt={`photo profil ${name}`}
-          layout="responsive"
+          layout="intrinsic"
           className="rounded-full"
-          width={60}
-          height={60}
+          width={144}
+          height={144}
         />
       </div>
       <div className="flex-grow ">

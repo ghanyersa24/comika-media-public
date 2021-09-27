@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import Image from 'next/image'
 import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
-import { CoverImageDekstop } from './cover-image'
+import { ImageInstrinsic } from './cover-image'
 import { Post } from '../res/interface'
 import { BookmarkButton } from './functional/button/bookmark'
 
@@ -21,21 +21,22 @@ export default function PostPreview({
   return (
     <div className="md:rounded-lg md:shadow-md text-textSecondary">
       <div className="relative mb-2 xs:mb-5">
-        <CoverImageDekstop
+        <ImageInstrinsic
           slug={slug}
           title={title}
           src={banner}
-          height={230}
-          width={345}
+          height={2}
+          width={3}
+          sizes="(min-width: 768px) 256px, (min-width: 1024px) 384px, 128px"
         />
         {isPremium ? (
-          <div className="absolute bottom-0 w-8 h-8 lg:w-16 lg:h-16 lg:ml-2">
+          <div className="absolute bottom-0 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:ml-2">
             <Image
               src="/assets/blog/subscribe/premium_badge.png"
               alt="premium badge"
               layout="responsive"
-              width={144}
-              height={144}
+              width={1}
+              height={1}
             />
           </div>
         ) : null}

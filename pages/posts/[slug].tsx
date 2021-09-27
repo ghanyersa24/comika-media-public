@@ -2,10 +2,11 @@ import Router, { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { getSession } from 'next-auth/client'
 import useSWR from 'swr'
 import classnames from 'classnames'
+import Script from 'next/script'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -95,7 +96,7 @@ const OverlayStopArticle = ({ isShow }) => {
   if (isShow) {
     return (
       <>
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end pb-8 mx-2  lg:max-w-2xl lg:mx-auto bg-gradient-to-b from-transparent via-white to-white">
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end pb-8 mx-2 lg:max-w-2xl lg:mx-auto bg-gradient-to-b from-transparent via-white to-white">
           <h4 className="text-3xl font-medium leading-9 text-primary mt-52 ">Jadilah Bagian dari Kami!</h4>
           <p className="text-lg leading-loose text-center text-gray-700 ">Dapatkan akses tanpa batas ke seluruh artikel kami dengan berlangganan comikamedia.id</p>
           <button type="button" className="text-xl" onClick={() => Router.push('/subscribe')}>
@@ -116,7 +117,12 @@ export default function DetailOfPost({
   if (isMobile) {
     limit = 2
   }
-
+  useEffect(() => {
+    if (window?.instgrm?.Embeds && twttr?.widgets) {
+      window.instgrm.Embeds.process()
+      twttr.widgets.load()
+    }
+  }, [])
   const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { initialData: post })
   const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
   const router = useRouter()
@@ -143,8 +149,14 @@ export default function DetailOfPost({
 
   return (
     <Layout isMobile={isMobile}>
-
-      {/* <Header /> */}
+      <Script
+        id="embedig"
+        src="https://www.instagram.com/embed.js"
+      />
+      <Script
+        src="https://platform.twitter.com/widgets.js"
+        charSet="utf-8"
+      />
       {router.isFallback ? (
         <PostTitle>Loading…</PostTitle>
       ) : (
@@ -160,7 +172,7 @@ export default function DetailOfPost({
           </div>
           <div className="mx-4 md:max-w-2xl md:mx-auto">
 
-            <div className="inline-block mb-8 divide-y  md:my-12">
+            <div className="inline-block mb-8 divide-y md:my-12">
               <div className="pb-4">
                 <SocialMediaShareButton size={32} slug={postClient.slug} />
               </div>
@@ -181,7 +193,7 @@ export default function DetailOfPost({
               </div>
             </div>
 
-            <div className="px-4 pb-24">
+            <div className="pb-24">
               <PostCommentList
                 comments={comments}
                 isLoading={isLoading}

@@ -17,7 +17,7 @@ export const SubsribeBanner:FunctionComponent<SubsribeBannerType> = ({
         <Image
           src={src}
           alt="Subsribe Banner"
-          layout="responsive"
+          layout="intrinsic"
           className="rounded"
           width={isMobile ? 354 : 1200}
           height={isMobile ? 125 : 258}

@@ -30,17 +30,14 @@ export type ForgetPassword = {
 export type Signup = Login &{
   name: string,
 }
-export type Profile = Signup&{
-  role: string,
+export type Profile = Signup&address&{
+  role?: string,
   phone: string,
   address: string,
-  postalCode: string,
-  district: string,
-  city: string,
-  province: string,
-  createdAt: string,
-  updatedAt: string,
-  deletedAt: string,
+  birthdate: string,
+  createdAt?: string,
+  updatedAt?: string,
+  deletedAt?: string,
   photo:string
 }
 export type comments ={
@@ -69,7 +66,14 @@ export type TypePostCommentAdd = swrReturn &{
   comment:string
 
 }
-
+export type subscribeType = {
+  'rupiah': string,
+  'description': string[],
+  'id': string,
+  'name': string,
+  'price': number,
+  'longTime': number
+}
 export type Post = {
   'id': string,
   'userId': string,

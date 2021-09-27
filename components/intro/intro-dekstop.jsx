@@ -1,11 +1,10 @@
 import SwipeableViews from 'react-swipeable-views'
-import { autoPlay } from 'react-swipeable-views-utils'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import virtualize from 'react-swipeable-views-utils/lib/virtualize'
 import classnames from 'classnames'
-import { Get as GetJumbotron } from '../service/jumbotron'
+import { Get as GetJumbotron } from '../../service/jumbotron'
 
 export const ItemDekstop = ({ url, link }) => (
   <Link href={link || '/'}>
@@ -52,10 +51,9 @@ export const Pagination = ({ dots, index, onChangeIndex }) => {
   )
 }
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 const EnhancedSwipeableViews = virtualize(SwipeableViews)
 
-export function IntroDekstop() {
+export default function IntroDekstop() {
   const [swipeIndex, setSwipeIndex] = useState(0)
   // console.log('IntroDekstop -> swipeIndex', swipeIndex)
 
@@ -102,57 +100,6 @@ export function IntroDekstop() {
           index={Number(swipeIndex)}
           onChangeIndex={(i) => {
             setSwipeIndex(i)
-          }}
-        />
-      </div>
-    </section>
-  )
-}
-
-export const ItemMobile = ({ url, link }) => (
-  <Link href={link || '/'}>
-    <a>
-      <div className="w-full rounded-lg">
-        <Image
-          height={184}
-          width={350}
-          layout="responsive"
-          placeholder="blur"
-          blurDataURL="/background/download.webp"
-          src={url || '/background/download.webp'}
-          alt="Gambar Intro"
-          className="object-cover rounded-lg"
-        />
-      </div>
-    </a>
-  </Link>
-
-)
-export function IntroMobile() {
-  const [index, setIndex] = useState(0)
-  const { data: jumbotrons, isLoading } = GetJumbotron()
-  // console.log('🚀 ~ file: intro.jsx ~ line 84 ~ IntroMobile ~ jumbotrons', jumbotrons)
-  const filteredJumbotrons = jumbotrons?.filter((jumbotron) => jumbotron.isPhone)
-  return (
-    <section className="relative mb-4 hp:-mt-36 -mt-28">
-      <AutoPlaySwipeableViews
-        enableMouseEvents
-        className="px-3"
-        interval={7000}
-        index={Number(index)}
-        onChangeIndex={(i) => setIndex(i)}
-        slideClassName="px-1"
-      >
-        {isLoading ? <ItemMobile url={null} link="/" /> : filteredJumbotrons.map((jumbotron) => (
-          <ItemMobile url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
-        ))}
-      </AutoPlaySwipeableViews>
-      <div className="absolute flex bottom-16 left-16 ">
-        <Pagination
-          dots={filteredJumbotrons?.length || 1}
-          index={index}
-          onChangeIndex={(i) => {
-            setIndex(i)
           }}
         />
       </div>

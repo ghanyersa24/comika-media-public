@@ -4,6 +4,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './layout/**/*.{js,ts,jsx,tsx}',
@@ -52,13 +53,14 @@ module.exports = {
   plugins: [
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),
   ],
   variants: {
     extend: {
-      backgroundColor: ['checked', 'active'],
+      backgroundColor: ['checked', 'active', 'disabled'],
       borderColor: ['checked'],
     },
   },

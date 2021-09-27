@@ -1,34 +1,37 @@
-import Footer from './footer'
-import Meta from './meta'
-import Navbar from './blog/navigation/navbar'
-import { BottomNavbar } from './blog/navigation/bottom-navbar'
+import dynamic from 'next/dynamic'
 
-export const Desktop = ({ children }) => (
+import Meta from './meta'
+
+const Navbar = dynamic(() => import('./blog/navigation/navbar'), { ssr: false })
+const BottomNavbar = dynamic(() => import('./blog/navigation/bottom-navbar'), { ssr: false })
+const Footer = dynamic(() => import('./footer'), { ssr: false })
+
+export const Desktop = ({ children, className }) => (
   <>
     <Meta />
     <Navbar />
-    <div className="min-h-screen ">
+    <div className={`min-h-screen ${className}`}>
       {/* <Alert preview={preview} /> */}
-      <main>{children}</main>
+      <main className="className">{children}</main>
     </div>
     <Footer />
   </>
 )
 
-export const Mobile = ({ children }) => (
+export const Mobile = ({ children, className }) => (
   <>
     <Meta />
-    <div className="min-h-screen ">
+    <div className={`min-h-screen ${className}`}>
       {/* <Alert preview={preview} /> */}
-      <main className=" ">{children}</main>
+      <main className="">{children}</main>
     </div>
     <BottomNavbar />
     {/* <Footer /> */}
   </>
 )
 // eslint-disable-next-line no-unused-vars
-export default function Layout({ children, isMobile }) {
+export default function Layout({ children, isMobile, className = '' }) {
   console.log('🚀 ~ file: layout.jsx ~ line 7 ~ Layout ~ isMobile', isMobile)
-  if (isMobile) { return <Mobile>{children}</Mobile> }
-  return <Desktop>{children}</Desktop>
+  if (isMobile) { return <Mobile className={className}>{children}</Mobile> }
+  return <Desktop className={className}>{children}</Desktop>
 }
