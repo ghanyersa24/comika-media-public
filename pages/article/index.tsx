@@ -1,23 +1,27 @@
 /* eslint-disable react/destructuring-assignment */
 import Head from 'next/head'
-import { GetServerSideProps } from 'next'
 import { useSWRInfinite } from 'swr'
 
 import React, { } from 'react'
 import { useRouter } from 'next/router'
 import { title } from 'process'
+import mobile from 'is-mobile'
+import dynamic from 'next/dynamic'
 import { MorePosts } from '../../components/more-posts'
-import { IntroDekstop } from '../../components/intro'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../../res/string'
 import Layout from '../../components/layout'
-import { SearchBar } from '../../components/blog/navigation/search-bar'
 import { OrderBy } from '../../components/blog/navigation/ordering-by'
-import BackgroundArticlePage from '../../components/svg/BackgroundArticlePage'
 import ContainerPadding from '../../components/container-padding'
 import { RenderMoreArticle } from '../../components/blog/more-articles'
 import { LoadMoreButton } from '../../components/blog/button/load-more'
+import { SearchBar } from '../../components/blog/navigation/search-bar'
+
+const isMobile = mobile()
+
+const BackgroundArticleMobile = dynamic(() => import('../../components/background/background-article-mobile') as any, { ssr: false })
+const IntroDekstop = dynamic(() => import('../../components/intro/intro-dekstop') as any, { ssr: false })
 
 const titleDescription = {
   popular: {
@@ -27,15 +31,9 @@ const titleDescription = {
     title: 'Semua Artikel', description: 'Semua artikel yang ada di Comika Media',
   },
 }
-type Props= {
-  isMobile:boolean
-  limit:number
-}
-export default function Index(
-  {
-    isMobile, limit,
-  }:Props,
-): React.ReactNode {
+
+export default function Index(): React.ReactNode {
+  const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
   const router = useRouter()
   const { orderBy } = router.query
   const selectedOrderBy = titleDescription?.[orderBy as string] ? orderBy as string : 'createdAt'
@@ -60,14 +58,11 @@ export default function Index(
       </Head>
       {/* <Container> */}
       {isMobile ? (
-        <div className="bg-primary pt-8 pb-20 text-center relative">
-          <BackgroundArticlePage className="absolute -top-4" />
-          <h1 className="text-xl font-bold leading-relaxed text-white">Artikel</h1>
-        </div>
+        <BackgroundArticleMobile />
       ) : <IntroDekstop />}
 
-      <ContainerPadding className="-mt-16 rounded-xl bg-white relative pt-8  lg:mt-8 mb-24">
-        {isMobile && <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />}
+      <ContainerPadding className="relative pt-8 mb-24 -mt-16 bg-white rounded-xl lg:mt-8">
+        {isMobile && <SearchBar className="mb-2 text-gray-500 bg-gray-400 bg-opacity-30" />}
         <OrderBy orderBy={selectedOrderBy} />
         <div className="mt-4">
           <MorePosts
@@ -82,19 +77,4 @@ export default function Index(
       </ContainerPadding>
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const UA = context.req.headers['user-agent']
-  const isMobile = Boolean(UA.match(
-    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
-  ))
-  const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
-
-  // will be passed to the page component as props
-  return {
-    props: {
-      isMobile, limit,
-    },
-  }
 }

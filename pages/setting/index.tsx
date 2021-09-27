@@ -40,7 +40,7 @@ export const Setting = ():ReactElement => {
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
-  if (!session) { return <button type="button" className="btn-primary" onClick={() => signIn()}>Masuk sekarang</button> }
+  if (!session) signIn()
 
   return (
     <Layout isMobile={isMobile}>
