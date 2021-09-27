@@ -66,22 +66,22 @@ export default function Index(): React.ReactNode {
           isMobile={isMobile}
           src={isMobile ? '/assets/blog/subscribe/Subscribe_Kecil.png' : '/assets/svg/Subscribe_Kecil.svg'}
         />
-        <ContainerStore
+        {/* <ContainerStore
           className="my-8"
           title="Digital produk"
           titleDescription="Produk populer minggu ini"
         >
           <ItemStores digitalStores={digitalStores} isMobile={isMobile} />
-        </ContainerStore>
+        </ContainerStore> */}
         <MorePosts posts={pupularArticles} mutate={mutatePopularArticles} title="Artikel Terpopuler" description="Terpopuler di minggu ini" />
-
+        {/*
         <ContainerStore
           className="my-8"
           title="Merchandise"
           titleDescription="Merchandise populer minggu ini"
         >
           <ItemStores digitalStores={merchandiseStores} isMobile={isMobile} />
-        </ContainerStore>
+        </ContainerStore> */}
         <TitlePost title="Artikel Lainya" description="Lainya di minggu ini" />
         <RenderMoreArticle data={moreArticles} mutate={mutateMoreArticles} />
 

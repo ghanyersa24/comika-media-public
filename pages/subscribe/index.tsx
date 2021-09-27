@@ -6,6 +6,7 @@ import { GetServerSideProps } from 'next'
 import { signIn, useSession } from 'next-auth/client'
 import { toast } from 'react-toastify'
 import useSWR from 'swr'
+import Head from 'next/head'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
 import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
@@ -110,22 +111,30 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
     )
   }
   return (
-    <Layout isMobile={false}>
-      <div className="max-w-screen-xl min-h-screen mx-auto mt-8 lg:my-24 sm:px-8">
-        <div className="hidden md:block">
-          <p className="text-4xl font-medium leading-10 text-center text-blue-900">
-            Mengapa kamu harus subscribe?
-          </p>
-          <p className="text-2xl leading-loose text-center text-gray-500">
-            Karena dengan kamu subcribe kamu telah membantu kami agar tetap terus
-            bekarya
-          </p>
+    <>
+      <Head>
+        <title>
+          Comika Media - Subscribe
+        </title>
+        {/* <meta property="og:image" content={post.ogImage.url} /> */}
+      </Head>
+      <Layout isMobile={false}>
+        <div className="max-w-screen-xl min-h-screen mx-auto mt-8 lg:my-24 sm:px-8">
+          <div className="hidden md:block">
+            <p className="text-4xl font-medium leading-10 text-center text-blue-900">
+              Mengapa kamu harus subscribe?
+            </p>
+            <p className="text-2xl leading-loose text-center text-gray-500">
+              Karena dengan kamu subcribe kamu telah membantu kami agar tetap terus
+              bekarya
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+            { SubscriptionContent}
+          </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          { SubscriptionContent}
-        </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   )
 }
 

@@ -41,7 +41,7 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
       )}
       <button
         type="submit"
-        className="absolute right-0 h-full mr-4 "
+        className="absolute right-0 h-full mx-2 "
         onClick={onSubmit}
       >
         <div className="flex items-center">

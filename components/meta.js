@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { HOME_OG_IMAGE_URL } from '../lib/constants'
 
-export default function Meta({ description = 'Media online hiburan, berita, dan informasi seputar komedi pertama di Indonesia' }) {
+export default function Meta({ description = 'Comikamedia adalah media online hiburan, berita, serta informasi seputar komedi pertama di Indonesia. Pemberitaan kami tak cuma dari dunia stand-up comedy. Panggung lawak, trending berbau humor di internet, hingga artikel-artikel nostalgia akan hadir di Comikamedia. Serta, jika bos kami sedang baik, kami akan bagi-bagi giveaway.' }) {
   return (
     <Head>
       <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png" />
