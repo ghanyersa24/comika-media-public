@@ -9,12 +9,12 @@ export const Signout = () => {
     localStorage.removeItem('komika-key')
   }, [])
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="relative h-12 w-12 text-primary text-3xl">
-        <span className="animate-ping absolute ">
+    <div className="flex items-center justify-center h-screen">
+      <div className="relative w-12 h-12 text-3xl text-primary">
+        <span className="absolute animate-ping ">
           Logout...
         </span>
-        {/* <span className="relative inline-flex rounded-full h-8 w-8 bg-primary " /> */}
+        {/* <span className="relative inline-flex w-8 h-8 rounded-full bg-primary " /> */}
       </div>
     </div>
   )

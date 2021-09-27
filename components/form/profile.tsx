@@ -57,10 +57,8 @@ export const ProfileCard = ({
   const {
     photo,
   } = profileData || {}
-  console.log('profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
-  console.log('provinces', provinces)
 
   return (
     <Formik
@@ -98,7 +96,6 @@ export const ProfileCard = ({
                   onChange={(event) => {
                     const reader = new FileReader()
                     const { files } = event.target
-                    console.log('files', files)
                     const file = files[0]
                     reader.onloadend = () => {
                       formik.setFieldValue('photo', file)

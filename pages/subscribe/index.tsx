@@ -36,7 +36,6 @@ const SubscriptionMobile = ({ content: contents }) => (
 
 export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get)
-  console.log('package', subscribes)
 
   const [session] = useSession()
   // eslint-disable-next-line no-unused-vars
@@ -51,7 +50,6 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
     } else {
       try {
         setIsLoading(true)
-        console.log()
         const key = localStorage.getItem('komika-key')
         if (key !== 'undefined') {
           localStorage.getItem('komika-key')
@@ -73,14 +71,14 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const bgColor = ['bg-gray-300', 'bg-primary', 'bg-yellow-400']
   const SubscriptionContent = shortedSubsribe ? shortedSubsribe.map((subscribe, index) => (
     <SubsribeItem
-      onClick={() => isLoading || handleSubscribe('weekly')}
+      onClick={() => isLoading || handleSubscribe(subscribe.id)}
       loading={isLoading}
       title={subscribe.name}
       price={subscribe.rupiah}
       until={`Berlaku untuk ${subscribe.longTime} Hari`}
       buttonText="Subscribe"
       headBgColor={bgColor[index]}
-      key={1}
+      key={subscribe.id}
     >
       <div className="mt-4">
         <ListCustomPrefix

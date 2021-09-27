@@ -38,11 +38,11 @@ export const LikeButton : FunctionComponent <LikeButtonType> = ({
 
   return (
     <div className={`text-xl md:text-2xl lg:text-3xl ${className}`}>
-      {isBookmarkLoading ? <FaSpinner className="animate-spin mr-2" /> : (
+      {isBookmarkLoading ? <FaSpinner className="mr-2 animate-spin" /> : (
         <button type="button" onClick={handleBookmark}>
           {isBookmarked
-            ? <AiFillLike className="  " />
-            : <AiOutlineLike className=" " />}
+            ? <AiFillLike className="" />
+            : <AiOutlineLike className="" />}
         </button>
       )}
     </div>

@@ -38,7 +38,7 @@ export const SocialMediaShareButton = ({ size, slug }:
       <LineShareButton url={href} onShareWindowClose={() => handleShared('LINE')}>
         <LineIcon size={size} round className="mr-2" />
       </LineShareButton>
-      <button className="bg-primary text-white text-xl rounded-full flex items-center justify-center" type="button" style={{ height: size, width: size }} onClick={() => handleCopy()}>
+      <button className="flex items-center justify-center text-xl text-white rounded-full bg-primary" type="button" style={{ height: size, width: size }} onClick={() => handleCopy()}>
         <AiFillCopy style={{ fontSize: size - 8 }} />
       </button>
     </span>

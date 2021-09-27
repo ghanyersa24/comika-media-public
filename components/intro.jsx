@@ -29,12 +29,9 @@ export const ItemDekstop = ({ url, link }) => (
 )
 
 export const Pagination = ({ dots, index, onChangeIndex }) => {
-  // console.log('Pagination -> index', index)
   const indexMod = Math.abs(index % dots)
-  // console.log('Pagination -> indexMod', indexMod)
   const children = []
   for (let i = 0; i < dots; i += 1) {
-    // console.log('Pagination -> i', i, index)
     children.push(
       // eslint-disable-next-line jsx-a11y/control-has-associated-label
       <button
@@ -57,7 +54,6 @@ const EnhancedSwipeableViews = virtualize(SwipeableViews)
 
 export function IntroDekstop() {
   const [swipeIndex, setSwipeIndex] = useState(0)
-  // console.log('IntroDekstop -> swipeIndex', swipeIndex)
 
   const { data: jumbotrons, isLoading } = GetJumbotron()
   if (isLoading) return <ItemDekstop url={null} link="/" />
@@ -131,7 +127,6 @@ export const ItemMobile = ({ url, link }) => (
 export function IntroMobile() {
   const [index, setIndex] = useState(0)
   const { data: jumbotrons, isLoading } = GetJumbotron()
-  // console.log('🚀 ~ file: intro.jsx ~ line 84 ~ IntroMobile ~ jumbotrons', jumbotrons)
   const filteredJumbotrons = jumbotrons?.filter((jumbotron) => jumbotron.isPhone)
   return (
     <section className="relative mb-4 hp:-mt-36 -mt-28">

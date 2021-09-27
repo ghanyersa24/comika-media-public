@@ -192,9 +192,7 @@ export default function Navbar() {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
-  console.log('Navbar -> subUrlAdmin', subUrlAdmin)
 
-  // console.log('🚀 ~ file: navbar.jsx ~ line 92 ~ Navbar ~ loading', session, loading)
   return (
     <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
       {({ open }) => (
@@ -242,7 +240,6 @@ export default function Navbar() {
                 >
                   <MdNotifications className="mx-2 text-2xl " />
                 </button>
-                {/* <SocialMediaLogo className="hidden mt-1 mr-4 text-xl fill-current text-primary sm:block" /> */}
                 <div className="hidden ml-2 sm:block">
                   {session ? (
                     <Profile name={data?.name} src={data?.photo} />

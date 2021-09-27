@@ -37,7 +37,6 @@ export const Setting = ():ReactElement => {
   const [session] = useSession()
 
   const { data, isLoading } = GetProfile()
-  console.log('data', data)
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>

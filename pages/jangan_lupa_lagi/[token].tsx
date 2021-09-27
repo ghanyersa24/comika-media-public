@@ -17,7 +17,7 @@ import { ResetPassword } from '../../service/auth'
 export const LoginPage = (): ReactNode => {
   const router = useRouter()
   const { token } = router.query
-  console.log('🚀 ~ file: [token].tsx ~ line 20 ~ LoginPage ~ token', token as string)
+  // console.log('🚀 ~ file: [token].tsx ~ line 20 ~ LoginPage ~ token', token as string)
 
   const [ForgetPassword, setForgetPassword] = useState<ForgetPasswordType >()
   useEffect(() => {
@@ -48,10 +48,10 @@ export const LoginPage = (): ReactNode => {
     }
   }
   return (
-    <div className="grid lg:grid-cols-2  min-h-screen relative bg-primary lg:bg-white">
+    <div className="relative grid min-h-screen lg:grid-cols-2 bg-primary lg:bg-white">
       <BackgroundLogin className="block lg:hidden" />
-      <form onSubmit={handleSubmitLogin} className="bg-white absolute bottom-0 lg:static rounded-t-2xl lg:rounded px-8 pt-6 pb-8 lg:mb-4 flex flex-col lg:min-w-max w-full lg:w-2/3 mx-auto place-content-center">
-        <div className="hidden  lg:flex mb-8">
+      <form onSubmit={handleSubmitLogin} className="absolute bottom-0 flex flex-col w-full px-8 pt-6 pb-8 mx-auto bg-white lg:static rounded-t-2xl lg:rounded lg:mb-4 lg:min-w-max lg:w-2/3 place-content-center">
+        <div className="hidden mb-8 lg:flex">
           <ComikamediaNavbar className="w-2/3" />
         </div>
         <div className="mb-8">
@@ -63,15 +63,15 @@ export const LoginPage = (): ReactNode => {
 
         <div className="mb-4">
           {errorMsg ? (
-            <div className="bg-red-200 p-2 mb-4 rounded">{errorMsg}</div>
+            <div className="p-2 mb-4 bg-red-200 rounded">{errorMsg}</div>
           ) : null}
           <label
             htmlFor="Password"
-            className="block text-gray-800  font-bold mb-2 mt-4 relative"
+            className="relative block mt-4 mb-2 font-bold text-gray-800"
           >
             Password
             <input
-              className="w-full py-2 px-3  mt-3"
+              className="w-full px-3 py-2 mt-3"
               id="password"
               type={isPasswordShown ? 'text' : 'password'}
               name="password"
@@ -89,11 +89,11 @@ export const LoginPage = (): ReactNode => {
 
           <label
             htmlFor="Password"
-            className="block text-gray-800  font-bold mb-2 mt-4 relative"
+            className="relative block mt-4 mb-2 font-bold text-gray-800"
           >
             Konfirmasi Password
             <input
-              className="w-full py-2 px-3  mt-3"
+              className="w-full px-3 py-2 mt-3"
               id="passwordConfirmation"
               type={isPasswordShown ? 'text' : 'password'}
               name="passwordConfirmation"
@@ -112,14 +112,14 @@ export const LoginPage = (): ReactNode => {
         </div>
 
         <button
-          className="btn-primary font-bold px-6 py-4 mt-8 flex  justify-center"
+          className="flex justify-center px-6 py-4 mt-8 font-bold btn-primary"
           type="submit"
         >
-          {isLoading && <FaSpinner className="animate-spin h-5 w-5 mr-3" /> }
+          {isLoading && <FaSpinner className="w-5 h-5 mr-3 animate-spin" /> }
           Submit
         </button>
       </form>
-      <div className="bg-primary overflow-hidden hidden lg:block h-screen">
+      <div className="hidden h-screen overflow-hidden bg-primary lg:block">
         <BackgroundLogin className="" />
       </div>
     </div>

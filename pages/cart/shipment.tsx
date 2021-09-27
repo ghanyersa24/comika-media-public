@@ -1,12 +1,12 @@
 import React from 'react'
 import { FaChevronRight, FaStore } from 'react-icons/fa'
 import { IoMdPin } from 'react-icons/io'
-import BottomFixedSummaryStore from '../../components/card/bottom-fixed-summary-store'
+import { BottomFixedSummaryStore } from '../../components/card/bottom-fixed-summary-store'
 import SummaryItemStore from '../../components/items/summary-item-store'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 
-export const Shipment = (params) => {
-  console.log('🚀 ~ file: shipment.tsx ~ line 2 ~ Shipment ~ params', params)
+export const Shipment = () => {
+  console.log('🚀 ~ file: shipment.tsx ~ line 2 ~ Shipment ~ params')
   return (
     <div className="pt-16 pb-44 bg-bgGrayLight">
       <TopNavbarWithBackButton title="Pesanan" />

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import router from 'next/router'
 import { FunctionComponent, ReactElement } from 'react'
 import { toast } from 'react-toastify'
 import { ItemStoreType } from '../../res/interface'
@@ -44,7 +43,6 @@ export const ItemStoreDekstop: FunctionComponent<props> = ({
   imageUrl = '/background/download.webp',
   title = 'null',
   price = 'null',
-  type,
 }) => (
   <button type="button" onClick={onClick} className="p-2 mb-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50">
     <div className="flex flex-col w-full ">

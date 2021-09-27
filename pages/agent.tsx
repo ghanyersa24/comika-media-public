@@ -5,18 +5,15 @@ interface Props {
   isMobile
 }
 
-const Page: NextPage<Props> = ({ userAgent, isMobile }) => {
-  console.log('🚀 ~ file: agent.tsx ~ line 8 ~ isMobile', isMobile)
-  return (
-    <main>
-      Your user agent:
-      {userAgent}
-      <br />
-      xlx
-      {isMobile}
-    </main>
-  )
-}
+const Page: NextPage<Props> = ({ userAgent, isMobile }) => (
+  <main>
+    Your user agent:
+    {userAgent}
+    <br />
+    xlx
+    {isMobile}
+  </main>
+)
 
 Page.getInitialProps = async ({ req }) => {
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent

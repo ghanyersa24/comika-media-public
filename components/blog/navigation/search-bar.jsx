@@ -1,6 +1,6 @@
 import { AiOutlineSearch } from 'react-icons/ai'
 import { FaSearch } from 'react-icons/fa'
-import Router, { useRouter } from 'next/router'
+import Router, { } from 'next/router'
 import React, { useState } from 'react'
 
 export const SearchBarMobile = ({ onChange, onSubmit, searchValue }) => (
@@ -35,7 +35,6 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
         name="search"
         placeholder="Search"
         value={searchValue}
-        onEmptied={() => console.log('x')}
         onChange={onChange}
       />
       )}
@@ -53,10 +52,6 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
 }
 
 export const SearchBar = ({ className = '', searchValue = '', isMobile = true }) => {
-  const router = useRouter()
-  const urlComponent = router.route.split('/')
-  const urlType = urlComponent?.[2] || ''
-  console.log('🚀 ~ file: search-bar.jsx ~ line 9 ~ SearchBar ~ urlType', urlType)
   const [search, setSearch] = useState(searchValue)
   const handleSubmit = (e) => {
     e.preventDefault()

@@ -24,9 +24,6 @@ export const SubsribeItem = ({
   loading,
   onClick,
 }: SubsribeItemProps): ReactElement => {
-  console.log(
-    '🚀 ~ file: subscribe-item.tsx ~ line 4 ~ SubsribeItem ~ SubsribeItem',
-  )
   const classButton = 'lg:mt-8 mt-4 inline-flex items-center justify-center w-full bg-primary rounded-md hover:bg-primaryDark '
   return (
     <div

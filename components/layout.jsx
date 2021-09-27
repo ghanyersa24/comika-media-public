@@ -31,7 +31,6 @@ export const Mobile = ({ children, className }) => (
 )
 // eslint-disable-next-line no-unused-vars
 export default function Layout({ children, isMobile, className = '' }) {
-  console.log('🚀 ~ file: layout.jsx ~ line 7 ~ Layout ~ isMobile', isMobile)
   if (isMobile) { return <Mobile className={className}>{children}</Mobile> }
   return <Desktop className={className}>{children}</Desktop>
 }

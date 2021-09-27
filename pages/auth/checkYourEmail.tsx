@@ -7,9 +7,9 @@ export const LoginPage = (): ReactNode => {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-2  min-h-screen">
-      <div className="bg-white rounded px-8 pt-6 pb-8 mb-4 flex flex-col min-w-max w-2/3 mx-auto place-content-center">
-        <button type="button" className="py-4 pr-4 w-12 text-lg " onClick={() => router.back()}>
+    <div className="grid min-h-screen grid-cols-2">
+      <div className="flex flex-col w-2/3 px-8 pt-6 pb-8 mx-auto mb-4 bg-white rounded min-w-max place-content-center">
+        <button type="button" className="w-12 py-4 pr-4 text-lg " onClick={() => router.back()}>
           <AiOutlineArrowLeft />
         </button>
         <div className="mb-8">
@@ -18,14 +18,14 @@ export const LoginPage = (): ReactNode => {
         </div>
 
         <button
-          className="btn-primary font-bold px-6 py-4 mt-8"
+          className="px-6 py-4 mt-8 font-bold btn-primary"
           type="button"
         >
           OK
         </button>
 
       </div>
-      <div className="bg-primary overflow-hidden h-screen">
+      <div className="h-screen overflow-hidden bg-primary">
         <BackgroundLogin className="" />
       </div>
     </div>
