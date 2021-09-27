@@ -1,7 +1,10 @@
-import { Footer } from './footer'
+import dynamic from 'next/dynamic'
+
 import Meta from './meta'
-import Navbar from './blog/navigation/navbar'
-import { BottomNavbar } from './blog/navigation/bottom-navbar'
+
+const Navbar = dynamic(() => import('./blog/navigation/navbar'), { ssr: false })
+const BottomNavbar = dynamic(() => import('./blog/navigation/bottom-navbar'), { ssr: false })
+const Footer = dynamic(() => import('./footer'), { ssr: false })
 
 export const Desktop = ({ children, className }) => (
   <>

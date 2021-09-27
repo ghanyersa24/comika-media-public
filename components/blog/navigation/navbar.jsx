@@ -127,13 +127,11 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }) => (
     {/* Sliding sidebar */}
     <Transition.Child
       enter="duration-200 ease-out"
-      enterFrom="opacity-0 scale-95"
       enterTo="opacity-100 scale-100"
       leave="duration-100 ease-in"
-      leaveFrom="opacity-100 scale-100"
-      leaveTo="opacity-0 scale-95"
+      leaveTo="opacity-0 scale-100"
     >
-      <div className="fixed top-0 z-50 w-full min-h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary ">
+      <div className="fixed top-0 w-full h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary " style={{ zIndex: 9999 }}>
         <div className="flex justify-end">
           <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <XIcon className="block w-6 h-6" aria-hidden="true" />
@@ -200,6 +198,8 @@ export default function Navbar() {
     <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
       {({ open }) => (
         <>
+          <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
+
           <div className="pl-4 pr-2 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 ">
               <div className="inset-y-0 left-0 flex items-center ">
@@ -242,7 +242,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
         </>
       )}
     </Disclosure>
