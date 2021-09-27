@@ -37,6 +37,7 @@ export const Setting = ():ReactElement => {
   const [session] = useSession()
 
   const { data, isLoading } = GetProfile()
+  console.log('data', data)
 
   if (!isMobile) return <div>For Mobile Only</div>
   if (isLoading) return <div>Loading...</div>
@@ -45,7 +46,7 @@ export const Setting = ():ReactElement => {
   return (
     <Layout isMobile={isMobile}>
       {session ? (
-        <div className="h-screen">
+        <div className="h-screen bg-bgGray">
           <div className="pb-24 bg-primary">
             <div className="flex justify-end pt-4 pb-4 pr-4 text-2xl text-white">
               <AiFillBell />
