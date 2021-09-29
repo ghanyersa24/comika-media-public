@@ -150,3 +150,33 @@ export type address ={
   'postalCode': string,
   'phone': string
 }
+
+export type productDetailsType = {
+  onClickCart:()=>void,
+  onClickBuy:()=>void,
+  isDisabled: boolean,
+  itemstore:ItemStoreType,
+  buyedProductQyt?:number
+}
+
+export interface cartType {
+  priceRp: string;
+  totalRp: string;
+  id: string;
+  productId: string;
+  userId: string;
+  name: string;
+  qty: number;
+  img: string;
+  weight: number;
+  price: number;
+  total: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date;
+}
+
+export type decreaseIncreaseFunctionType ={
+  onDecrease:()=> void,
+	onIncrease:()=> void,
+}

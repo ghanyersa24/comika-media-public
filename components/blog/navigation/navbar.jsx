@@ -7,10 +7,13 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { MdShoppingBasket, MdNotifications } from 'react-icons/md'
 import { toast } from 'react-toastify'
+import useSWR from 'swr'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { Get as GetProfile } from '../../../service/user-profile'
 import { SearchBar } from './search-bar'
+import { API_ENDPOINT_CART } from '../../../res/api-endpoint'
+import { client } from '../../../lib/clientRaw'
 
 const navigation = [
   { name: 'Home', href: '', current: true },
@@ -192,6 +195,8 @@ export default function Navbar() {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
+  const { data: carts } = useSWR(`${API_ENDPOINT_CART}`, client.get)
+  const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 
   return (
     <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
@@ -215,8 +220,8 @@ export default function Navbar() {
               </div>
               <div className="">
                 <Link href="/">
-                  <a className="hidden hover:underline md:block ">
-                    <ComikamediaNavbar className="h-8" />
+                  <a className="relative hidden hover:underline md:block ">
+                    <ComikamediaNavbar className="h-8 w-52" />
                   </a>
                 </Link>
               </div>
@@ -224,11 +229,12 @@ export default function Navbar() {
                 <SearchBar className="" isMobile={false} searchValue="" />
                 <button
                   type="button"
-                  className=""
-                  onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
-                    position: 'bottom-right',
-                  })}
+                  className="relative"
+                  onClick={() => router.push('/cart')}
                 >
+                  <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
+                    {sumOfCarts}
+                  </div>
                   <MdShoppingBasket className="mx-2 text-2xl" />
                 </button>
                 <button

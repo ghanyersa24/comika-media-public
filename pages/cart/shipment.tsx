@@ -25,13 +25,13 @@ export const Shipment = () => {
           <p className="text-base font-medium leading-tight text-black w-28">Karya Pandji</p>
         </div>
         <div className="py-4">
-          <SummaryItemStore />
+          {/* <SummaryItemStore /> */}
         </div>
         <div className="py-4">
-          <SummaryItemStore />
+          {/* <SummaryItemStore /> */}
         </div>
         <div className="py-4">
-          <SummaryItemStore />
+          {/* <SummaryItemStore /> */}
         </div>
       </div>
       <div className="px-6 py-4 m-4 bg-white divide-y rounded-lg shadow-md">
@@ -51,7 +51,7 @@ export const Shipment = () => {
           <p className="leading-normal text-black ">Rp 0</p>
         </div>
       </div>
-      <BottomFixedSummaryStore />
+      {/* <BottomFixedSummaryStore /> */}
 
     </div>
   )

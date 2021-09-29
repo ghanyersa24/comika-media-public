@@ -60,6 +60,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['checked', 'active', 'disabled'],
+      opacity: ['disabled'],
       borderColor: ['checked'],
     },
   },
