@@ -7,14 +7,14 @@ import useSWR, { mutate } from 'swr'
 import { toast } from 'react-toastify'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_ADD_CART, API_ENDPOINT_CART, API_ENDPOINT_STORE } from '../../res/api-endpoint'
-import { cartType, ItemStoreType } from '../../res/interface'
+import { ItemStoreType } from '../../res/interface'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
 import Layout from '../../components/layout'
 import { ContainerStore } from '../../components/container/container-store'
 import { ItemStores } from '../../components/items/item-store'
 
 const ProductDekstop = dynamic(() => import('../../components/card/product-detail/dekstop'), { ssr: false })
-const ProductMobile = dynamic(() => import('../../components/card/product-detail/mobile'), { ssr: false })
+const ProductMobile = dynamic(() => import('../../components/card/product-detail/product-detail-mobile'), { ssr: false })
 
 const isMobile = mobile()
 
@@ -25,8 +25,6 @@ type props = {
 
 export const Product:FunctionComponent<props> = ({ itemstore }) => {
   const { data: anotherProducts } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=3`, client.get)
-  const { data: carts } = useSWR<cartType[]>(`${API_ENDPOINT_CART}`, client.get)
-  const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
   const [isDisabled, setIsDisabled] = useState(false)
   const handleClickCart = async () => {
     setIsDisabled(true)
@@ -50,7 +48,6 @@ export const Product:FunctionComponent<props> = ({ itemstore }) => {
       onClickCart={handleClickCart}
       onClickBuy={handleClickBuy}
       isDisabled={isDisabled}
-      buyedProductQyt={sumOfCarts}
     />
   ) : (
     <ProductDekstop

@@ -195,7 +195,7 @@ export default function Navbar() {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
-  const { data: carts } = useSWR(`${API_ENDPOINT_CART}`, client.get)
+  const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 
   return (
@@ -232,9 +232,11 @@ export default function Navbar() {
                   className="relative"
                   onClick={() => router.push('/cart')}
                 >
+                  {![0, undefined].includes(sumOfCarts) && (
                   <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
                     {sumOfCarts}
                   </div>
+                  )}
                   <MdShoppingBasket className="mx-2 text-2xl" />
                 </button>
                 <button

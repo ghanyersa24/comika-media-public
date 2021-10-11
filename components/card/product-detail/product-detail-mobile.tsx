@@ -3,11 +3,11 @@ import router from 'next/router'
 import React, { ReactElement } from 'react'
 import Image from 'next/image'
 import { BiArrowBack } from 'react-icons/bi'
-import { IoMdBasket } from 'react-icons/io'
 import SwipeableViews from 'react-swipeable-views'
 import { productDetailsType } from '../../../res/interface'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
 import Content from './content'
+import { ButtonCartNotifMobile } from '../../button/button-cart-notif-mobile'
 
 const ImageProductMobile = ({ url }) => (
   <Image
@@ -20,8 +20,8 @@ const ImageProductMobile = ({ url }) => (
   />
 )
 
-const ProductMobile = ({
-  onClickBuy, onClickCart, itemstore, isDisabled, buyedProductQyt,
+const ProductDetailMobile = ({
+  onClickBuy, onClickCart, itemstore, isDisabled,
 }:productDetailsType):ReactElement => (
   // <Layout isMobile={isMobile}>
   <div>
@@ -41,12 +41,8 @@ const ProductMobile = ({
       <button onClick={() => router.back()} type="button" className="p-2 text-xl bg-white rounded-lg shadow">
         <BiArrowBack />
       </button>
-      <button onClick={() => router.push('/cart')} type="button" className="relative p-2 text-xl bg-white rounded-lg shadow">
-        <IoMdBasket />
-        <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
-          {buyedProductQyt}
-        </div>
-      </button>
+      <ButtonCartNotifMobile isFilled />
+
     </div>
     <div className="relative w-full px-4 pt-8 pb-24 -mt-8 bg-white rounded-2xl">
       <Content itemstore={itemstore} />
@@ -76,4 +72,4 @@ const ProductMobile = ({
   // </Layout>
 )
 
-export default ProductMobile
+export default ProductDetailMobile

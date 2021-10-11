@@ -16,10 +16,11 @@ import Layout from '../components/layout'
 
 import { RenderMoreArticle } from '../components/blog/more-articles'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../res/string'
-import { SubsribeBanner } from '../components/banner/subscribe-banner'
 import { ItemStores } from '../components/items/item-store'
 import { ContainerStore } from '../components/container/container-store'
 import { ItemStoreType } from '../res/interface'
+
+const SubsribeBanner = dynamic(() => import('../components/banner/subscribe-banner') as any, { ssr: false })
 
 const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile') as any, { ssr: false })
 
@@ -33,6 +34,7 @@ export default function Index(): React.ReactNode {
   const { data: pupularArticles, mutate: mutatePopularArticles } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
   const { data: digitalStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=1`, client.get)
   const { data: merchandiseStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=3`, client.get)
+
   // pagination
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end

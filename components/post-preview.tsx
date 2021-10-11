@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import Image from 'next/image'
+
 import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
 import { ImageInstrinsic } from './cover-image'
 import { Post } from '../res/interface'
 import { BookmarkButton } from './functional/button/bookmark'
+import { DateFormatterRelative } from './date-formatter'
 
 type PostPreviewProps= {
   post : Post, mutate
@@ -15,7 +17,7 @@ export default function PostPreview({
   post, mutate,
 }: PostPreviewProps): ReactElement {
   const {
-    slug, title, banner, isPremium, Comika, bookmarked,
+    slug, title, banner, isPremium, Comika, bookmarked, createdAt,
   } = post
 
   return (
@@ -54,7 +56,7 @@ export default function PostPreview({
             className="pt-2 text-xs font-medium text-gray-800 md:text-base lg:text-lg"
             name={Comika.name}
             picture={Comika.photo}
-            date="17 Juni 2021"
+            date={<DateFormatterRelative dateString={createdAt} />}
             read="10m read"
           />
           <BookmarkButton bookmarked={bookmarked} slug={slug} mutate={mutate} />

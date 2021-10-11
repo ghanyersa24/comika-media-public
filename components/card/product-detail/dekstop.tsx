@@ -9,7 +9,7 @@ import Content from './content'
 const ProductDekstop = ({
   onClickBuy, onClickCart, itemstore, isDisabled,
 }:productDetailsType):ReactElement => {
-  const [selectedImage, setSelectedImage] = useState(itemstore.images[0].url)
+  const [selectedImage, setSelectedImage] = useState(itemstore.images[0].source.url)
   return (
     <div className="flex max-w-screen-lg p-2 mx-auto bg-white shadow-md lg:p-4">
       <div className="flex-shrink-0 mr-4 w-96">
@@ -24,9 +24,9 @@ const ProductDekstop = ({
         <InnerImageZoom src={selectedImage} zoomSrc={selectedImage} zoomType="hover" />
         <div className="w-full mt-2 overflow-y-auto">
           {itemstore.images.length && itemstore.images.map((image) => (
-            <button type="button" onClick={() => setSelectedImage(image.url)} key={image.url} className="mr-2 rounded">
+            <button type="button" onClick={() => setSelectedImage(image.source.url)} key={image.source.url} className="mr-2 rounded">
               <Image
-                src={image.url}
+                src={image.source.url}
                 alt="photo profil "
                 layout="intrinsic"
                 className="rounded"

@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import router from 'next/router'
 import { FunctionComponent, ReactElement } from 'react'
-import { toast } from 'react-toastify'
 import { ItemStoreType } from '../../res/interface'
 
 type props = {
@@ -46,6 +45,7 @@ export const ItemStoreDekstop: FunctionComponent<props> = ({
   price = 'null',
 }) => (
   <button type="button" onClick={onClick} className="p-2 mb-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50">
+    {/* { console.log('imageUrl', imageUrl)} */}
     <div className="flex flex-col w-full ">
       <div className="w-full">
         <Image
@@ -77,11 +77,11 @@ export const ItemStores: FunctionComponent<{
     {isMobile ? digitalStores?.map((popularStore) => (
       <ItemStoreMobile
         onClick={() => router.push(`/product/${popularStore.slug}`)}
-        // onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
+      // onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
         //   position: 'bottom-right',
         // })}
         key={popularStore.id}
-        imageUrl={popularStore.images[0]?.url}
+        imageUrl={popularStore.images[0]?.source.url}
         title={popularStore.name}
         price={popularStore.rupiah}
         type={popularStore.Category.name}
@@ -96,7 +96,7 @@ export const ItemStores: FunctionComponent<{
               //   position: 'bottom-right',
               // })}
               key={popularStore.id}
-              imageUrl={popularStore.images[0]?.url}
+              imageUrl={popularStore.images[0]?.source.url}
               title={popularStore.name}
               price={popularStore.rupiah}
               type={popularStore.Category.name}

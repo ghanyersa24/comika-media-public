@@ -24,7 +24,7 @@ export default function Avatar({
       <div className="flex-grow ">
         <p className="leading-tight line-clamp-1">{name}</p>
         <div className="flex item-center ">
-          <p className="mr-1">{date}</p>
+          <p className="mr-1 text-xs font-normal md:text-sm ">{date}</p>
           {/* <p className="mr-1">•</p> */}
           {/* <p className="">{read}</p> */}
         </div>

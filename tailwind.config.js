@@ -42,6 +42,13 @@ module.exports = {
         // sm: '0 5px 10px rgba(0, 0, 0, 0.12)',
         // md: '0 8px 30px rgba(0, 0, 0, 0.12)',
       },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          md: '2rem',
+        },
+      },
     },
     screens: {
       hp: '359px',
@@ -60,6 +67,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['checked', 'active', 'disabled'],
+      cursor: ['disabled', 'active'],
       opacity: ['disabled'],
       borderColor: ['checked'],
     },

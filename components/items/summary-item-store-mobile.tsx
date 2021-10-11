@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { ReactElement } from 'react'
 import { cartType } from '../../res/interface'
 
-const SummaryItemStore = ({ cart }:{cart:cartType}) :ReactElement => (
+const SummaryItemStoreMobile = ({ cart }:{cart:cartType}) :ReactElement => (
   <div className="flex">
     <div className="flex-initial">
       <Image
@@ -15,10 +15,10 @@ const SummaryItemStore = ({ cart }:{cart:cartType}) :ReactElement => (
       />
     </div>
     <div className="ml-3">
-      <p className="text-sm leading-normal text-gray-400 line-clamp-2">{cart.name}</p>
-      <p className="text-lg leading-relaxed text-black">{cart.price}</p>
+      <p className="text-base leading-normal text-gray-400 line-clamp-2">{cart.name}</p>
+      <p className="text-base font-bold leading-relaxed text-black">{cart.priceRp}</p>
     </div>
   </div>
 )
 
-export default SummaryItemStore
+export default SummaryItemStoreMobile

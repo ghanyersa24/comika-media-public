@@ -2,7 +2,7 @@
 import Head from 'next/head'
 import { useSWRInfinite } from 'swr'
 
-import React, { } from 'react'
+import React, { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 import { title } from 'process'
 import mobile from 'is-mobile'
@@ -32,7 +32,7 @@ const titleDescription = {
   },
 }
 
-export default function Index(): React.ReactNode {
+const Index = () :ReactElement => {
   const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
   const router = useRouter()
   const { orderBy } = router.query
@@ -78,3 +78,7 @@ export default function Index(): React.ReactNode {
     </Layout>
   )
 }
+
+export default dynamic(() => Promise.resolve(Index), {
+  ssr: false,
+})

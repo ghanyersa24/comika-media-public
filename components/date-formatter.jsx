@@ -10,7 +10,7 @@ export function DateFormatterRelative({ dateString }) {
   return (
     <time dateTime={dateString}>
       {
-    formatDistance(date, new Date(), { locale: id, addSuffix: true })
+    formatDistance(date, new Date(), { locale: id })
 }
     </time>
   )
