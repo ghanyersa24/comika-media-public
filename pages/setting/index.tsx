@@ -1,8 +1,7 @@
 import { ReactElement } from 'react'
-import { AiFillBell, AiFillShopping } from 'react-icons/ai'
+import { AiFillBell } from 'react-icons/ai'
 import { BsBookmarkFill } from 'react-icons/bs'
 import { MdAccountCircle } from 'react-icons/md'
-import { RiFileHistoryFill } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
 import {

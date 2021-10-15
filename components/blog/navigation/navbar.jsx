@@ -10,9 +10,8 @@ import { toast } from 'react-toastify'
 import useSWR from 'swr'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
-import { Get as GetProfile } from '../../../service/user-profile'
 import { SearchBar } from './search-bar'
-import { API_ENDPOINT_CART } from '../../../res/api-endpoint'
+import { API_ENDPOINT_CART, PROFILE } from '../../../res/api-endpoint'
 import { client } from '../../../lib/clientRaw'
 
 const navigation = [
@@ -191,10 +190,11 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }) => (
 
 export default function Navbar() {
   const [session] = useSession()
-  const { data } = session ? GetProfile() : { data: null }
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
+
+  const { data } = useSWR(() => (session ? `${PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 

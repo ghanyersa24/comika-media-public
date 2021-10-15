@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react'
-import Image from 'next/image'
 import { cartType } from '../../res/interface'
 import IncreaseDecreaseButton, { DeleteButton } from '../button/increase-decrease-delete-button'
 import { numberWithCommas } from '../../helper/accounting'

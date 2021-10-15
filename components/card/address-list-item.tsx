@@ -1,6 +1,4 @@
 import React, { FunctionComponent, ReactElement } from 'react'
-import { FaChevronRight } from 'react-icons/fa'
-import { IoMdPin } from 'react-icons/io'
 import cn from 'classnames'
 import { getBodyAddress, getTitleAddress } from '../../helper/address'
 import { address as addressType } from '../../res/interface'

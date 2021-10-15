@@ -213,3 +213,14 @@ export interface EstimateDelivery {
   estDate: string;
   note: string;
 }
+
+export interface CartEstimation {
+  detail: {
+    qty: string;
+    weight: string;
+    subtotal: string;
+    subtotalRp: string;
+  };
+  address: address;
+  estimateDelivery: EstimateDelivery[];
+}

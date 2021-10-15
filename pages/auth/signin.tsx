@@ -1,11 +1,11 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import {
   signIn,
-  getProviders, useSession,
+  getProviders,
 } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { FaFacebookF, FaSpinner, FaGooglePlusG } from 'react-icons/fa'
+import { FaSpinner, FaGooglePlusG } from 'react-icons/fa'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'

@@ -1,6 +1,9 @@
 import dynamic from 'next/dynamic'
-
 import Meta from './meta'
+
+// import Navbar from './blog/navigation/navbar'
+// import { BottomNavbar } from './blog/navigation/bottom-navbar'
+// import { Footer } from './footer'
 
 const Navbar = dynamic(() => import('./blog/navigation/navbar'), { ssr: false })
 const BottomNavbar = dynamic(() => import('./blog/navigation/bottom-navbar'), { ssr: false })

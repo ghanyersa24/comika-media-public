@@ -4,9 +4,10 @@ import {
   Formik, Field, Form, FormikHelpers, useField, useFormikContext,
 } from 'formik'
 import useSWR from 'swr'
-import { address } from '../../res/interface'
-import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
-import { client } from '../../lib/clientRaw'
+import { useRouter } from 'next/router'
+import { address } from '../../../res/interface'
+import TopNavbarWithBackButton from '../../../components/navigation/top-navbar-with-back-button'
+import { client } from '../../../lib/clientRaw'
 
 const City = (props) => {
   const {
@@ -42,12 +43,18 @@ const Subdistrict = (props) => {
 }
 
 const App = ():ReactElement => {
+  const router = useRouter()
+  const { id } = router.query
+  const isEdit = (id && id !== 'add')
+  const { data: selectedAddress } = useSWR<address>(() => ((id && id !== 'add') ? `/account/address/${id}` : null), client.get)
+  console.log('address', selectedAddress)
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
+  const title = isEdit ? 'Ubah alamat' : 'Tambah alamat baru'
   return (
     <div className="pt-10">
-      <TopNavbarWithBackButton title="Tambah Alamat Baru" />
+      <TopNavbarWithBackButton title={title} />
       <Formik
-        initialValues={{
+        initialValues={selectedAddress || {
           id: '',
           name: '',
           address: '',
@@ -59,16 +66,21 @@ const App = ():ReactElement => {
           postalCode: '',
           phone: '',
         }}
+        enableReinitialize
         onSubmit={async (
           values: address,
           { setSubmitting }: FormikHelpers<address>,
         ) => {
-          await client.post('/account/address', values)
+          if (id === 'add') {
+            await client.post('/account/address', values)
+          } else {
+            await client.put('/account/address', values)
+          }
           setSubmitting(false)
+          router.back()
         }}
       >
         <Form className="flex flex-col p-4 divide-y form-add-address">
-          <h1 className="py-4 text-xl font-medium leading-relaxed text-gray-700">Tambah Alamat Baru</h1>
           <div className="py-4">
 
             <h2 className="mb-2 text-xl font-medium leading-relaxed text-primary">Kontak</h2>

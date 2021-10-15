@@ -1,4 +1,3 @@
-import { FunctionComponent } from 'react'
 import { address as addressType } from '../res/interface'
 
 export const getTitleAddress = (address :addressType):string => `${address.name} (${address.postalCode})`

@@ -92,7 +92,7 @@ export default function IntroDekstop() {
       </button>
       <div className="absolute flex bottom-16 left-16 ">
         <Pagination
-          dots={filteredJumbotrons.length}
+          dots={filteredJumbotrons?.length}
           index={Number(swipeIndex)}
           onChangeIndex={(i) => {
             setSwipeIndex(i)

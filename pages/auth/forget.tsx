@@ -11,11 +11,10 @@ import {
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import { BiArrowBack } from 'react-icons/bi'
-import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
+import { BackgroundLogin } from '../../components/svg'
 
 import { CreateResetPassword } from '../../service/auth'
-import BackButtonAbsoluteMobile from '../../components/button/back-button-absolute-mobile'
+import { BackButtonAbsoluteMobile } from '../../components/button/back-button-absolute-mobile'
 
 // enum Severity {
 //   error='bg-red-200',

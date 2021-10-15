@@ -94,7 +94,7 @@ export function IntroDekstop() {
       </button>
       <div className="absolute flex bottom-16 left-16 ">
         <Pagination
-          dots={filteredJumbotrons.length}
+          dots={filteredJumbotrons?.length}
           index={Number(swipeIndex)}
           onChangeIndex={(i) => {
             setSwipeIndex(i)
@@ -138,7 +138,7 @@ export function IntroMobile() {
         onChangeIndex={(i) => setIndex(i)}
         slideClassName="px-1"
       >
-        {isLoading ? <ItemMobile url={null} link="/" /> : filteredJumbotrons.map((jumbotron) => (
+        {isLoading ? <ItemMobile url={null} link="/" /> : filteredJumbotrons?.map((jumbotron) => (
           <ItemMobile url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>

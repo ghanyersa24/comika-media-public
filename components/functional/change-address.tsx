@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 
-function MyDialog() {
+function MyDialog():ReactElement {
   const [isOpen, setIsOpen] = useState(true)
 
   return (

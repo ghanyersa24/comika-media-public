@@ -9,7 +9,6 @@ import useSWR from 'swr'
 import Head from 'next/head'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
-import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
@@ -54,7 +53,7 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
         if (key !== 'undefined') {
           localStorage.getItem('komika-key')
           // eslint-disable-next-line no-unused-vars
-          const { msg, data } = await client.post('/payment/subscribe', { package: subscribePlan })
+          const { data } = await client.post('/payment/subscribe', { package: subscribePlan })
           window.open(data.redirect_url)
         } else {
           router.push('/auth/signin')

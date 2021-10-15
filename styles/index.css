@@ -33,7 +33,7 @@
     display: inline;
   }
   button {
-    @apply focus:outline-none focus:ring-4 focus:ring-primaryLight focus:ring-opacity-25  disabled:cursor-default;
+    @apply focus:outline-none focus:ring-4 focus:ring-primaryLight focus:ring-opacity-25  disabled:cursor-default disabled:opacity-50;
   }
 }
 @layer components {

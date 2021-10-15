@@ -24,10 +24,11 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "simple-import-sort"],
+  "plugins": ["@typescript-eslint", "simple-import-sort", "react-hooks"],
   "rules": {
     "linebreak-style": 0,
     "react/no-unescaped-entities": "off",
+    "react-hooks/rules-of-hooks": "error",
     "@next/next/no-page-custom-font": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
