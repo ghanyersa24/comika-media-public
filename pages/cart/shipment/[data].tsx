@@ -98,16 +98,22 @@ export const Shipment = ():ReactElement => {
       <div className=" pb-44 bg-bgBlueLight">
         <TopNavbarWithBackButton title="Pesanan" />
         <div className="mt-20">
-          {mainCustomerAddress && (
-          <AdddressListItem
-            leftElement={<IoMdPin className="flex-shrink-0 mr-2 text-2xl text-primary" />}
-            title="Alamat utama"
-            address={mainCustomerAddress}
-            isMobile={isMobile}
-            onClickRight={handleClickMainAddress}
-            rightElement={<FaChevronRight />}
-          />
-          )}
+          {mainCustomerAddress ? (
+            <AdddressListItem
+              leftElement={<IoMdPin className="flex-shrink-0 mr-2 text-2xl text-primary" />}
+              title="Alamat utama"
+              address={mainCustomerAddress}
+              isMobile={isMobile}
+              onClickRight={handleClickMainAddress}
+              rightElement={<FaChevronRight />}
+            />
+
+          )
+            : (
+              <div className="mx-4">
+                <button type="button" className="w-full btn-primary" onClick={handleClickMainAddress}>Pilih Alamat Pengiriman</button>
+              </div>
+            )}
         </div>
         <div className="px-6 m-4 bg-white divide-y rounded-lg shadow-md">
           <div className="flex py-4">
@@ -184,51 +190,53 @@ export const Shipment = ():ReactElement => {
 
   return (
     <Layout isMobile={isMobile} className="pb-12 md:pt-24 ">
-      {!isListAddressOpen && mainCustomerAddress && (
-        <AdddressListItem
-          rightElement={<>Pilih Alamat Utama</>}
-          leftElement={<IoMdPin className="flex-shrink-0 mr-4 text-2xl text-primary" />}
-          address={mainCustomerAddress}
-          isMobile={isMobile}
-          title="Alamat Utama"
-          onClickRight={handleClickMainAddress}
-        />
-      )}
-      {isListAddressOpen && (
-        <div className="py-6 my-6 bg-white rounded-lg shadow-lg mycontainer">
-          <div className="flex">
-            <div className="flex items-center justify-center mr-2">
-              <IoMdPin className="text-2xl text-primary" />
+
+      {(!isListAddressOpen && mainCustomerAddress)
+        ? (
+          <AdddressListItem
+            rightElement={<>Pilih Alamat Utama</>}
+            leftElement={<IoMdPin className="flex-shrink-0 mr-4 text-2xl text-primary" />}
+            address={mainCustomerAddress}
+            isMobile={isMobile}
+            title="Alamat Utama"
+            onClickRight={handleClickMainAddress}
+          />
+        )
+        : (
+          <div className="py-6 my-6 bg-white rounded-lg shadow-lg mycontainer">
+            <div className="flex">
+              <div className="flex items-center justify-center mr-2">
+                <IoMdPin className="text-2xl text-primary" />
+              </div>
+              <p className="mb-2 text-sm leading-normal text-gray-500">Pilih Alamat utama</p>
             </div>
-            <p className="mb-2 text-sm leading-normal text-gray-500">Pilih Alamat utama</p>
-          </div>
-          {customerAddress?.map((address) => (
+            {customerAddress?.map((address) => (
             // eslint-disable-next-line jsx-a11y/label-has-associated-control
-            <label htmlFor={`add${address.id}`} key={address.id} className="my-2">
-              <AdddressListItem
-                leftElement={(
-                  <div className="flex items-center mr-4">
-                    <input id={`add${address.id}`} checked={selectedAddressId === address.id} type="radio" name="checked-demo" className="form-radio" onChange={(e) => handleChangeMainAddress(e, address.id)} />
-                  </div>
+              <label htmlFor={`add${address.id}`} key={address.id} className="my-2">
+                <AdddressListItem
+                  leftElement={(
+                    <div className="flex items-center mr-4">
+                      <input id={`add${address.id}`} checked={selectedAddressId === address.id} type="radio" name="checked-demo" className="form-radio" onChange={(e) => handleChangeMainAddress(e, address.id)} />
+                    </div>
               )}
-                address={address}
-                isMobile={isMobile}
+                  address={address}
+                  isMobile={isMobile}
             // onClickRight={handleChangeMainAddress}
-                rightElement="ubah"
-                isList
-              />
-            </label>
-          ))}
-          <div className="flex justify-end mt-6">
-            <button type="button" className="mx-2 btn-primary" onClick={handleSubmitChangeMainAddress}>
-              Simpan
-            </button>
-            <button type="button" className="px-6 mx-2 btn-secondary max-w-max" onClick={() => setIsListAddressOpen(false)}>
-              Batal
-            </button>
+                  rightElement="ubah"
+                  isList
+                />
+              </label>
+            ))}
+            <div className="flex justify-end mt-6">
+              <button type="button" className="mx-2 btn-primary" onClick={handleSubmitChangeMainAddress}>
+                Simpan
+              </button>
+              <button type="button" className="px-6 mx-2 btn-secondary max-w-max" onClick={() => setIsListAddressOpen(false)}>
+                Batal
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       <div className="bg-white rounded-lg shadow mycontainer ">
         <table className="w-full ">
           <tr className="border-b">
