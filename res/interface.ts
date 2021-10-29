@@ -224,3 +224,12 @@ export interface CartEstimation {
   address: address;
   estimateDelivery: EstimateDelivery[];
 }
+
+export interface Notification {
+  id?: string;
+  img?: string;
+  title?: string;
+  isRead?: boolean;
+  createdAt?: Date;
+  description?: string;
+}

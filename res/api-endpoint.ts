@@ -6,6 +6,7 @@ export const API_ENDPOINT_BOOKMARKED_ARTICLE = '/article/bookmark/me'
 export const API_ENDPOINT_STORE = '/store/product'
 export const API_ENDPOINT_ADD_CART = '/store/add-cart'
 export const API_ENDPOINT_CART = '/store/cart'
+export const API_NOTIFICATION = '/notification'
 
 export const PROFILE = '/account/me'
 
