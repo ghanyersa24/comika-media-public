@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import router from 'next/router'
 import { FunctionComponent, ReactElement } from 'react'
-import { toast } from 'react-toastify'
 import { ItemStoreType } from '../../res/interface'
 
 type props = {
@@ -44,9 +43,9 @@ export const ItemStoreDekstop: FunctionComponent<props> = ({
   imageUrl = '/background/download.webp',
   title = 'null',
   price = 'null',
-  type,
 }) => (
   <button type="button" onClick={onClick} className="p-2 mb-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50">
+    {/* { console.log('imageUrl', imageUrl)} */}
     <div className="flex flex-col w-full ">
       <div className="w-full">
         <Image
@@ -77,12 +76,12 @@ export const ItemStores: FunctionComponent<{
   <>
     {isMobile ? digitalStores?.map((popularStore) => (
       <ItemStoreMobile
-        // onClick={() => router.push(`/product/${popularStore.slug}`)}
-        onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
-          position: 'bottom-right',
-        })}
+        onClick={() => router.push(`/product/${popularStore.slug}`)}
+      // onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
+        //   position: 'bottom-right',
+        // })}
         key={popularStore.id}
-        imageUrl={popularStore.images[0]?.url}
+        imageUrl={popularStore.images[0]?.source.url}
         title={popularStore.name}
         price={popularStore.rupiah}
         type={popularStore.Category.name}
@@ -92,12 +91,12 @@ export const ItemStores: FunctionComponent<{
         <div className="grid grid-cols-1 hp:grid-cols-2 xs:grid-cols-2 gap-x-4 md:grid-cols-3 md:gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-16">
           { digitalStores?.map((popularStore) => (
             <ItemStoreDekstop
-              // onClick={() => router.push(`/product/${popularStore.slug}`)}
-              onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
-                position: 'bottom-right',
-              })}
+              onClick={() => router.push(`/product/${popularStore.slug}`)}
+              // onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
+              //   position: 'bottom-right',
+              // })}
               key={popularStore.id}
-              imageUrl={popularStore.images[0]?.url}
+              imageUrl={popularStore.images[0]?.source.url}
               title={popularStore.name}
               price={popularStore.rupiah}
               type={popularStore.Category.name}

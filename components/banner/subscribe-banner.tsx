@@ -19,6 +19,7 @@ export const SubsribeBanner:FunctionComponent<SubsribeBannerType> = ({
           alt="Subsribe Banner"
           layout="intrinsic"
           className="rounded"
+          objectFit="cover"
           width={isMobile ? 354 : 1200}
           height={isMobile ? 125 : 258}
         />

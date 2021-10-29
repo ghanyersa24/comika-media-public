@@ -1,5 +1,5 @@
 import '../styles/index.css'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'
 import { Provider } from 'next-auth/client'
 import type { AppProps /* , AppContext */ } from 'next/app'
@@ -11,9 +11,8 @@ import { store } from '../store'
 import 'react-toastify/dist/ReactToastify.css'
 
 function MyApp({ Component, pageProps }: AppProps):ReactElement {
-  const router = useRouter()
-  const urlComponent = router.route.split('/')
-  console.log('🚀 ~ file: _app.js ~ line 8 ~ MyApp ~ urlComponent', urlComponent)
+  // const router = useRouter()
+  // const urlComponent = router.route.split('/')
   return (
     <ReduxProvider store={store}>
       <Provider

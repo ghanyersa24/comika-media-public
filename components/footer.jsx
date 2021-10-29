@@ -42,7 +42,7 @@ export function Footer2() {
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-center h-12 text-center bg-black  bg-opacity-5">
+      <div className="flex items-center justify-center h-12 text-center bg-black bg-opacity-5">
         © Copyright COMIKAMEDIA 2021. All right reserved.
       </div>
     </footer>
@@ -77,25 +77,25 @@ export const Footer = () => (
           <h2 className="h2-text-gray-light">HUBUNGI KAMI</h2>
           <nav className="mb-10 list-none">
             <Link href="/x">
-              <a className="flex items-center  text-gray-light">
+              <a className="flex items-center text-gray-light">
                 <RiInstagramFill className="mr-2 text-xl" />
                 @Comikamedia
               </a>
             </Link>
             <Link href="/x">
-              <a className="flex items-center  text-gray-light">
+              <a className="flex items-center text-gray-light">
                 <IoLogoYoutube className="mr-2 text-xl" />
                 COMIKA MEDIA
               </a>
             </Link>
             <Link href="/x">
-              <a className="flex items-center  text-gray-light">
+              <a className="flex items-center text-gray-light">
                 <IoLogoTwitter className="mr-2 text-xl" />
                 Comikamedia
               </a>
             </Link>
             <Link href="/x">
-              <a className="flex items-center  text-gray-light">
+              <a className="flex items-center text-gray-light">
                 <SiTiktok className="mr-2 text-xl" />
                 @Comikamedia
               </a>

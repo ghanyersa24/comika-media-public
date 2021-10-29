@@ -4,26 +4,26 @@ import { FaUser, FaTicketAlt } from 'react-icons/fa'
 import { RiArticleFill } from 'react-icons/ri'
 import { MdShoppingBasket } from 'react-icons/md'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { toast } from 'react-toastify'
 
 type ButtonItemType = {
   icon:any,
   url:string,
-  isActive:boolean
+  isActive:boolean,
+  // eslint-disable-next-line no-unused-vars
+  onClick:(string)=>void
 }
 export const ButtonItem = ({
-  icon, url, isActive,
+  icon, url, isActive, onClick,
 }:ButtonItemType):ReactElement => (
-  <Link href={`/${url}`}>
-    <a className="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center pt-2 pb-1">
-      <div className={isActive
-        ? 'text-2xl w-full flex justify-center text-primary mt-2 mb-0 '
-        : 'text-2xl w-full flex justify-center text-gray-400 mt-2 mb-3  '}
-      >
-        {icon}
-      </div>
-    </a>
-  </Link>
+  <button onClick={() => onClick(url)} type="button" className="justify-center inline-block w-full pt-2 pb-1 text-center focus:ring-0 focus:text-teal-500 hover:text-teal-500">
+    <div className={isActive
+      ? 'text-2xl w-full flex justify-center text-primary mt-2 mb-3 '
+      : 'text-2xl w-full flex justify-center text-gray-400 mt-2 mb-3  '}
+    >
+      {icon}
+    </div>
+  </button>
 
 )
 
@@ -35,7 +35,7 @@ const navigations = [
     name: 'Article', url: 'article', icon: <RiArticleFill />,
   },
   {
-    name: 'Store', url: 'store', icon: <MdShoppingBasket />,
+    name: 'Store', url: '#', icon: <MdShoppingBasket />,
   },
   {
     name: 'Subscribe', url: 'subscribe', icon: <FaTicketAlt />,
@@ -49,16 +49,26 @@ export const BottomNavbar = ():ReactElement => {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
-  console.log('🚀 ~ file: bottom-navbar.tsx ~ line 31 ~ BottomNavbar ~ subUrlAdmin', subUrlAdmin)
+  // console.log('🚀 ~ file: bottom-navbar.tsx ~ line 31 ~ BottomNavbar ~ subUrlAdmin', subUrlAdmin)
+  const handleClick = (selectedUrl) => {
+    if (selectedUrl === '#') {
+      toast.info('Nantikan updatenya segera, hanya di Comika Media', {
+        position: 'top-right',
+      })
+    } else {
+      router.push(`/${selectedUrl}`)
+    }
+  }
 
   return (
 
     <div className="w-full">
-      <section id="bottom-navigation" className="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow">
-        <section id="bottom-navigation" className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow">
+      <section id="bottom-navigation" className="fixed inset-x-0 bottom-0 z-10 block bg-white shadow md:hidden">
+        <section id="bottom-navigation" className="fixed inset-x-0 bottom-0 z-10 block bg-white shadow">
           <div id="tabs" className="flex justify-between ">
             {navigations.map((navigation) => (
               <ButtonItem
+                onClick={handleClick}
                 icon={navigation.icon}
                 url={navigation.url}
                 isActive={navigation.url === subUrlAdmin}

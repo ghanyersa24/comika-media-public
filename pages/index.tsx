@@ -16,10 +16,11 @@ import Layout from '../components/layout'
 
 import { RenderMoreArticle } from '../components/blog/more-articles'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../res/string'
-import { SubsribeBanner } from '../components/banner/subscribe-banner'
 import { ItemStores } from '../components/items/item-store'
 import { ContainerStore } from '../components/container/container-store'
-import { ItemStoreType } from '../res/interface'
+import { ItemStoreType, Post } from '../res/interface'
+
+const SubsribeBanner = dynamic(() => import('../components/banner/subscribe-banner') as any, { ssr: false })
 
 const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile') as any, { ssr: false })
 
@@ -29,11 +30,12 @@ const IntroMobile = dynamic(() => import('../components/intro/intro-mobile') as 
 const isMobile = mobile()
 export default function Index(): React.ReactNode {
   const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
-  const { data: lastestArticles, mutate: mutateLastestArticles } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${1}`, client.get)
-  const { data: pupularArticles, mutate: mutatePopularArticles } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
+
+  const { data: lastestArticles, mutate: mutateLastestArticles } = useSWR<Post[]>(`${API_ENDPOINT_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${1}`, client.get)
+  const { data: pupularArticles, mutate: mutatePopularArticles } = useSWR<Post[]>(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
   const { data: digitalStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=1`, client.get)
   const { data: merchandiseStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=3`, client.get)
-  console.log('🚀 ~ file: index.tsx ~ line 35 ~ PupularStores', digitalStores)
+
   // pagination
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
@@ -61,27 +63,27 @@ export default function Index(): React.ReactNode {
       <ContainerPadding className="mt-8 mb-24 md:mt-12 ">
         <MorePosts posts={lastestArticles} mutate={mutateLastestArticles} title="Artikel Terbaru" description="Terbaru di minggu ini" />
         <SubsribeBanner
-          isShow
+          isShow={!lastestArticles?.[0]?.isPremium}
           onClick={() => router.push('/subscribe')}
           isMobile={isMobile}
           src={isMobile ? '/assets/blog/subscribe/Subscribe_Kecil.png' : '/assets/svg/Subscribe_Kecil.svg'}
         />
-        {/* <ContainerStore
+        <ContainerStore
           className="my-8"
           title="Digital produk"
           titleDescription="Produk populer minggu ini"
         >
           <ItemStores digitalStores={digitalStores} isMobile={isMobile} />
-        </ContainerStore> */}
+        </ContainerStore>
         <MorePosts posts={pupularArticles} mutate={mutatePopularArticles} title="Artikel Terpopuler" description="Terpopuler di minggu ini" />
-        {/*
+
         <ContainerStore
           className="my-8"
           title="Merchandise"
           titleDescription="Merchandise populer minggu ini"
         >
           <ItemStores digitalStores={merchandiseStores} isMobile={isMobile} />
-        </ContainerStore> */}
+        </ContainerStore>
         <TitlePost title="Artikel Lainya" description="Lainya di minggu ini" />
         <RenderMoreArticle data={moreArticles} mutate={mutateMoreArticles} />
 

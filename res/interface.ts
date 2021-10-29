@@ -110,32 +110,35 @@ export type PropsDetailOfPost =Layout& {
   // morePosts: string[]
 }
 
-export type ItemStoreType ={
-  'rupiah': string,
-  'id': string,
-  'name': string,
-  'slug': string,
-  'categoryId': string,
-  'description': string,
-  'price': string,
-  'createdAt': string,
-  'updatedAt': string,
-  'deletedAt': null,
-  'Category': {
-      'name': string,
-      'type': string
-  },
-  'images': [
-      {
-          'url': string,
-          'store_product_sources': {
-              'createdAt': string,
-              'updatedAt': string,
-              'ProductId': string,
-              'SourceId': string
-          }
-      }
-  ]
+export interface ItemStoreType {
+  rupiah: string;
+  id: string;
+  name: string;
+  slug: string;
+  categoryId: number;
+  description?: string;
+  price: number;
+  publishedAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: null;
+  Category?: Category;
+  images: Image[];
+}
+
+export interface Category {
+  name: string;
+  type: string;
+}
+
+export interface Image {
+  thumbnail: boolean | null;
+  source: Source;
+}
+
+export interface Source {
+  url: string;
+  name: string;
 }
 
 export type address ={
@@ -148,5 +151,85 @@ export type address ={
   'city': string,
   'type': string,
   'postalCode': string,
-  'phone': string
+  'phone': string,
+  userId?: string,
+  subdistrictId?: null,
+  subdistrict?: null,
+  createdAt?: Date,
+  updatedAt?: Date,
+  deletedAt?: null,
+  UserId?: string,
+  mark?: string,
+  active?: boolean,
+}
+
+export type productDetailsType = {
+  onClickCart:()=>void,
+  onClickBuy:()=>void,
+  isDisabled: boolean,
+  itemstore:ItemStoreType,
+  buyedProductQyt?:number
+}
+
+export interface cartType {
+  id: string;
+  productId: string;
+  qty: number;
+  img: string;
+  note: string;
+  name: string;
+  weight: number;
+  price: number;
+  priceRp: string;
+  total: number;
+  totalRp: string;
+}
+
+export type decreaseIncreaseFunctionType ={
+  onDecrease:()=> void,
+	onIncrease:()=> void,
+}
+
+export interface EstimationCost {
+  detail: DetailOfEstimationCost;
+  address: address;
+  estimateDelivery: EstimateDelivery[];
+}
+
+export interface DetailOfEstimationCost {
+  qty: string;
+  weight: string;
+  subtotal: string;
+  subtotalRp: string;
+}
+
+export interface EstimateDelivery {
+  id: number;
+  service: string;
+  description: string;
+  cost: number;
+  rupiah: string;
+  estDay: string;
+  estDate: string;
+  note: string;
+}
+
+export interface CartEstimation {
+  detail: {
+    qty: string;
+    weight: string;
+    subtotal: string;
+    subtotalRp: string;
+  };
+  address: address;
+  estimateDelivery: EstimateDelivery[];
+}
+
+export interface Notification {
+  id?: string;
+  img?: string;
+  title?: string;
+  isRead?: boolean;
+  createdAt?: Date;
+  description?: string;
 }

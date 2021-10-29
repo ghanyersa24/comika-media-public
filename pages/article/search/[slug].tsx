@@ -57,14 +57,14 @@ export default function Index(
       </Head>
       {/* <Container> */}
       {isMobile ? (
-        <div className="bg-primary pt-4 pb-20 text-center ">
+        <div className="pt-4 pb-20 text-center bg-primary ">
           <BackgroundArticlePage className="absolute -top-4" />
           <h1 className="text-xl font-bold leading-relaxed text-white">Artikel</h1>
         </div>
       ) : <IntroDekstop />}
 
-      <ContainerPadding className="-mt-16 rounded-xl bg-white relative pt-8  lg:mt-8 mb-24">
-        {isMobile && <SearchBar className="bg-gray-400 bg-opacity-30 text-gray-500 mb-2" />}
+      <ContainerPadding className="relative pt-8 mb-24 -mt-16 bg-white rounded-xl lg:mt-8">
+        {isMobile && <SearchBar className="mb-2 text-gray-500 bg-gray-400 bg-opacity-30" />}
         <div className="mt-4" ref={myRef}>
           <MorePosts
             title="Hasil Pencarian"

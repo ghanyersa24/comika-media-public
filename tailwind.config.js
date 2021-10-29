@@ -4,7 +4,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './layout/**/*.{js,ts,jsx,tsx}',
@@ -43,6 +42,13 @@ module.exports = {
         // sm: '0 5px 10px rgba(0, 0, 0, 0.12)',
         // md: '0 8px 30px rgba(0, 0, 0, 0.12)',
       },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '0.5rem',
+          md: '2rem',
+        },
+      },
     },
     screens: {
       hp: '359px',
@@ -61,6 +67,8 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['checked', 'active', 'disabled'],
+      cursor: ['disabled', 'active'],
+      opacity: ['disabled'],
       borderColor: ['checked'],
     },
   },

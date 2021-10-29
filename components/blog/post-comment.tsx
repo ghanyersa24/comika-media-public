@@ -21,7 +21,6 @@ export const PostCommentLoading = (): ReactElement => (
 export const PostCommentList = ({
   comments, isLoading,
 }: TypePostCommentComponent): ReactElement => {
-  console.log('🚀 ~ file: post-comment.tsx ~ line 24 ~ comments', comments)
   let content: ReactElement[] | ReactElement = <PostCommentLoading />
   if (comments && !isLoading) {
     content = comments.map(({
@@ -35,7 +34,6 @@ export const PostCommentList = ({
             picture={User.photo}
             date={<DateFormatterRelative dateString={createdAt} />}
           />
-          {/* <span className="text-sm leading-9 text-gray-500 md:font-medium md:text-base"><DateFormatterRelative dateString={createdAt} /></span> */}
         </div>
         <p className="md:text-lg">
 

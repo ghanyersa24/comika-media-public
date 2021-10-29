@@ -1,6 +1,9 @@
 import dynamic from 'next/dynamic'
-
 import Meta from './meta'
+
+// import Navbar from './blog/navigation/navbar'
+// import { BottomNavbar } from './blog/navigation/bottom-navbar'
+// import { Footer } from './footer'
 
 const Navbar = dynamic(() => import('./blog/navigation/navbar'), { ssr: false })
 const BottomNavbar = dynamic(() => import('./blog/navigation/bottom-navbar'), { ssr: false })
@@ -31,7 +34,6 @@ export const Mobile = ({ children, className }) => (
 )
 // eslint-disable-next-line no-unused-vars
 export default function Layout({ children, isMobile, className = '' }) {
-  console.log('🚀 ~ file: layout.jsx ~ line 7 ~ Layout ~ isMobile', isMobile)
   if (isMobile) { return <Mobile className={className}>{children}</Mobile> }
   return <Desktop className={className}>{children}</Desktop>
 }

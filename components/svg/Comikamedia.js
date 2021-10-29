@@ -1,8 +1,17 @@
-import * as React from 'react'
+import React from 'react'
+import Image from 'next/image'
 
 function SvgComikamedia(props) {
   return (
-    <img {...props} src="https://api.comika.media/uploads/comika/media-white.png" />
+    <div {...props}>
+      <Image
+        src="https://api.comika.media/uploads/comika/media-white.png"
+        alt="logo comika media"
+        layout="intrinsic"
+        width={320 * 1.2}
+        height={52 * 1.2}
+      />
+    </div>
 
   )
 }

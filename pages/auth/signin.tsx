@@ -1,11 +1,11 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import {
   signIn,
-  getProviders, useSession,
+  getProviders,
 } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { FaFacebookF, FaSpinner, FaGooglePlusG } from 'react-icons/fa'
+import { FaSpinner, FaGooglePlusG } from 'react-icons/fa'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -20,10 +20,8 @@ import { Login } from '../../res/interface'
 //   0:Severity,
 //   1:string
 // }
-export const LoginPage = ({ providers }): ReactNode => {
-  console.log('🚀 ~ file: signin.tsx ~ line 23 ~ LoginPage ~ providers', providers)
+export const LoginPage = (): ReactNode => {
   const router = useRouter()
-  console.log('🚀 ~ file: signin.tsx ~ line 25 ~ LoginPage ~ router', router)
   const [login, setLogin] = useState<Login | null>(null)
   const [errorMsg, setErrorMsg] = useState<string>(router?.query?.errorNextAuth as string)
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -44,7 +42,6 @@ export const LoginPage = ({ providers }): ReactNode => {
     setErrorMsg(null)
     signIn('credentials', { redirect: false, ...login, callbackUrlString }).then(
       (result) => {
-        console.log('🚀 ~ file: signin.tsx ~ line 18 ~ .then ~ result', result)
         if (result?.error !== null) {
           setErrorMsg(result.error)
           setIsLoading(false)

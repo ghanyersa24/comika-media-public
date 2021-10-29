@@ -1,10 +1,8 @@
 import {
   AiFillEye, AiOutlineShareAlt,
 } from 'react-icons/ai'
-import { BiArrowBack } from 'react-icons/bi'
-import Router from 'next/router'
 import React, { } from 'react'
-
+import { BackButtonAbsoluteMobile } from './button/back-button-absolute-mobile'
 import Avatar from './avatar'
 import DateFormatter from './date-formatter'
 import { ImageInstrinsic, ImageResponsive } from './cover-image'
@@ -72,9 +70,7 @@ export function PostHeaderMobile({
   return (
     <div className="">
       <div className="relative sm:mx-0">
-        <button onClick={() => Router.back()} type="button" className="absolute top-0 z-20 p-2 mt-6 ml-6 text-xl bg-white rounded-lg shadow">
-          <BiArrowBack />
-        </button>
+        <BackButtonAbsoluteMobile />
         <div className="z-10 relaive ">
           <ImageResponsive title={title} src={coverImage} height={2} width={3} />
         </div>

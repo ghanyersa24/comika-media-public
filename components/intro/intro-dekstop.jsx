@@ -28,12 +28,9 @@ export const ItemDekstop = ({ url, link }) => (
 )
 
 export const Pagination = ({ dots, index, onChangeIndex }) => {
-  // console.log('Pagination -> index', index)
   const indexMod = Math.abs(index % dots)
-  // console.log('Pagination -> indexMod', indexMod)
   const children = []
   for (let i = 0; i < dots; i += 1) {
-    // console.log('Pagination -> i', i, index)
     children.push(
       // eslint-disable-next-line jsx-a11y/control-has-associated-label
       <button
@@ -55,7 +52,6 @@ const EnhancedSwipeableViews = virtualize(SwipeableViews)
 
 export default function IntroDekstop() {
   const [swipeIndex, setSwipeIndex] = useState(0)
-  // console.log('IntroDekstop -> swipeIndex', swipeIndex)
 
   const { data: jumbotrons, isLoading } = GetJumbotron()
   if (isLoading) return <ItemDekstop url={null} link="/" />
@@ -96,7 +92,7 @@ export default function IntroDekstop() {
       </button>
       <div className="absolute flex bottom-16 left-16 ">
         <Pagination
-          dots={filteredJumbotrons.length}
+          dots={filteredJumbotrons?.length}
           index={Number(swipeIndex)}
           onChangeIndex={(i) => {
             setSwipeIndex(i)

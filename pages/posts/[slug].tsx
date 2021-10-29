@@ -26,7 +26,6 @@ import { BookmarkButton } from '../../components/functional/button/bookmark'
 import { LikeButton } from '../../components/functional/button/like'
 
 export const Dekstop = ({ post }:{post:Post}):ReactElement => {
-  console.log('🚀 ~ file: [slug].tsx ~ line 49 ~ Dekstop ~ Dekstop', Dekstop)
   const {
     title, banner, updatedAt, Comika, content, viewer, attribution, shared,
   } = post
@@ -59,7 +58,6 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
 }
 
 export const Mobile = ({ post }:{post:Post}):ReactElement => {
-  console.log('🚀 ~ file: [slug].tsx ~ line 78 ~ Mobile ~ Mobile')
   const {
     title, banner, updatedAt, Comika, content, viewer, shared,
   } = post

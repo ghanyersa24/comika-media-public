@@ -33,7 +33,7 @@
     display: inline;
   }
   button {
-    @apply focus:outline-none focus:ring-4 focus:ring-primaryLight focus:ring-opacity-25;
+    @apply focus:outline-none focus:ring-4 focus:ring-primaryLight focus:ring-opacity-25  disabled:cursor-default disabled:opacity-50;
   }
 }
 @layer components {
@@ -89,6 +89,10 @@
     select {
       @apply w-full px-3 py-2 my-1.5;
     }
+  }
+
+  .mycontainer {
+    @apply container xl:max-w-screen-lg 2xl:max-w-screen-xl;
   }
 }
 

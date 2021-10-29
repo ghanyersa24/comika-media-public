@@ -9,7 +9,6 @@ import useSWR from 'swr'
 import Head from 'next/head'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
-import { ButtonJustifyBetween } from '../../components/button/button-justify-between'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
@@ -36,7 +35,6 @@ const SubscriptionMobile = ({ content: contents }) => (
 
 export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get)
-  console.log('package', subscribes)
 
   const [session] = useSession()
   // eslint-disable-next-line no-unused-vars
@@ -51,12 +49,11 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
     } else {
       try {
         setIsLoading(true)
-        console.log()
         const key = localStorage.getItem('komika-key')
         if (key !== 'undefined') {
           localStorage.getItem('komika-key')
           // eslint-disable-next-line no-unused-vars
-          const { msg, data } = await client.post('/payment/subscribe', { package: subscribePlan })
+          const { data } = await client.post('/payment/subscribe', { package: subscribePlan })
           window.open(data.redirect_url)
         } else {
           router.push('/auth/signin')
@@ -73,14 +70,14 @@ export const Subscribe = ({ isMobile }:{isMobile:boolean}): ReactElement => {
   const bgColor = ['bg-gray-300', 'bg-primary', 'bg-yellow-400']
   const SubscriptionContent = shortedSubsribe ? shortedSubsribe.map((subscribe, index) => (
     <SubsribeItem
-      onClick={() => isLoading || handleSubscribe('weekly')}
+      onClick={() => isLoading || handleSubscribe(subscribe.id)}
       loading={isLoading}
       title={subscribe.name}
       price={subscribe.rupiah}
       until={`Berlaku untuk ${subscribe.longTime} Hari`}
       buttonText="Subscribe"
       headBgColor={bgColor[index]}
-      key={1}
+      key={subscribe.id}
     >
       <div className="mt-4">
         <ListCustomPrefix

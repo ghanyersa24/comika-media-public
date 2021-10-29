@@ -3,14 +3,11 @@ import {
 } from '../more-posts'
 
 export const RenderMoreArticle = ({ data, mutate }) => {
-  console.log('🚀 ~ file: index.tsx ~ line 75 ~ RenderMoreArticle ~ data', data)
   if (!data) return <div />
   return (
     <PostsContainer>
-      { data.map((articles) => (
-        <>
-          {!articles ? null : <Posts posts={articles} mutate={mutate} />}
-        </>
+      { data.map((article) => (
+        !article ? null : <Posts posts={article} mutate={mutate} key={Math.random()} />
       ))}
     </PostsContainer>
   )

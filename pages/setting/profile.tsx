@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react'
 
-import { GetServerSideProps } from 'next'
 import mobile from 'is-mobile'
 import { ProfileCard } from '../../components/form/profile'
 import { Get as GetProfile, UpdateProfile } from '../../service/user-profile'
@@ -18,10 +17,9 @@ export const Profile = ():ReactElement => {
   }
   const handleSubmit = async (profileData) => {
     try {
-      const result = await UpdateProfile(profileData)
+      await UpdateProfile(profileData)
       mutate()
       setCanEdit(true)
-      console.log('🚀 ~ file: profile.tsx ~ line 24 ~ handleSubmit ~ result', result)
     } catch (error) {
       console.log('handleSubmit -> error', error)
     }
