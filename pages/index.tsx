@@ -84,7 +84,7 @@ export default function Index(): React.ReactNode {
         >
           <ItemStores digitalStores={merchandiseStores} isMobile={isMobile} />
         </ContainerStore>
-        <TitlePost title="Artikel Lainya" description="Lainya di minggu ini" />
+        <TitlePost title="Artikel Lainnya" description="Lainnya di minggu ini" />
         <RenderMoreArticle data={moreArticles} mutate={mutateMoreArticles} />
 
         <div className="mt-8 text-right">
