@@ -100,8 +100,8 @@ export const Footer = () => (
     </div>
     <div className="bg-primaryDark">
       <div className="container flex flex-col justify-center px-5 py-4 mx-auto text-lg text-white sm:flex-row">
-        <div className="justify-center">
-          <div>© Copyright COMIKAMEDIA 2021. All right reserved.</div>
+        <div className="text-center">
+          <div>© COMIKA MEDIA 2021. </div>
           <div>PT Wongsoyudan Pratama Indonesia</div>
         </div>
       </div>
