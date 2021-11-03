@@ -51,8 +51,8 @@ export const BookmarkedArticle = ({ isMobile, session }:
           <div className="mt-12">
             <Tab.Group>
               <Tab.List className="flex justify-between w-full text-lg ">
-                <Tab className={({ selected }) => `flex-1 py-3 focus:ring-0 ${selected ? 'text-white underline' : 'text-gray-300'}`}>Pesan</Tab>
-                <Tab className={({ selected }) => `flex-1 py-3 focus:ring-0 ${selected ? 'text-white underline' : 'text-gray-300'}`}>Transaksi</Tab>
+                <Tab className={({ selected }) => `flex-1 py-3 focus:ring-0 ${selected ? 'text-white font-medium ' : 'text-gray-300'}`}>Pesan</Tab>
+                <Tab className={({ selected }) => `flex-1 py-3 focus:ring-0 ${selected ? 'text-white font-medium ' : 'text-gray-300'}`}>Transaksi</Tab>
               </Tab.List>
               <Tab.Panels className="relative min-h-screen bg-bgBlueLight rounded-t-xl ">
                 <Tab.Panel className="">

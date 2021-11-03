@@ -1,89 +1,93 @@
-import { useRouter } from "next/router";
-import React, { ReactElement, useState } from "react";
-import { TiTick } from "react-icons/ti";
-import SwipeableViews from "react-swipeable-views";
-import { GetServerSideProps } from "next";
-import { signIn, useSession } from "next-auth/client";
-import { toast } from "react-toastify";
-import useSWR from "swr";
-import Head from "next/head";
-import { SubsribeItem } from "../../components/card/subscribe-item";
-import { ListCustomPrefix } from "../../components/list/list-custom-prefix";
-import Layout from "../../components/layout";
-import { client } from "../../lib/clientRaw";
-import { API_ENDPOINT_PACKAGE } from "../../res/api-endpoint";
-import { subscribeType } from "../../res/interface";
+import { useRouter } from 'next/router'
+import React, { ReactElement, useState } from 'react'
+import { TiTick } from 'react-icons/ti'
+import { GetServerSideProps } from 'next'
+import { signIn, useSession } from 'next-auth/client'
+import { toast } from 'react-toastify'
+import useSWR from 'swr'
+import Head from 'next/head'
+import { SubsribeItem } from '../../components/card/subscribe-item'
+import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
+import Layout from '../../components/layout'
+import { client } from '../../lib/clientRaw'
+import { API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
+import { subscribeType } from '../../res/interface'
 
 const SubscriptionMobile = ({ content: contents }) => (
-  <section className="">
-    <SwipeableViews enableMouseEvents className="px-3" slideClassName="px-1 overflow-hidden ">
-      {contents.map((item) => (
-        <div key={Math.random()}>{item}</div>
-      ))}
-      {/* <div>1</div>
+  <section className="px-6 pt-8 pb-8">
+    <p className="text-2xl font-bold leading-relaxed text-center text-gray-800">
+      Choose & Customize Your
+      <br />
+      Subscription Plan
+    </p>
+    {contents.map((item) => (
+      <div key={Math.random()}>
+        {item}
+      </div>
+    ))}
+    {/* <div>1</div>
       <div>2</div>
       <div>3</div> */}
-    </SwipeableViews>
   </section>
-);
+)
 
 export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => {
-  const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get);
+  const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get)
 
-  const [session] = useSession();
+  const [session] = useSession()
   // eslint-disable-next-line no-unused-vars
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
   const handleSubscribe = async (subscribePlan: string) => {
     if (!session) {
-      toast.info("Harap Login terlebih dahulu", {
-        position: "bottom-right",
+      toast.info('Harap Login terlebih dahulu', {
+        position: 'bottom-right',
         onClose: () => signIn(),
-      });
+      })
     } else {
       try {
-        setIsLoading(true);
-        const key = localStorage.getItem("komika-key");
-        if (key !== "undefined") {
-          localStorage.getItem("komika-key");
+        setIsLoading(true)
+        const key = localStorage.getItem('komika-key')
+        if (key !== 'undefined') {
+          localStorage.getItem('komika-key')
           // eslint-disable-next-line no-unused-vars
-          const { data } = await client.post("/payment/subscribe", { package: subscribePlan });
-          window.open(data.redirect_url);
+          const { data } = await client.post('/payment/subscribe', { package: subscribePlan })
+          window.open(data.redirect_url)
         } else {
-          router.push("/auth/signin");
+          router.push('/auth/signin')
         }
-        setIsLoading(false);
+        setIsLoading(false)
       } catch (error) {
         setTimeout(() => {
-          if (error.msg === "silahkan lengkapi data profile terlebih dahulu") router.push("/setting/profile");
-        }, 3000);
+          if (error.msg === 'silahkan lengkapi data profile terlebih dahulu') router.push('/setting/profile')
+        }, 3000)
       }
     }
-  };
-  const shortedSubsribe = subscribes?.sort((a, b) => a.price - b.price);
-  const bgColor = ["bg-gray-300", "bg-primary", "bg-yellow-400"];
+  }
+  const shortedSubsribe = subscribes?.sort((a, b) => a.price - b.price)
+  const bgColor = ['bg-gray-300', 'bg-primary', 'bg-yellow-400']
   const SubscriptionContent = shortedSubsribe
     ? shortedSubsribe.map((subscribe, index) => (
-        <SubsribeItem
-          onClick={() => isLoading || handleSubscribe(subscribe.id)}
-          loading={isLoading}
-          title={subscribe.name}
-          price={subscribe.rupiah}
-          until={`Berlaku untuk ${subscribe.longTime} Hari`}
-          buttonText="Subscribe"
-          headBgColor={bgColor[index]}
-          key={subscribe.id}
-        >
-          <div className="mt-4">
-            <ListCustomPrefix
-              prefixIcon={<TiTick className="inline" />}
-              label="Keunggulan"
-              content={subscribe.description}
-            />
-          </div>
-        </SubsribeItem>
-      ))
-    : [];
+      <SubsribeItem
+        onClick={() => isLoading || handleSubscribe(subscribe.id)}
+        loading={isLoading}
+        title={subscribe.name}
+        price={subscribe.rupiah}
+        until={`Berlaku untuk ${subscribe.longTime} Hari`}
+        buttonText="Subscribe"
+        headBgColor={bgColor[index]}
+        key={subscribe.id}
+      >
+        <div className="mt-4">
+          <ListCustomPrefix
+            prefixIcon={<TiTick className="inline" />}
+            label="Keunggulan"
+            content={subscribe.description}
+          />
+        </div>
+      </SubsribeItem>
+    ))
+    : []
 
   if (isMobile) {
     return (
@@ -98,7 +102,7 @@ export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => 
           </div>
         </div>
       </Layout>
-    );
+    )
   }
   return (
     <>
@@ -116,22 +120,22 @@ export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => 
               Tidak harus, kok. Tapi kalau kamu suka komedi, cuma kami yang memberitakan.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">{SubscriptionContent}</div>
+          <div className="grid grid-cols-1 gap-4 pb-12 md:grid-cols-3">{SubscriptionContent}</div>
         </div>
       </Layout>
     </>
-  );
-};
+  )
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const UA = context.req.headers["user-agent"];
-  const isMobile = Boolean(UA.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i));
+  const UA = context.req.headers['user-agent']
+  const isMobile = Boolean(UA.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i))
 
   // will be passed to the page component as props
   return {
     props: {
       isMobile,
     },
-  };
-};
-export default Subscribe;
+  }
+}
+export default Subscribe
