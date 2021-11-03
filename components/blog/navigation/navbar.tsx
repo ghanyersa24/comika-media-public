@@ -150,7 +150,7 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }:{
             <div className="flex flex-col items-center ">
 
               <Comikamedia className="w-full px-4 " />
-              <span className="py-4 text-lg font-medium text-gray-300 ">Tempat mencari kebahagiaan</span>
+              <span className="py-4 text-lg font-medium text-gray-300 ">Lucunya Tuh di Sana, Beritanya Tuh di Sini</span>
             </div>
             <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
               {navigation.map((item) => (

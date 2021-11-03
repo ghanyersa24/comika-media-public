@@ -28,7 +28,7 @@ const titleDescription = {
     title: 'Terpopular', description: 'Artikel terpopuler saat ini',
   },
   createdAt: {
-    title: 'Semua Artikel', description: 'Semua artikel yang ada di Comika Media',
+    title: 'Semua Artikel', description: 'Semua artikel yang ada di comika media',
   },
 }
 
