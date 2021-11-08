@@ -122,13 +122,8 @@ export interface ItemStoreType {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: null;
-  Category?: Category;
+  Category?: string;
   images: Image[];
-}
-
-export interface Category {
-  name: string;
-  type: string;
 }
 
 export interface Image {

@@ -1,13 +1,13 @@
-import Link from "next/link";
-import { IoLogoYoutube, IoLogoTwitter } from "react-icons/io";
-import { SiTiktok } from "react-icons/si";
-import { RiInstagramFill } from "react-icons/ri";
-import { Comikamedia } from "./svg";
+import Link from 'next/link'
+import { IoLogoYoutube, IoLogoTwitter } from 'react-icons/io'
+import { SiTiktok } from 'react-icons/si'
+import { RiInstagramFill } from 'react-icons/ri'
+import { Comikamedia } from './svg'
 
 const navigation = [
-  { name: "Artikel", href: "/article", current: true },
-  { name: "Store", href: "/store", current: false },
-];
+  { name: 'Artikel', href: '/article', current: true },
+  { name: 'Store', href: '/store', current: false },
+]
 export function Footer2() {
   return (
     <footer className="text-white border-t bg-primary border-accent-2">
@@ -19,7 +19,7 @@ export function Footer2() {
           <h5 className="text-xl font-bold leading-loose">Menu</h5>
           {navigation.map((item) => (
             <Link href={item.href} key={item.name}>
-              <a className="font-medium leading-loose hover:underline" aria-current={item.current ? "page" : undefined}>
+              <a className="font-medium leading-loose hover:underline" aria-current={item.current ? 'page' : undefined}>
                 {item.name}
               </a>
             </Link>
@@ -29,7 +29,7 @@ export function Footer2() {
           <h5 className="text-xl font-bold leading-loose">Menu</h5>
           {navigation.map((item) => (
             <Link href={item.href} key={item.name}>
-              <a className="font-medium leading-loose hover:underline" aria-current={item.current ? "page" : undefined}>
+              <a className="font-medium leading-loose hover:underline" aria-current={item.current ? 'page' : undefined}>
                 {item.name}
               </a>
             </Link>
@@ -43,7 +43,7 @@ export function Footer2() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
 export const Footer = () => (
@@ -60,7 +60,7 @@ export const Footer = () => (
           <nav className="mb-10 list-none">
             {navigation.map((item) => (
               <Link href={item.href} key={item.name}>
-                <a className="block text-gray-light" aria-current={item.current ? "page" : undefined}>
+                <a className="block text-gray-light" aria-current={item.current ? 'page' : undefined}>
                   {item.name}
                 </a>
               </Link>
@@ -107,6 +107,6 @@ export const Footer = () => (
       </div>
     </div>
   </footer>
-);
+)
 
-export default Footer;
+export default Footer

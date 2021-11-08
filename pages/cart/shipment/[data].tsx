@@ -24,7 +24,7 @@ import { BottomFixedSummaryStore } from '../../../components/card/bottom-fixed-s
 
 const isMobile = mobile()
 
-export const Shipment = ():ReactElement => {
+export const Shipment = (): ReactElement => {
   const router = useRouter()
   const { data } = router.query
 
@@ -37,7 +37,14 @@ export const Shipment = ():ReactElement => {
   console.log('selectedCourier', selectedCourier)
   const [isModalSelectCourierOpen, setIsModalSelectCourierOpen] = useState(false)
 
-  const { data: cartConfirm, mutate } = useSWR<cartType[]>(() => (data ? `/store/confirm-cart?${data}` : null), client.get)
+  const { data: cartConfirmFromApi, mutate } = useSWR<{
+    showAddress: boolean;
+    cart: cartType[];
+  }>(() => (data ? `/store/confirm-cart?${data}` : null), client.get)
+  const cartConfirm = cartConfirmFromApi?.cart
+  const showAddress = cartConfirmFromApi?.showAddress
+  console.log('🚀 ~ file: [data].tsx ~ line 46 ~ Shipment ~ showAddress', showAddress)
+
   const { data: customerAddress, mutate: mutateCustomerAddress } = useSWR<addressType[]>(() => (data ? '/account/address' : null), client.get)
   const mainCustomerAddress = customerAddress?.find((ca) => ca.active === true)
   console.log('mainCustomerAddress', mainCustomerAddress)
@@ -51,7 +58,7 @@ export const Shipment = ():ReactElement => {
     setSelectedCourier(null)
   }, [mainCustomerAddress?.id])
 
-  const handleNoteChange = async (note:string, cartId:string, qty:number) => {
+  const handleNoteChange = async (note: string, cartId: string, qty: number) => {
     await client.post(`${API_ENDPOINT_ADD_CART}/${cartId}`, {
       qty,
       note,
@@ -66,7 +73,7 @@ export const Shipment = ():ReactElement => {
     if (isMobile) router.push('/setting/select-main-address')
     else setIsListAddressOpen(true)
   }
-  const handleChangeMainAddress = (e:React.ChangeEvent<HTMLInputElement>, id:string) => {
+  const handleChangeMainAddress = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     if (e.target.checked) {
       setSelectedAddressId(id)
     }
@@ -78,7 +85,7 @@ export const Shipment = ():ReactElement => {
     setIsListAddressOpen(false)
   }
 
-  const canSubmit = selectedCourier && mainCustomerAddress
+  const canSubmit = showAddress ? selectedCourier && mainCustomerAddress : true
   const txtTotalPengiriman = `Rp ${numberWithCommas(selectedCourier?.cost)}`
   const txtSubTotalProduk = estimation?.detail.subtotalRp
   const total = sumOfTotal + selectedCourier?.cost
@@ -95,9 +102,10 @@ export const Shipment = ():ReactElement => {
 
   if (isMobile) {
     return (
-      <div className=" pb-44 bg-bgBlueLight">
+      <div className="pt-16 pb-44 bg-bgBlueLight">
         <TopNavbarWithBackButton title="Pesanan" />
-        <div className="mt-20">
+        {showAddress && (
+        <div className="">
           {mainCustomerAddress ? (
             <AdddressListItem
               leftElement={<IoMdPin className="flex-shrink-0 mr-2 text-2xl text-primary" />}
@@ -115,6 +123,7 @@ export const Shipment = ():ReactElement => {
               </div>
             )}
         </div>
+        )}
         <div className="px-6 m-4 bg-white divide-y rounded-lg shadow-md">
           <div className="flex py-4">
             <FaStore className="flex-shrink-0 mr-4 text-2xl text-primary" />
@@ -133,29 +142,31 @@ export const Shipment = ():ReactElement => {
           ))}
         </div>
         <div className="px-4">
-          <button onClick={() => setIsModalSelectCourierOpen(true)} type="button" className="block w-full px-6 py-4 text-left bg-white rounded-lg shadow-md">
-            <div className="flex w-full ">
-              <FaShippingFast className="flex-shrink-0 mr-4 text-2xl text-primary" />
-              <div className="flex-1 text-base ">
-                {selectedCourier ? (
-                  <div className="font-medium leading-tight text-black">
-                    <p>{`${selectedCourier.service}`}</p>
-                    <p className="mt-2 font-normal text-gray-500">
-                      Estimasi diterima
-                      {' '}
-                      {selectedCourier.estDate}
-                    </p>
-                  </div>
-                )
-                  : (
-                    <div className="font-medium leading-tight text-black ">
-                      Pilih Pengiriman
+          {showAddress && (
+            <button onClick={() => setIsModalSelectCourierOpen(true)} type="button" className="block w-full px-6 py-4 text-left bg-white rounded-lg shadow-md">
+              <div className="flex w-full ">
+                <FaShippingFast className="flex-shrink-0 mr-4 text-2xl text-primary" />
+                <div className="flex-1 text-base ">
+                  {selectedCourier ? (
+                    <div className="font-medium leading-tight text-black">
+                      <p>{`${selectedCourier.service}`}</p>
+                      <p className="mt-2 font-normal text-gray-500">
+                        Estimasi diterima
+                        {' '}
+                        {selectedCourier.estDate}
+                      </p>
                     </div>
-                  )}
+                  )
+                    : (
+                      <div className="font-medium leading-tight text-black ">
+                        Pilih Pengiriman
+                      </div>
+                    )}
+                </div>
+                <FaChevronRight className="self-center flex-shrink-0 mx-2" />
               </div>
-              <FaChevronRight className="self-center flex-shrink-0 mx-2" />
-            </div>
-          </button>
+            </button>
+          )}
         </div>
         <div className="px-6 py-4 m-4 ">
           <div className="flex justify-between">
@@ -191,52 +202,54 @@ export const Shipment = ():ReactElement => {
   return (
     <Layout isMobile={isMobile} className="pb-12 md:pt-24 ">
 
-      {(!isListAddressOpen && mainCustomerAddress)
-        ? (
-          <AdddressListItem
-            rightElement={<>Pilih Alamat Utama</>}
-            leftElement={<IoMdPin className="flex-shrink-0 mr-4 text-2xl text-primary" />}
-            address={mainCustomerAddress}
-            isMobile={isMobile}
-            title="Alamat Utama"
-            onClickRight={handleClickMainAddress}
-          />
-        )
-        : (
-          <div className="py-6 my-6 bg-white rounded-lg shadow-lg mycontainer">
-            <div className="flex">
-              <div className="flex items-center justify-center mr-2">
-                <IoMdPin className="text-2xl text-primary" />
+      {showAddress && (
+        (!isListAddressOpen && mainCustomerAddress)
+          ? (
+            <AdddressListItem
+              rightElement={<>Pilih Alamat Utama</>}
+              leftElement={<IoMdPin className="flex-shrink-0 mr-4 text-2xl text-primary" />}
+              address={mainCustomerAddress}
+              isMobile={isMobile}
+              title="Alamat Utama"
+              onClickRight={handleClickMainAddress}
+            />
+          )
+          : (
+            <div className="py-6 my-6 bg-white rounded-lg shadow-lg mycontainer">
+              <div className="flex">
+                <div className="flex items-center justify-center mr-2">
+                  <IoMdPin className="text-2xl text-primary" />
+                </div>
+                <p className="mb-2 text-sm leading-normal text-gray-500">Pilih Alamat utama</p>
               </div>
-              <p className="mb-2 text-sm leading-normal text-gray-500">Pilih Alamat utama</p>
+              {customerAddress?.map((address) => (
+              // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                <label htmlFor={`add${address.id}`} key={address.id} className="my-2">
+                  <AdddressListItem
+                    leftElement={(
+                      <div className="flex items-center mr-4">
+                        <input id={`add${address.id}`} checked={selectedAddressId === address.id} type="radio" name="checked-demo" className="form-radio" onChange={(e) => handleChangeMainAddress(e, address.id)} />
+                      </div>
+                  )}
+                    address={address}
+                    isMobile={isMobile}
+                    onClickRight={(id) => router.push(`/setting/address/${id}`)}
+                    rightElement="ubah"
+                    isList
+                  />
+                </label>
+              ))}
+              <div className="flex justify-end mt-6">
+                <button type="button" className="mx-2 btn-primary" onClick={handleSubmitChangeMainAddress}>
+                  Simpan
+                </button>
+                <button type="button" className="px-6 mx-2 btn-secondary max-w-max" onClick={() => setIsListAddressOpen(false)}>
+                  Batal
+                </button>
+              </div>
             </div>
-            {customerAddress?.map((address) => (
-            // eslint-disable-next-line jsx-a11y/label-has-associated-control
-              <label htmlFor={`add${address.id}`} key={address.id} className="my-2">
-                <AdddressListItem
-                  leftElement={(
-                    <div className="flex items-center mr-4">
-                      <input id={`add${address.id}`} checked={selectedAddressId === address.id} type="radio" name="checked-demo" className="form-radio" onChange={(e) => handleChangeMainAddress(e, address.id)} />
-                    </div>
-              )}
-                  address={address}
-                  isMobile={isMobile}
-            // onClickRight={handleChangeMainAddress}
-                  rightElement="ubah"
-                  isList
-                />
-              </label>
-            ))}
-            <div className="flex justify-end mt-6">
-              <button type="button" className="mx-2 btn-primary" onClick={handleSubmitChangeMainAddress}>
-                Simpan
-              </button>
-              <button type="button" className="px-6 mx-2 btn-secondary max-w-max" onClick={() => setIsListAddressOpen(false)}>
-                Batal
-              </button>
-            </div>
-          </div>
-        )}
+          )
+      )}
       <div className="bg-white rounded-lg shadow mycontainer ">
         <table className="w-full ">
           <tr className="border-b">
@@ -336,13 +349,13 @@ export const Shipment = ():ReactElement => {
         </button>
       </div>
       {estimation && (
-      <SelectCourier
-        couriers={estimation.estimateDelivery}
-        isOpen={isModalSelectCourierOpen}
-        onClose={() => setIsModalSelectCourierOpen(false)}
-        onChange={setSelectedCourier}
-        selectedCourier={selectedCourier}
-      />
+        <SelectCourier
+          couriers={estimation.estimateDelivery}
+          isOpen={isModalSelectCourierOpen}
+          onClose={() => setIsModalSelectCourierOpen(false)}
+          onChange={setSelectedCourier}
+          selectedCourier={selectedCourier}
+        />
       )}
     </Layout>
   )

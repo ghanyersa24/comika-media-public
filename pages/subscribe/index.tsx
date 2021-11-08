@@ -4,13 +4,13 @@ import { TiTick } from 'react-icons/ti'
 import { GetServerSideProps } from 'next'
 import { signIn, useSession } from 'next-auth/client'
 import { toast } from 'react-toastify'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import Head from 'next/head'
 import { SubsribeItem } from '../../components/card/subscribe-item'
 import { ListCustomPrefix } from '../../components/list/list-custom-prefix'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
+import { API_ENDPOINT_ADD_CART, API_ENDPOINT_CART, API_ENDPOINT_PACKAGE } from '../../res/api-endpoint'
 import { subscribeType } from '../../res/interface'
 
 const SubscriptionMobile = ({ content: contents }) => (
@@ -51,8 +51,14 @@ export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => 
         if (key !== 'undefined') {
           localStorage.getItem('komika-key')
           // eslint-disable-next-line no-unused-vars
-          const { data } = await client.post('/payment/subscribe', { package: subscribePlan })
-          window.open(data.redirect_url)
+          await client.post(`${API_ENDPOINT_ADD_CART}/${subscribePlan}`, {
+            qty: 1,
+            note: null,
+          })
+          await mutate(API_ENDPOINT_CART)
+          router.push('/cart')
+          // const { data } = await client.post('/payment/subscribe', { package: subscribePlan })
+          // window.open(data.redirect_url)
         } else {
           router.push('/auth/signin')
         }

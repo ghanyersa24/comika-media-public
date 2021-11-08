@@ -84,7 +84,7 @@ export const ItemStores: FunctionComponent<{
         imageUrl={popularStore.images[0]?.source.url}
         title={popularStore.name}
         price={popularStore.rupiah}
-        type={popularStore.Category.name}
+        type={popularStore.Category}
       />
     ))
       : (
@@ -99,7 +99,7 @@ export const ItemStores: FunctionComponent<{
               imageUrl={popularStore.images[0]?.source.url}
               title={popularStore.name}
               price={popularStore.rupiah}
-              type={popularStore.Category.name}
+              type={popularStore.Category}
             />
           ))}
         </div>

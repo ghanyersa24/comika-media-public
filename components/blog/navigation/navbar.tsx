@@ -28,9 +28,9 @@ const navigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-export const Profile = ({ src, name }:{
-  src:string, name:string
-}):ReactElement => {
+export const Profile = ({ src, name }: {
+  src: string, name: string
+}): ReactElement => {
   const router = useRouter()
   return (
     <Menu as="div" className="relative ml-3">
@@ -118,83 +118,84 @@ export const Profile = ({ src, name }:{
     </Menu>
   )
 }
-export const SideBar = ({ isShowing, session, subUrlAdmin }:{
-  isShowing:boolean, session:Session, subUrlAdmin:string }):ReactElement => (
+export const SideBar = ({ isShowing, session, subUrlAdmin }: {
+  isShowing: boolean, session: Session, subUrlAdmin: string
+}): ReactElement => (
   /* This `show` prop controls all nested `Transition.Child` components. */
-    <Transition show={isShowing}>
-      {/* Background overlay */}
-      <Transition.Child
-        enter="transition-opacity ease-linear duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity ease-linear duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <Disclosure.Button className="fixed top-0 z-40 w-full h-screen bg-black bg-opacity-80 " />
-      </Transition.Child>
-      {/* Sliding sidebar */}
-      <Transition.Child
-        enter="duration-200 ease-out"
-        enterTo="opacity-100 scale-100"
-        leave="duration-100 ease-in"
-        leaveTo="opacity-0 scale-100"
-      >
-        <div className="fixed top-0 w-full h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary " style={{ zIndex: 9999 }}>
-          <div className="flex justify-end">
-            <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <XIcon className="block w-6 h-6" aria-hidden="true" />
-            </Disclosure.Button>
+  <Transition show={isShowing}>
+    {/* Background overlay */}
+    <Transition.Child
+      enter="transition-opacity ease-linear duration-200"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="transition-opacity ease-linear duration-200"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+    >
+      <Disclosure.Button className="fixed top-0 z-40 w-full h-screen bg-black bg-opacity-80 " />
+    </Transition.Child>
+    {/* Sliding sidebar */}
+    <Transition.Child
+      enter="duration-200 ease-out"
+      enterTo="opacity-100 scale-100"
+      leave="duration-100 ease-in"
+      leaveTo="opacity-0 scale-100"
+    >
+      <div className="fixed top-0 w-full h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary " style={{ zIndex: 9999 }}>
+        <div className="flex justify-end">
+          <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <XIcon className="block w-6 h-6" aria-hidden="true" />
+          </Disclosure.Button>
+        </div>
+        <div className="pt-4 divide-y ">
+          <div className="flex flex-col items-center ">
+
+            <Comikamedia className="w-full px-4 " />
+            <span className="py-4 text-lg font-medium text-gray-300 ">Lucunya Tuh di Sana, Beritanya Tuh di Sini</span>
           </div>
-          <div className="pt-4 divide-y ">
-            <div className="flex flex-col items-center ">
-
-              <Comikamedia className="w-full px-4 " />
-              <span className="py-4 text-lg font-medium text-gray-300 ">Lucunya Tuh di Sana, Beritanya Tuh di Sini</span>
-            </div>
-            <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
-              {navigation.map((item) => (
-                <Link href={`/${item.href}`} key={item.name}>
-                  <a
-                    className={classNames(
-                      item.href === subUrlAdmin
-                        ? 'bg-gray-900 bg-opacity-20 text-white'
-                        : 'text-gray-300 hover:text-white  ',
-                      'block px-3 py-2 rounded-md ',
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    {item.name}
-                  </a>
-                </Link>
-              ))}
-
-              <Link href={session ? '/auth/signout' : '/auth/signin'} key="auth">
+          <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
+            {navigation.map((item) => (
+              <Link href={`/${item.href}`} key={item.name}>
                 <a
                   className={classNames(
-                    'text-gray-300 hover:text-white  ',
-                    'block px-3 py-2 rounded-md',
+                    item.href === subUrlAdmin
+                      ? 'bg-gray-900 bg-opacity-20 text-white'
+                      : 'text-gray-300 hover:text-white  ',
+                    'block px-3 py-2 rounded-md ',
                   )}
+                  aria-current={item.current ? 'page' : undefined}
                 >
-                  {session ? 'Logout' : 'Login'}
+                  {item.name}
                 </a>
               </Link>
+            ))}
 
-            </div>
-            <div className="px-3">
-              {/* <p>Social Media</p> */}
-              <div className="py-4 text-lg font-medium text-gray-300 ">Social Media</div>
-              <div className="flex flex-row">
-                <SocialMediaLogo className="mr-4 text-2xl text-white fill-current " />
-              </div>
+            <Link href={session ? '/auth/signout' : '/auth/signin'} key="auth">
+              <a
+                className={classNames(
+                  'text-gray-300 hover:text-white  ',
+                  'block px-3 py-2 rounded-md',
+                )}
+              >
+                {session ? 'Logout' : 'Login'}
+              </a>
+            </Link>
+
+          </div>
+          <div className="px-3">
+            {/* <p>Social Media</p> */}
+            <div className="py-4 text-lg font-medium text-gray-300 ">Social Media</div>
+            <div className="flex flex-row">
+              <SocialMediaLogo className="mr-4 text-2xl text-white fill-current " />
             </div>
           </div>
         </div>
-      </Transition.Child>
-    </Transition>
+      </div>
+    </Transition.Child>
+  </Transition>
 )
 
-export const Navbar = ():ReactElement => {
+export const Navbar = (): ReactElement => {
   const [session] = useSession()
   const router = useRouter()
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
@@ -203,8 +204,9 @@ export const Navbar = ():ReactElement => {
 
   const { data } = useSWR<ProfileType>(() => (session ? `${PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
-  const { data: notifications } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}` : null), client.get)
-  console.log('Navbar -> notifications', notifications)
+  const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=5&page=1&type=promo` : null), client.get)
+  const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=5&page=1&type=transaksi` : null), client.get)
+  console.log('Navbar -> notifications', messagesNotification)
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 
   return (
@@ -243,14 +245,15 @@ export const Navbar = ():ReactElement => {
                     onClick={() => router.push('/cart')}
                   >
                     {![0, undefined].includes(sumOfCarts) && (
-                    <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
-                      {sumOfCarts}
-                    </div>
+                      <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
+                        {sumOfCarts}
+                      </div>
                     )}
                     <MdShoppingBasket className="mx-2 text-2xl" />
                   </button>
                   <NotificationPopover
-                    notifications={notifications}
+                    messagesNotification={messagesNotification}
+                    transactionsNotification={transactionsNotification}
                   />
                   <div className="hidden ml-2 sm:block">
                     {session ? (
@@ -268,12 +271,12 @@ export const Navbar = ():ReactElement => {
           </>
         )}
       </Disclosure>
-      <NotificationModal
+      {/* <NotificationModal
         notifications={notifications}
         isOpen={isNotificationOpen}
         onClose={() => setIsNotificationOpen(false)}
         onClick={() => console.log('click')}
-      />
+      /> */}
     </>
   )
 }

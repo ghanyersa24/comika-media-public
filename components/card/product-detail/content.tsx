@@ -5,7 +5,7 @@ import { ItemStoreType } from '../../../res/interface'
 
 const Content = ({ itemstore }:{itemstore:ItemStoreType}):ReactElement => (
   <>
-    <p className="mt-2 mb-1 title-store">{itemstore.Category.name}</p>
+    <p className="mt-2 mb-1 title-store">{itemstore.Category}</p>
     <p className="text-2xl text-gray-900">{itemstore.name}</p>
     <div className="flex items-center ">
       <p className="flex-1 text-2xl font-bold text-primary">{itemstore.rupiah}</p>

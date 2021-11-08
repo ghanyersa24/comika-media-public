@@ -9,7 +9,7 @@ type Props = {
 export const NotificationList: FunctionComponent<Props> = ({ notifications, btnClassName }) => (
   <>
     {notifications?.map((notification) => (
-      <button type="button" className={`w-full py-3 text-left  focus:ring-0 hover:bg-gray-100 ${btnClassName}`} key={notification.id}>
+      <button type="button" className={`w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`} key={notification.id}>
         <div className="flex">
           <div className="flex flex-col items-stretch ">
             <div className="flex">
@@ -28,7 +28,7 @@ export const NotificationList: FunctionComponent<Props> = ({ notifications, btnC
           </div>
           <div className="text-right">
             <div>1 mnt</div>
-            <div className="w-20 h-20 mt-1 ml-2 bg-red-200 rounded-lg">
+            <div className="w-20 h-20 mt-1 ml-2 rounded-lg bg-gray-50">
               <Image
                 src={notification.img}
                 alt="notif"
