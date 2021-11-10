@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import React, { ReactElement } from 'react'
 import { GetServerSideProps } from 'next'
-import { getSession, signIn } from 'next-auth/client'
+import { getSession, signIn, useSession } from 'next-auth/client'
 import useSWR from 'swr'
 import { toast } from 'react-toastify'
 import { Tab } from '@headlessui/react'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
+import { Notification } from '../../res/interface'
 import { API_ENDPOINT_BOOKMARKED_ARTICLE, API_NOTIFICATION } from '../../res/api-endpoint'
 import { MorePosts } from '../../components/more-posts'
 import ContainerPadding from '../../components/container-padding'
@@ -28,6 +29,9 @@ const EmptyBookmark = ({ onClick }) => (
 
 export const BookmarkedArticle = ({ isMobile, session }:
   {isMobile:boolean, session:string[]}): ReactElement => {
+  const { data: messagesNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=promo` : null), client.get)
+  const { data: transactionsNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=transaksi` : null), client.get)
+
   // eslint-disable-next-line no-unused-vars
   const { data: bookmarkedArticles, mutate: mutateBookmarkedArticles } = useSWR(`${API_ENDPOINT_BOOKMARKED_ARTICLE}`, client.get)
   if (!session) {
@@ -46,7 +50,7 @@ export const BookmarkedArticle = ({ isMobile, session }:
       <Layout isMobile>
         <div className="relative bg-primary">
           <TopNavbarWithBackButton
-            title="Pilih Alamat utama"
+            title="Notifikasi"
           />
           <div className="mt-12">
             <Tab.Group>
@@ -56,10 +60,11 @@ export const BookmarkedArticle = ({ isMobile, session }:
               </Tab.List>
               <Tab.Panels className="relative min-h-screen bg-bgBlueLight rounded-t-xl ">
                 <Tab.Panel className="">
-                  <p className="py-4 mx-4 text-lg font-bold leading-tight">November 2021</p>
-                  <NotificationList notifications={notifications} btnClassName="bg-white my-1 px-4 " />
+                  <NotificationList notifications={messagesNotification} btnClassName="bg-white my-1 px-4 " />
                 </Tab.Panel>
-                <Tab.Panel className="">Content 2</Tab.Panel>
+                <Tab.Panel className="">
+                  <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4 " />
+                </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
           </div>

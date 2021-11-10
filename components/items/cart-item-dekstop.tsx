@@ -5,12 +5,12 @@ import { numberWithCommas } from '../../helper/accounting'
 import SummaryItemStoreDektop from './summary-item-store-dekstop'
 
 type props = {
-	cart:cartType
-	onQytChange:(qyt:number, cartId:string) => void,
-  setChecked:(value:boolean, cartId:string)=>void,
-  isChecked:boolean
+  cart: cartType
+  onQytChange: (qyt: number, cartId: string) => void,
+  setChecked: (value: boolean, cartId: string) => void,
+  isChecked: boolean
 }
-const CartItemDekstop : FunctionComponent<props> = ({
+const CartItemDekstop: FunctionComponent<props> = ({
   cart, onQytChange, setChecked, isChecked,
 }) => (
   // <div className="py-4">
@@ -41,10 +41,10 @@ const CartItemDekstop : FunctionComponent<props> = ({
         />
       </div>
     </td>
-    <td className="font-bold text-right text-primary">{`Rp ${numberWithCommas(cart.price * cart.qty)}` }</td>
+    <td className="font-bold text-right text-primary">{`Rp ${numberWithCommas(cart.price * cart.qty)}`}</td>
     <td>
       <div className="flex justify-center ">
-        <DeleteButton onDelete={() => console.log('Delete')} />
+        <DeleteButton onDelete={() => onQytChange(0, cart.productId)} />
       </div>
     </td>
   </tr>

@@ -27,10 +27,10 @@ export type ForgetPassword = {
   passwordConfirmation: string
   token: string
 }
-export type Signup = Login &{
+export type Signup = Login & {
   name: string,
 }
-export type Profile = Signup&address&{
+export type Profile = Signup & address & {
   role?: string,
   phone: string,
   address: string,
@@ -38,9 +38,9 @@ export type Profile = Signup&address&{
   createdAt?: string,
   updatedAt?: string,
   deletedAt?: string,
-  photo:string
+  photo: string
 }
-export type comments ={
+export type comments = {
   'id': 'bb3cb8bf-ef5e-4f5b-9ed7-749990401045',
   'comment': 'waaah bagus nih gae',
   'userId': '0734f6b2-6b4c-45b9-be8c-d1aaf6803348',
@@ -57,13 +57,13 @@ export type comments ={
   }
 }
 
-export type TypePostCommentComponent = swrReturn &{
-  comments:comments[],
+export type TypePostCommentComponent = swrReturn & {
+  comments: comments[],
 }
-export type TypePostCommentAdd = swrReturn &{
-  onChange:(e:any)=>void,
-  onSubmit:()=>void,
-  comment:string
+export type TypePostCommentAdd = swrReturn & {
+  onChange: (e: any) => void,
+  onSubmit: () => void,
+  comment: string
 
 }
 export type subscribeType = {
@@ -82,7 +82,7 @@ export type Post = {
   'banner': string,
   'isPremium': boolean,
   'isPublish': boolean,
-  'content':string,
+  'content': string,
   'createdAt': Date,
   'updatedAt': Date,
   'deletedAt': Date,
@@ -92,21 +92,21 @@ export type Post = {
   'shared': number,
   'bookmarked': number,
   'likes': number,
-  'attribution':string,
+  'attribution': string,
   'Comika': {
     'id': number,
     'name': string,
     'photo': string,
     'verified': boolean
+  }
 }
+export type Layout = {
+  isMobile: boolean,
 }
-export type Layout ={
-  isMobile:boolean,
-}
-export type PropsDetailOfPost =Layout& {
+export type PropsDetailOfPost = Layout & {
   post: Post,
-  session:string[],
-  relatedArticle:Post[]
+  session: string[],
+  relatedArticle: Post[]
   // morePosts: string[]
 }
 
@@ -136,7 +136,7 @@ export interface Source {
   name: string;
 }
 
-export type address ={
+export type address = {
   'id': string,
   'name': string,
   'address': string,
@@ -159,11 +159,11 @@ export type address ={
 }
 
 export type productDetailsType = {
-  onClickCart:()=>void,
-  onClickBuy:()=>void,
+  onClickCart: () => void,
+  onClickBuy: () => void,
   isDisabled: boolean,
-  itemstore:ItemStoreType,
-  buyedProductQyt?:number
+  itemstore: ItemStoreType,
+  buyedProductQyt?: number
 }
 
 export interface cartType {
@@ -180,9 +180,9 @@ export interface cartType {
   totalRp: string;
 }
 
-export type decreaseIncreaseFunctionType ={
-  onDecrease:()=> void,
-	onIncrease:()=> void,
+export type decreaseIncreaseFunctionType = {
+  onDecrease: () => void,
+  onIncrease: () => void,
 }
 
 export interface EstimationCost {
@@ -220,11 +220,52 @@ export interface CartEstimation {
   estimateDelivery: EstimateDelivery[];
 }
 
+export interface Promo {
+  price: number;
+  rupiah: string;
+  id: string;
+  name: string;
+  code: string;
+  category: string;
+}
+
 export interface Notification {
+  typeIcon?: string;
   id?: string;
-  img?: string;
   title?: string;
-  isRead?: boolean;
-  createdAt?: Date;
+  img?: string;
   description?: string;
+  descriptionHtml?: string;
+  isRead?: boolean;
+  type?: string;
+  userId?: string;
+  orderId?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: null;
+  UserId?: string;
+  OrderId?: string;
+  Order?: Order;
+}
+
+export interface Order {
+  priceRp?: string;
+  id?: string;
+  code?: string;
+  price?: number;
+  url?: string;
+  status?: string;
+  paymentType?: null;
+  details?: DetailOrder[];
+}
+
+export interface DetailOrder {
+  priceRp?: string;
+  totalRp?: string;
+  id?: string;
+  name?: string;
+  quantity?: number;
+  img?: string;
+  price?: number;
+  total?: number;
 }

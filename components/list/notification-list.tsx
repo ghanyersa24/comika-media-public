@@ -1,6 +1,8 @@
-import { FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react'
 import Image from 'next/image'
+import router from 'next/router'
 import { Notification } from '../../res/interface'
+import { DateFormatterRelative } from '../date-formatter'
 
 type Props = {
 	notifications:Notification[]
@@ -9,12 +11,12 @@ type Props = {
 export const NotificationList: FunctionComponent<Props> = ({ notifications, btnClassName }) => (
   <>
     {notifications?.map((notification) => (
-      <button type="button" className={`w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`} key={notification.id}>
+      <button onClick={() => router.push(`/notification/${notification.id}`)} type="button" className={`w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`} key={notification.id}>
         <div className="flex">
           <div className="flex flex-col items-stretch ">
             <div className="flex">
               <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-2 bg-blue-300 rounded-full" />
-              <div>Promo</div>
+              <div>{notification.type}</div>
             </div>
 
             <div className="flex flex-col justify-center flex-1 text-base ">
@@ -27,7 +29,7 @@ export const NotificationList: FunctionComponent<Props> = ({ notifications, btnC
             </div>
           </div>
           <div className="text-right">
-            <div>1 mnt</div>
+            <div><DateFormatterRelative dateString={notification.createdAt} /></div>
             <div className="w-20 h-20 mt-1 ml-2 rounded-lg bg-gray-50">
               <Image
                 src={notification.img}

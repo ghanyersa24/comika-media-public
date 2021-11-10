@@ -10,6 +10,7 @@ module.exports = {
     staticFolder: '/static',
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     domains: ['miro.medium.com', 'service-comika.herokuapp.com', 'awsimages.detik.net.id', 'www.static-src.com', 'betterstudio.com',
       'cdn-production-thumbor-vidio.akamaized.net', 'localhost', 'i2.wp.com', 'www.herworld.co.id', 'pbs.twimg.com',
       '1.bp.blogspot.com', 'www.comikacomedy.club', 'comika.id', 'api.comika.mediauploads', 'lh3.googleusercontent.com', 'i.ytimg.com', 'babussalambuana.com', 'api.comika.media', 'i.graphicmama.com', 'via.placeholder.com', 'i.imgur.com',

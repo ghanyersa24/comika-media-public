@@ -5,6 +5,11 @@ export default function DateFormatter({ dateString }) {
   const date = parseISO(dateString)
   return <time dateTime={dateString}>{format(date, 'd LLLL yyyy', { locale: id })}</time>
 }
+
+export function DateFormatterWithHour({ dateString }) {
+  const date = parseISO(dateString)
+  return <time dateTime={dateString}>{format(date, 'd MMM yyyy HH:mm:ss', { locale: id })}</time>
+}
 export function DateFormatterRelative({ dateString }) {
   const date = parseISO(dateString)
   return (

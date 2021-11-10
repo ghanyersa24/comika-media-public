@@ -8,6 +8,8 @@ export const API_ENDPOINT_ADD_CART = '/store/add-cart'
 export const API_ENDPOINT_CART = '/store/cart'
 export const API_NOTIFICATION = '/notification'
 
+export const API_ENDPOINT_PROMO = '/promo'
+
 export const PROFILE = '/account/me'
 
 export const API_ENDPOINT_JUMBOTRON = '/jumbotron'

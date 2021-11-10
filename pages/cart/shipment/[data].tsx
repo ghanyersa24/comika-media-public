@@ -1,17 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import { FaChevronRight, FaShippingFast, FaStore } from 'react-icons/fa'
+import { FaChevronRight, FaShippingFast } from 'react-icons/fa'
 import { IoMdPin } from 'react-icons/io'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import mobile from 'is-mobile'
 import dynamic from 'next/dynamic'
 import { toast } from 'react-toastify'
+
 import TopNavbarWithBackButton from '../../../components/navigation/top-navbar-with-back-button'
 import { client } from '../../../lib/clientRaw'
 import {
-  address as addressType, CartEstimation, cartType, EstimateDelivery,
+  address as addressType, CartEstimation, cartType, EstimateDelivery, Promo,
 } from '../../../res/interface'
-import { API_ENDPOINT_ADD_CART } from '../../../res/api-endpoint'
+import { API_ENDPOINT_ADD_CART, API_ENDPOINT_PROMO } from '../../../res/api-endpoint'
 import { Note } from '../../../components/form/note'
 import Layout from '../../../components/layout'
 import { numberWithCommas } from '../../../helper/accounting'
@@ -21,6 +22,7 @@ import SummaryItemStoreDektop from '../../../components/items/summary-item-store
 import { AdddressListItem } from '../../../components/card/address-list-item'
 import { SelectCourier } from '../../../components/modal/select-courier'
 import { BottomFixedSummaryStore } from '../../../components/card/bottom-fixed-summary-store'
+import PromoForm from '../../../components/form/promo'
 
 const isMobile = mobile()
 
@@ -31,26 +33,27 @@ export const Shipment = (): ReactElement => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [isListAddressOpen, setIsListAddressOpen] = useState(false)
-  console.log('isListAddressOpen', isListAddressOpen)
   const [selectedAddressId, setSelectedAddressId] = useState<string>('')
   const [selectedCourier, setSelectedCourier] = useState<EstimateDelivery>()
-  console.log('selectedCourier', selectedCourier)
   const [isModalSelectCourierOpen, setIsModalSelectCourierOpen] = useState(false)
+
+  const [promoCode, setPromoCode] = useState('')
+  const { data: promo } = useSWR<Promo>(
+    () => (promoCode ? `${API_ENDPOINT_PROMO}/${promoCode}` : null),
+    client.get, { errorRetryCount: 0 },
+  )
 
   const { data: cartConfirmFromApi, mutate } = useSWR<{
     showAddress: boolean;
     cart: cartType[];
-  }>(() => (data ? `/store/confirm-cart?${data}` : null), client.get)
+  }>(() => (data ? `/store/confirm-cart?${data}&promo=${promo ? promoCode : null}` : null), client.get)
   const cartConfirm = cartConfirmFromApi?.cart
   const showAddress = cartConfirmFromApi?.showAddress
-  console.log('🚀 ~ file: [data].tsx ~ line 46 ~ Shipment ~ showAddress', showAddress)
 
   const { data: customerAddress, mutate: mutateCustomerAddress } = useSWR<addressType[]>(() => (data ? '/account/address' : null), client.get)
   const mainCustomerAddress = customerAddress?.find((ca) => ca.active === true)
-  console.log('mainCustomerAddress', mainCustomerAddress)
 
   const { data: estimation, mutate: mutateEstimation } = useSWR<CartEstimation>(() => ((data && mainCustomerAddress) ? `/store/cart-estimation?${data}` : null), client.get)
-  console.log('estimation', estimation)
 
   useEffect(() => {
     setSelectedAddressId(mainCustomerAddress?.id)
@@ -66,6 +69,10 @@ export const Shipment = (): ReactElement => {
     })
     await mutate()
   }
+  const onPromoCodeChange = async (valPromoCode:string) => {
+    setPromoCode(valPromoCode)
+  }
+
   const sumOfCarts = cartConfirm?.reduce((sum, cart) => sum + cart.qty, 0)
   const sumOfTotal = cartConfirm?.reduce((sum, cart) => sum + cart.total, 0)
 
@@ -84,7 +91,6 @@ export const Shipment = (): ReactElement => {
     await mutateCustomerAddress()
     setIsListAddressOpen(false)
   }
-
   const canSubmit = showAddress ? selectedCourier && mainCustomerAddress : true
   const txtTotalPengiriman = `Rp ${numberWithCommas(selectedCourier?.cost)}`
   const txtSubTotalProduk = estimation?.detail.subtotalRp
@@ -105,30 +111,30 @@ export const Shipment = (): ReactElement => {
       <div className="pt-16 pb-44 bg-bgBlueLight">
         <TopNavbarWithBackButton title="Pesanan" />
         {showAddress && (
-        <div className="">
-          {mainCustomerAddress ? (
-            <AdddressListItem
-              leftElement={<IoMdPin className="flex-shrink-0 mr-2 text-2xl text-primary" />}
-              title="Alamat utama"
-              address={mainCustomerAddress}
-              isMobile={isMobile}
-              onClickRight={handleClickMainAddress}
-              rightElement={<FaChevronRight />}
-            />
+          <div className="">
+            {mainCustomerAddress ? (
+              <AdddressListItem
+                leftElement={<IoMdPin className="flex-shrink-0 mr-2 text-2xl text-primary" />}
+                title="Alamat utama"
+                address={mainCustomerAddress}
+                isMobile={isMobile}
+                onClickRight={handleClickMainAddress}
+                rightElement={<FaChevronRight />}
+              />
 
-          )
-            : (
-              <div className="mx-4">
-                <button type="button" className="w-full btn-primary" onClick={handleClickMainAddress}>Pilih Alamat Pengiriman</button>
-              </div>
-            )}
-        </div>
+            )
+              : (
+                <div className="mx-4">
+                  <button type="button" className="w-full btn-primary" onClick={handleClickMainAddress}>Pilih Alamat Pengiriman</button>
+                </div>
+              )}
+          </div>
         )}
-        <div className="px-6 m-4 bg-white divide-y rounded-lg shadow-md">
-          <div className="flex py-4">
+        <div className="px-6 py-2 m-4 bg-white divide-y rounded-lg shadow-md">
+          {/* <div className="flex py-4">
             <FaStore className="flex-shrink-0 mr-4 text-2xl text-primary" />
             <p className="text-base font-medium leading-tight text-black w-28">Karya Pandji</p>
-          </div>
+          </div> */}
           {cartConfirm?.map((cart) => (
             <div className="py-4" key={cart.id}>
               <SummaryItemStoreMobile cart={cart} />
@@ -168,6 +174,13 @@ export const Shipment = (): ReactElement => {
             </button>
           )}
         </div>
+        <div className="px-4 mt-4 ">
+          <PromoForm
+            promoCodeInitial={promoCode}
+            onPromoCodeChange={onPromoCodeChange}
+            promo={promo}
+          />
+        </div>
         <div className="px-6 py-4 m-4 ">
           <div className="flex justify-between">
             <p className="leading-normal text-gray-500 ">Subtotal untuk produk</p>
@@ -179,15 +192,17 @@ export const Shipment = (): ReactElement => {
           </div>
         </div>
         {/* <BottomFixedSummaryStore /> */}
-        {estimation && (
-          <SelectCourier
-            couriers={estimation.estimateDelivery}
-            isOpen={isModalSelectCourierOpen}
-            onClose={() => setIsModalSelectCourierOpen(false)}
-            onChange={setSelectedCourier}
-            selectedCourier={selectedCourier}
-          />
-        )}
+        {
+          estimation && (
+            <SelectCourier
+              couriers={estimation.estimateDelivery}
+              isOpen={isModalSelectCourierOpen}
+              onClose={() => setIsModalSelectCourierOpen(false)}
+              onChange={setSelectedCourier}
+              selectedCourier={selectedCourier}
+            />
+          )
+        }
         <BottomFixedSummaryStore
           qyt={sumOfCarts}
           total={total}
@@ -223,14 +238,14 @@ export const Shipment = (): ReactElement => {
                 <p className="mb-2 text-sm leading-normal text-gray-500">Pilih Alamat utama</p>
               </div>
               {customerAddress?.map((address) => (
-              // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                // eslint-disable-next-line jsx-a11y/label-has-associated-control
                 <label htmlFor={`add${address.id}`} key={address.id} className="my-2">
                   <AdddressListItem
                     leftElement={(
                       <div className="flex items-center mr-4">
                         <input id={`add${address.id}`} checked={selectedAddressId === address.id} type="radio" name="checked-demo" className="form-radio" onChange={(e) => handleChangeMainAddress(e, address.id)} />
                       </div>
-                  )}
+                    )}
                     address={address}
                     isMobile={isMobile}
                     onClickRight={(id) => router.push(`/setting/address/${id}`)}
