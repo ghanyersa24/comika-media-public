@@ -15,6 +15,7 @@ export const App = ():ReactElement => {
   const [session] = useSession()
 
   const { data: notification } = useSWR<Notification>(() => (session && id ? `${API_NOTIFICATION}/${id}` : null), client.get)
+  if (!notification) return <div>Loading...</div>
   console.log('🚀 ~ file: [id].tsx ~ line 43 ~ App ~ notification', notification)
   return (
     <div className="w-full">
@@ -35,7 +36,7 @@ export const App = ():ReactElement => {
           <tr>
             <td className="py-2 text-gray-500 md:text-2xl">Nomor Transaksi</td>
             <td className="font-medium text-right text-gray-700 md:text-2xl">
-              {notification.OrderId}
+              {notification?.OrderId}
             </td>
           </tr>
           <tr>
@@ -53,7 +54,7 @@ export const App = ():ReactElement => {
           <tr>
             <td className="py-2 text-gray-500 md:text-2xl">Total yang dibayarkan</td>
             <td className="text-lg font-medium text-right text-primaryLight md:text-2xl">
-              {notification.Order.priceRp}
+              {notification?.Order.priceRp}
             </td>
           </tr>
 
@@ -64,7 +65,7 @@ export const App = ():ReactElement => {
             <div key={cart.id} className="my-4 md:my-2">
               <div className="flex justify-between text-sm ">
                 <SummaryItemStoreMobile cart={cart as cartType} />
-                <p className="font-bold">
+                <p className="flex-shrink-0 font-bold">
                   <span>
                     {`${cart.quantity} `}
                     <span className="">barang</span>
