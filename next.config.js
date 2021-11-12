@@ -1,4 +1,10 @@
 module.exports = {
+  swcMinify: true,
+  experimental: {
+    // Enables the styled-components SWC transform
+    swcLoader: true,
+    styledComponents: true,
+  },
   serverRuntimeConfig: {
     // Will only be available on the server side
     mySecret: 'secret',

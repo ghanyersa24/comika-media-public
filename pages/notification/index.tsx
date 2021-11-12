@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { ReactElement } from 'react'
 import { GetServerSideProps } from 'next'
-import { getSession, signIn, useSession } from 'next-auth/client'
+import { getSession, signIn } from 'next-auth/client'
 import useSWR from 'swr'
 import { toast } from 'react-toastify'
 import { Tab } from '@headlessui/react'
@@ -29,7 +29,7 @@ const EmptyBookmark = ({ onClick }) => (
 
 export const BookmarkedArticle = ({ isMobile, session }:
   {isMobile:boolean, session:string[]}): ReactElement => {
-  const { data: messagesNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=promo` : null), client.get)
+  const { data: messagesNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=informasi` : null), client.get)
   const { data: transactionsNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=transaksi` : null), client.get)
 
   // eslint-disable-next-line no-unused-vars
@@ -40,7 +40,6 @@ export const BookmarkedArticle = ({ isMobile, session }:
       onClose: () => signIn(),
     })
   }
-  const { data: notifications } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}` : null), client.get)
   const router = useRouter()
   const handleClickAddBookmark = () => {
     router.push('/article')

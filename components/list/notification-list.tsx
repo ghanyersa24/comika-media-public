@@ -12,10 +12,19 @@ export const NotificationList: FunctionComponent<Props> = ({ notifications, btnC
   <>
     {notifications?.map((notification) => (
       <button onClick={() => router.push(`/notification/${notification.id}`)} type="button" className={`w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`} key={notification.id}>
-        <div className="flex">
-          <div className="flex flex-col items-stretch ">
+        <div className="flex w-full">
+          <div className="flex flex-col items-stretch flex-grow ">
             <div className="flex">
-              <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-2 bg-blue-300 rounded-full" />
+              <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-2 rounded-full">
+                <Image
+                  src={notification.typeIcon}
+                  alt="notif"
+                  layout="intrinsic"
+                  className="rounded-full"
+                  width={64}
+                  height={64}
+                />
+              </div>
               <div>{notification.type}</div>
             </div>
 

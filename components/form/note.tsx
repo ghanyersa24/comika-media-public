@@ -14,7 +14,7 @@ export const Note: FunctionComponent<props> = ({
 }) => {
   const [currentValue, setCurrentValue] = useState(note)
   return (
-    <div className="flex">
+    <div className="">
       {isUseLable && <span className="font-medium">Catatan</span>}
       <input
         readOnly={isReadOnly}
@@ -23,7 +23,7 @@ export const Note: FunctionComponent<props> = ({
         onChange={(e) => setCurrentValue(e.target.value)}
         value={currentValue || ''}
         type="text"
-        className="ml-2 py-0.5 md:px-4  px-1 md:py-2 w-full"
+        className=" py-0.5 md:px-4  px-1 md:py-2 w-full"
       />
     </div>
   )
