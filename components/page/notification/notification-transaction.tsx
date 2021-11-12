@@ -10,45 +10,42 @@ type propsTypes = {
 }
 
 const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification }) => (
-  <div className="w-full min-h-screen bg-primary">
-    <TopNavbarWithBackButton
-      title="Rincian Pembayaran"
-    />
-    <div className="flex flex-col items-center w-full pt-12 md:py-12">
+  <div className="relative w-full min-h-screen bg-primary md:bg-white">
+    <div className="flex flex-col items-center w-full pt-12 md:py-16 md:bg-primary">
       <img src={notification.img} className=" md:h-80" alt="" />
       <p className="text-lg font-medium text-center text-white md:text-4xl w-max">Terima kasih</p>
-      <p className="text-center text-white md:text-2xl w-max">Pesanan kamu berhasil diproses</p>
+      <p className="text-xl text-center text-white w-max">Pesanan kamu berhasil diproses</p>
     </div>
-    <div className="max-w-screen-lg px-4 py-4 my-8 bg-white md:mx-auto md:my-16 rounded-t-2xl">
-      <p className="text-lg font-bold text-gray-900 md:font-medium md:text-4xl">Detail Transaksi</p>
+    <div className="max-w-screen-lg px-4 py-4 my-8 prose bg-white md:mx-auto md:my-16 rounded-t-2xl lg:prose-lg">
+      <h2 className="">Detail Transaksi</h2>
       <table className="w-full my-4 text-black border-b border-dashed divide-y shadow-none divide-dashed">
         <tr>
-          <td className="py-2 text-gray-500 md:text-xl">Tanggal transaksi</td>
-          <td className="font-medium text-right text-gray-700 md:text-2xl">
+          <td className="py-2 text-gray-500 ">Tanggal transaksi</td>
+          <td className="font-bold text-right text-gray-700 ">
             <DateFormatterWithHour dateString={notification?.createdAt} />
           </td>
         </tr>
         <tr>
-          <td className="py-2 text-gray-500 md:text-xl">Nomor Transaksi</td>
-          <td className="font-medium text-right text-gray-700 md:text-2xl">
+          <td className="py-2 text-gray-500 ">Nomor Transaksi</td>
+          <td className="font-bold text-right text-gray-700 ">
             {notification?.Order.code}
           </td>
         </tr>
         <tr>
-          <td className="py-2 text-gray-500 md:text-xl">Kategori</td>
-          <td className="font-medium text-right text-gray-700 md:text-2xl">
+          <td className="py-2 text-gray-500 ">Kategori</td>
+          <td className="font-bold text-right text-gray-700 ">
             xxx
           </td>
         </tr>
         <tr>
-          <td className="py-2 text-gray-500 md:text-xl">Metode Pembayaran</td>
-          <td className="font-medium text-right text-gray-700 md:text-2xl">
+          <td className="py-2 text-gray-500 ">Metode Pembayaran</td>
+          <td className="font-bold text-right text-gray-700 ">
             {notification?.Order.paymentType || 'Belum dibayar'}
           </td>
         </tr>
         <tr>
-          <td className="py-2 text-gray-500 md:text-xl">Total yang dibayarkan</td>
-          <td className="text-lg font-medium text-right text-primaryLight md:text-2xl">
+          <td className="py-2 text-gray-500 ">Total yang dibayarkan</td>
+          <td className="font-bold text-right text-primaryLight ">
             {notification?.Order.priceRp}
           </td>
         </tr>
