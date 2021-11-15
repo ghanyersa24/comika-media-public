@@ -38,9 +38,14 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
           </td>
         </tr>
         <tr>
-          <td className="py-2 text-gray-500 ">Metode Pembayaran</td>
+          <td className="py-2 text-gray-500 ">Status</td>
           <td className="font-bold text-right text-gray-700 ">
-            {notification?.Order.paymentType || 'Belum dibayar'}
+            {notification?.Order.paymentType === null ? <span className="text-yellow-500">Belum dibayar</span>
+              : (
+                <span>
+                  Lunas
+                </span>
+              )}
           </td>
         </tr>
         <tr>
