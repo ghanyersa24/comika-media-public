@@ -16,7 +16,7 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
       <p className="text-lg font-medium text-center text-white md:text-4xl w-max">Terima kasih</p>
       <p className="text-xl text-center text-white w-max">Pesanan kamu berhasil diproses</p>
     </div>
-    <div className="max-w-screen-lg px-4 py-4 my-8 prose bg-white md:mx-auto md:my-16 rounded-t-2xl lg:prose-lg">
+    <div className="max-w-screen-lg px-4 py-4 mt-8 mb-16 prose bg-white md:mx-auto md:my-16 rounded-t-2xl lg:prose-lg">
       <h2 className="">Detail Transaksi</h2>
       <table className="w-full my-4 text-black border-b border-dashed divide-y shadow-none divide-dashed">
         <tr>
@@ -73,11 +73,11 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
           </div>
         ))}
       </div>
-      {/* <div className="flex justify-center w-full my-6">
+      <div className="flex justify-center w-full mt-12">
         <button type="button" className="px-16 btn-primary">
-          Ok
+          Bayar Sekarang
         </button>
-      </div> */}
+      </div>
     </div>
   </div>
 )
