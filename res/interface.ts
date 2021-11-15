@@ -38,6 +38,8 @@ export type Profile = Signup & address & {
   createdAt?: string,
   updatedAt?: string,
   deletedAt?: string,
+  isPremium: 1|0,
+  lastPremiumDate?:Date,
   photo: string
 }
 export type comments = {

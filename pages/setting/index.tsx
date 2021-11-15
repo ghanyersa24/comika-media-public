@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { AiFillBell } from 'react-icons/ai'
 import { BsBookmarkFill } from 'react-icons/bs'
 import { MdAccountCircle } from 'react-icons/md'
@@ -10,8 +10,12 @@ import {
 } from 'next-auth/client'
 import Router from 'next/router'
 import mobile from 'is-mobile'
+import useSWR from 'swr'
 import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
+import { client } from '../../lib/clientRaw'
+import { Profile } from '../../res/interface'
+import DateFormatter, { DateFormatterRelative } from '../../components/date-formatter'
 
 const isMobile = mobile()
 
@@ -35,10 +39,11 @@ const navigation = [
 export const Setting = ():ReactElement => {
   const [session] = useSession()
 
-  const { data, isLoading } = GetProfile()
+  const { data, error } = useSWR<Profile>(`${'/account/me'}`, client.get)
 
+  console.log('🚀 ~ file: index.tsx ~ line 43 ~ Setting ~ data', data)
   if (!isMobile) return <div>For Mobile Only</div>
-  if (isLoading) return <div>Loading...</div>
+  if (!error && !data) return <div>Loading...</div>
   if (!session) signIn()
 
   return (
@@ -64,11 +69,27 @@ export const Setting = ():ReactElement => {
                   </div>
                   <div className="flex flex-col items-start justify-end w-3/4 h-full ">
                     <p className="text-xl font-bold leading-relaxed text-white">{data.name}</p>
-                    <p className="text-xs leading-normal text-white">{data.phone}</p>
-                    <p className="text-xs leading-normal text-white">{data.email}</p>
-                    <button type="button" onClick={() => Router.push('subscribe')} className="px-4 py-2 mt-4 rounded bg-warning">
-                      <p className="text-xs leading-normal text-white">Upgrade Premium</p>
-                    </button>
+                    {/* <p className="text-xs leading-normal text-white">{data.phone}</p> */}
+                    {/* <p className="text-xs leading-normal text-white">{data.email}</p> */}
+                    {
+                      data?.isPremium === 0 ? (
+                        <button type="button" onClick={() => Router.push('subscribe')} className="px-4 py-2 mt-4 rounded bg-warning">
+                          <p className="text-xs leading-normal text-white">Upgrade Premium</p>
+                        </button>
+                      ) : (
+                        <div className="flex items-center mt-0.5">
+                          <div className="relative w-6 h-6 mr-2">
+                            <img src="/assets/blog/subscribe/premium_badge.svg" alt="" />
+                          </div>
+                          <span className="text-white">
+                            Berlaku hingga
+                            {' '}
+                            <DateFormatter dateString={data.lastPremiumDate} />
+                          </span>
+                        </div>
+                      )
+                    }
+
                   </div>
                 </div>
               ) : 'loading'}

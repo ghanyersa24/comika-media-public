@@ -3,7 +3,7 @@ import id from 'date-fns/locale/id'
 
 export default function DateFormatter({ dateString }) {
   const date = parseISO(dateString)
-  return <time dateTime={dateString}>{format(date, 'd LLLL yyyy', { locale: id })}</time>
+  return <time dateTime={dateString}>{format(date, 'd LLL yyyy', { locale: id })}</time>
 }
 
 export function DateFormatterWithHour({ dateString }) {
