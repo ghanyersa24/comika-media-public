@@ -36,6 +36,7 @@ const CartItemDekstop: FunctionComponent<props> = ({
     <td>
       <div className="flex justify-center">
         <IncreaseDecreaseButton
+          isPlusDisabled={cart.type === 'subscription'}
           qyt={cart.qty}
           onQytChange={(qyt) => onQytChange(qyt, cart.productId)}
         />

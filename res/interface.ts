@@ -180,6 +180,7 @@ export interface cartType {
   priceRp: string;
   total: number;
   totalRp: string;
+  type: string;
 }
 
 export type decreaseIncreaseFunctionType = {
