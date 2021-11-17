@@ -97,7 +97,12 @@ export const Cart = ():ReactElement => {
             </div>
           </div>
         </div>
-        <BottomFixedSummaryStore qyt={sumOfCarts} total={sumOfTotal} onSubmit={handleSubmit} />
+        <BottomFixedSummaryStore
+          isDisabled={sumOfCarts === 0}
+          qyt={sumOfCarts}
+          total={sumOfTotal}
+          onSubmit={handleSubmit}
+        />
       </div>
     )
   }
@@ -154,7 +159,7 @@ export const Cart = ():ReactElement => {
               </div>
             </td>
             <td colSpan={2}>
-              <button type="button" className="w-full btn btn-primary" onClick={handleSubmit}>
+              <button disabled={sumOfCarts === 0} type="button" className="w-full btn btn-primary" onClick={handleSubmit}>
                 Beli
               </button>
             </td>
