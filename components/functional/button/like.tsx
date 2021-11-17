@@ -21,9 +21,9 @@ export const LikeButton : FunctionComponent <LikeButtonType> = ({
 }):ReactElement => {
   const [isBookmarkLoading, setIsBookmarkLoading] = useState(false)
   const [prevBookmark, setPrevBookmark] = useState(liked)
-  const [session] = useSession()
+  const [session, loading] = useSession()
   const handleBookmark = async () => {
-    if (!session) signIn()
+    if (!session && !loading) signIn()
     setIsBookmarkLoading(true)
     setPrevBookmark(liked)
     await client.post(`/article/like/${slug}`, [])

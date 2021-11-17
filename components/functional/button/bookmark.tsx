@@ -20,9 +20,9 @@ export const BookmarkButton : FunctionComponent <BookmarkButtonType> = ({
 }):ReactElement => {
   const [isBookmarkLoading, setIsBookmarkLoading] = useState(false)
   const [prevBookmark, setPrevBookmark] = useState(bookmarked)
-  const [session] = useSession()
+  const [session, loading] = useSession()
   const handleBookmark = async () => {
-    if (!session) signIn()
+    if (!session && !loading) signIn()
     setIsBookmarkLoading(true)
     setPrevBookmark(bookmarked)
     await client.post(`/article/bookmark/${slug}`, [])

@@ -1,7 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import useSWR, { useSWRInfinite } from 'swr'
+import useSWR from 'swr'
+import useSWRInfinite from 'swr/infinite'
 import React, { } from 'react'
 import router from 'next/router'
 import mobile from 'is-mobile'
@@ -19,13 +20,14 @@ import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../res/string'
 import { ItemStores } from '../components/items/item-store'
 import { ContainerStore } from '../components/container/container-store'
 import { ItemStoreType, Post } from '../res/interface'
+// import { SubsribeBanner } from '../components/banner/subscribe-banner'
 
-const SubsribeBanner = dynamic(() => import('../components/banner/subscribe-banner') as any, { ssr: false })
+const SubsribeBanner = dynamic(() => import('../components/banner/subscribe-banner'), { ssr: false })
 
-const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile') as any, { ssr: false })
+const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile'), { ssr: false })
 
-const IntroDekstop = dynamic(() => import('../components/intro/intro-dekstop') as any, { ssr: false })
-const IntroMobile = dynamic(() => import('../components/intro/intro-mobile') as any, { ssr: false })
+const IntroDekstop = dynamic(() => import('../components/intro/intro-dekstop'), { ssr: false })
+const IntroMobile = dynamic(() => import('../components/intro/intro-mobile'), { ssr: false })
 
 const isMobile = mobile()
 export default function Index(): React.ReactNode {

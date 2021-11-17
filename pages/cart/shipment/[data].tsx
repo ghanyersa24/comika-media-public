@@ -2,17 +2,17 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { FaChevronRight, FaShippingFast } from 'react-icons/fa'
 import { IoMdPin } from 'react-icons/io'
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import mobile from 'is-mobile'
 import dynamic from 'next/dynamic'
 import { toast } from 'react-toastify'
-
+import { useMatchMutate } from '../../../helper/mutateManyRegex'
 import TopNavbarWithBackButton from '../../../components/navigation/top-navbar-with-back-button'
 import { client } from '../../../lib/clientRaw'
 import {
   address as addressType, CartEstimation, cartType, EstimateDelivery, Promo,
 } from '../../../res/interface'
-import { API_ENDPOINT_ADD_CART, API_ENDPOINT_PROMO } from '../../../res/api-endpoint'
+import { API_ENDPOINT_ADD_CART, API_ENDPOINT_PROMO, API_NOTIFICATION } from '../../../res/api-endpoint'
 import { Note } from '../../../components/form/note'
 import Layout from '../../../components/layout'
 import { numberWithCommas } from '../../../helper/accounting'
@@ -29,6 +29,7 @@ const isMobile = mobile()
 export const Shipment = (): ReactElement => {
   const router = useRouter()
   const { data } = router.query
+  const matchMutate = useMatchMutate()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -42,11 +43,11 @@ export const Shipment = (): ReactElement => {
     () => (promoCode ? `${API_ENDPOINT_PROMO}/${promoCode}` : null),
     client.get, { errorRetryCount: 0 },
   )
-
-  const { data: cartConfirmFromApi, mutate } = useSWR<{
+  const submittedPromoCode = promo ? promoCode : null
+  const { data: cartConfirmFromApi, mutate: mutateConfirmCart } = useSWR<{
     showAddress: boolean;
     cart: cartType[];
-  }>(() => (data ? `/store/confirm-cart?${data}&promo=${promo ? promoCode : null}` : null), client.get)
+  }>(() => (data ? `/store/confirm-cart?${data}&promo=${submittedPromoCode}` : null), client.get)
   const cartConfirm = cartConfirmFromApi?.cart
   const showAddress = cartConfirmFromApi?.showAddress
 
@@ -67,7 +68,7 @@ export const Shipment = (): ReactElement => {
       note,
       update: true,
     })
-    await mutate()
+    await mutateConfirmCart()
   }
   const onPromoCodeChange = async (valPromoCode:string) => {
     setPromoCode(valPromoCode)
@@ -98,10 +99,15 @@ export const Shipment = (): ReactElement => {
 
   const handleSubmit = async () => {
     setIsLoading(true)
-    const { data: submitedData, msg } = await client.post(`/store/cart-checkout?${data}`, { courierId: selectedCourier?.id })
+    const { data: submitedData, msg } = await client.post(`/store/cart-checkout?${data}&promo=${submittedPromoCode}`, { courierId: selectedCourier?.id })
     toast.success(msg, {
       position: 'bottom-right',
-      onClose: () => window?.open(submitedData.redirect_url),
+      autoClose: 2000,
+      onClose: async () => {
+        await matchMutate(/^\/notification\?/)
+        window?.open(submitedData.redirect_url)
+        router.push('/')
+      },
     })
     setIsLoading(false)
   }
@@ -332,7 +338,20 @@ export const Shipment = (): ReactElement => {
               {`Rp ${numberWithCommas(sumOfTotal)}`}
             </td>
           </tr>
-          <div className="w-full my-4 " />
+          <tr className="border-b border-dashed ">
+            <td colSpan={2} />
+            <td colSpan={3}>
+              <div className="mb-4">
+                <PromoForm
+                  isUseLable={false}
+                  promoCodeInitial={promoCode}
+                  onPromoCodeChange={onPromoCodeChange}
+                  promo={promo}
+                />
+              </div>
+            </td>
+          </tr>
+          <div className="mt-4" />
           <tr className="text-gray-400">
             <td colSpan={2} />
             <td colSpan={2}>Subtotal Produk</td>

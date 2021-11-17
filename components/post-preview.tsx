@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import Avatar from './avatar'
 // import DateFormatter from './date-formatter'
-import { ImageInstrinsic } from './cover-image'
+import { ImageInstrinsicPost } from './cover-image-post'
 import { Post } from '../res/interface'
 import { BookmarkButton } from './functional/button/bookmark'
 import { DateFormatterRelative } from './date-formatter'
@@ -23,13 +23,13 @@ export default function PostPreview({
   return (
     <div className="md:rounded-lg md:shadow-md text-textSecondary">
       <div className="relative mb-2 xs:mb-5">
-        <ImageInstrinsic
+        <ImageInstrinsicPost
+          className="object-cover rounded-t-md"
           slug={slug}
           title={title}
           src={banner}
-          height={2}
-          width={3}
-          sizes="(min-width: 768px) 256px, (min-width: 1024px) 384px, 128px"
+          height={256}
+          width={384}
         />
         {isPremium ? (
           <div className="absolute bottom-0 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:ml-2">

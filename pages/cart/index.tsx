@@ -3,6 +3,8 @@ import React, { ReactElement, useState } from 'react'
 import useSWR, { mutate } from 'swr'
 import mobile from 'is-mobile'
 import router from 'next/router'
+import { signIn, useSession } from 'next-auth/client'
+import { toast } from 'react-toastify'
 import { BottomFixedSummaryStore } from '../../components/card/bottom-fixed-summary-store'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 import { API_ENDPOINT_ADD_CART, API_ENDPOINT_CART } from '../../res/api-endpoint'
@@ -17,9 +19,17 @@ import { numberWithCommas } from '../../helper/accounting'
 const isMobile = mobile()
 
 export const Cart = ():ReactElement => {
-  const { data: carts } = useSWR<cartType[]>(`${API_ENDPOINT_CART}`, client.get)
-
+  const [session, loading] = useSession()
+  console.log('🚀 ~ file: index.tsx ~ line 23 ~ Cart ~ session', loading, session)
+  const { data: carts } = useSWR<cartType[]>(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
   const [checkedCarts, setCheckedCarts] = useState([])
+  if (!session && !loading) {
+    toast.info('Harap Login terlebih dahulu', {
+      position: 'bottom-right',
+      onClose: () => signIn(),
+    })
+    return <div>Loading...</div>
+  }
   console.log('checkedCarts', checkedCarts)
 
   const handleSubmit = async () => {

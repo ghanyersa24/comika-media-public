@@ -214,8 +214,8 @@ export const Navbar = (): ReactElement => {
 
   const { data } = useSWR<ProfileType>(() => (session ? `${PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
-  const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=5&page=1&type=informasi` : null), client.get)
-  const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=5&page=1&type=transaksi` : null), client.get)
+  const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
+  const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
   console.log('Navbar -> notifications', messagesNotification)
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 

@@ -5,7 +5,7 @@ import React, { } from 'react'
 import { BackButtonAbsoluteMobile } from './button/back-button-absolute-mobile'
 import Avatar from './avatar'
 import DateFormatter from './date-formatter'
-import { ImageInstrinsic, ImageResponsive } from './cover-image'
+import { ImageInstrinsicPost, ImageResponsive } from './cover-image-post'
 import PostTitle from './post-title'
 
 export function PostHeaderDekstop({
@@ -43,7 +43,13 @@ export function PostHeaderDekstop({
         </div>
       </div>
       <div className="mb-8 md:mb-12 sm:mx-0">
-        <ImageInstrinsic title={title} src={coverImage} height={620} width={1240} />
+        <ImageInstrinsicPost
+          className="object-cover rounded-md"
+          title={title}
+          src={coverImage}
+          height={620}
+          width={1240}
+        />
         {
           attribution !== '' && (
           <p className="text-lg font-medium leading-9 text-justify text-gray-500">

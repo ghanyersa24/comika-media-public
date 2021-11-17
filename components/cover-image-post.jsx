@@ -2,8 +2,8 @@ import cn from 'classnames'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export function ImageInstrinsic({
-  title, src, slug, height, width, sizes = '100vw',
+export function ImageInstrinsicPost({
+  title, src, slug, height, width, sizes = '100vw', className,
 }) {
   if (!src) {
     return <>Tanpa Gambar</>
@@ -12,8 +12,8 @@ export function ImageInstrinsic({
     <Image
       src={src}
       alt={`Cover Image for ${title}`}
-      className="object-cover rounded-md"
-      layout="responsive"
+      className={className}
+      layout="intrinsic"
       width={width}
       height={height}
       sizes={sizes} // 128px used if width < 768px

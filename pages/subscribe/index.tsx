@@ -34,12 +34,12 @@ const SubscriptionMobile = ({ content: contents }) => (
 export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => {
   const { data: subscribes } = useSWR<subscribeType[]>(`${API_ENDPOINT_PACKAGE}`, client.get)
 
-  const [session] = useSession()
+  const [session, loading] = useSession()
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleSubscribe = async (subscribePlan: string) => {
-    if (!session) {
+    if (!session && !loading) {
       toast.info('Harap Login terlebih dahulu', {
         position: 'bottom-right',
         onClose: () => signIn(),

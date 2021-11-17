@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import Head from 'next/head'
-import { useSWRInfinite } from 'swr'
+import useSWRInfinite from 'swr/infinite'
 
 import React, { ReactElement } from 'react'
 import { useRouter } from 'next/router'

@@ -15,10 +15,10 @@ import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_ARTICLE } from '../../res/api-endpoint'
+import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_ARTICLE, API_ENDPOINT_COMMENT } from '../../res/api-endpoint'
 import { PropsDetailOfPost, Post } from '../../res/interface'
 import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
-import { Get, add as addPost } from '../../service/comments'
+import { add as addPost } from '../../service/comments'
 import Layout from '../../components/layout'
 import { MorePosts } from '../../components/more-posts'
 import { SocialMediaShareButton } from '../../components/functional/button/social-media-share-button'
@@ -115,28 +115,28 @@ export default function DetailOfPost({
   if (isMobile) {
     limit = 2
   }
+  const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { fallbackData: post })
+  const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
+  const { data: comments, error, mutate: mutateComment } = useSWR(() => (postClient?.slug ? `${API_ENDPOINT_COMMENT}/${postClient.slug}` : null), client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
+  const router = useRouter()
+  const [comment, setComment] = useState('')
+  const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
   useEffect(() => {
-    if (window?.instgrm?.Embeds && twttr?.widgets) {
+    if (window?.instgrm?.Embeds && twttr?.widgets && postClient) {
       window.instgrm.Embeds.process()
       twttr.widgets.load()
     }
   }, [])
-  const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { initialData: post })
-  const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
-  const router = useRouter()
-  const [comment, setComment] = useState('')
-  const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
   if (!router.isFallback && !postClient?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  const { data: comments, isLoading, mutate } = Get(postClient.slug)
 
   const handleSubmitPostComment = async () => {
     try {
       await addPost(postClient.slug, {
         comment,
       })
-      mutate(); setComment(''); setErrorMsgPostAdd(null)
+      mutateComment(); setComment(''); setErrorMsgPostAdd(null)
     } catch (error) {
       setErrorMsgPostAdd(error)
     }
@@ -194,12 +194,12 @@ export default function DetailOfPost({
             <div className="pb-24">
               <PostCommentList
                 comments={comments}
-                isLoading={isLoading}
+                isLoading={!error && !comments}
               />
               {session ? (
                 <PostCommentAdd
                   onChange={(e) => setComment(e.target.value)}
-                  isLoading={isLoading}
+                  isLoading={!error && !comments}
                   error={errorMsgPostAdd}
                   comment={comment}
                   onSubmit={handleSubmitPostComment}

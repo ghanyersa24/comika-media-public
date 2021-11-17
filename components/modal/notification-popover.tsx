@@ -49,7 +49,7 @@ export const NotificationPopover: FunctionComponent<props> = ({
             </div>
             {/* <div className="">
               <NotificationList notifications={notifications} />
-  
+
             </div>
             <div className="flex justify-center my-4 ">
               <button type="button" className="font-medium text-primary hover:underline">
@@ -67,7 +67,7 @@ export const NotificationPopover: FunctionComponent<props> = ({
                   <ClickToMoreBtn onClick={() => console.log('notifications')} />
                 </Tab.Panel>
                 <Tab.Panel className="">
-                  <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4" />
+                  <NotificationList notifications={transactionsNotification?.slice(0, 4)} btnClassName="bg-white my-1 px-4" />
                   <ClickToMoreBtn onClick={() => console.log('notifications')} />
                 </Tab.Panel>
               </Tab.Panels>

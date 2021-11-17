@@ -6,9 +6,12 @@ import { Promo } from '../../res/interface'
 type props = {
 	promo:Promo
 	promoCodeInitial:string
+  isUseLable?:boolean
 	onPromoCodeChange: (qyt: string) => void
 }
-const PromoForm = ({ promoCodeInitial, promo, onPromoCodeChange }: props): ReactElement => {
+const PromoForm = ({
+  promoCodeInitial, promo, onPromoCodeChange, isUseLable = true,
+}: props): ReactElement => {
   const [promoCode, setPromoCode] = useState<string>(promoCodeInitial)
   const [debouncedPromoCode] = useDebounce(promoCode, 2000)
   const isPromoCodeSameWithInitial = debouncedPromoCode === promoCodeInitial
@@ -17,13 +20,13 @@ const PromoForm = ({ promoCodeInitial, promo, onPromoCodeChange }: props): React
   }, [debouncedPromoCode])
   return (
     <>
-      <div className="font-medium text-gray-800 text-md">Kode Promo</div>
+      {isUseLable && <div className="font-medium text-gray-800 text-md">Kode Promo</div>}
       <div className="relative ">
         <input
           className="w-full px-3 py-2 my-2 rounded-md"
           type="text"
           onChange={(e) => setPromoCode(e.target.value)}
-          placeholder="XXXXX"
+          placeholder="Masukkan kode promo disini"
           name="email"
           id="email"
         />

@@ -24,7 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/setting/address"
-  ],
+, "helper/mutate.js"  ],
   "exclude": [
     "node_modules"
   ]

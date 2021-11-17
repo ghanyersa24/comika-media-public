@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import router from 'next/router'
 import { DateFormatterWithHour } from '../../date-formatter'
 import { Note } from '../../form/note'
 import SummaryItemStoreMobile from '../../items/summary-item-store-mobile'
@@ -29,12 +30,6 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
           <td className="py-2 text-gray-500 ">Nomor Transaksi</td>
           <td className="font-bold text-right text-gray-700 ">
             {notification?.Order.code}
-          </td>
-        </tr>
-        <tr>
-          <td className="py-2 text-gray-500 ">Kategori</td>
-          <td className="font-bold text-right text-gray-700 ">
-            xxx
           </td>
         </tr>
         <tr>
@@ -79,9 +74,20 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
         ))}
       </div>
       <div className="flex justify-center w-full mt-12">
-        <button type="button" className="px-16 btn-primary">
-          Bayar Sekarang
-        </button>
+        {
+          notification?.Order.status === 'pending'
+            ? (
+              <button onClick={() => router.push(notification?.Order.url)} type="button" className="px-16 btn-primary">
+                Bayar Sekarang
+              </button>
+            )
+            : (
+              <button onClick={() => router.back()} type="button" className="px-16 btn-primary">
+                Ok
+              </button>
+            )
+        }
+
       </div>
     </div>
   </div>

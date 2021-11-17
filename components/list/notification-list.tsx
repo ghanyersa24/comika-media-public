@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import Image from 'next/image'
 import router from 'next/router'
+import classnames from 'classnames'
 import { Notification } from '../../res/interface'
 import { DateFormatterRelative } from '../date-formatter'
 
@@ -11,7 +12,16 @@ type Props = {
 export const NotificationList: FunctionComponent<Props> = ({ notifications, btnClassName }) => (
   <>
     {notifications?.map((notification) => (
-      <button onClick={() => router.push(`/notification/${notification.id}`)} type="button" className={`w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`} key={notification.id}>
+      <button
+        onClick={() => router.push(`/notification/${notification.id}`)}
+        type="button"
+        className={classnames(
+          `w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`,
+          { 'bg-blue-50': !notification?.isRead },
+
+        )}
+        key={notification.id}
+      >
         <div className="flex w-full">
           <div className="flex flex-col items-stretch flex-grow ">
             <div className="flex">

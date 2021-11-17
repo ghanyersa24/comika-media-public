@@ -257,7 +257,7 @@ export interface Order {
   code?: string;
   price?: number;
   url?: string;
-  status?: string;
+  status?: 'pending'|'settlement'|'expired';
   paymentType?: null;
   details?: DetailOrder[];
 }
