@@ -18,11 +18,18 @@ import { NotificationPopover } from '../../modal/notification-popover'
 import { Notification, Profile as ProfileType } from '../../../res/interface'
 
 const navigation = [
-  { name: 'Home', href: '', current: true },
-  { name: 'Artikel', href: 'article', current: false },
-  // { name: 'Store', href: 'store', current: false },
-  { name: 'Subscribe', href: 'subscribe', current: false },
-  { name: 'Bookmark', href: 'setting/bookmark', current: false },
+  {
+    name: 'Home', href: '', current: true, isRequiredLogin: false,
+  },
+  {
+    name: 'Artikel', href: 'article', current: false, isRequiredLogin: false,
+  },
+  {
+    name: 'Subscribe', href: 'subscribe', current: false, isRequiredLogin: false,
+  },
+  {
+    name: 'Bookmark', href: 'setting/bookmark', current: false, isRequiredLogin: true,
+  },
 ]
 
 function classNames(...classes) {
@@ -155,6 +162,8 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
           </div>
           <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
             {navigation.map((item) => (
+              (!item.isRequiredLogin || session)
+              && (
               <Link href={`/${item.href}`} key={item.name}>
                 <a
                   className={classNames(
@@ -168,6 +177,7 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
                   {item.name}
                 </a>
               </Link>
+              )
             ))}
 
             <Link href={session ? '/auth/signout' : '/auth/signin'} key="auth">
