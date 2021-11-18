@@ -51,7 +51,6 @@ const App = ():ReactElement => {
   const { id } = router.query
   const isEdit = (id && id !== 'add')
   const { data: selectedAddress } = useSWR<address>(() => ((id && id !== 'add') ? `/account/address/${id}` : null), client.get)
-  console.log('address', selectedAddress)
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
   const title = isEdit ? 'Ubah alamat' : 'Tambah alamat baru'
   const form = (

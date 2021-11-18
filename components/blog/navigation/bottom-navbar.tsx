@@ -49,7 +49,6 @@ export const BottomNavbar = ():ReactElement => {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
-  // console.log('🚀 ~ file: bottom-navbar.tsx ~ line 31 ~ BottomNavbar ~ subUrlAdmin', subUrlAdmin)
   const handleClick = (selectedUrl) => {
     if (selectedUrl === '#') {
       toast.info('Nantikan updatenya segera, hanya di Comika Media', {

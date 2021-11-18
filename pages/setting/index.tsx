@@ -41,7 +41,6 @@ export const Setting = ():ReactElement => {
 
   const { data, error } = useSWR<Profile>(`${'/account/me'}`, client.get)
 
-  console.log('🚀 ~ file: index.tsx ~ line 43 ~ Setting ~ data', data)
   if (!isMobile) return <div>For Mobile Only</div>
   if (!error && !data) return <div>Loading...</div>
   if (!session) signIn()

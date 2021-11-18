@@ -23,7 +23,7 @@ const CartItemMobile : FunctionComponent<props> = ({
         qyt={cart.qty}
         onQytChange={(qyt) => onQytChange(qyt, cart.productId)}
       />
-      <DeleteButton onDelete={() => console.log('Delete')} />
+      <DeleteButton onDelete={() => onQytChange(0, cart.productId)} />
     </div>
   </div>
 )

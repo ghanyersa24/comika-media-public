@@ -20,7 +20,6 @@ const isMobile = mobile()
 
 export const Cart = ():ReactElement => {
   const [session, loading] = useSession()
-  console.log('🚀 ~ file: index.tsx ~ line 23 ~ Cart ~ session', loading, session)
   const { data: carts } = useSWR<cartType[]>(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
   const [checkedCarts, setCheckedCarts] = useState([])
   if (!session && !loading) {
@@ -30,7 +29,6 @@ export const Cart = ():ReactElement => {
     })
     return <div>Loading...</div>
   }
-  console.log('checkedCarts', checkedCarts)
 
   const handleSubmit = async () => {
     let params = ''

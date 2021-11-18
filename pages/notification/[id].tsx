@@ -22,7 +22,6 @@ export const App = ():ReactElement => {
 
   const { data: notification } = useSWR<Notification>(() => (session && id ? `${API_NOTIFICATION}/${id}` : null), client.get)
   if (!notification) return <div>Loading...</div>
-  console.log('🚀 ~ file: [id].tsx ~ line 43 ~ App ~ notification', notification)
   if (notification.type === 'transaksi') {
     return (
       <Layout isMobile={isMobile}>

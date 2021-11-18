@@ -17,7 +17,6 @@ import { ResetPassword } from '../../service/auth'
 export const LoginPage = (): ReactNode => {
   const router = useRouter()
   const { token } = router.query
-  // console.log('🚀 ~ file: [token].tsx ~ line 20 ~ LoginPage ~ token', token as string)
 
   const [ForgetPassword, setForgetPassword] = useState<ForgetPasswordType >()
   useEffect(() => {
