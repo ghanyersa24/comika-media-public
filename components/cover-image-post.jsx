@@ -1,9 +1,10 @@
 import cn from 'classnames'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getImageSize } from '../helper/imageSize'
 
 export function ImageInstrinsicPost({
-  title, src, slug, height, width, sizes = '100vw', className,
+  title, src, slug, height, width, className,
 }) {
   if (!src) {
     return <>Tanpa Gambar</>
@@ -14,9 +15,9 @@ export function ImageInstrinsicPost({
       alt={`Cover Image for ${title}`}
       className={className}
       layout="intrinsic"
-      width={width}
-      height={height}
-      sizes={sizes} // 128px used if width < 768px
+      width={getImageSize(width)}
+      height={getImageSize(height)}
+      // sizes={sizes} // 128px used if width < 768px
     />
   )
   return (
