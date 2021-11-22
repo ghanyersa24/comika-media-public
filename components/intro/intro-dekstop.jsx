@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import virtualize from 'react-swipeable-views-utils/lib/virtualize'
 import classnames from 'classnames'
-import { Get as GetJumbotron } from '../../service/jumbotron'
 
 export const ItemDekstop = ({ url, link }) => (
   <Link href={link || '/'}>
@@ -13,11 +12,9 @@ export const ItemDekstop = ({ url, link }) => (
         {/* <img src={url} alt="Gambar Intro" className="object-cover w-full" /> */}
         <Image
           height={480}
-          placeholder="blur"
-          blurDataURL="/background/download.webp"
           width={1440}
           layout="responsive"
-          src={url || '/background/download.webp'}
+          src={url}
           alt="Gambar Intro"
           className="object-cover w-full"
         />
@@ -50,11 +47,9 @@ export const Pagination = ({ dots, index, onChangeIndex }) => {
 
 const EnhancedSwipeableViews = virtualize(SwipeableViews)
 
-export default function IntroDekstop() {
+export default function IntroDekstop({ jumbotrons }) {
   const [swipeIndex, setSwipeIndex] = useState(0)
 
-  const { data: jumbotrons, isLoading } = GetJumbotron()
-  if (isLoading) return <ItemDekstop url={null} link="/" />
   const filteredJumbotrons = jumbotrons?.filter((jumbotron) => jumbotron.isDesktop)
 
   const slideRenderer = ({ key, index }) => {

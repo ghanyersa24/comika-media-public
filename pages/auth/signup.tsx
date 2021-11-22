@@ -6,6 +6,7 @@ import Head from 'next/head'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Signup } from '../../res/interface'
 import { SignUp } from '../../service/auth'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 // enum Severity {
 //   error='bg-red-200',
 //   success='bg-green-200',
@@ -18,6 +19,8 @@ export const LoginPage = ():ReactNode => {
   const router = useRouter()
   const [signup, setSignup] = useState<Signup|null>(null)
   const [submitSignupStatus, setSubmitSignupStatus] = useState('')
+  const [isPasswordShown, setIsPasswordShown] = useState(false)
+
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type, checked, name, value,
@@ -86,17 +89,24 @@ export const LoginPage = ():ReactNode => {
             </label>
             <label
               htmlFor="Password"
-              className="block mt-4 mb-2 font-bold text-gray-800"
+              className="relative block mt-4 mb-2 font-bold text-gray-800"
             >
               Password
               <input
                 className="w-full px-3 py-2 mt-3"
                 id="password"
-                type="password"
+                type={isPasswordShown ? 'text' : 'password'}
                 name="password"
                 onChange={handleChangeValue}
                 placeholder="******************"
               />
+              <button
+                type="button"
+                className="absolute right-4 bottom-3"
+                onClick={() => setIsPasswordShown(!isPasswordShown)}
+              >
+                {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
+              </button>
             </label>
           </div>
 

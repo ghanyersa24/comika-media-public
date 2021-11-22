@@ -4,7 +4,6 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import classnames from 'classnames'
-import { Get as GetJumbotron } from '../../service/jumbotron'
 
 export const Pagination = ({ dots, index, onChangeIndex }) => {
   const indexMod = Math.abs(index % dots)
@@ -37,9 +36,7 @@ export const ItemMobile = ({ url, link }) => (
           height={184}
           width={350}
           layout="responsive"
-          placeholder="blur"
-          blurDataURL="/background/download.webp"
-          src={url || '/background/download.webp'}
+          src={url}
           alt="Gambar Intro"
           className="object-cover rounded-lg"
         />
@@ -48,9 +45,8 @@ export const ItemMobile = ({ url, link }) => (
   </Link>
 
 )
-export default function IntroMobile() {
+export default function IntroMobile({ jumbotrons }) {
   const [index, setIndex] = useState(0)
-  const { data: jumbotrons, isLoading } = GetJumbotron()
   const filteredJumbotrons = jumbotrons?.filter((jumbotron) => jumbotron.isPhone)
   return (
     <section className="relative mb-4 hp:-mt-36 -mt-28">
@@ -62,7 +58,7 @@ export default function IntroMobile() {
         onChangeIndex={(i) => setIndex(i)}
         slideClassName="px-1"
       >
-        {isLoading ? <ItemMobile url={null} link="/" /> : filteredJumbotrons?.map((jumbotron) => (
+        { filteredJumbotrons?.map((jumbotron) => (
           <ItemMobile url={jumbotron.img} key={jumbotron.id} link={jumbotron.link} />
         ))}
       </AutoPlaySwipeableViews>

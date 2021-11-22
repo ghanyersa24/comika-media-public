@@ -10,9 +10,9 @@ const navigations = [
 ]
 
 export const ButtonItem = ({
-  label, url, isActive,
+  label, url, isActive, searchParam,
 }) => (
-  <Link href={`/article?orderBy=${url}`}>
+  <Link href={`/article?orderBy=${url}${searchParam}`}>
     <a className={isActive
       ? 'h-full text-base leading-tight text-gray-800'
       : 'h-full text-base leading-tight text-gray-400 '}
@@ -22,7 +22,7 @@ export const ButtonItem = ({
   </Link>
 
 )
-export const OrderBy = ({ orderBy }) => (
+export const OrderBy = ({ orderBy, searchParam }) => (
   <div className="">
     <div className="flex items-center justify-start flex-1 h-full rounded-lg">
       <div className="flex items-center justify-start flex-1 h-full space-x-5">
@@ -30,6 +30,7 @@ export const OrderBy = ({ orderBy }) => (
           <ButtonItem
             label={navigation.name}
             url={navigation.url}
+            searchParam={searchParam}
             isActive={navigation.url === orderBy}
             key={navigation.name}
           />

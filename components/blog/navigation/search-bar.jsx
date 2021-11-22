@@ -56,7 +56,7 @@ export const SearchBar = ({ className = '', searchValue = '', isMobile = true })
   const handleSubmit = (e) => {
     e.preventDefault()
     if (search) {
-      Router.push(`/article/search/${search}`)
+      Router.push(`/article?search=${search}`)
     }
   }
   return (

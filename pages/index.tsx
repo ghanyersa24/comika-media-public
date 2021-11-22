@@ -6,13 +6,14 @@ import useSWRInfinite from 'swr/infinite'
 import React, { } from 'react'
 import router from 'next/router'
 import mobile from 'is-mobile'
+import { GetStaticProps } from 'next'
 import ContainerPadding from '../components/container-padding'
 import {
   MorePosts, TitlePost,
 } from '../components/more-posts'
 // import { IntroDekstop, IntroMobile } from '../components/intro'
 import { client } from '../lib/clientRaw'
-import { API_ENDPOINT_ARTICLE, API_ENDPOINT_STORE } from '../res/api-endpoint'
+import { API_ENDPOINT_ARTICLE, API_ENDPOINT_JUMBOTRON, API_ENDPOINT_STORE } from '../res/api-endpoint'
 import Layout from '../components/layout'
 
 import { RenderMoreArticle } from '../components/blog/more-articles'
@@ -22,19 +23,37 @@ import { ContainerStore } from '../components/container/container-store'
 import { ItemStoreType, Post } from '../res/interface'
 // import { SubsribeBanner } from '../components/banner/subscribe-banner'
 
-const SubsribeBanner = dynamic(() => import('../components/banner/subscribe-banner'), { ssr: false })
+const SubsribeBanner = dynamic(() => import('../components/banner/subscribe-banner'), { ssr: true })
 
-const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile'), { ssr: false })
+const SearchNavigation = dynamic(() => import('../components/blog/navigation/search-navigation-mobile'), { ssr: true })
 
-const IntroDekstop = dynamic(() => import('../components/intro/intro-dekstop'), { ssr: false })
-const IntroMobile = dynamic(() => import('../components/intro/intro-mobile'), { ssr: false })
+const IntroDekstop = dynamic(() => import('../components/intro/intro-dekstop'), { ssr: true })
+const IntroMobile = dynamic(() => import('../components/intro/intro-mobile'), { ssr: true })
 
 const isMobile = mobile()
-export default function Index(): React.ReactNode {
-  const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
 
-  const { data: lastestArticles, mutate: mutateLastestArticles } = useSWR<Post[]>(`${API_ENDPOINT_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${1}`, client.get)
-  const { data: pupularArticles, mutate: mutatePopularArticles } = useSWR<Post[]>(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
+type props = {
+  jumbotronFromSSR:string,
+  lastestArticlesSSR:Post[],
+  pupularArticlesSSR:Post[],
+}
+
+const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
+const lastestArticlesInitialUrl = `${API_ENDPOINT_ARTICLE}?orderBy=createdAt&ordering=DESC&limit=${limit}&page=${1}`
+const pupularArticlesInitialUrl = `${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`
+
+export default function Index({
+  jumbotronFromSSR, lastestArticlesSSR,
+  pupularArticlesSSR,
+}:props): React.ReactNode {
+  const { data: lastestArticles, mutate: mutateLastestArticles } = useSWR<Post[]>(
+    lastestArticlesInitialUrl,
+    client.get, { fallbackData: lastestArticlesSSR },
+  )
+  const { data: pupularArticles, mutate: mutatePopularArticles } = useSWR<Post[]>(
+    pupularArticlesInitialUrl,
+    client.get, { fallbackData: pupularArticlesSSR },
+  )
   const { data: digitalStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=digital produk`, client.get)
   const { data: merchandiseStores } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=Merchandise`, client.get)
 
@@ -58,9 +77,9 @@ export default function Index(): React.ReactNode {
       {isMobile ? (
         <>
           <SearchNavigation />
-          <IntroMobile />
+          <IntroMobile jumbotrons={jumbotronFromSSR} />
         </>
-      ) : <IntroDekstop />}
+      ) : <IntroDekstop jumbotrons={jumbotronFromSSR} />}
 
       <ContainerPadding className="mt-8 mb-24 md:mt-12 ">
         <MorePosts posts={lastestArticles} mutate={mutateLastestArticles} title="Artikel Terbaru" description="Terbaru di minggu ini" />
@@ -103,4 +122,20 @@ export default function Index(): React.ReactNode {
       </ContainerPadding>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ():
+Promise<{props:props, revalidate:number}> => {
+  const jumbotronFromSSR = await client.get(`${API_ENDPOINT_JUMBOTRON}`, undefined)
+  const lastestArticlesSSR = await client.get(lastestArticlesInitialUrl, undefined)
+  const pupularArticlesSSR = await client.get(pupularArticlesInitialUrl, undefined)
+
+  return {
+    props: {
+      jumbotronFromSSR,
+      lastestArticlesSSR,
+      pupularArticlesSSR,
+    },
+    revalidate: 60,
+  }
 }

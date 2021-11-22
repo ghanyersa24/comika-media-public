@@ -117,7 +117,7 @@ export default function DetailOfPost({
   }
   const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { fallbackData: post })
   const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
-  const { data: comments, error, mutate: mutateComment } = useSWR(() => (postClient?.slug ? `${API_ENDPOINT_COMMENT}/${postClient.slug}` : null), client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
+  const { data: comments, error: errorComment, mutate: mutateComment } = useSWR(() => (postClient?.slug ? `${API_ENDPOINT_COMMENT}/${postClient.slug}` : null), client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
   const router = useRouter()
   const [comment, setComment] = useState('')
   const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
@@ -194,12 +194,12 @@ export default function DetailOfPost({
             <div className="pb-24">
               <PostCommentList
                 comments={comments}
-                isLoading={!error && !comments}
+                isLoading={!errorComment && !comments}
               />
               {session ? (
                 <PostCommentAdd
                   onChange={(e) => setComment(e.target.value)}
-                  isLoading={!error && !comments}
+                  isLoading={!errorComment && !comments}
                   error={errorMsgPostAdd}
                   comment={comment}
                   onSubmit={handleSubmitPostComment}
