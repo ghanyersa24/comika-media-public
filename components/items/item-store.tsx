@@ -25,7 +25,7 @@ export const ItemStoreMobile: FunctionComponent<props> = ({
         layout="responsive"
         src={imageUrl}
         alt="Gambar "
-        className="rounded-lg "
+        className="rounded-l-lg "
       />
     </div>
     <div className="flex flex-col items-start h-full px-4 py-2">

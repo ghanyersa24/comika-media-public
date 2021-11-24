@@ -33,7 +33,7 @@ const IncreaseDecreaseButton:NextPage<props> = ({
       )}
       <span className={cn('px-2 mx-2',
         { 'border-b': isWithButton },
-        { '': !isWithButton })}
+        { 'hidden md:block ': !isWithButton })}
       >
         {currentQyt}
 

@@ -25,7 +25,7 @@ type props = {
 }
 
 export const Product:FunctionComponent<props> = ({ itemstore }) => {
-  const { data: anotherProducts } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=3`, client.get)
+  const { data: anotherProducts } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=digital produk`, client.get)
   const [isDisabled, setIsDisabled] = useState(false)
   const handleClickCart = async () => {
     setIsDisabled(true)
