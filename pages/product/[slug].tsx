@@ -5,6 +5,7 @@ import mobile from 'is-mobile'
 import dynamic from 'next/dynamic'
 import useSWR, { mutate } from 'swr'
 import { toast } from 'react-toastify'
+import router from 'next/router'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_ADD_CART, API_ENDPOINT_CART, API_ENDPOINT_STORE } from '../../res/api-endpoint'
 import { ItemStoreType } from '../../res/interface'
@@ -24,7 +25,7 @@ type props = {
 }
 
 export const Product:FunctionComponent<props> = ({ itemstore }) => {
-  const { data: anotherProducts } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=3`, client.get)
+  const { data: anotherProducts } = useSWR<ItemStoreType[]>(`${API_ENDPOINT_STORE}?orderBy=name&ordering=DESC&limit=${3}&page=${1}&category=digital produk`, client.get)
   const [isDisabled, setIsDisabled] = useState(false)
   const handleClickCart = async () => {
     setIsDisabled(true)
@@ -38,8 +39,15 @@ export const Product:FunctionComponent<props> = ({ itemstore }) => {
     await mutate(API_ENDPOINT_CART)
     setIsDisabled(false)
   }
-  const handleClickBuy = () => {
-    console.log('handleClickBuy -> handleClickBuy')
+  const handleClickBuy = async () => {
+    setIsDisabled(true)
+    await client.post(`${API_ENDPOINT_ADD_CART}/${itemstore.id}`, {
+      qty: 1,
+      note: null,
+    })
+    await mutate(API_ENDPOINT_CART)
+    router.push('/cart')
+    setIsDisabled(false)
   }
 
   const detailProduct = isMobile ? (

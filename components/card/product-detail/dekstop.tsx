@@ -21,7 +21,7 @@ const ProductDekstop = ({
           width={384}
           height={384}
         /> */}
-        <InnerImageZoom src={selectedImage} zoomSrc={selectedImage} zoomType="hover" />
+        <InnerImageZoom src={selectedImage} zoomSrc={selectedImage} zoomType="hover" className="rounded" />
         <div className="w-full mt-2 overflow-y-auto">
           {itemstore.images.length && itemstore.images.map((image) => (
             <button type="button" onClick={() => setSelectedImage(image.source.url)} key={image.source.url} className="mr-2 rounded">

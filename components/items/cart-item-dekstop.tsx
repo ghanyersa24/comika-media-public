@@ -13,18 +13,6 @@ type props = {
 const CartItemDekstop: FunctionComponent<props> = ({
   cart, onQytChange, setChecked, isChecked,
 }) => (
-  // <div className="py-4">
-  //   <div className="flex items-center py-4 border-b border-gray-100">
-  //
-  //     <SummaryItemStore cart={cart} />
-  //   </div>
-  //   <div className="flex items-center justify-end mt-4 text-base ">
-  //     <IncreaseDecreaseDeleteButton
-  //       qyt={cart.qty}
-  //       onQytChange={(qyt) => onQytChange(qyt, cart.productId)}
-  //     />
-  //   </div>
-  // </div>
   <tr className="table-auto">
     <td>
       <input type="checkbox" name="checked-demo" className="checkbox" checked={isChecked} onChange={(e) => setChecked(e.target.checked, cart.id)} />
@@ -36,7 +24,7 @@ const CartItemDekstop: FunctionComponent<props> = ({
     <td>
       <div className="flex justify-center">
         <IncreaseDecreaseButton
-          isPlusDisabled={cart.type === 'subscription'}
+          isWithButton={!(cart.type === 'subscription')}
           qyt={cart.qty}
           onQytChange={(qyt) => onQytChange(qyt, cart.productId)}
         />
