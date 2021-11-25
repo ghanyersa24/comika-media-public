@@ -11,7 +11,7 @@ import { Session } from 'next-auth'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { SearchBar } from './search-bar'
-import { API_ENDPOINT_CART, API_NOTIFICATION, PROFILE } from '../../../res/api-endpoint'
+import { API_ENDPOINT_CART, API_NOTIFICATION, API_ENDPOINT_PROFILE } from '../../../res/api-endpoint'
 import { client } from '../../../lib/clientRaw'
 import { NotificationPopover } from '../../modal/notification-popover'
 import { Notification, Profile as ProfileType } from '../../../res/interface'
@@ -213,7 +213,7 @@ export const Navbar = (): ReactElement => {
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
 
-  const { data } = useSWR<ProfileType>(() => (session ? `${PROFILE}` : null), client.get)
+  const { data } = useSWR<ProfileType>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
   const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
   const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
