@@ -1,17 +1,18 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, {
+  FunctionComponent, ReactElement, useEffect, useState,
+} from 'react'
 import { FaSpinner } from 'react-icons/fa'
 import { useDebounce } from 'use-debounce'
-import { Promo } from '../../res/interface'
 
 type props = {
-	promo:Promo
+	// promo:Promo
 	promoCodeInitial:string
   isUseLable?:boolean
 	onPromoCodeChange: (qyt: string) => void
 }
-const PromoForm = ({
-  promoCodeInitial, promo, onPromoCodeChange, isUseLable = true,
-}: props): ReactElement => {
+const PromoForm: FunctionComponent<props> = ({
+  promoCodeInitial, onPromoCodeChange, isUseLable = true,
+}): ReactElement => {
   const [promoCode, setPromoCode] = useState<string>(promoCodeInitial)
   const [debouncedPromoCode] = useDebounce(promoCode, 2000)
   const isPromoCodeSameWithInitial = debouncedPromoCode === promoCodeInitial
@@ -32,7 +33,7 @@ const PromoForm = ({
         />
         <div className="absolute inset-y-0 top-0 right-0 flex items-center px-4 text-sm font-medium text-red-500 ">
 
-          {debouncedPromoCode === promoCode ? promo?.rupiah : <FaSpinner className="w-5 h-5 mr-3 animate-spin text-primary" /> }
+          {debouncedPromoCode === promoCode ? null : <FaSpinner className="w-5 h-5 mr-3 animate-spin text-primary" /> }
         </div>
       </div>
     </>

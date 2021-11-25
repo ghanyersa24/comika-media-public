@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { FaChevronRight, FaShippingFast } from 'react-icons/fa'
 import { IoMdPin } from 'react-icons/io'
 import { useRouter } from 'next/router'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import mobile from 'is-mobile'
 import dynamic from 'next/dynamic'
 import { toast } from 'react-toastify'
@@ -12,7 +12,7 @@ import { client } from '../../../lib/clientRaw'
 import {
   address as addressType, CartEstimation, cartType, EstimateDelivery, Promo,
 } from '../../../res/interface'
-import { API_ENDPOINT_ADD_CART, API_ENDPOINT_PROMO, API_NOTIFICATION } from '../../../res/api-endpoint'
+import { API_ENDPOINT_ADD_CART, API_ENDPOINT_PROMO } from '../../../res/api-endpoint'
 import { Note } from '../../../components/form/note'
 import Layout from '../../../components/layout'
 import { numberWithCommas } from '../../../helper/accounting'
@@ -93,7 +93,7 @@ export const Shipment = (): ReactElement => {
     setIsListAddressOpen(false)
   }
   const canSubmit = showAddress ? selectedCourier && mainCustomerAddress : true
-  const txtTotalPengiriman = `Rp ${numberWithCommas(selectedCourier?.cost)}`
+  const totalPengiriman = `${numberWithCommas(selectedCourier?.cost)}`
   const txtSubTotalProduk = estimation?.detail.subtotalRp
   const total = sumOfTotal + selectedCourier?.cost
 
@@ -144,12 +144,16 @@ export const Shipment = (): ReactElement => {
           {cartConfirm?.map((cart) => (
             <div className="py-4" key={cart.id}>
               <SummaryItemStoreMobile cart={cart} />
-              <div className="mt-2">
-                <Note
-                  note={cart.note}
-                  onChange={(note) => handleNoteChange(note, cart.productId, cart.qty)}
-                />
-              </div>
+              {
+                  cart.type !== 'subscription' && (
+                  <div className="mt-2">
+                    <Note
+                      note={cart.note}
+                      onChange={(note) => handleNoteChange(note, cart.productId, cart.qty)}
+                    />
+                  </div>
+                  )
+               }
             </div>
           ))}
         </div>
@@ -184,7 +188,6 @@ export const Shipment = (): ReactElement => {
           <PromoForm
             promoCodeInitial={promoCode}
             onPromoCodeChange={onPromoCodeChange}
-            promo={promo}
           />
         </div>
         <div className="px-6 py-4 m-4 ">
@@ -194,7 +197,7 @@ export const Shipment = (): ReactElement => {
           </div>
           <div className="flex justify-between">
             <p className="leading-normal text-gray-500 ">Subtotal pengiriman</p>
-            <p className="leading-normal text-black ">{txtTotalPengiriman}</p>
+            <p className="leading-normal text-black ">{totalPengiriman}</p>
           </div>
         </div>
         {/* <BottomFixedSummaryStore /> */}
@@ -287,11 +290,16 @@ export const Shipment = (): ReactElement => {
                 <SummaryItemStoreDektop cart={cart} />
               </td>
               <td>
-                <Note
-                  note={cart.note}
-                  onChange={(note) => handleNoteChange(note, cart.productId, cart.qty)}
-                  isUseLable={false}
-                />
+                {
+                  !['subscription', 'discount'].includes(cart.type) && (
+                  <Note
+                    note={cart.note}
+                    onChange={(note) => handleNoteChange(note, cart.productId, cart.qty)}
+                    isUseLable={false}
+                  />
+                  )
+                }
+
               </td>
               <td className="text-right">
                 {cart.priceRp}
@@ -307,7 +315,7 @@ export const Shipment = (): ReactElement => {
 
           <div className="w-full my-4 " />
           <tr className="border-t table-auto">
-            <td className="py-4">
+            <td className="py-6">
               Pengiriman
             </td>
             <td className="px-2 ">
@@ -335,7 +343,7 @@ export const Shipment = (): ReactElement => {
 
             </td>
             <td className="text-right">
-              {`Rp ${numberWithCommas(sumOfTotal)}`}
+              {totalPengiriman}
             </td>
           </tr>
           <tr className="border-b border-dashed ">
@@ -346,7 +354,7 @@ export const Shipment = (): ReactElement => {
                   isUseLable={false}
                   promoCodeInitial={promoCode}
                   onPromoCodeChange={onPromoCodeChange}
-                  promo={promo}
+                  // promo={promo}
                 />
               </div>
             </td>
@@ -357,11 +365,11 @@ export const Shipment = (): ReactElement => {
             <td colSpan={2}>Subtotal Produk</td>
             <td className="text-right">{txtSubTotalProduk}</td>
           </tr>
-          <tr className="text-gray-400">
+          {/* <tr className="text-gray-400">
             <td colSpan={2} />
             <td colSpan={2}>Total Ongkos Kirim</td>
             <td className="text-right">{txtTotalPengiriman}</td>
-          </tr>
+          </tr> */}
           <tr>
             <td colSpan={2} />
             <td colSpan={2} className="font-medium">
