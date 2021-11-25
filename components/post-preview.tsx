@@ -22,7 +22,7 @@ export default function PostPreview({
 
   return (
     <div className="md:rounded-lg md:shadow-md text-textSecondary">
-      <div className="relative mb-2 xs:mb-5">
+      <div className="relative">
         <ImageInstrinsicPost
           className="object-cover rounded-t-md"
           slug={slug}
@@ -44,9 +44,9 @@ export default function PostPreview({
         ) : null}
       </div>
       <div className="divide-y xs:px-4 md:px-4 md:pb-2 ">
-        <h3 className="mb-3 font-bold xs:leading-loose xs:mt-4 md:py-2">
+        <h3 className="mb-2 font-bold xs:leading-loose xs:mt-4 md:py-2">
           <Link as={`/posts/${slug}`} href="/posts/[slug]">
-            <a className="text-sm text-gray-700 hover:underline md:text-2xl line-clamp-2">
+            <a className="text-xs text-gray-700 hp2:text-sm hover:underline md:text-2xl line-clamp-2">
               {title}
             </a>
           </Link>
