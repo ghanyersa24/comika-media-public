@@ -138,7 +138,7 @@ export const ProfileCard = ({
 
             <label htmlFor="phone" className="label-flex ">
               phone
-              <Field type="tel" maxLength={13} name="phone" id="phone" disabled={canEdit} />
+              <Field type="tel" pattern="\+?([ -]?\d+)+|\(\d+\)([ -]\d+)" maxLength={13} name="phone" id="phone" disabled={canEdit} />
             </label>
 
             <label htmlFor="birthdate" className="label-flex ">
