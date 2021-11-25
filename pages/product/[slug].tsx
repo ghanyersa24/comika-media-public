@@ -85,9 +85,8 @@ export const Product:FunctionComponent<props> = ({ itemstore }) => {
       </ContainerStore>
     </>
   )
-  if (isMobile) return content
   return (
-    <Layout isMobile={isMobile} className="pb-12 md:pt-24 bg-gray-50 ">
+    <Layout isMobile={isMobile} className="md:pb-12 md:pt-24 bg-gray-50 ">
       {content}
     </Layout>
   )

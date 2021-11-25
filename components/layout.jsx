@@ -5,9 +5,9 @@ import Meta from './meta'
 // import { BottomNavbar } from './blog/navigation/bottom-navbar'
 // import { Footer } from './footer'
 
-const Navbar = dynamic(() => import('./blog/navigation/navbar'), { ssr: false })
-const BottomNavbar = dynamic(() => import('./blog/navigation/bottom-navbar'), { ssr: false })
-const Footer = dynamic(() => import('./footer'), { ssr: false })
+const Navbar = dynamic(() => import('./blog/navigation/navbar'), { ssr: true })
+const BottomNavbar = dynamic(() => import('./blog/navigation/bottom-navbar'), { ssr: true })
+const Footer = dynamic(() => import('./footer'), { ssr: true })
 
 export const Desktop = ({ children, className }) => (
   <>
