@@ -33,6 +33,7 @@ export const MenuItem = ({ icon, name, href }
 const navigation = [
   { name: 'Akun', href: '/setting/profile', icon: <MdAccountCircle /> },
   { name: 'Bookmark Artikel', href: '/setting/bookmark', icon: <BsBookmarkFill /> },
+  { name: 'About', href: '/about', icon: <BsBookmarkFill /> },
   // { name: 'Riwayat Bacaan', href: '#', icon: <RiFileHistoryFill /> },
   // { name: 'Riwayat Belanja', href: '#', icon: <AiFillShopping /> },
 ]

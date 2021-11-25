@@ -3,9 +3,9 @@ import React, { ReactElement } from 'react'
 import mobile from 'is-mobile'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import Layout from '../../components/layout'
+import Layout from '../components/layout'
 
-const TopNavbarWithBackButton = dynamic(() => import('../../components/navigation/top-navbar-with-back-button'), { ssr: false })
+const TopNavbarWithBackButton = dynamic(() => import('../components/navigation/top-navbar-with-back-button'), { ssr: false })
 
 const isMobile = mobile()
 export const About = ():ReactElement => (

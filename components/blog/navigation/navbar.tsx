@@ -1,7 +1,7 @@
 import { Disclosure, Transition, Menu } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { signIn, useSession } from 'next-auth/client'
-import React, { Fragment, ReactElement, useState } from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -13,7 +13,6 @@ import { SocialMediaLogo } from '../../social-media'
 import { SearchBar } from './search-bar'
 import { API_ENDPOINT_CART, API_NOTIFICATION, PROFILE } from '../../../res/api-endpoint'
 import { client } from '../../../lib/clientRaw'
-import { NotificationModal } from '../../modal/notification-modal'
 import { NotificationPopover } from '../../modal/notification-popover'
 import { Notification, Profile as ProfileType } from '../../../res/interface'
 
@@ -29,6 +28,9 @@ const navigation = [
   },
   {
     name: 'Bookmark', href: 'setting/bookmark', current: false, isRequiredLogin: true,
+  },
+  {
+    name: 'About', href: 'about', current: false, isRequiredLogin: false,
   },
 ]
 
@@ -208,7 +210,6 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
 export const Navbar = (): ReactElement => {
   const [session] = useSession()
   const router = useRouter()
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false)
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
 
