@@ -315,37 +315,44 @@ export const Shipment = (): ReactElement => {
 
           <div className="w-full my-4 " />
           <tr className="border-t table-auto">
-            <td className="py-6">
-              Pengiriman
-            </td>
-            <td className="px-2 ">
-              {selectedCourier ? (
-                <div className="mt-2 font-medium leading-tight text-black">
-                  <p>{`${selectedCourier.service}`}</p>
-                  <p className="mt-2 font-normal text-gray-500">
-                    Estimasi diterima
-                    {' '}
-                    {selectedCourier.estDate}
-                  </p>
-                </div>
+            {showAddress
+              ? (
+                <>
+                  <td className="py-6">
+                    Pengiriman
+                  </td>
+                  <td className="px-2 ">
+                    {selectedCourier ? (
+                      <div className="mt-2 font-medium leading-tight text-black">
+                        <p>{`${selectedCourier.service}`}</p>
+                        <p className="mt-2 font-normal text-gray-500">
+                          Estimasi diterima
+                          {' '}
+                          {selectedCourier.estDate}
+                        </p>
+                      </div>
+                    )
+                      : (
+                        <div className="font-medium leading-tight text-black ">
+                          Pilih pengiriman terlebih dahulu
+                        </div>
+                      )}
+                  </td>
+                  <td colSpan={2} className="text-center">
+
+                    <button type="button" onClick={() => setIsModalSelectCourierOpen(true)} className="font-bold text-primary hover:underline">
+                      Ubah
+                    </button>
+
+                  </td>
+                  <td className="text-right">
+                    {totalPengiriman}
+                  </td>
+                </>
               )
-                : (
-                  <div className="font-medium leading-tight text-black ">
-                    Pilih pengiriman terlebih dahulu
-                  </div>
-                )}
-            </td>
-            <td colSpan={2} className="text-center">
-
-              <button type="button" onClick={() => setIsModalSelectCourierOpen(true)} className="font-bold text-primary hover:underline">
-                Ubah
-              </button>
-
-            </td>
-            <td className="text-right">
-              {totalPengiriman}
-            </td>
+              : <td className="pt-3" />}
           </tr>
+
           <tr className="border-b border-dashed ">
             <td colSpan={2} />
             <td colSpan={3}>

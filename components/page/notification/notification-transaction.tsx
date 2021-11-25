@@ -66,7 +66,7 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
             </div>
             <div>
               <Note
-                note="xxx"
+                note=""
                 isReadOnly
               />
             </div>
