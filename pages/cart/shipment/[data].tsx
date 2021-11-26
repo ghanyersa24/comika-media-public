@@ -145,7 +145,7 @@ export const Shipment = (): ReactElement => {
             <div className="py-4" key={cart.id}>
               <SummaryItemStoreMobile cart={cart} />
               {
-                  cart.type !== 'subscription' && (
+                  !['subscription', 'discount'].includes(cart.type) && (
                   <div className="mt-2">
                     <Note
                       note={cart.note}

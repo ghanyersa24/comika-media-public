@@ -65,10 +65,12 @@ const NotificationTransaction:FunctionComponent<propsTypes> = ({ notification })
               </p>
             </div>
             <div>
+              {cart?.note && (
               <Note
-                note=""
+                note={cart?.note}
                 isReadOnly
               />
+              )}
             </div>
           </div>
         ))}
