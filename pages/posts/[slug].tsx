@@ -13,7 +13,6 @@ import PostBody from '../../components/post-body'
 import { PostHeaderDekstop, PostHeaderMobile } from '../../components/post-header'
 import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
-import markdownToHtml from '../../lib/markdownToHtml'
 import { client } from '../../lib/clientRaw'
 import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_ARTICLE, API_ENDPOINT_COMMENT } from '../../res/api-endpoint'
 import { PropsDetailOfPost, Post } from '../../res/interface'
@@ -24,6 +23,11 @@ import { MorePosts } from '../../components/more-posts'
 import { SocialMediaShareButton } from '../../components/functional/button/social-media-share-button'
 import { BookmarkButton } from '../../components/functional/button/bookmark'
 import { LikeButton } from '../../components/functional/button/like'
+
+declare global {
+  interface Window { instgrm: any; }
+}
+declare let twttr: any
 
 export const Dekstop = ({ post }:{post:Post}):ReactElement => {
   const {
@@ -122,6 +126,9 @@ export default function DetailOfPost({
   const [comment, setComment] = useState('')
   const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
   useEffect(() => {
+    window.instgrm = window.instgrm || {}
+
+    // eslint-disable-next-line no-undef
     if (window?.instgrm?.Embeds && twttr?.widgets && postClient) {
       window.instgrm.Embeds.process()
       twttr.widgets.load()
@@ -232,13 +239,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
   ))
 
-  const content = await markdownToHtml(post.content || '')
-
   return {
     props: {
       post: {
         ...post,
-        content,
       },
       session,
       isMobile,
