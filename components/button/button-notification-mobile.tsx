@@ -11,8 +11,9 @@ export const ButtonNotificationMobile:FunctionComponent<{isFilled?:boolean}> = (
   { isFilled = false },
 ) => {
   const [session] = useSession()
-  const { data: notifications } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}` : null), client.get)
-  const notificationsLength = notifications?.length || 0
+  const { data: messagesNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=100&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
+  const { data: transactionsNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=100&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
+  const notificationsLength = (transactionsNotification?.length + messagesNotification?.length) || 0
   return (
     <button
       onClick={() => router.push('/notification')}

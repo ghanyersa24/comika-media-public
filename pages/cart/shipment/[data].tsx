@@ -95,7 +95,8 @@ export const Shipment = (): ReactElement => {
   const canSubmit = showAddress ? selectedCourier && mainCustomerAddress : true
   const totalPengiriman = `${numberWithCommas(selectedCourier?.cost)}`
   const txtSubTotalProduk = estimation?.detail.subtotalRp
-  const total = sumOfTotal + selectedCourier?.cost
+  const courierCost = selectedCourier?.cost ? selectedCourier?.cost : 0
+  const total = sumOfTotal + courierCost
 
   const handleSubmit = async () => {
     setIsLoading(true)
