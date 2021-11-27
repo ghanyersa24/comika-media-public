@@ -1,7 +1,17 @@
+/* eslint-disable arrow-body-style */
 import Link from 'next/link'
 import { FunctionComponent } from 'react'
 
-export const ButtonItem: FunctionComponent = ({
+type ButtonItemProps = {
+  label: string,
+  url: string,
+  isActive:boolean,
+  searchParam:string,
+  subUrl?:string,
+  filterBy?:string,
+}
+
+export const ButtonItem: FunctionComponent<ButtonItemProps> = ({
   label, url, isActive, searchParam, subUrl, filterBy,
 }) => {
   const filterParams = url ? `${filterBy}=${url}` : ''
@@ -17,10 +27,21 @@ export const ButtonItem: FunctionComponent = ({
 
   )
 }
-export const OrderBy : FunctionComponent = ({
+
+type OrderByProps = {
+  filterValue:string,
+  searchParam:string,
+  navigations:Array<{
+    name:string,
+    url:string,
+  }>,
+  subUrl?:string,
+  filterBy?:string,
+}
+
+export const OrderBy : FunctionComponent<OrderByProps> = ({
   filterValue, searchParam, navigations, subUrl = '/article', filterBy = 'orderBy',
 }) => {
-  console.log('🚀 ~ file: ordering-by.jsx ~ line 19 ~ navigations', navigations.url, filterValue)
   return (
     <div className="">
       <div className="flex items-center justify-start flex-1 h-full rounded-lg">

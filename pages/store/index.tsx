@@ -35,14 +35,6 @@ const navigationsOrderBy = [
   },
 ]
 
-const titleDescription = {
-  popular: {
-    title: 'Terpopular', description: 'terpopuler saat ini',
-  },
-  createdAt: {
-    title: 'Terbaru', description: 'terbaru saat ini',
-  },
-}
 type props = {
   jumbotronFromSSR:string,
 }
