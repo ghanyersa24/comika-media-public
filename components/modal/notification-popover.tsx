@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, ReactElement } from 'react'
 import {
   Popover, Tab, Transition,
 } from '@headlessui/react'
@@ -13,10 +13,10 @@ type props = {
   unreadNotifications:UnreadNotification
 };
 
-const ClickToMoreBtn = ({ onClick }: { onClick: () => void }) => (
+export const ClickToMoreBtn: FunctionComponent<{ onClick: () => void, name?: string}> = ({ onClick, name = 'Tampilkan Semua' }):ReactElement => (
   <div className="flex justify-center my-4 ">
     <button onClick={onClick} type="button" className="font-medium text-primary hover:underline">
-      Tampilkan Semua
+      {name}
     </button>
   </div>
 )

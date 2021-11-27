@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react'
+import React, { FunctionComponent, ReactElement } from 'react'
 import { GetServerSideProps } from 'next'
 import { getSession, signIn } from 'next-auth/client'
 import useSWR from 'swr'
 import { toast } from 'react-toastify'
 import { Tab } from '@headlessui/react'
+import useSWRInfinite from 'swr/infinite'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
 import { Notification, UnreadNotification } from '../../res/interface'
@@ -11,12 +12,40 @@ import { API_COUNT_UNREAD_NOTIFICATION, API_NOTIFICATION } from '../../res/api-e
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 import { NotificationList } from '../../components/list/notification-list'
 import NotificationHint from '../../components/general/animation/notification-hint'
+import { ClickToMoreBtn } from '../../components/modal/notification-popover'
+
+const PaginatedNotifification: FunctionComponent<
+{transactionsNotification:Notification[][]}
+> = ({ transactionsNotification }) => (
+  <>
+    {transactionsNotification?.map((transaction) => (
+      <NotificationList notifications={transaction} key={Math.random()} btnClassName="bg-white my-1 px-4 " />
+    ))}
+  </>
+)
 
 export const BookmarkedArticle = ({ isMobile, session }:
   {isMobile:boolean, session:string[]}): ReactElement => {
-  const { data: messagesNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=informasi` : null), client.get)
-  const { data: transactionsNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=5&page=1&type=transaksi` : null), client.get)
   const { data: unreadNotifications } = useSWR<UnreadNotification>(() => (session ? `${API_COUNT_UNREAD_NOTIFICATION}` : null), client.get, { errorRetryCount: 0 })
+
+  const getKeyTransactionNotification = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null // reached the end
+    return `${API_NOTIFICATION}?limit=${5}&page=${0 + pageIndex}&type=transaksi`
+  }
+  const {
+    data: transactionsNotification, size,
+    setSize: setSizeTransactionNotifications,
+  } = useSWRInfinite<Notification[]>(getKeyTransactionNotification, client.get)
+
+  const getKeyInformasiNotification = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null // reached the end
+    return `${API_NOTIFICATION}?limit=${5}&page=${0 + pageIndex}&type=informasi`
+  }
+
+  const {
+    data: messagesNotification, size: sizeMessages,
+    setSize: setSizeMessages,
+  } = useSWRInfinite<Notification[]>(getKeyInformasiNotification, client.get)
 
   // eslint-disable-next-line no-unused-vars
   if (!session) {
@@ -41,10 +70,13 @@ export const BookmarkedArticle = ({ isMobile, session }:
               </Tab.List>
               <Tab.Panels className="relative min-h-screen bg-bgBlueLight rounded-t-xl ">
                 <Tab.Panel className="">
-                  <NotificationList notifications={messagesNotification} btnClassName="bg-white my-1 px-4 " />
+                  <PaginatedNotifification transactionsNotification={messagesNotification} />
+                  <ClickToMoreBtn onClick={() => setSizeMessages(size + 1)} name="Tampilkan lebih banyak" />
                 </Tab.Panel>
                 <Tab.Panel className="">
-                  <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4 " />
+                  <PaginatedNotifification transactionsNotification={transactionsNotification} />
+                  <ClickToMoreBtn onClick={() => setSizeTransactionNotifications(size + 1)} name="Tampilkan lebih banyak" />
+
                 </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
@@ -83,12 +115,14 @@ export const BookmarkedArticle = ({ isMobile, session }:
             {' '}
 
           </Tab.List>
-          <Tab.Panels className="relative min-h-screen rounded-t-xl ">
+          <Tab.Panels className="relative min-h-screen pb-8 rounded-t-xl ">
             <Tab.Panel className="">
-              <NotificationList notifications={messagesNotification} btnClassName="bg-white my-1 px-4 " />
+              <PaginatedNotifification transactionsNotification={messagesNotification} />
+              <ClickToMoreBtn onClick={() => setSizeMessages(sizeMessages + 1)} name="Tampilkan lebih banyak" />
             </Tab.Panel>
             <Tab.Panel className="">
-              <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4 " />
+              <PaginatedNotifification transactionsNotification={transactionsNotification} />
+              <ClickToMoreBtn onClick={() => setSizeTransactionNotifications(size + 1)} name="Tampilkan lebih banyak" />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
