@@ -35,7 +35,7 @@ const navigations = [
     name: 'Article', url: 'article', icon: <RiArticleFill />,
   },
   {
-    name: 'Store', url: '#', icon: <MdShoppingBasket />,
+    name: 'Store', url: 'store', icon: <MdShoppingBasket />,
   },
   {
     name: 'Subscribe', url: 'subscribe', icon: <FaTicketAlt />,
