@@ -17,6 +17,7 @@ import { LoadMoreButton } from '../../components/blog/button/load-more'
 import { SearchBar } from '../../components/blog/navigation/search-bar'
 import { ItemStoreType } from '../../res/interface'
 import { ItemStores } from '../../components/items/item-store'
+import { TitlePost } from '../../components/more-posts'
 
 const isMobile = mobile()
 
@@ -25,10 +26,10 @@ const IntroDekstop = dynamic(() => import('../../components/intro/intro-dekstop'
 
 const navigationsOrderBy = [
   {
-    name: 'All', url: undefined,
+    name: 'Semua', url: undefined,
   },
   {
-    name: 'Digital Produk', url: 'digital produk',
+    name: 'Digital', url: 'digital produk',
   },
   {
     name: 'Merchandise', url: 'Merchandise',
@@ -44,6 +45,9 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
   const router = useRouter()
   const { category, search } = router.query
   const searchParam = search ? `&search=${search}` : ''
+  const NameOfNavigationsOrderBy = navigationsOrderBy.find(
+    (navigation) => navigation.url === category,
+  )?.name
 
   // pagination
   const categoryParams = category ? `&category=${category}` : ''
@@ -82,6 +86,10 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
           navigations={navigationsOrderBy}
           subUrl="/store"
           filterBy="category"
+        />
+        <TitlePost
+          title={NameOfNavigationsOrderBy}
+          description={`Produk ${search ? `dengan kata kunci "${search}" ${NameOfNavigationsOrderBy}` : NameOfNavigationsOrderBy}`}
         />
         <div className="mt-4">
           {
