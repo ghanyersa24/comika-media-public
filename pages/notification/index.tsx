@@ -30,21 +30,21 @@ export const BookmarkedArticle = ({ isMobile, session }:
 
   const getKeyTransactionNotification = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_NOTIFICATION}?limit=${5}&page=${0 + pageIndex}&type=transaksi`
+    return `${API_NOTIFICATION}?limit=${1}&page=${0 + pageIndex}&type=transaksi`
   }
+  const getKeyInformasiNotification = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null // reached the end
+    return `${API_NOTIFICATION}?limit=${1}&page=${0 + pageIndex}&type=informasi`
+  }
+
   const {
-    data: transactionsNotification, size,
+    data: transactionsNotification, size: sizeTransaction,
     setSize: setSizeTransactionNotifications,
   } = useSWRInfinite<Notification[]>(getKeyTransactionNotification, client.get)
 
-  const getKeyInformasiNotification = (pageIndex, previousPageData) => {
-    if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_NOTIFICATION}?limit=${5}&page=${0 + pageIndex}&type=informasi`
-  }
-
   const {
     data: messagesNotification, size: sizeMessages,
-    setSize: setSizeMessages,
+    setSize: setSizeMessagesNotifications,
   } = useSWRInfinite<Notification[]>(getKeyInformasiNotification, client.get)
 
   // eslint-disable-next-line no-unused-vars
@@ -68,15 +68,14 @@ export const BookmarkedArticle = ({ isMobile, session }:
                 <Tab className={({ selected }) => `flex-1 py-3 focus:ring-0 ${selected ? 'text-white font-medium ' : 'text-gray-300'}`}>Pesan</Tab>
                 <Tab className={({ selected }) => `flex-1 py-3 focus:ring-0 ${selected ? 'text-white font-medium ' : 'text-gray-300'}`}>Transaksi</Tab>
               </Tab.List>
-              <Tab.Panels className="relative min-h-screen bg-bgBlueLight rounded-t-xl ">
+              <Tab.Panels className="relative min-h-screen mb-16 bg-bgBlueLight rounded-t-xl">
                 <Tab.Panel className="">
                   <PaginatedNotifification transactionsNotification={messagesNotification} />
-                  <ClickToMoreBtn onClick={() => setSizeMessages(size + 1)} name="Tampilkan lebih banyak" />
+                  <ClickToMoreBtn onClick={() => setSizeMessagesNotifications(sizeMessages + 1)} name="Tampilkan lebih banyak" />
                 </Tab.Panel>
                 <Tab.Panel className="">
                   <PaginatedNotifification transactionsNotification={transactionsNotification} />
-                  <ClickToMoreBtn onClick={() => setSizeTransactionNotifications(size + 1)} name="Tampilkan lebih banyak" />
-
+                  <ClickToMoreBtn onClick={() => setSizeTransactionNotifications(sizeTransaction + 1)} name="Tampilkan lebih banyak" />
                 </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
@@ -118,11 +117,11 @@ export const BookmarkedArticle = ({ isMobile, session }:
           <Tab.Panels className="relative min-h-screen pb-8 rounded-t-xl ">
             <Tab.Panel className="">
               <PaginatedNotifification transactionsNotification={messagesNotification} />
-              <ClickToMoreBtn onClick={() => setSizeMessages(sizeMessages + 1)} name="Tampilkan lebih banyak" />
+              <ClickToMoreBtn onClick={() => setSizeMessagesNotifications(sizeMessages + 1)} name="Tampilkan lebih banyak" />
             </Tab.Panel>
             <Tab.Panel className="">
               <PaginatedNotifification transactionsNotification={transactionsNotification} />
-              <ClickToMoreBtn onClick={() => setSizeTransactionNotifications(size + 1)} name="Tampilkan lebih banyak" />
+              <ClickToMoreBtn onClick={() => setSizeTransactionNotifications(sizeTransaction + 1)} name="Tampilkan lebih banyak" />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
