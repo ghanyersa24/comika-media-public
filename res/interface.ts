@@ -266,6 +266,7 @@ export interface DetailOrder {
   priceRp?: string;
   totalRp?: string;
   id?: string;
+  note?: string;
   name?: string;
   quantity?: number;
   img?: string;

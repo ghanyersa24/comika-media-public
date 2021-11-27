@@ -11,7 +11,7 @@ export const API_NOTIFICATION = '/notification'
 
 export const API_ENDPOINT_PROMO = '/promo'
 
-export const PROFILE = '/account/me'
+export const API_ENDPOINT_PROFILE = '/account/me'
 
 export const API_ENDPOINT_JUMBOTRON = '/jumbotron'
 export const X = '/article'

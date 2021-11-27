@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import { AiFillBell } from 'react-icons/ai'
 import { BsBookmarkFill } from 'react-icons/bs'
 import { MdAccountCircle } from 'react-icons/md'
 import Image from 'next/image'
@@ -11,11 +10,11 @@ import {
 import Router from 'next/router'
 import mobile from 'is-mobile'
 import useSWR from 'swr'
-import { Get as GetProfile } from '../../service/user-profile'
 import Layout from '../../components/layout'
 import { client } from '../../lib/clientRaw'
 import { Profile } from '../../res/interface'
-import DateFormatter, { DateFormatterRelative } from '../../components/date-formatter'
+import DateFormatter from '../../components/date-formatter'
+import { ButtonNotificationMobile } from '../../components/button/button-notification-mobile'
 
 const isMobile = mobile()
 
@@ -33,6 +32,7 @@ export const MenuItem = ({ icon, name, href }
 const navigation = [
   { name: 'Akun', href: '/setting/profile', icon: <MdAccountCircle /> },
   { name: 'Bookmark Artikel', href: '/setting/bookmark', icon: <BsBookmarkFill /> },
+  { name: 'About', href: '/about', icon: <BsBookmarkFill /> },
   // { name: 'Riwayat Bacaan', href: '#', icon: <RiFileHistoryFill /> },
   // { name: 'Riwayat Belanja', href: '#', icon: <AiFillShopping /> },
 ]
@@ -51,7 +51,7 @@ export const Setting = ():ReactElement => {
         <div className="h-screen bg-bgGray">
           <div className="pb-24 bg-primary">
             <div className="flex justify-end pt-4 pb-4 pr-4 text-2xl text-white">
-              <AiFillBell />
+              <ButtonNotificationMobile />
             </div>
             <div className="px-4">
               {data ? (
