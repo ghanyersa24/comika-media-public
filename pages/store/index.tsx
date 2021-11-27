@@ -4,18 +4,15 @@ import useSWRInfinite from 'swr/infinite'
 
 import React, { ReactElement } from 'react'
 import { useRouter } from 'next/router'
-import { title } from 'process'
 import mobile from 'is-mobile'
 import dynamic from 'next/dynamic'
 import { GetStaticProps } from 'next'
-import { MorePosts } from '../../components/more-posts'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_ARTICLE, API_ENDPOINT_JUMBOTRON, API_ENDPOINT_STORE } from '../../res/api-endpoint'
+import { API_ENDPOINT_JUMBOTRON, API_ENDPOINT_STORE } from '../../res/api-endpoint'
 import { LIMIT_DEKSTOP, LIMIT_MOBILE } from '../../res/string'
 import Layout from '../../components/layout'
 import { OrderBy } from '../../components/blog/navigation/ordering-by'
 import ContainerPadding from '../../components/container-padding'
-import { RenderMoreArticle } from '../../components/blog/more-articles'
 import { LoadMoreButton } from '../../components/blog/button/load-more'
 import { SearchBar } from '../../components/blog/navigation/search-bar'
 import { ItemStoreType } from '../../res/interface'
@@ -25,6 +22,18 @@ const isMobile = mobile()
 
 const BackgroundArticleMobile = dynamic(() => import('../../components/background/background-article-mobile'), { ssr: false })
 const IntroDekstop = dynamic(() => import('../../components/intro/intro-dekstop'), { ssr: false })
+
+const navigationsOrderBy = [
+  {
+    name: 'All', url: undefined,
+  },
+  {
+    name: 'Digital Produk', url: 'digital produk',
+  },
+  {
+    name: 'Merchandise', url: 'Merchandise',
+  },
+]
 
 const titleDescription = {
   popular: {
@@ -37,21 +46,21 @@ const titleDescription = {
 type props = {
   jumbotronFromSSR:string,
 }
+
 const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
   const limit = isMobile ? LIMIT_MOBILE : LIMIT_DEKSTOP
   const router = useRouter()
-  const { orderBy, search } = router.query
+  const { category, search } = router.query
   const searchParam = search ? `&search=${search}` : ''
-  const selectedOrderBy = titleDescription?.[orderBy as string] ? orderBy as string : 'createdAt'
-  const selectedTitleDescription = titleDescription[selectedOrderBy]
 
   // pagination
+  const categoryParams = category ? `&category=${category}` : ''
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_ENDPOINT_STORE}?${searchParam}&orderBy=${orderBy}&ordering=DESC&limit=${limit}&page=${1 + pageIndex}`
+    return `${API_ENDPOINT_STORE}?${searchParam}${categoryParams}&ordering=DESC&limit=${limit}&page=${1 + pageIndex}`
   }
   const {
-    data: moreArticles, size, setSize, isValidating, mutate,
+    data: moreArticles, size, setSize, isValidating,
   } = useSWRInfinite<ItemStoreType[]>(getKey, client.get)
   const handleLoadMore = () => {
     setSize(size + 1)
@@ -71,10 +80,17 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
         {isMobile && (
         <SearchBar
           onSubmit={(searchInput) => router.push(`/store?search=${searchInput}`)}
+          searchValue={search as string}
           className="mb-2 text-gray-500 bg-gray-400 bg-opacity-30"
         />
         )}
-        <OrderBy orderBy={selectedOrderBy} searchParam={searchParam} />
+        <OrderBy
+          filterValue={category as string}
+          searchParam={searchParam}
+          navigations={navigationsOrderBy}
+          subUrl="/store"
+          filterBy="category"
+        />
         <div className="mt-4">
           {
             moreArticles?.map((item) => (

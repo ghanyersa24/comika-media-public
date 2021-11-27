@@ -32,6 +32,14 @@ const titleDescription = {
     title: 'Terbaru', description: 'terbaru saat ini',
   },
 }
+const navigationsOrderBy = [
+  {
+    name: 'All', url: 'createdAt',
+  },
+  {
+    name: 'Most populer', url: 'popular',
+  },
+]
 type props = {
   jumbotronFromSSR:string,
 }
@@ -73,7 +81,12 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
           className="mb-2 text-gray-500 bg-gray-400 bg-opacity-30"
         />
         )}
-        <OrderBy orderBy={selectedOrderBy} searchParam={searchParam} />
+        <OrderBy
+          filterValue={selectedOrderBy}
+          searchParam={searchParam}
+          navigations={navigationsOrderBy}
+
+        />
         <div className="mt-4">
           <MorePosts
             title={searchParam ? 'Hasil Pencarian' : selectedTitleDescription.title}
