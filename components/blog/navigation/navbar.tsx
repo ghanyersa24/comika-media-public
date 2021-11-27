@@ -214,6 +214,7 @@ export const Navbar = (): ReactElement => {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
+  const { orderBy, search } = router.query
 
   const { data } = useSWR<ProfileType>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
@@ -251,7 +252,12 @@ export const Navbar = (): ReactElement => {
                   </Link>
                 </div>
                 <div className="flex items-center text-primary sm:pr-4">
-                  <SearchBar className="" isMobile={false} searchValue="" />
+                  <SearchBar
+                    className=""
+                    isMobile={false}
+                    searchValue={search as string}
+                    onSubmit={(searchInput) => router.push(`/article?search=${searchInput}`)}
+                  />
                   <button
                     type="button"
                     className="relative"

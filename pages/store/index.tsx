@@ -68,11 +68,16 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
       ) : <IntroDekstop jumbotrons={jumbotronFromSSR} />}
 
       <ContainerPadding className="relative pt-8 mb-24 -mt-16 bg-white rounded-xl lg:mt-8">
-        {isMobile && <SearchBar className="mb-2 text-gray-500 bg-gray-400 bg-opacity-30" />}
+        {isMobile && (
+        <SearchBar
+          onSubmit={(searchInput) => router.push(`/store?search=${searchInput}`)}
+          className="mb-2 text-gray-500 bg-gray-400 bg-opacity-30"
+        />
+        )}
         <OrderBy orderBy={selectedOrderBy} searchParam={searchParam} />
         <div className="mt-4">
           {
-            moreArticles.map((item) => (
+            moreArticles?.map((item) => (
               <ItemStores digitalStores={item} key={Math.random()} isMobile={isMobile} />
             ))
           }
