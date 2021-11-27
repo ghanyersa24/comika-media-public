@@ -5,6 +5,7 @@ import {
 import { MdNotifications } from 'react-icons/md'
 import { Notification, UnreadNotification } from '../../res/interface'
 import { NotificationList } from '../list/notification-list'
+import NotificationHint from '../general/animation/notification-hint'
 
 type props = {
   messagesNotification: Notification[],
@@ -61,10 +62,7 @@ export const NotificationPopover: FunctionComponent<props> = ({
                 <div className="relative mx-auto w-min">
                   Pesan
                   {unreadNotifications?.unreadInformasi !== 0 && (
-                  <span className="absolute top-0 flex items-center justify-center w-3 h-3 -right-4 ">
-                    <span className="absolute inline-flex w-3 h-3 bg-red-300 rounded-full opacity-75 animate-ping" />
-                    <span className="relative inline-flex w-2 h-2 bg-red-500 rounded-full" />
-                  </span>
+                  <NotificationHint />
                   )}
                 </div>
 
@@ -73,10 +71,7 @@ export const NotificationPopover: FunctionComponent<props> = ({
                 <div className="relative mx-auto w-min">
                   Transaksi
                   {unreadNotifications?.unreadTransaksi !== 0 && (
-                    <span className="absolute top-0 flex items-center justify-center w-3 h-3 -right-4 ">
-                      <span className="absolute inline-flex w-2.5 h-2.5 bg-red-300 rounded-full opacity-75 animate-ping" />
-                      <span className="relative inline-flex w-2 h-2 bg-red-500 rounded-full" />
-                    </span>
+                    <NotificationHint />
                   )}
                 </div>
 
@@ -88,7 +83,7 @@ export const NotificationPopover: FunctionComponent<props> = ({
                 <ClickToMoreBtn onClick={() => console.log('notifications')} />
               </Tab.Panel>
               <Tab.Panel className="">
-                <NotificationList notifications={transactionsNotification?.slice(0, 4)} btnClassName="bg-white my-1 px-4" />
+                <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4" />
                 <ClickToMoreBtn onClick={() => console.log('notifications')} />
               </Tab.Panel>
             </Tab.Panels>
