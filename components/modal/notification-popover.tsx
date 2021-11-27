@@ -26,11 +26,11 @@ export const NotificationPopover: FunctionComponent<props> = ({
 }) => (
   <Popover className="relative mt-1.5 ">
     <Popover.Button>
-      {unreadNotifications?.unreadAll !== 0 && (
-      <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
-        {unreadNotifications?.unreadAll}
-      </div>
-      )}
+      {![0, undefined].includes(unreadNotifications?.unreadAll) ? (
+        <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
+          {unreadNotifications?.unreadAll}
+        </div>
+      ) : null}
       <MdNotifications className="mx-2 text-2xl " />
     </Popover.Button>
     <Transition
