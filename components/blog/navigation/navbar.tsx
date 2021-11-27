@@ -215,6 +215,7 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
 export const Navbar = (): ReactElement => {
   const [session] = useSession()
   const router = useRouter()
+  const currentRoute = router.route
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
   const { search } = router.query
@@ -259,7 +260,7 @@ export const Navbar = (): ReactElement => {
                     className=""
                     isMobile={false}
                     searchValue={search as string}
-                    onSubmit={(searchInput) => router.push(`/article?search=${searchInput}`)}
+                    onSubmit={(searchInput) => router.push(`/${currentRoute}?search=${searchInput}`)}
                   />
                   <button
                     type="button"
