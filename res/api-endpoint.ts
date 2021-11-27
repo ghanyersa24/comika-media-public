@@ -8,6 +8,7 @@ export const API_ENDPOINT_STORE = '/store/product'
 export const API_ENDPOINT_ADD_CART = '/store/add-cart'
 export const API_ENDPOINT_CART = '/store/cart'
 export const API_NOTIFICATION = '/notification'
+export const API_COUNT_UNREAD_NOTIFICATION = '/notification/unread'
 
 export const API_ENDPOINT_PROMO = '/promo'
 

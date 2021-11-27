@@ -11,10 +11,12 @@ import { Session } from 'next-auth'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { SearchBar } from './search-bar'
-import { API_ENDPOINT_CART, API_NOTIFICATION, API_ENDPOINT_PROFILE } from '../../../res/api-endpoint'
+import {
+  API_ENDPOINT_CART, API_NOTIFICATION, API_ENDPOINT_PROFILE, API_COUNT_UNREAD_NOTIFICATION,
+} from '../../../res/api-endpoint'
 import { client } from '../../../lib/clientRaw'
 import { NotificationPopover } from '../../modal/notification-popover'
-import { Notification, Profile as ProfileType } from '../../../res/interface'
+import { Notification, Profile as ProfileType, UnreadNotification } from '../../../res/interface'
 
 const navigation = [
   {
@@ -215,6 +217,7 @@ export const Navbar = (): ReactElement => {
 
   const { data } = useSWR<ProfileType>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
+  const { data: unreadNotifications } = useSWR<UnreadNotification>(() => (session ? `${API_COUNT_UNREAD_NOTIFICATION}` : null), client.get, { errorRetryCount: 0 })
   const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
   const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
@@ -262,6 +265,7 @@ export const Navbar = (): ReactElement => {
                     <MdShoppingBasket className="mx-2 text-2xl" />
                   </button>
                   <NotificationPopover
+                    unreadNotifications={unreadNotifications}
                     messagesNotification={messagesNotification}
                     transactionsNotification={transactionsNotification}
                   />
