@@ -34,6 +34,9 @@ const navigation = [
   {
     name: 'About', href: 'about', current: false, isRequiredLogin: false,
   },
+  {
+    name: 'Store', href: 'store', current: false, isRequiredLogin: false,
+  },
 ]
 
 function classNames(...classes) {
@@ -214,7 +217,7 @@ export const Navbar = (): ReactElement => {
   const router = useRouter()
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
-  const { orderBy, search } = router.query
+  const { search } = router.query
 
   const { data } = useSWR<ProfileType>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
