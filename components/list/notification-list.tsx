@@ -11,6 +11,8 @@ type Props = {
 }
 export const NotificationList: FunctionComponent<Props> = ({ notifications, btnClassName }) => (
   <>
+    { console.log('🚀 ~ file: notification-list.tsx ~ line 13 ~ notifications', notifications)}
+    {' '}
     {notifications?.map((notification) => (
       <button
         onClick={() => router.push(`/notification/${notification.id}`)}

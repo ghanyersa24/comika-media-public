@@ -11,10 +11,12 @@ import { Session } from 'next-auth'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { SearchBar } from './search-bar'
-import { API_ENDPOINT_CART, API_NOTIFICATION, API_ENDPOINT_PROFILE } from '../../../res/api-endpoint'
+import {
+  API_ENDPOINT_CART, API_NOTIFICATION, API_ENDPOINT_PROFILE, API_COUNT_UNREAD_NOTIFICATION,
+} from '../../../res/api-endpoint'
 import { client } from '../../../lib/clientRaw'
 import { NotificationPopover } from '../../modal/notification-popover'
-import { Notification, Profile as ProfileType } from '../../../res/interface'
+import { Notification, Profile as ProfileType, UnreadNotification } from '../../../res/interface'
 
 const navigation = [
   {
@@ -31,6 +33,9 @@ const navigation = [
   },
   {
     name: 'About', href: 'about', current: false, isRequiredLogin: false,
+  },
+  {
+    name: 'Store', href: 'store', current: false, isRequiredLogin: false,
   },
 ]
 
@@ -210,13 +215,16 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
 export const Navbar = (): ReactElement => {
   const [session] = useSession()
   const router = useRouter()
+  const currentRoute = router.route
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
+  const { search } = router.query
 
   const { data } = useSWR<ProfileType>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
   const { data: carts } = useSWR(() => (session ? `${API_ENDPOINT_CART}` : null), client.get)
-  const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
-  const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=100&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
+  const { data: unreadNotifications } = useSWR<UnreadNotification>(() => (session ? `${API_COUNT_UNREAD_NOTIFICATION}` : null), client.get, { errorRetryCount: 0 })
+  const { data: messagesNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=4&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
+  const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=4&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 
   return (
@@ -248,7 +256,12 @@ export const Navbar = (): ReactElement => {
                   </Link>
                 </div>
                 <div className="flex items-center text-primary sm:pr-4">
-                  <SearchBar className="" isMobile={false} searchValue="" />
+                  <SearchBar
+                    className=""
+                    isMobile={false}
+                    searchValue={search as string}
+                    onSubmit={(searchInput) => router.push(`/${currentRoute}?search=${searchInput}`)}
+                  />
                   <button
                     type="button"
                     className="relative"
@@ -262,6 +275,7 @@ export const Navbar = (): ReactElement => {
                     <MdShoppingBasket className="mx-2 text-2xl" />
                   </button>
                   <NotificationPopover
+                    unreadNotifications={unreadNotifications}
                     messagesNotification={messagesNotification}
                     transactionsNotification={transactionsNotification}
                   />

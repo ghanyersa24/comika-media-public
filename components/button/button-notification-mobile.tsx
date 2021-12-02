@@ -5,15 +5,15 @@ import useSWR from 'swr'
 import cn from 'classnames'
 import { useSession } from 'next-auth/client'
 import { client } from '../../lib/clientRaw'
-import { API_NOTIFICATION } from '../../res/api-endpoint'
+import { API_COUNT_UNREAD_NOTIFICATION } from '../../res/api-endpoint'
+import { UnreadNotification } from '../../res/interface'
 
 export const ButtonNotificationMobile:FunctionComponent<{isFilled?:boolean}> = (
   { isFilled = false },
 ) => {
   const [session] = useSession()
-  const { data: messagesNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=100&page=1&type=informasi` : null), client.get, { errorRetryCount: 0 })
-  const { data: transactionsNotification } = useSWR<Notification[]>(() => (session ? `${API_NOTIFICATION}?limit=100&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
-  const notificationsLength = (transactionsNotification?.length + messagesNotification?.length) || 0
+
+  const { data: unreadNotifications } = useSWR<UnreadNotification>(() => (session ? `${API_COUNT_UNREAD_NOTIFICATION}` : null), client.get, { errorRetryCount: 0 })
   return (
     <button
       onClick={() => router.push('/notification')}
@@ -23,9 +23,9 @@ export const ButtonNotificationMobile:FunctionComponent<{isFilled?:boolean}> = (
         { 'text-white': !isFilled })}
     >
       <MdNotifications />
-      { ![0, undefined].includes(notificationsLength) && (
+      { ![0, undefined].includes(unreadNotifications?.unreadAll) && (
         <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
-          {notificationsLength}
+          {unreadNotifications?.unreadAll}
         </div>
       )}
     </button>

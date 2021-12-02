@@ -51,13 +51,13 @@ export const SearchBarDekstop = ({ onChange, onSubmit, searchValue }) => {
   )
 }
 
-export const SearchBar = ({ className = '', searchValue = '', isMobile = true }) => {
+export const SearchBar = ({
+  className = '', searchValue = '', isMobile = true, onSubmit,
+}) => {
   const [search, setSearch] = useState(searchValue)
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (search) {
-      Router.push(`/article?search=${search}`)
-    }
+    onSubmit(search)
   }
   return (
     <div className={`flex items-center justify-start  pl-3 rounded ${className}`}>

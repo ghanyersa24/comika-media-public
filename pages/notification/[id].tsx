@@ -11,11 +11,15 @@ import NotificationNonTransaction from '../../components/page/notification/notif
 import NotificationTransaction from '../../components/page/notification/notification-transaction'
 import { client } from '../../lib/clientRaw'
 import { API_NOTIFICATION } from '../../res/api-endpoint'
-import { cartType, Notification } from '../../res/interface'
+import { Notification } from '../../res/interface'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
+import { useMatchMutate } from '../../helper/mutateManyRegex'
 
 const isMobile = mobile()
 export const App = ():ReactElement => {
+  const matchMutate = useMatchMutate()
+  matchMutate(/^\/notification\/unread\?/)
+
   const router = useRouter()
   const { id } = router.query
   const [session] = useSession()

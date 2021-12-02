@@ -251,6 +251,12 @@ export interface Notification {
   Order?: Order;
 }
 
+export interface UnreadNotification {
+    'unreadAll': number,
+    'unreadInformasi': number,
+    'unreadTransaksi': number
+}
+
 export interface Order {
   priceRp?: string;
   id?: string;
