@@ -86,7 +86,7 @@ export const Product:FunctionComponent<props> = ({ itemstore }) => {
     </>
   )
   return (
-    <Layout isMobile={isMobile} className="md:pb-12 md:pt-24 bg-gray-50 ">
+    <Layout isMobile={isMobile} className="md:pb-12 md:pt-24 bg-gray-50 " title={itemstore.name}>
       {content}
     </Layout>
   )

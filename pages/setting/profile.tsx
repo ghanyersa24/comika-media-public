@@ -26,7 +26,7 @@ export const Profile = ():ReactElement => {
   }
 
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} title="Profile">
       <TopNavbarWithBackButton title="Detail Akun" />
       <div className="container max-w-screen-xl mx-auto xs:px-4 lg:px-4 sm:px-8 lg:mt-24">
 

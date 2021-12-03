@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { toast } from 'react-toastify'
 import router from 'next/router'
 import { AiOutlinePlus } from 'react-icons/ai'
+import Head from 'next/head'
 import { address as addressType } from '../../res/interface'
 import TopNavbarWithBackButton from '../../components/navigation/top-navbar-with-back-button'
 import { AdddressListItem } from '../../components/card/address-list-item'
@@ -30,6 +31,9 @@ export const SelectMainAddress = ():ReactElement => {
       customerAddress
         ? (
           <div className="min-h-screen pt-16 bg-bgGrayLight">
+            <Head>
+              <title>Comika Media - Address</title>
+            </Head>
             <TopNavbarWithBackButton
               title="Pilih Alamat utama"
               rightComponent={(
@@ -62,9 +66,14 @@ export const SelectMainAddress = ():ReactElement => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-screen text-2xl ">
-      Tampilan ini hanya untuk mobile
-    </div>
+    <>
+      <Head>
+        <title>Comika Media - Address</title>
+      </Head>
+      <div className="flex items-center justify-center w-full h-screen text-2xl ">
+        Tampilan ini hanya untuk mobile
+      </div>
+    </>
   )
 }
 

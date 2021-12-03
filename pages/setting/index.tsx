@@ -46,7 +46,7 @@ export const Setting = ():ReactElement => {
   if (!session) signIn()
 
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} title="Setting">
       {session ? (
         <div className="h-screen bg-bgGray">
           <div className="pb-24 bg-primary">

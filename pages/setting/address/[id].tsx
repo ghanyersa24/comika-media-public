@@ -6,6 +6,7 @@ import {
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import mobile from 'is-mobile'
+import Head from 'next/head'
 import { address } from '../../../res/interface'
 import TopNavbarWithBackButton from '../../../components/navigation/top-navbar-with-back-button'
 import { client } from '../../../lib/clientRaw'
@@ -126,14 +127,22 @@ const App = ():ReactElement => {
   )
   if (isMobile) {
     return (
-      <div className="pt-10">
-        <TopNavbarWithBackButton title={title} />
-        {form}
-      </div>
+      <>
+        <Head>
+          <title>Comika Media - Address</title>
+        </Head>
+        <div className="pt-10">
+          <TopNavbarWithBackButton title={title} />
+          {form}
+        </div>
+      </>
     )
   }
   return (
     <Layout isMobile={isMobile}>
+      <Head>
+        <title>Comika Media - Address</title>
+      </Head>
       <div className="max-w-screen-md p-2 mx-auto mb-12 rounded-lg shadow lg:prose-lg">
         {form}
       </div>

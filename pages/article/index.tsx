@@ -64,7 +64,7 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
   }
 
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} title="Article">
       <Head>
         <title>Comika Media</title>
       </Head>

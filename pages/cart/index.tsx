@@ -115,7 +115,7 @@ export const Cart = ():ReactElement => {
     )
   }
   return (
-    <Layout isMobile={isMobile} className="pb-12 md:pt-24 bg-gray-50 ">
+    <Layout isMobile={isMobile} className="pb-12 md:pt-24 bg-gray-50 " title="Cart">
       <Container className="bg-white rounded-lg shadow">
         <table className="w-full ">
           <tr className="border-b">

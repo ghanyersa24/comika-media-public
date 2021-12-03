@@ -16,9 +16,9 @@ export const Desktop = ({
   <>
     <Head>
       <title>
-        {prevTitle}
-        {' '}
-        {title ? `- ${title}` : null }
+        {prevTitle?.length > 0 ? `${prevTitle}` : ''}
+        {prevTitle?.length > 0 && title?.length > 0 ? ' - ' : ''}
+        {title ? `${title}` : null }
       </title>
     </Head>
     <Meta />
@@ -35,11 +35,13 @@ export const Mobile = ({
   children, className, title, prevTitle,
 }) => (
   <>
-    <title>
-      {prevTitle}
-      {' '}
-      {title ? `- ${title}` : null }
-    </title>
+    <Head>
+      <title>
+        {prevTitle?.length > 0 ? `${prevTitle}` : ''}
+        {prevTitle?.length > 0 && title?.length > 0 ? ' - ' : ''}
+        {title ? `${title}` : null }
+      </title>
+    </Head>
     <Meta />
     <div className={`min-h-screen ${className}`}>
       {/* <Alert preview={preview} /> */}

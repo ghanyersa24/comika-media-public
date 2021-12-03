@@ -6,6 +6,7 @@ import useSWR from 'swr'
 import mobile from 'is-mobile'
 import dynamic from 'next/dynamic'
 import { toast } from 'react-toastify'
+import Head from 'next/head'
 import { useMatchMutate } from '../../../helper/mutateManyRegex'
 import TopNavbarWithBackButton from '../../../components/navigation/top-navbar-with-back-button'
 import { client } from '../../../lib/clientRaw'
@@ -116,6 +117,9 @@ export const Shipment = (): ReactElement => {
   if (isMobile) {
     return (
       <div className="pt-16 pb-44 bg-bgBlueLight">
+        <Head>
+          <title>Comika Media - Cart Confirmation</title>
+        </Head>
         <TopNavbarWithBackButton title="Pesanan" />
         {showAddress && (
           <div className="">
@@ -225,7 +229,7 @@ export const Shipment = (): ReactElement => {
   }
 
   return (
-    <Layout isMobile={isMobile} className="pb-12 md:pt-24 ">
+    <Layout isMobile={isMobile} className="pb-12 md:pt-24 " title="Cart Confirmation">
 
       {showAddress && (
         (!isListAddressOpen && mainCustomerAddress)
