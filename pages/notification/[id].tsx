@@ -28,7 +28,7 @@ export const App = ():ReactElement => {
   if (!notification) return <div>Loading...</div>
   if (notification.type === 'transaksi') {
     return (
-      <Layout isMobile={isMobile}>
+      <Layout isMobile={isMobile} prevTitle="Detail Notification" title={notification.title}>
         {isMobile ? (
           <div className="relative w-full min-h-screen bg-primary md:bg-white">
             <TopNavbarWithBackButton
@@ -46,7 +46,7 @@ export const App = ():ReactElement => {
     )
   }
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} prevTitle="Detail Notification" title={notification.title}>
       {isMobile && (
       <TopNavbarWithBackButton
         title="Rincian Pembayaran"

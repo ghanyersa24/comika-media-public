@@ -57,7 +57,7 @@ export const BookmarkedArticle = ({ isMobile, session }:
 
   if (isMobile) {
     return (
-      <Layout isMobile>
+      <Layout isMobile title="Notifications">
         <div className="relative bg-primary">
           <TopNavbarWithBackButton
             title="Notifikasi"

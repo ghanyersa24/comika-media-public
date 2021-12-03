@@ -1,5 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-import Head from 'next/head'
 import useSWRInfinite from 'swr/infinite'
 
 import React, { ReactElement } from 'react'
@@ -63,10 +62,7 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
   }
 
   return (
-    <Layout isMobile={isMobile}>
-      <Head>
-        <title>Comika Media</title>
-      </Head>
+    <Layout isMobile={isMobile} title="Store">
       {/* <Container> */}
       {isMobile ? (
         <BackgroundArticleMobile />

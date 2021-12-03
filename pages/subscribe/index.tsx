@@ -112,11 +112,7 @@ export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => 
   }
   return (
     <>
-      <Head>
-        <title>Comika Media - Subscribe</title>
-        {/* <meta property="og:image" content={post.ogImage.url} /> */}
-      </Head>
-      <Layout isMobile={false}>
+      <Layout isMobile={false} title="Subscribe">
         <div className="max-w-screen-xl min-h-screen mx-auto mt-8 lg:my-24 sm:px-8">
           <div className="hidden md:block">
             <p className="text-4xl font-medium leading-10 text-center text-blue-900">

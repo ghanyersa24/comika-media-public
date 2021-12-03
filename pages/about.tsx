@@ -17,7 +17,7 @@ export const About = ():ReactElement => {
   const [session] = useSession()
   const { data } = useSWR<Profile>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} title="About">
       <div className="relative pt-16 pb-14 bg-primary md:bg-white ">
         {isMobile && (
           <TopNavbarWithBackButton

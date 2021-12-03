@@ -39,7 +39,7 @@ export const BookmarkedArticle = ({ isMobile, session }:
   }
   if (isMobile) {
     return (
-      <Layout isMobile>
+      <Layout isMobile title="Bookmark">
         <div className="relative bg-primary">
           <p className="pt-6 pb-4 text-xl font-bold leading-relaxed text-center text-white ">Bookmark Artikel</p>
           <img
@@ -57,7 +57,7 @@ export const BookmarkedArticle = ({ isMobile, session }:
     )
   }
   return (
-    <Layout isMobile={false}>
+    <Layout isMobile={false} title="Bookmark">
       <IntroDekstop />
       <ContainerPadding className="relative min-h-screen pt-0.5 ">
         {bookmarkedArticles?.length !== 0 ? <MorePosts posts={bookmarkedArticles} mutate={mutateBookmarkedArticles} title="Bookmark Artikel" description="Artikel yang telah anda simpan" />
