@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import useSWR from 'swr'
 import mobile from 'is-mobile'
 import { IoMdPin } from 'react-icons/io'
@@ -16,7 +16,7 @@ const isMobile = mobile()
 
 export const SelectMainAddress = ():ReactElement => {
   console.log('isMobile', isMobile)
-  const { data: customerAddress, mutate, isValidating } = useSWR<addressType[]>('/account/address', client.get)
+  const { data: customerAddress, mutate } = useSWR<addressType[]>('/account/address', client.get)
   const handleChangeMainAddress = async (id:string) => {
     await client.put(`/account/address/${id}`)
     toast.success('Berhasil memilih alamat utama', {

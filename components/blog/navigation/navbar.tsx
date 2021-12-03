@@ -23,19 +23,19 @@ const navigation = [
     name: 'Home', href: '', current: true, isRequiredLogin: false,
   },
   {
-    name: 'Artikel', href: 'article', current: false, isRequiredLogin: false,
+    name: 'About', href: 'about', current: false, isRequiredLogin: false,
   },
   {
-    name: 'Subscribe', href: 'subscribe', current: false, isRequiredLogin: false,
+    name: 'Artikel', href: 'article', current: false, isRequiredLogin: false,
   },
   {
     name: 'Bookmark', href: 'setting/bookmark', current: false, isRequiredLogin: true,
   },
   {
-    name: 'About', href: 'about', current: false, isRequiredLogin: false,
+    name: 'Store', href: 'store', current: false, isRequiredLogin: false,
   },
   {
-    name: 'Store', href: 'store', current: false, isRequiredLogin: false,
+    name: 'Subscribe', href: 'subscribe', current: false, isRequiredLogin: false,
   },
 ]
 
@@ -215,7 +215,11 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
 export const Navbar = (): ReactElement => {
   const [session] = useSession()
   const router = useRouter()
-  const currentRoute = router.route
+  const searchAbleRoutes = ['article', 'store']
+  const domainUrl = router.route.split('/')?.[1]
+1
+  console.log('🚀 ~ file: navbar.tsx ~ line 220 ~ Navbar ~ router.route', domainUrl)
+  const currentRoute = searchAbleRoutes.find((searchAbleRoute) => searchAbleRoute === domainUrl) ? domainUrl : 'article'
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
   const { search } = router.query
