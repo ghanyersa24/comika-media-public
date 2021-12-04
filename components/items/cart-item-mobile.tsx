@@ -20,6 +20,7 @@ const CartItemMobile : FunctionComponent<props> = ({
     <div className="flex items-center justify-end mt-4 text-base ">
       <IncreaseDecreaseButton
         isWithButton={!(cart.type === 'subscription')}
+        isMinusDisabled={cart.qty === 1}
         qyt={cart.qty}
         onQytChange={(qyt) => onQytChange(qyt, cart.productId)}
       />
