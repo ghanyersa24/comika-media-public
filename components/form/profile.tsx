@@ -7,6 +7,7 @@ import {
   Formik, Field, Form, FormikHelpers, useField, useFormikContext,
 } from 'formik'
 import useSWR from 'swr'
+import format from 'date-fns/format'
 import { Profile } from '../../res/interface'
 import { client } from '../../lib/clientRaw'
 
@@ -59,7 +60,7 @@ export const ProfileCard = ({
   } = profileData || {}
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
-
+  const maxDate = format(new Date(), 'yyyy-MM-dd')
   return (
     <Formik
       enableReinitialize
@@ -143,7 +144,7 @@ export const ProfileCard = ({
 
             <label htmlFor="birthdate" className="label-flex ">
               Tanggal Lahir
-              <Field type="date" name="birthdate" id="birthdate" disabled={canEdit} />
+              <Field type="date" name="birthdate" id="birthdate" disabled={canEdit} max={maxDate} />
             </label>
 
             <h2 className="mt-12 mb-4 text-xl font-semibold text-gray-900">
