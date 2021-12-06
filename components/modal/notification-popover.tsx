@@ -3,6 +3,7 @@ import {
   Popover, Tab, Transition,
 } from '@headlessui/react'
 import { MdNotifications } from 'react-icons/md'
+import router from 'next/router'
 import { Notification, UnreadNotification } from '../../res/interface'
 import { NotificationList } from '../list/notification-list'
 import NotificationHint from '../general/animation/notification-hint'
@@ -80,11 +81,14 @@ export const NotificationPopover: FunctionComponent<props> = ({
             <Tab.Panels className="relative px-2 rounded-t-xl ">
               <Tab.Panel className="">
                 <NotificationList notifications={messagesNotification} btnClassName="bg-white my-1 px-4" />
-                <ClickToMoreBtn onClick={() => console.log('notifications')} />
+                {messagesNotification?.length > 4 && (
+                <ClickToMoreBtn onClick={() => router.push('/notification')} />
+                )}
               </Tab.Panel>
               <Tab.Panel className="">
                 <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4" />
-                <ClickToMoreBtn onClick={() => console.log('notifications')} />
+                {transactionsNotification?.length > 4 && (
+                <ClickToMoreBtn onClick={() => router.push('/notification')} />)}
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

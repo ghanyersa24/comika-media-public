@@ -30,11 +30,11 @@ export const BookmarkedArticle = ({ isMobile, session }:
 
   const getKeyTransactionNotification = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_NOTIFICATION}?limit=${1}&page=${0 + pageIndex}&type=transaksi`
+    return `${API_NOTIFICATION}?limit=${5}&page=${0 + pageIndex}&type=transaksi`
   }
   const getKeyInformasiNotification = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null // reached the end
-    return `${API_NOTIFICATION}?limit=${1}&page=${0 + pageIndex}&type=informasi`
+    return `${API_NOTIFICATION}?limit=${5}&page=${0 + pageIndex}&type=informasi`
   }
 
   const {
