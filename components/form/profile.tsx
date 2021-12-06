@@ -58,6 +58,7 @@ export const ProfileCard = ({
   const {
     photo,
   } = profileData || {}
+  console.log('🚀 ~ file: profile.tsx ~ line 61 ~ profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
   const maxDate = format(new Date(), 'yyyy-MM-dd')
@@ -75,7 +76,7 @@ export const ProfileCard = ({
     >
       {(formik) => (
         <Form className="grid w-full grid-cols-1 mb-16 rounded-lg shadow-md lg:grid-cols-3 ">
-          <div className="flex flex-col items-center px-4 py-8 pt-16 mt-4 bg-gray-200 rounded-l-lg ">
+          <div className="flex flex-col items-center px-4 py-8 pt-16 bg-gray-200 rounded-l-lg ">
             <div className="relative w-32 lg:w-44 ">
               {/* <img
             className="w-full rounded-full shadow "
@@ -122,6 +123,17 @@ export const ProfileCard = ({
             </div>
           </div>
           <div className="col-span-2 p-6 lg:p-8">
+            {profileData?.isPremium ? (
+              <div className="w-full p-6 mb-6 rounded-lg bg-bgBlueLight ">
+                <div className="flex justify-between">
+                  <h6 className="text-xl font-bold">Membership</h6>
+                  <div className="flex items-center px-6 text-sm font-medium bg-white rounded-md text-primary ">Aktif</div>
+                </div>
+                <div className="mt-1">
+                  Status membership kamu berlaku hingga 31 November
+                </div>
+              </div>
+            ) : null}
             <h2 className="flex items-center mb-4 text-xl font-semibold text-gray-900 ">
               Data Diri
               {!profileData ? <AiOutlineLoading className="w-5 h-5 ml-3 animate-spin" /> : null}
