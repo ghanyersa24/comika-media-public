@@ -53,6 +53,7 @@ export const Shipment = (): ReactElement => {
   const showAddress = cartConfirmFromApi?.showAddress
 
   const { data: customerAddress, mutate: mutateCustomerAddress } = useSWR<addressType[]>(() => (data ? '/account/address' : null), client.get)
+  const isHaveAddress = customerAddress?.length > 0
   const mainCustomerAddress = customerAddress?.find((ca) => ca.active === true)
 
   const { data: estimation, mutate: mutateEstimation } = useSWR<CartEstimation>(() => ((data && mainCustomerAddress) ? `/store/cart-estimation?${data}` : null), client.get)
@@ -245,11 +246,16 @@ export const Shipment = (): ReactElement => {
           )
           : (
             <div className="py-6 my-6 bg-white rounded-lg shadow-lg mycontainer">
-              <div className="flex">
-                <div className="flex items-center justify-center mr-2">
-                  <IoMdPin className="text-2xl text-primary" />
+              <div className="flex justify-between">
+                <div className="flex items-center justify-center ">
+                  <IoMdPin className="mr-2 text-2xl text-primary" />
+                  <p className="font-medium text-primary">Pilih Alamat utama</p>
                 </div>
-                <p className="mb-2 text-sm leading-normal text-gray-500">Pilih Alamat utama</p>
+                {!isHaveAddress && (
+                <button type="button" className="btn-primary" onClick={() => router.push('/setting/address/add')}>
+                  Tambah Alamat Baru
+                </button>
+                )}
               </div>
               {customerAddress?.map((address) => (
                 // eslint-disable-next-line jsx-a11y/label-has-associated-control
@@ -268,14 +274,18 @@ export const Shipment = (): ReactElement => {
                   />
                 </label>
               ))}
-              <div className="flex justify-end mt-6">
-                <button type="button" className="mx-2 btn-primary" onClick={handleSubmitChangeMainAddress}>
-                  Simpan
-                </button>
-                <button type="button" className="px-6 mx-2 btn-secondary max-w-max" onClick={() => setIsListAddressOpen(false)}>
-                  Batal
-                </button>
-              </div>
+              {
+                isHaveAddress && (
+                  <div className="flex justify-end mt-6">
+                    <button type="button" className="mx-2 btn-primary" onClick={handleSubmitChangeMainAddress}>
+                      Simpan
+                    </button>
+                    <button type="button" className="px-6 mx-2 btn-secondary max-w-max" onClick={() => setIsListAddressOpen(false)}>
+                      Batal
+                    </button>
+                  </div>
+                )
+              }
             </div>
           )
       )}
