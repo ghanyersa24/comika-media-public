@@ -10,6 +10,7 @@ import useSWR from 'swr'
 import format from 'date-fns/format'
 import { Profile } from '../../res/interface'
 import { client } from '../../lib/clientRaw'
+import DateFormatter, { DateFormatterWithHour } from '../date-formatter'
 
 type ProfileCardProps = {
   profileData: Profile,
@@ -124,13 +125,15 @@ export const ProfileCard = ({
           </div>
           <div className="col-span-2 p-6 lg:p-8">
             {profileData?.isPremium ? (
-              <div className="w-full p-6 mb-6 rounded-lg bg-bgBlueLight ">
+              <div className="w-full p-6 mb-4 rounded-lg md:mb-6 bg-bgBlueLight ">
                 <div className="flex justify-between">
                   <h6 className="text-xl font-bold">Membership</h6>
                   <div className="flex items-center px-6 text-sm font-medium bg-white rounded-md text-primary ">Aktif</div>
                 </div>
                 <div className="mt-1">
-                  Status membership kamu berlaku hingga 31 November
+                  Status membership kamu berlaku hingga
+                  {' '}
+                  <DateFormatter dateString={profileData?.lastPremiumDate} />
                 </div>
               </div>
             ) : null}
