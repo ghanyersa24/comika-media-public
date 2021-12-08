@@ -109,7 +109,9 @@ export const Shipment = (): ReactElement => {
       autoClose: 2000,
       onClose: async () => {
         await matchMutate(/^\/notification\/unread\?/)
-        window?.open(submitedData.redirect_url)
+        if (submitedData?.redirect_url) {
+          window?.open(submitedData.redirect_url)
+        }
         router.push('/')
       },
     })
