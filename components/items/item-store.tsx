@@ -45,7 +45,6 @@ export const ItemStoreDekstop: FunctionComponent<props> = ({
   price = 'null',
 }) => (
   <button type="button" onClick={onClick} className="p-2 mb-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50">
-    {/* { console.log('imageUrl', imageUrl)} */}
     <div className="flex flex-col w-full ">
       <div className="w-full">
         <Image

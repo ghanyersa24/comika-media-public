@@ -15,7 +15,6 @@ import { client } from '../../lib/clientRaw'
 const isMobile = mobile()
 
 export const SelectMainAddress = ():ReactElement => {
-  console.log('isMobile', isMobile)
   const { data: customerAddress, mutate } = useSWR<addressType[]>('/account/address', client.get)
   const handleChangeMainAddress = async (id:string) => {
     await client.put(`/account/address/${id}`)

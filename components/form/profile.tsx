@@ -59,7 +59,6 @@ export const ProfileCard = ({
   const {
     photo,
   } = profileData || {}
-  console.log('🚀 ~ file: profile.tsx ~ line 61 ~ profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
   const maxDate = format(new Date(), 'yyyy-MM-dd')
