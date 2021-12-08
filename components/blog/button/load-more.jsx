@@ -1,5 +1,5 @@
 export const LoadMoreButton = ({ onClickMore, isLoading, title = 'Lihat artikel lainnya' }) => (
-  <div className="mt-8 text-right">
+  <div className="text-right ">
     <button
       type="button"
       onClick={onClickMore}
