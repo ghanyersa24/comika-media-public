@@ -217,7 +217,7 @@ export const Navbar = (): ReactElement => {
   const router = useRouter()
   const searchAbleRoutes = ['article', 'store']
   const domainUrl = router.route.split('/')?.[1]
-1
+
   const currentRoute = searchAbleRoutes.find((searchAbleRoute) => searchAbleRoute === domainUrl) ? domainUrl : 'article'
   const urlComponent = router.route.split('/')
   const subUrlAdmin = urlComponent?.[1] || ''
