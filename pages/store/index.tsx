@@ -94,7 +94,7 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
             ))
           }
         </div>
-        <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} />
+        <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} title="Lihar produk lainnya" />
       </ContainerPadding>
     </Layout>
   )
