@@ -7,8 +7,10 @@ import {
   Formik, Field, Form, FormikHelpers, useField, useFormikContext,
 } from 'formik'
 import useSWR from 'swr'
+import format from 'date-fns/format'
 import { Profile } from '../../res/interface'
 import { client } from '../../lib/clientRaw'
+import DateFormatter, { DateFormatterWithHour } from '../date-formatter'
 
 type ProfileCardProps = {
   profileData: Profile,
@@ -57,9 +59,10 @@ export const ProfileCard = ({
   const {
     photo,
   } = profileData || {}
+  console.log('🚀 ~ file: profile.tsx ~ line 61 ~ profileData', profileData)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string|null>()
   const { data: provinces } = useSWR('/store/ongkir/master-province', client.get)
-
+  const maxDate = format(new Date(), 'yyyy-MM-dd')
   return (
     <Formik
       enableReinitialize
@@ -74,7 +77,7 @@ export const ProfileCard = ({
     >
       {(formik) => (
         <Form className="grid w-full grid-cols-1 mb-16 rounded-lg shadow-md lg:grid-cols-3 ">
-          <div className="flex flex-col items-center px-4 py-8 pt-16 mt-4 bg-gray-200 rounded-l-lg ">
+          <div className="flex flex-col items-center px-4 py-8 pt-16 bg-gray-200 rounded-l-lg ">
             <div className="relative w-32 lg:w-44 ">
               {/* <img
             className="w-full rounded-full shadow "
@@ -121,6 +124,19 @@ export const ProfileCard = ({
             </div>
           </div>
           <div className="col-span-2 p-6 lg:p-8">
+            {profileData?.isPremium ? (
+              <div className="w-full p-6 mb-4 rounded-lg md:mb-6 bg-bgBlueLight ">
+                <div className="flex justify-between">
+                  <h6 className="text-xl font-bold">Membership</h6>
+                  <div className="flex items-center px-6 text-sm font-medium bg-white rounded-md text-primary ">Aktif</div>
+                </div>
+                <div className="mt-1">
+                  Status membership kamu berlaku hingga
+                  {' '}
+                  <DateFormatter dateString={profileData?.lastPremiumDate} />
+                </div>
+              </div>
+            ) : null}
             <h2 className="flex items-center mb-4 text-xl font-semibold text-gray-900 ">
               Data Diri
               {!profileData ? <AiOutlineLoading className="w-5 h-5 ml-3 animate-spin" /> : null}
@@ -143,7 +159,7 @@ export const ProfileCard = ({
 
             <label htmlFor="birthdate" className="label-flex ">
               Tanggal Lahir
-              <Field type="date" name="birthdate" id="birthdate" disabled={canEdit} />
+              <Field type="date" name="birthdate" id="birthdate" disabled={canEdit} max={maxDate} />
             </label>
 
             <h2 className="mt-12 mb-4 text-xl font-semibold text-gray-900">

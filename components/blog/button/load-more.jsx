@@ -1,12 +1,12 @@
-export const LoadMoreButton = ({ onClickMore, isLoading }) => (
-  <div className="text-right mt-8">
+export const LoadMoreButton = ({ onClickMore, isLoading, title = 'Lihat artikel lainnya' }) => (
+  <div className="text-right ">
     <button
       type="button"
       onClick={onClickMore}
       disabled={isLoading}
-      className="text-base px-2 md:text-lg leading-tight text-primary "
+      className="px-2 text-base leading-tight md:text-lg text-primary "
     >
-      {isLoading ? 'loading' : 'Lihat artikel lainnya'}
+      {isLoading ? 'loading' : title }
     </button>
   </div>
 )

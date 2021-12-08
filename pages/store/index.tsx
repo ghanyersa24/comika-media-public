@@ -61,11 +61,14 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
     setSize(size + 1)
   }
 
+  const moreArticlesCount = moreArticles?.reduce((count, row) => count + row.length, 0)
+  const isNextPageExist = moreArticlesCount >= size * limit
+
   return (
     <Layout isMobile={isMobile} title="Store">
       {/* <Container> */}
       {isMobile ? (
-        <BackgroundArticleMobile />
+        <BackgroundArticleMobile title="Store" />
       ) : <IntroDekstop jumbotrons={jumbotronFromSSR} />}
 
       <ContainerPadding className="relative pt-8 mb-24 -mt-16 bg-white rounded-xl lg:mt-8">
@@ -94,7 +97,10 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
             ))
           }
         </div>
-        <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} />
+        <div className="py-1">
+          {(isNextPageExist || isValidating) && <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} title="Lihar produk lainnya" />}
+        </div>
+
       </ContainerPadding>
     </Layout>
   )

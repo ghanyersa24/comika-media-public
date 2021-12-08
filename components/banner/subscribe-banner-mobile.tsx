@@ -3,13 +3,12 @@ import { FunctionComponent } from 'react'
 
 type SubsribeBannerType = {
   isShow: boolean
-  isMobile: boolean
   onClick: any
   src:string
 }
 
 export const SubsribeBanner:FunctionComponent<SubsribeBannerType> = ({
-  isShow, onClick, isMobile, src,
+  isShow, onClick, src,
 }) => {
   if (isShow) {
     return (
@@ -20,8 +19,8 @@ export const SubsribeBanner:FunctionComponent<SubsribeBannerType> = ({
           layout="intrinsic"
           className="rounded"
           objectFit="cover"
-          width={isMobile ? 354 : 1200}
-          height={isMobile ? 125 : 258}
+          width={354}
+          height={125}
         />
       </button>
     )

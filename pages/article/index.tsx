@@ -63,6 +63,9 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
     setSize(size + 1)
   }
 
+  const moreArticlesCount = moreArticles?.reduce((count, row) => count + row.length, 0)
+  const isNextPageExist = moreArticlesCount >= size * limit
+
   return (
     <Layout isMobile={isMobile} title="Article">
       <Head>
@@ -97,7 +100,7 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
           />
           <RenderMoreArticle data={moreArticles?.slice(1)} mutate={mutate} />
         </div>
-        <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} />
+        {(isNextPageExist || isValidating) && <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} title="Lihar produk lainnya" />}
       </ContainerPadding>
     </Layout>
   )
