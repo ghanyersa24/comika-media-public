@@ -162,10 +162,14 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
           </Disclosure.Button>
         </div>
         <div className="pt-4 divide-y ">
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-col items-left ">
 
             <Comikamedia className="w-full px-4 " />
-            <span className="py-4 text-lg font-medium text-gray-300 ">Lucunya Tuh di Sana, Beritanya Tuh di Sini</span>
+            <span className="py-4 pl-4 text-sm font-medium text-left text-gray-200 ">
+              Lucunya Tuh di Sana
+              {' '}
+              Beritanya Tuh di Sini
+            </span>
           </div>
           <div className="pt-8 pb-8 text-base font-bold md:text-2xl">
             {navigation.map((item) => (

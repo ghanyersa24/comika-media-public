@@ -28,9 +28,7 @@ export const BottomFixedSummaryStore:FunctionComponent<{total:number,
      </div>
      <div className="py-4">
        <button type="button" className="w-full py-3 btn-primary" onClick={onSubmit} disabled={isDisabled}>
-         Beli (
-         {qyt}
-         )
+         Beli
        </button>
      </div>
    </div>
