@@ -54,6 +54,7 @@ export const Shipment = (): ReactElement => {
 
   const { data: customerAddress, mutate: mutateCustomerAddress } = useSWR<addressType[]>(() => (data ? '/account/address' : null), client.get)
   const isHaveAddress = customerAddress?.length > 0
+  const isHaveNote = showAddress
   const mainCustomerAddress = customerAddress?.find((ca) => ca.active === true)
 
   const { data: estimation, mutate: mutateEstimation } = useSWR<CartEstimation>(() => ((data && mainCustomerAddress) ? `/store/cart-estimation?${data}` : null), client.get)
@@ -291,12 +292,12 @@ export const Shipment = (): ReactElement => {
       )}
       <div className="bg-white rounded-lg shadow mycontainer ">
         <table className="w-full ">
-          <tr className="border-b">
+          <tr className="text-left border-b">
             <th className="py-4">Produk Disimpan</th>
-            <th>Tambah Catatan</th>
-            <th>Harga Satuan</th>
-            <th>Jumlah</th>
-            <th>Subtotal Produk</th>
+            <th>{isHaveNote && 'Tambah Catatan' }</th>
+            <th className="text-right">Harga Satuan</th>
+            <th className="text-right">Jumlah</th>
+            <th className="text-right">Subtotal Produk</th>
           </tr>
           <div className="my-4" />
           {cartConfirm?.map((cart) => (
