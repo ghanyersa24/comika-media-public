@@ -88,13 +88,13 @@ export default function Index({
           <SubsribeBannerMobile
             isShow={!lastestArticles?.[0]?.isPremium}
             onClick={() => router.push('/subscribe')}
-            src={isMobile ? '/assets/blog/subscribe/Subscribe_Kecil.png' : '/assets/svg/Subscribe_Kecil.svg'}
+            src="/assets/blog/subscribe/Subscribe_Kecil.png"
           />
         ) : (
-          <SubsribeBannerMobile
+          <SubsribeBannerDekstop
             isShow={!lastestArticles?.[0]?.isPremium}
             onClick={() => router.push('/subscribe')}
-            src={isMobile ? '/assets/blog/subscribe/Subscribe_Kecil.png' : '/assets/svg/Subscribe_Kecil.svg'}
+            src="/assets/svg/Subscribe_Kecil.svg"
           />
         )}
         <ContainerStore
