@@ -30,7 +30,7 @@ export const About = ():ReactElement => {
             {data?.name ? `, ${data?.name}` : ''}
           </h2>
           <Image
-            src="https://via.placeholder.com/720x720"
+            src="https://api.comika.media/uploads/comika/event.jpg"
             alt="photo profil "
             layout="responsive"
             className="object-cover rounded-md"

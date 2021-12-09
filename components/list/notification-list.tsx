@@ -10,7 +10,14 @@ type Props = {
   btnClassName?:string
 }
 export const NotificationList: FunctionComponent<Props> = ({ notifications, btnClassName }) => (
-  <>
+  <div
+    style={{
+      maxHeight: '65vh',
+      overflow: 'auto',
+    }}
+    className="mb-4 scrollbar"
+    id="style-1"
+  >
     {' '}
     {notifications?.map((notification) => (
       <button
@@ -23,21 +30,25 @@ export const NotificationList: FunctionComponent<Props> = ({ notifications, btnC
         )}
         key={notification.id}
       >
-        <div className="flex w-full">
-          <div className="flex flex-col items-stretch flex-grow ">
-            <div className="flex">
-              <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-2 rounded-full">
-                <Image
-                  src={notification.typeIcon}
-                  alt="notif"
-                  layout="intrinsic"
-                  className="rounded-full"
-                  width={64}
-                  height={64}
-                />
-              </div>
-              <div>{notification.type}</div>
+        <div className="flex justify-between">
+          <div className="flex">
+            <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-2 rounded-full">
+              <Image
+                src={notification.typeIcon}
+                alt="notif"
+                layout="intrinsic"
+                className="rounded-full"
+                width={64}
+                height={64}
+              />
             </div>
+            <div>{notification.type}</div>
+          </div>
+          <div><DateFormatterRelative dateString={notification.createdAt} /></div>
+        </div>
+        <div className="flex w-full">
+
+          <div className="flex flex-col items-stretch flex-grow ">
 
             <div className="flex flex-col justify-center flex-1 text-base ">
               <div className="font-extrabold line-clamp-1 ">
@@ -49,7 +60,6 @@ export const NotificationList: FunctionComponent<Props> = ({ notifications, btnC
             </div>
           </div>
           <div className="text-right">
-            <div><DateFormatterRelative dateString={notification.createdAt} /></div>
             <div className="w-20 h-20 mt-1 ml-2 rounded-lg bg-gray-50">
               <Image
                 src={notification.img}
@@ -66,7 +76,7 @@ export const NotificationList: FunctionComponent<Props> = ({ notifications, btnC
 
       </button>
     ))}
-  </>
+  </div>
 )
 
 export default NotificationList

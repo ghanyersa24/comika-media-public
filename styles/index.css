@@ -110,6 +110,16 @@
       -moz-appearance: textfield;
     }
   }
+  .scrollbar::-webkit-scrollbar {
+    @apply w-2
+  }
+  .scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    @apply rounded
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300  rounded
+  }
 }
 
 @tailwind utilities;
