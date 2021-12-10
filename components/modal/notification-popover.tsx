@@ -79,14 +79,34 @@ export const NotificationPopover: FunctionComponent<props> = ({
               </Tab>
             </Tab.List>
             <Tab.Panels className="relative px-2 rounded-t-xl ">
-              <Tab.Panel className="">
-                <NotificationList notifications={messagesNotification} btnClassName="bg-white my-1 px-4" />
+              <Tab.Panel
+                style={{
+                  maxHeight: '65vh',
+                  overflow: 'auto',
+                }}
+                className="mb-4 scrollbar"
+              >
+                <NotificationList
+                  notifications={messagesNotification}
+                  notifLenght={4}
+                  btnClassName="bg-white my-1 px-4"
+                />
                 {messagesNotification?.length > 4 && (
                 <ClickToMoreBtn onClick={() => router.push('/notification')} />
                 )}
               </Tab.Panel>
-              <Tab.Panel className="">
-                <NotificationList notifications={transactionsNotification} btnClassName="bg-white my-1 px-4" />
+              <Tab.Panel
+                style={{
+                  maxHeight: '65vh',
+                  overflow: 'auto',
+                }}
+                className="mb-4 scrollbar"
+              >
+                <NotificationList
+                  notifications={transactionsNotification}
+                  notifLenght={4}
+                  btnClassName="bg-white my-1 px-4"
+                />
                 {transactionsNotification?.length > 4 && (
                 <ClickToMoreBtn onClick={() => router.push('/notification')} />)}
               </Tab.Panel>
