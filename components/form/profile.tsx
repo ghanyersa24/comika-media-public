@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import format from 'date-fns/format'
 import { Profile } from '../../res/interface'
 import { client } from '../../lib/clientRaw'
-import DateFormatter, { DateFormatterWithHour } from '../date-formatter'
+import DateFormatter, { } from '../date-formatter'
 
 type ProfileCardProps = {
   profileData: Profile,

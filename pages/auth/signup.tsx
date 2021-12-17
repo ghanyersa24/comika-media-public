@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import { FaSpinner } from 'react-icons/fa'
 import Link from 'next/link'
 import Head from 'next/head'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Signup } from '../../res/interface'
 import { SignUp } from '../../service/auth'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 // enum Severity {
 //   error='bg-red-200',
 //   success='bg-green-200',

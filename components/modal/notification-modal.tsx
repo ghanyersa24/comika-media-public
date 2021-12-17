@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Dialog } from '@headlessui/react'
-import { EstimateDelivery, Notification } from '../../res/interface'
+import { Notification } from '../../res/interface'
 import { NotificationList } from '../list/notification-list'
 
 type props = {

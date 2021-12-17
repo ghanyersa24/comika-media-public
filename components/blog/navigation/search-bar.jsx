@@ -1,6 +1,5 @@
 import { AiOutlineSearch } from 'react-icons/ai'
 import { FaSearch } from 'react-icons/fa'
-import Router, { } from 'next/router'
 import React, { useState } from 'react'
 
 export const SearchBarMobile = ({ onChange, onSubmit, searchValue }) => (
