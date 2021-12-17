@@ -52,10 +52,9 @@ export const App = ():ReactElement => {
         title="Rincian Pembayaran"
       />
       )}
-      <div className="absolute top-0 w-full min-h-screen bg-primary md:bg-white ">
+      <div className="relative w-full min-h-screen ">
         <NotificationNonTransaction notification={notification} />
       </div>
-
     </Layout>
   )
 }
