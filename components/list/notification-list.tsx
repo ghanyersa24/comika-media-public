@@ -13,11 +13,11 @@ type Props = {
 export const NotificationList: FunctionComponent<Props> = (
   { notifications, btnClassName, notifLenght = null },
 ) => {
-  const notifSlice = notifLenght ? notifications.slice(0, notifLenght) : notifications
+  const notifSlice = notifLenght ? notifications?.slice(0, notifLenght) : notifications
   return (
     <div>
       {' '}
-      { notifSlice.map((notification) => (
+      { notifSlice?.map((notification) => (
         <button
           onClick={() => router.push(`/notification/${notification.id}`)}
           type="button"

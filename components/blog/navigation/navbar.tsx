@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { MdShoppingBasket } from 'react-icons/md'
 import useSWR from 'swr'
 import { Session } from 'next-auth'
+import { toast } from 'react-toastify'
 import { ComikamediaNavbar, Comikamedia } from '../../svg'
 import { SocialMediaLogo } from '../../social-media'
 import { SearchBar } from './search-bar'
@@ -272,7 +273,11 @@ export const Navbar = (): ReactElement => {
                   <button
                     type="button"
                     className="relative"
-                    onClick={() => router.push('/cart')}
+                    onClick={() => (session ? router.push('/cart') : toast.info('Harap Login terlebih dahulu', {
+                      position: 'bottom-right',
+                      onClose: () => signIn(),
+                      autoClose: 2000,
+                    }))}
                   >
                     {![0, undefined].includes(sumOfCarts) && (
                       <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
@@ -281,11 +286,13 @@ export const Navbar = (): ReactElement => {
                     )}
                     <MdShoppingBasket className="mx-2 text-2xl" />
                   </button>
+                  {session && (
                   <NotificationPopover
                     unreadNotifications={unreadNotifications}
                     messagesNotification={messagesNotification}
                     transactionsNotification={transactionsNotification}
                   />
+                  )}
                   <div className="hidden ml-2 sm:block">
                     {session ? (
                       <Profile name={data?.name} src={data?.photo} />
