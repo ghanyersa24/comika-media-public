@@ -4,6 +4,7 @@ import { FaSpinner } from 'react-icons/fa'
 import Link from 'next/link'
 import Head from 'next/head'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { toast } from 'react-toastify'
 import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
 import { Signup } from '../../res/interface'
 import { SignUp } from '../../service/auth'
@@ -31,7 +32,14 @@ export const LoginPage = ():ReactNode => {
     e.preventDefault()
     try {
       setSubmitSignupStatus('loading')
-      await SignUp(signup)
+      const result = await SignUp(signup) as {
+        data:any,
+        msg:string
+      }
+      toast.success(result?.msg, {
+        position: 'top-right',
+        autoClose: 1000 * 10,
+      })
       setSubmitSignupStatus('success')
       router.push('/auth/signin')
     } catch (error) {
