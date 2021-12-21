@@ -79,7 +79,7 @@ export const Product:FunctionComponent<props> = ({ itemstore }) => {
           // onClick={handleLoadMore}
             className="px-2 text-base leading-tight md:text-lg text-primary "
           >
-            Lihat artikel lainnya
+            Lihat produk lainnya
           </button>
         </div>
       </ContainerStore>
