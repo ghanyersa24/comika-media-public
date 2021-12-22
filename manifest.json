@@ -1,0 +1,17 @@
+{
+  "name": "PWA App",
+  "short_name": "App",
+  "favicon": [
+    {
+      "src": "/favicon/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#006BC1",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
