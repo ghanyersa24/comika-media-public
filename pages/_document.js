@@ -8,6 +8,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content="#006BC1" />
+          <link rel="manifest" href="/manifest.json" />
 
         </Head>
         <body>

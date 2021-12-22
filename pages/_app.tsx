@@ -10,7 +10,6 @@ import { ToastContainer } from 'react-toastify'
 import { store } from '../store'
 import 'nprogress/nprogress.css'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const TopProgressBar = dynamic(
