@@ -7,6 +7,7 @@ let timer
 let state
 let activeRequests = 0
 const delay = 250
+NProgress.configure({ showSpinner: false })
 
 function load() {
   if (state === 'loading') {
