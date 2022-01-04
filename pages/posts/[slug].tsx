@@ -53,7 +53,7 @@ export const Dekstop = ({ post }:{post:Post}):ReactElement => {
             shared={shared}
             attribution={attribution}
           />
-          <PostBody content={content} />
+          <PostBody isMobile={false} content={content} />
         </article>
       </Container>
 
@@ -86,7 +86,7 @@ export const Mobile = ({ post }:{post:Post}):ReactElement => {
 
         />
         <div className="mx-4 mt-8">
-          <PostBody content={content} />
+          <PostBody isMobile content={content} />
         </div>
       </article>
 

@@ -100,7 +100,7 @@ const Index = ({ jumbotronFromSSR }:props) :ReactElement => {
           />
           <RenderMoreArticle data={moreArticles?.slice(1)} mutate={mutate} />
         </div>
-        {(isNextPageExist || isValidating) && <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} title="Lihar produk lainnya" />}
+        {(isNextPageExist || isValidating) && <LoadMoreButton onClickMore={handleLoadMore} isLoading={isValidating} title="Lihat artikel lainnya" />}
       </ContainerPadding>
     </Layout>
   )
