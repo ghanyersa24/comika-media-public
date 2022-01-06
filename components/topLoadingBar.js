@@ -1,5 +1,6 @@
 import Router from 'next/router'
 import NProgress from 'nprogress'
+import * as ga from '../lib/ga'
 // eslint-disable-next-line import/extensions
 // import * as ga from '../lib/ga'
 
@@ -27,7 +28,7 @@ function stop(url) {
   }
 
   state = 'stop'
-  // ga.pageview(url)
+  ga.pageview(url)
 
   clearTimeout(timer)
   NProgress.done()
