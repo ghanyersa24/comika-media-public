@@ -26,10 +26,15 @@ function stop(url) {
   if (activeRequests > 0) {
     return
   }
-
   state = 'stop'
   ga.pageview(url)
 
+  clearTimeout(timer)
+  NProgress.done()
+}
+
+function stopFetch() {
+  state = 'stop'
   clearTimeout(timer)
   NProgress.done()
 }
@@ -54,7 +59,7 @@ window.fetch = async function (...args) {
   } finally {
     activeRequests -= 1
     if (activeRequests === 0) {
-      stop()
+      stopFetch()
     }
   }
 }
