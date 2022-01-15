@@ -3,121 +3,123 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseFetch {
   error?: {
-    msg: string
-  },
-  data?: any,
+    msg: string;
+  };
+  data?: any;
 }
 export interface swrReturn extends BaseFetch {
-  isLoading: boolean,
-  isError?: boolean,
+  isLoading: boolean;
+  isError?: boolean;
 
-  mutate?: any
+  mutate?: any;
 }
 export interface Itime {
-  start: string,
-  end: string
+  start: string;
+  end: string;
 }
 
 export type Login = {
-  email: string,
-  password?: string
-}
+  email: string;
+  password?: string;
+};
 export type ForgetPassword = {
-  password: string
-  passwordConfirmation: string
-  token: string
-}
+  password: string;
+  passwordConfirmation: string;
+  token: string;
+};
 export type Signup = Login & {
-  name: string,
-}
-export type Profile = Signup & address & {
-  role?: string,
-  phone: string,
-  address: string,
-  birthdate: string,
-  createdAt?: string,
-  updatedAt?: string,
-  deletedAt?: string,
-  isPremium: 1|0,
-  lastPremiumDate?:Date,
-  photo: string
-}
+  name: string;
+};
+export type Profile = Signup &
+  address & {
+    role?: string;
+    phone: string;
+    address: string;
+    birthdate: string;
+    createdAt?: string;
+    updatedAt?: string;
+    deletedAt?: string;
+    isPremium: 1 | 0;
+    lastPremiumDate?: Date;
+    photo: string;
+  };
 export type comments = {
-  'id': 'bb3cb8bf-ef5e-4f5b-9ed7-749990401045',
-  'comment': 'waaah bagus nih gae',
-  'userId': '0734f6b2-6b4c-45b9-be8c-d1aaf6803348',
-  'articleId': 'f3950e22-c609-4f7e-8d23-4fec9b52dd65',
-  'createdAt': '2021-06-24T16:56:03.039Z',
-  'updatedAt': '2021-06-24T16:56:03.039Z',
-  'deletedAt': null,
-  'ArticleId': 'f3950e22-c609-4f7e-8d23-4fec9b52dd65',
-  'UserId': '0734f6b2-6b4c-45b9-be8c-d1aaf6803348',
-  'User': {
-    'photo': string,
-    'id': string,
-    'name': string
-  }
-}
+  id: "bb3cb8bf-ef5e-4f5b-9ed7-749990401045";
+  comment: "waaah bagus nih gae";
+  userId: "0734f6b2-6b4c-45b9-be8c-d1aaf6803348";
+  articleId: "f3950e22-c609-4f7e-8d23-4fec9b52dd65";
+  createdAt: "2021-06-24T16:56:03.039Z";
+  updatedAt: "2021-06-24T16:56:03.039Z";
+  deletedAt: null;
+  ArticleId: "f3950e22-c609-4f7e-8d23-4fec9b52dd65";
+  UserId: "0734f6b2-6b4c-45b9-be8c-d1aaf6803348";
+  User: {
+    photo: string;
+    id: string;
+    name: string;
+  };
+};
 
 export type TypePostCommentComponent = swrReturn & {
-  comments: comments[],
-}
+  comments: comments[];
+};
 export type TypePostCommentAdd = swrReturn & {
-  onChange: (e: any) => void,
-  onSubmit: () => void,
-  comment: string
-
-}
+  onChange: (e: any) => void;
+  onSubmit: () => void;
+  comment: string;
+};
 export type subscribeType = {
-  'rupiah': string,
-  'description': string[],
-  'id': string,
-  'name': string,
-  'price': number,
-  'longTime': number
-}
+  rupiah: string;
+  description: string[];
+  id: string;
+  name: string;
+  price: number;
+  longTime: number;
+};
 export type Post = {
-  'id': string,
-  'userId': string,
-  'title': string,
-  'slug': string,
-  'banner': string,
-  'isPremium': boolean,
-  'isPublish': boolean,
-  'content': string,
-  'createdAt': Date,
-  'updatedAt': Date,
-  'deletedAt': Date,
-  'UserId': Date,
-  'withFlayer': boolean,
-  'viewer': number,
-  'shared': number,
-  'bookmarked': number,
-  'likes': number,
-  'attribution': string,
-  'Comika': {
-    'id': number,
-    'name': string,
-    'photo': string,
-    'verified': boolean
-  }
-}
+  id: string;
+  userId: string;
+  title: string;
+  slug: string;
+  banner: string;
+  isPremium: boolean;
+  isPublish: boolean;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  UserId: Date;
+  withFlayer: boolean;
+  viewer: number;
+  shared: number;
+  bookmarked: number;
+  likes: number;
+  attribution: string;
+  Comika: {
+    id: number;
+    name: string;
+    photo: string;
+    verified: boolean;
+  };
+};
 export type Layout = {
-  isMobile: boolean,
-}
+  isMobile: boolean;
+};
 export type PropsDetailOfPost = Layout & {
-  post: Post,
-  session: string[],
-  relatedArticle: Post[]
+  post: Post;
+  session: string[];
+  relatedArticle: Post[];
   // morePosts: string[]
-}
+};
 
 export interface ItemStoreType {
   rupiah: string;
   id: string;
   name: string;
   slug: string;
+  isRedirect: boolean;
   categoryId: number;
+  redirect: string;
   description?: string;
   price: number;
   publishedAt?: Date;
@@ -139,34 +141,34 @@ export interface Source {
 }
 
 export type address = {
-  'id': string,
-  'name': string,
-  'address': string,
-  'provinceId': number,
-  'province': string,
-  'cityId': number,
-  'city': string,
-  'type': string,
-  'postalCode': string,
-  'phone': string,
-  userId?: string,
-  subdistrictId?: null,
-  subdistrict?: null,
-  createdAt?: Date,
-  updatedAt?: Date,
-  deletedAt?: null,
-  UserId?: string,
-  mark?: string,
-  active?: boolean,
-}
+  id: string;
+  name: string;
+  address: string;
+  provinceId: number;
+  province: string;
+  cityId: number;
+  city: string;
+  type: string;
+  postalCode: string;
+  phone: string;
+  userId?: string;
+  subdistrictId?: null;
+  subdistrict?: null;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: null;
+  UserId?: string;
+  mark?: string;
+  active?: boolean;
+};
 
 export type productDetailsType = {
-  onClickCart: () => void,
-  onClickBuy: () => void,
-  isDisabled: boolean,
-  itemstore: ItemStoreType,
-  buyedProductQyt?: number
-}
+  onClickCart: () => void;
+  onClickBuy: () => void;
+  isDisabled: boolean;
+  itemstore: ItemStoreType;
+  buyedProductQyt?: number;
+};
 
 export interface cartType {
   id: string;
@@ -184,9 +186,9 @@ export interface cartType {
 }
 
 export type decreaseIncreaseFunctionType = {
-  onDecrease: () => void,
-  onIncrease: () => void,
-}
+  onDecrease: () => void;
+  onIncrease: () => void;
+};
 
 export interface EstimationCost {
   detail: DetailOfEstimationCost;
@@ -252,9 +254,9 @@ export interface Notification {
 }
 
 export interface UnreadNotification {
-    'unreadAll': number,
-    'unreadInformasi': number,
-    'unreadTransaksi': number
+  unreadAll: number;
+  unreadInformasi: number;
+  unreadTransaksi: number;
 }
 
 export interface Order {
@@ -263,7 +265,7 @@ export interface Order {
   code?: string;
   price?: number;
   url?: string;
-  status?: 'pending'|'settlement'|'expired';
+  status?: "pending" | "settlement" | "expired";
   paymentType?: null;
   details?: DetailOrder[];
 }

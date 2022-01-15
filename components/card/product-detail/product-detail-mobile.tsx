@@ -47,25 +47,36 @@ const ProductDetailMobile = ({
     <div className="relative w-full px-4 pt-8 pb-24 -mt-8 bg-white rounded-2xl">
       <Content itemstore={itemstore} />
       <div className="fixed inset-x-0 bottom-0 z-50 flex justify-between px-4 py-2 mt-8 bg-white shadow hp:text-lg ">
-        <button
-          type="button"
-          className="w-1/2 px-4 py-2 mr-2 border border-gray-200 rounded-md disabled:opacity-50"
-          onClick={onClickCart}
-          disabled={isDisabled}
-
-        >
-          + Keranjang
-        </button>
-        <button
-          type="button"
-          className="w-1/2 px-4 py-2 ml-2 text-white rounded-md bg-primary disabled:opacity-50"
-          onClick={onClickBuy}
-          disabled={isDisabled}
-
-        >
-          Beli Sekarang
-          {' '}
-        </button>
+        {itemstore.isRedirect ? (
+          <button
+            type="button"
+            className="w-full px-4 py-2 ml-2 text-white rounded-md bg-primary disabled:opacity-50"
+            onClick={() => window.open(itemstore.redirect)}
+            disabled={isDisabled}
+          >
+            Kunjungi
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="w-1/2 px-4 py-2 mr-2 border border-gray-200 rounded-md disabled:opacity-50"
+              onClick={onClickCart}
+              disabled={isDisabled}
+            >
+              + Keranjang
+            </button>
+            <button
+              type="button"
+              className="w-1/2 px-4 py-2 ml-2 text-white rounded-md bg-primary disabled:opacity-50"
+              onClick={onClickBuy}
+              disabled={isDisabled}
+            >
+              Beli Sekarang
+              {' '}
+            </button>
+          </>
+        )}
       </div>
     </div>
   </div>
