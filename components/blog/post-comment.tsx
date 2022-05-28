@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable max-len */
 import {
-  Fragment, ReactElement, useState,
+  Fragment, ReactElement, useEffect, useState,
 } from 'react'
 import Image from 'next/image'
 import { Dialog, Transition } from '@headlessui/react'
@@ -11,6 +11,7 @@ import cn from 'classnames'
 
 import { IoMdClose } from 'react-icons/io'
 import TextareaAutosize from 'react-textarea-autosize'
+import { AiOutlineArrowDown } from 'react-icons/ai'
 import { DateFormatterRelative } from '../date-formatter'
 import {
   TypePostCommentComponent,
@@ -43,6 +44,7 @@ export const CommentItem = ({
   replies,
   id,
   onClickReply,
+  isSubComment,
 }: {
   name: string;
   id: string;
@@ -50,6 +52,7 @@ export const CommentItem = ({
   createdAt: string;
   photo: string;
   replies: CommentType[];
+  isSubComment:boolean
   onClickReply: (selectedID:string) => void;
 }): ReactElement => {
   const [session] = useSession()
@@ -70,7 +73,11 @@ export const CommentItem = ({
       <table className="table-auto ">
         <tr className="">
           <td className="">
-            <div className="w-8 h-8 mr-2 xs:w-12 xs:h-12 xs:mr-4 ">
+            <div className={cn('mr-2 xs:w-12 xs:h-12 xs:mr-4 ',
+              { 'w-6 h-6 ': isSubComment },
+              { 'w-8 h-8 ': !isSubComment })}
+            >
+
               <Image
                 src={photo || '/background/download.webp'}
                 alt={`photo profil ${name}`}
@@ -83,10 +90,18 @@ export const CommentItem = ({
           </td>
           <td>
             <div className="flex items-center">
-              <p className="mr-2 font-bold leading-tight md:text-xl line-clamp-1 ">
+              <p
+                className={cn('mr-2 font-bold leading-tight line-clamp-1 ',
+                  { 'md:text-lg ': isSubComment },
+                  { 'md:text-xl ': !isSubComment })}
+              >
                 {name}
               </p>
-              <span className="flex-shrink-0 text-xs font-medium text-gray-500 md:text-base ">
+              <span
+                className={cn('flex-shrink-0 font-medium text-gray-500 md:text-base',
+                  { ' text-xs  ': isSubComment },
+                  { 'text-sm  ': !isSubComment })}
+              >
                 <DateFormatterRelative dateString={createdAt} />
               </span>
             </div>
@@ -94,7 +109,15 @@ export const CommentItem = ({
         </tr>
         <tr>
           <td />
-          <td className="md:text-lg">{comment}</td>
+          <td
+            className={cn(
+              { ' md:text-base  ': isSubComment },
+              { 'md:text-lg': !isSubComment },
+            )}
+          >
+            {comment}
+
+          </td>
         </tr>
         <tr>
           <td />
@@ -111,16 +134,21 @@ export const CommentItem = ({
                   clipRule="evenodd"
                   d="M4.83329 0.166504H7.30663C8.5443 0.166504 9.73129 0.658169 10.6065 1.53334C11.4816 2.40851 11.9733 3.59549 11.9733 4.83317V7.3065C11.9733 9.88383 9.88395 11.9732 7.30663 11.9732H4.83329C2.25596 11.9732 0.166626 9.88383 0.166626 7.3065V4.83317C0.166626 2.25584 2.25596 0.166504 4.83329 0.166504ZM8.59324 6.04299C8.99432 5.6463 9.22 5.10562 9.21996 4.5415V3.86484C9.21996 3.70853 9.13657 3.5641 9.00121 3.48595C8.86585 3.4078 8.69907 3.4078 8.56371 3.48595C8.42835 3.5641 8.34496 3.70853 8.34496 3.86484V4.5415C8.35304 4.87809 8.22288 5.20329 7.98481 5.44136C7.74674 5.67942 7.42155 5.80958 7.08496 5.8015H4.41329L5.70246 4.51234C5.86309 4.33996 5.85835 4.07133 5.69174 3.90472C5.52513 3.73812 5.25651 3.73338 5.08413 3.894L3.04829 5.92984C3.00875 5.9703 2.9771 6.01777 2.95496 6.06984C2.90824 6.17778 2.90824 6.30023 2.95496 6.40817C2.9771 6.46023 3.00875 6.50771 3.04829 6.54817L5.08413 8.56067C5.1668 8.64169 5.27755 8.68766 5.39329 8.689C5.50879 8.68649 5.61913 8.64069 5.70246 8.56067C5.87306 8.38986 5.87306 8.11315 5.70246 7.94234L4.41329 6.65317H7.08496C7.64904 6.6594 8.19217 6.43968 8.59324 6.04299Z"
                   fill="#006BC1"
+                  // className="bg-gray-500"
                 />
               </svg>
-              <p className="text-gray-700 ">Balas</p>
+              <p className="font-medium text-gray-700 ">Balas</p>
             </button>
           </td>
         </tr>
         <tr>
           <td />
           <td>
-            <div className="mt-2">
+            <div className={cn(
+              { ' mt-0  ': isSubComment },
+              { ' mt-2  ': !isSubComment },
+            )}
+            >
               {replies?.map(
                 ({
                   User,
@@ -131,6 +159,7 @@ export const CommentItem = ({
                 }) => (
                   <CommentItem
                     name={User.name}
+                    isSubComment
                     comment={subComment}
                     createdAt={subCreatedAt}
                     photo={User.photo}
@@ -168,6 +197,7 @@ export const PostCommentList = ({
           id={id}
           replies={replies}
           onClickReply={onClickReply}
+          isSubComment={false}
         />
       </div>
     ))
@@ -186,61 +216,82 @@ export const PostCommentAdd = ({
   parrentComment,
 }: TypePostCommentAdd): ReactElement => {
   const [comment, setComment] = useState(initialComment)
+  const [commentHint, setCommentHint] = useState(false)
+
+  localStorage.setItem('key', 'value')
   const handleSubmit = (e) => {
     e.preventDefault()
     onSubmit(comment)
     setComment('')
   }
 
+  useEffect(() => {
+    if (comment !== '') {
+      localStorage.setItem('commentHint', 'false')
+      setCommentHint(false)
+    }
+    if (!localStorage.getItem('commentHint') && comment === '') {
+      setCommentHint(true)
+    }
+    setTimeout(() => {
+      setCommentHint(false)
+      localStorage.setItem('commentHint', 'false')
+    }, 15000)
+  }, [comment])
+
   if (isMobile) {
     return (
-      <div className="fixed bottom-0 left-0 right-0 z-10 w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl">
-        {parrentComment && (
-        <div
-          className="text-lg font-medium text-gray-900"
-        >
-          <div className="flex items-center justify-start px-4 py-2 bg-gray-200">
-            <div className="flex items-center justify-start h-full">
-              <p className="font-medium leading-normal text-gray-600 ">Balasan untuk:</p>
-            </div>
-            <div className="flex items-center justify-center ml-2 mr-1">
-              <img className="rounded-full w-7 h-7" src={parrentComment.User.photo} />
-            </div>
-            <div className="flex items-center justify-start flex-1 ">
-              <p className="font-bold leading-normal text-gray-900 ">{getNickName(parrentComment.User.name)}</p>
-            </div>
-            <button onClick={onResetParrentComment} type="button" className="px-2 py-1"><IoMdClose /></button>
-          </div>
+      <>
+        <div className="fixed bottom-0 left-0 right-0 z-10 w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl">
+          {/* {true && <AiOutlineArrowDown className="absolute z-50 w-6 h-8 top-1 left-1/4 animate-bounce text-primary " />} */}
 
-        </div>
-        )}
-        <form className="py-2 border-t " onSubmit={handleSubmit}>
-
-          <div className="flex items-center justify-start w-full px-4 ">
-            <TextareaAutosize
-              // cacheMeasurements
-              placeholder="Tambahkan komentar..."
-              className="w-full py-2 border-0 focus:border-0 focus:ring-0"
-              onChange={(e) => setComment(e.target.value)}
-              value={comment}
-            />
-            <button
-              type="submit"
-              // className=" text-primary"
-              className={cn(
-                'px-6 py-2 text-white rounded bg-primary',
-                {
-                  'opacity-50 cursor-not-allowed': isLoading,
-                },
-              )}
-              disabled={isLoading}
+          {parrentComment && (
+            <div
+              className="text-lg font-medium text-gray-900"
             >
-              Post
+              <div className="flex items-center justify-start px-4 py-2 bg-gray-200">
+                <div className="flex items-center justify-start h-full">
+                  <p className="font-medium leading-normal text-gray-600 ">Balasan untuk:</p>
+                </div>
+                <div className="flex items-center justify-center ml-2 mr-1">
+                  <img className="rounded-full w-7 h-7" src={parrentComment.User.photo} />
+                </div>
+                <div className="flex items-center justify-start flex-1 ">
+                  <p className="font-bold leading-normal text-gray-900 ">{getNickName(parrentComment.User.name)}</p>
+                </div>
+                <button onClick={onResetParrentComment} type="button" className="px-2 py-1"><IoMdClose /></button>
+              </div>
 
-            </button>
-          </div>
-        </form>
-      </div>
+            </div>
+          )}
+          <form className="py-2 border-t " onSubmit={handleSubmit}>
+
+            <div className="flex items-end justify-start w-full px-4 ">
+              <TextareaAutosize
+              // cacheMeasurements
+                placeholder="Tambahkan komentar..."
+                className="w-full py-2 border-0 focus:border-0 focus:ring-0"
+                onChange={(e) => setComment(e.target.value)}
+                value={comment}
+              />
+              <button
+                type="submit"
+              // className=" text-primary"
+                className={cn(
+                  'px-4 py-2 text-white text-sm rounded bg-primary',
+                  {
+                    'opacity-50 cursor-not-allowed': isLoading,
+                  },
+                )}
+                disabled={isLoading}
+              >
+                Kirim
+                {/* {commentHint && <span className="absolute inline-flex w-full h-full bg-blue-300 rounded-full opacity-75 animate-ping" />} */}
+              </button>
+            </div>
+          </form>
+        </div>
+      </>
     )
   }
 
@@ -341,7 +392,7 @@ export const PostInitialCommentAddDesktop = ({ isLoading, profile, onSubmit }:{i
   return (
     <>
       {profile && (
-      <div className="px-6 py-6 my-2 -mx-8 rounded-xl bg-slate-100 ">
+      <div className="px-6 py-6 my-2 rounded-xl bg-slate-100 ">
         <div className="flex items-center">
           <div className="w-12 h-12 mr-2 xs:w-12 xs:h-12 xs:mr-4">
             <Image
