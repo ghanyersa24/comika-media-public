@@ -40,7 +40,7 @@ export const Subscribe = ({ isMobile }: { isMobile: boolean }): ReactElement => 
   const handleSubscribe = async (subscribePlan: string) => {
     if (!session && !loading) {
       toast.info('Harap Login terlebih dahulu', {
-        position: 'bottom-right',
+        
         onClose: () => signIn(),
       })
     } else {

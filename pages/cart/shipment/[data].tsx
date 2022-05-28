@@ -105,7 +105,7 @@ export const Shipment = (): ReactElement => {
     setIsLoading(true)
     const { data: submitedData, msg } = await client.post(`/store/cart-checkout?${data}&promo=${submittedPromoCode}`, { courierId: selectedCourier?.id })
     toast.success(msg, {
-      position: 'bottom-right',
+      
       autoClose: 2000,
       onClose: async () => {
         await matchMutate(/^\/notification\/unread\?/)

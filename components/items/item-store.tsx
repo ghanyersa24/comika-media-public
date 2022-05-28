@@ -77,7 +77,7 @@ export const ItemStores: FunctionComponent<{
       <ItemStoreMobile
         onClick={() => router.push(`/product/${popularStore.slug}`)}
       // onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
-        //   position: 'bottom-right',
+        //   
         // })}
         key={popularStore.id}
         imageUrl={popularStore.images[0]?.source.url}
@@ -92,7 +92,7 @@ export const ItemStores: FunctionComponent<{
             <ItemStoreDekstop
               onClick={() => router.push(`/product/${popularStore.slug}`)}
               // onClick={() => toast.info('Nantikan updatenya segera, hanya di Comika Media', {
-              //   position: 'bottom-right',
+              //   
               // })}
               key={popularStore.id}
               imageUrl={popularStore.images[0]?.source.url}

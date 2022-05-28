@@ -50,7 +50,7 @@ export const BookmarkedArticle = ({ isMobile, session }:
   // eslint-disable-next-line no-unused-vars
   if (!session) {
     toast.info('Harap Login terlebih dahulu', {
-      position: 'bottom-right',
+
       onClose: () => signIn(),
     })
   }

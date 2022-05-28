@@ -1,4 +1,5 @@
 import '../styles/index.css'
+import '../styles/animate.css'
 import dynamic from 'next/dynamic'
 // import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'

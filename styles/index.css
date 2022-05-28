@@ -111,14 +111,22 @@
     }
   }
   .scrollbar::-webkit-scrollbar {
-    @apply w-2
+    @apply w-2;
   }
   .scrollbar::-webkit-scrollbar-track {
     background: #f1f1f1;
-    @apply rounded
+    @apply rounded;
   }
   .scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-300  rounded
+    @apply bg-gray-300  rounded;
+  }
+
+  .textareaauto {
+    .boxsizingBorder {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
   }
 }
 

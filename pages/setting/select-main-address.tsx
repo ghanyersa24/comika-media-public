@@ -19,7 +19,7 @@ export const SelectMainAddress = ():ReactElement => {
   const handleChangeMainAddress = async (id:string) => {
     await client.put(`/account/address/${id}`)
     toast.success('Berhasil memilih alamat utama', {
-      position: 'bottom-right', autoClose: 2000,
+       autoClose: 2000,
     })
     await mutate()
   }

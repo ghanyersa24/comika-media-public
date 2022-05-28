@@ -1,5 +1,6 @@
 import { parseISO, format, formatDistance } from 'date-fns'
 import id from 'date-fns/locale/id'
+// import en from 'date-fns/locale/en-US'
 
 export default function DateFormatter({ dateString }) {
   const date = parseISO(dateString)
@@ -15,7 +16,7 @@ export function DateFormatterRelative({ dateString }) {
   return (
     <time dateTime={dateString}>
       {
-    formatDistance(date, new Date(), { locale: id })
+    formatDistance(date, new Date(), { locale: id, addSuffix: false })
 }
     </time>
   )
