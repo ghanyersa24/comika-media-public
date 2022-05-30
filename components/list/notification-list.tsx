@@ -4,6 +4,8 @@ import router from 'next/router'
 import classnames from 'classnames'
 import { Notification } from '../../res/interface'
 import { DateFormatterRelative } from '../date-formatter'
+import { client } from '../../lib/clientRaw'
+import { API_NOTIFICATION } from '../../res/api-endpoint'
 
 type Props = {
 	notifications:Notification[]
@@ -19,7 +21,10 @@ export const NotificationList: FunctionComponent<Props> = (
       {' '}
       { notifSlice?.map((notification) => (
         <button
-          onClick={() => router.push(`/notification/${notification.id}`)}
+          onClick={async () => {
+            await client.get(`${API_NOTIFICATION}/${notification.id}`)
+            router.push(notification.link)
+          }}
           type="button"
           className={classnames(
             `w-full py-3 text-left rounded-lg  focus:ring-0 hover:bg-gray-100 ${btnClassName}`,

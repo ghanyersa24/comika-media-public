@@ -274,7 +274,6 @@ export const Navbar = (): ReactElement => {
                     type="button"
                     className="relative"
                     onClick={() => (session ? router.push('/cart') : toast.info('Harap Login terlebih dahulu', {
-                      
                       onClose: () => signIn(),
                       autoClose: 2000,
                     }))}

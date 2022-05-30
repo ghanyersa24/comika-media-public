@@ -241,22 +241,15 @@ export interface Promo {
 }
 
 export interface Notification {
-  typeIcon?: string;
-  id?: string;
-  title?: string;
-  img?: string;
-  description?: string;
-  descriptionHtml?: string;
-  isRead?: boolean;
-  type?: string;
-  userId?: string;
-  orderId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: null;
-  UserId?: string;
-  OrderId?: string;
-  Order?: Order;
+  link: string;
+  typeIcon: string;
+  id: string;
+  img: string;
+  title: string;
+  isRead: boolean;
+  createdAt: Date;
+  type: string;
+  description: string;
 }
 
 export interface UnreadNotification {
