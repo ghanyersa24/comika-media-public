@@ -22,7 +22,7 @@ import {
 } from '../../res/interface'
 import getNickName from '../../helper/name'
 import { useAppDispatch, useAppSelector } from '../../hook'
-import { setComment } from '../../slices/comment'
+import { setComment, setModalValue } from '../../slices/comment'
 
 export const PostCommentLoading = (): ReactElement => (
   <div className="w-full max-w-sm p-4 mx-auto border border-blue-300 rounded-md shadow">
@@ -218,7 +218,7 @@ export const PostCommentAdd = ({
   onResetParrentComment,
   parrentComment,
 }: TypePostCommentAdd): ReactElement => {
-  const comment = useAppSelector((state) => state.Comment.value)
+  const comment = useAppSelector((state) => state.Comment.modalValue)
   const dispatch = useAppDispatch()
   const [commentHint, setCommentHint] = useState(false)
 
@@ -226,6 +226,10 @@ export const PostCommentAdd = ({
     e.preventDefault()
     onSubmit(comment)
     setComment('')
+  }
+
+  const handleChange = (e) => {
+    dispatch(setModalValue(e.target.value))
   }
 
   useEffect(() => {
@@ -274,8 +278,8 @@ export const PostCommentAdd = ({
               // cacheMeasurements
                 placeholder="Tambahkan komentar..."
                 className="w-full py-2 border-0 focus:border-0 focus:ring-0"
-                onChange={(e) => dispatch(setComment(e.target.value))}
-                value={comment}
+                onChange={handleChange}
+                value={`${comment}`}
               />
               <button
                 type="submit"
@@ -360,8 +364,8 @@ export const PostCommentAdd = ({
                         minRows={3}
                         placeholder="Tambahkan komentar..."
                         className="w-full py-2 border-0 focus:border-0 focus:ring-0"
-                        onChange={(e) => setComment(e.target.value)}
-                        value={comment}
+                        onChange={handleChange}
+                        value={`${comment}`}
                       />
                     </div>
                     <div className="justify-end hidden mt-2 md:flex">

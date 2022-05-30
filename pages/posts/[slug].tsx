@@ -32,7 +32,7 @@ import { SocialMediaShareButton } from '../../components/functional/button/socia
 import { BookmarkButton } from '../../components/functional/button/bookmark'
 import { LikeButton } from '../../components/functional/button/like'
 import { findCommentById } from '../../helper/comment'
-import { setComment } from '../../slices/comment'
+import { setComment, setModalValue } from '../../slices/comment'
 
 declare global {
   interface Window { instgrm: any; }
@@ -236,6 +236,7 @@ export default function DetailOfPost({
       await mutateComment(); setErrorMsgPostAdd(null)
       setIsModalOpen(false)
       dispatch(setComment(''))
+      dispatch(setModalValue(''))
     } catch (error) {
       setErrorMsgPostAdd(error)
     } finally {
