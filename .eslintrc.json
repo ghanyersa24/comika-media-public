@@ -31,7 +31,7 @@
     "react-hooks/rules-of-hooks": "error",
     "@next/next/no-page-custom-font": "off",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": "warn",
     "semi": [2, "never"],
     "no-tabs": 0,
     "react/react-in-jsx-scope": "off",

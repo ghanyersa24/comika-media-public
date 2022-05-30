@@ -11,8 +11,6 @@ import cn from 'classnames'
 
 import { IoMdClose } from 'react-icons/io'
 import TextareaAutosize from 'react-textarea-autosize'
-import { AiOutlineArrowDown } from 'react-icons/ai'
-import { useSelector } from 'react-redux'
 import { DateFormatterRelative } from '../date-formatter'
 import {
   TypePostCommentComponent,
@@ -424,7 +422,7 @@ export const PostInitialCommentAddDesktop = ({
           // cacheMeasurements
             placeholder="Tambahkan komentar..."
             minRows={3}
-            className="w-full px-4 py-2 my-4 border-0 focus:border-0 focus:ring-0 "
+            className="w-full px-4 py-2 my-4 border-0 rounded-md focus:border-0 focus:ring-0 "
             onChange={(e) => dispatch(setComment(e.target.value))}
             value={comment}
           />
