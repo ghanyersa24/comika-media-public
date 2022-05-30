@@ -12,6 +12,7 @@ import cn from 'classnames'
 import { IoMdClose } from 'react-icons/io'
 import TextareaAutosize from 'react-textarea-autosize'
 import { AiOutlineArrowDown } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
 import { DateFormatterRelative } from '../date-formatter'
 import {
   TypePostCommentComponent,
@@ -20,6 +21,8 @@ import {
   Profile,
 } from '../../res/interface'
 import getNickName from '../../helper/name'
+import { useAppDispatch, useAppSelector } from '../../hook'
+import { setComment } from '../../slices/comment'
 
 export const PostCommentLoading = (): ReactElement => (
   <div className="w-full max-w-sm p-4 mx-auto border border-blue-300 rounded-md shadow">
@@ -215,10 +218,10 @@ export const PostCommentAdd = ({
   onResetParrentComment,
   parrentComment,
 }: TypePostCommentAdd): ReactElement => {
-  const [comment, setComment] = useState(initialComment)
+  const comment = useAppSelector((state) => state.Comment.value)
+  const dispatch = useAppDispatch()
   const [commentHint, setCommentHint] = useState(false)
 
-  localStorage.setItem('key', 'value')
   const handleSubmit = (e) => {
     e.preventDefault()
     onSubmit(comment)
@@ -271,7 +274,7 @@ export const PostCommentAdd = ({
               // cacheMeasurements
                 placeholder="Tambahkan komentar..."
                 className="w-full py-2 border-0 focus:border-0 focus:ring-0"
-                onChange={(e) => setComment(e.target.value)}
+                onChange={(e) => dispatch(setComment(e.target.value))}
                 value={comment}
               />
               <button
@@ -387,54 +390,61 @@ export const PostCommentAdd = ({
   )
 }
 
-export const PostInitialCommentAddDesktop = ({ isLoading, profile, onSubmit }:{isLoading:boolean, profile:Profile, onSubmit:(comment:string)=>void}):ReactElement => {
-  const [comment, setComment] = useState('')
+export const PostInitialCommentAddDesktop = ({
+  isLoading, profile, onSubmit, initialComment,
+}:{isLoading:boolean, profile:Profile, onSubmit:(comment:string)=>void, initialComment:string}):ReactElement => {
+  const comment = useAppSelector((state) => state.Comment.value)
+  const dispatch = useAppDispatch()
   return (
     <>
-      {profile && (
-      <div className="px-6 py-6 my-2 rounded-xl bg-slate-100 ">
-        <div className="flex items-center">
-          <div className="w-12 h-12 mr-2 xs:w-12 xs:h-12 xs:mr-4">
-            <Image
-              src={profile.photo || '/background/download.webp'}
-              alt={`photo profil ${profile.name}`}
-              layout="intrinsic"
-              className="rounded-full"
-              width={144}
-              height={144}
-            />
-          </div>
-          <span className="mx-2 font-bold md:text-xl">{profile.name}</span>
-        </div>
-        <TextareaAutosize
-          // cacheMeasurements
-          placeholder="Tambahkan komentar..."
-          minRows={3}
-          className="w-full px-4 py-2 my-4 border-0 focus:border-0 focus:ring-0 "
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-        />
-        {/* <input value={comment} onChange={(e) => setComment(e.target.value)} className="flex-1 px-3 py-2 mr-2 " type="text" placeholder="Tambahkan Komentar" name="comment" id="comment" /> */}
-        <div className="flex justify-end">
-          <button
-            onClick={() => {
-              onSubmit(comment)
-              setComment('')
-            }}
-            type="button"
-            className={cn(
-              'px-6 py-2 text-white rounded bg-primary',
-              {
-                'opacity-50 cursor-not-allowed': isLoading,
-              },
+      {(
+        <div className="px-6 py-6 my-2 rounded-xl bg-slate-100 ">
+          <div className="flex items-center">
+            {profile && (
+            <>
+              <div className="w-12 h-12 mr-2 xs:w-12 xs:h-12 xs:mr-4">
+                <Image
+                  src={profile.photo || '/background/download.webp'}
+                  alt={`photo profil ${profile.name}`}
+                  layout="intrinsic"
+                  className="rounded-full"
+                  width={144}
+                  height={144}
+                />
+              </div>
+              <span className="mx-2 font-bold md:text-xl">{profile.name}</span>
+            </>
             )}
-            disabled={isLoading}
-          >
-            Kirim
+          </div>
+          <TextareaAutosize
+          // cacheMeasurements
+            placeholder="Tambahkan komentar..."
+            minRows={3}
+            className="w-full px-4 py-2 my-4 border-0 focus:border-0 focus:ring-0 "
+            onChange={(e) => dispatch(setComment(e.target.value))}
+            value={comment}
+          />
+          {/* <input value={comment} onChange={(e) => setComment(e.target.value)} className="flex-1 px-3 py-2 mr-2 " type="text" placeholder="Tambahkan Komentar" name="comment" id="comment" /> */}
+          <div className="flex justify-end">
+            <button
+              onClick={() => {
+                onSubmit(comment)
+                setComment('')
+              }}
+              type="button"
+              className={cn(
+                'px-6 py-2 text-white rounded bg-primary',
+                {
+                  'opacity-50 cursor-not-allowed': isLoading,
+                },
+              )}
+              disabled={isLoading}
+            >
+              Kirim
 
-          </button>
+            </button>
+          </div>
         </div>
-      </div>
       )}
     </>
   )

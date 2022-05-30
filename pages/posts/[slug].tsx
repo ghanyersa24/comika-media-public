@@ -10,6 +10,7 @@ import classnames from 'classnames'
 import Script from 'next/script'
 import { Disclosure, Transition } from '@headlessui/react'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -31,6 +32,7 @@ import { SocialMediaShareButton } from '../../components/functional/button/socia
 import { BookmarkButton } from '../../components/functional/button/bookmark'
 import { LikeButton } from '../../components/functional/button/like'
 import { findCommentById } from '../../helper/comment'
+import { setComment } from '../../slices/comment'
 
 declare global {
   interface Window { instgrm: any; }
@@ -187,6 +189,8 @@ export default function DetailOfPost({
   if (isMobile) {
     limit = 2
   }
+
+  const dispatch = useDispatch()
   const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { fallbackData: post })
   const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
   const { data: comments, error: errorComment, mutate: mutateComment } = useSWR<CommentType[]>(() => (postClient?.slug ? `${API_ENDPOINT_COMMENT}/${postClient.slug}` : null), client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
@@ -221,6 +225,8 @@ export default function DetailOfPost({
   }
 
   const handleSubmitPostComment = async (comment:string) => {
+    if (!session) signIn()
+
     try {
       setIsCommentLoading(true)
       await addPost(postClient.slug, {
@@ -229,6 +235,7 @@ export default function DetailOfPost({
       })
       await mutateComment(); setErrorMsgPostAdd(null)
       setIsModalOpen(false)
+      dispatch(setComment(''))
     } catch (error) {
       setErrorMsgPostAdd(error)
     } finally {
@@ -285,14 +292,14 @@ export default function DetailOfPost({
               </div>
             </div>
 
-            <Disclosure defaultOpen={false}>
+            <Disclosure defaultOpen>
               {({ open }) => (
                 <>
-                  { (open && !session) && toast.info('Harap Login terlebih dahulu', {
+                  {/* { (open && !session) && toast.info('Harap Login terlebih dahulu', {
 
                     onClose: () => signIn(),
                     autoClose: 5000,
-                  })}
+                  })} */}
                   {/* <p className="hidden -mx-4 text-4xl font-medium leading-10 text-primary md:block">Komentar</p> */}
                   <div className="-mx-4 md:-mx-0">
                     <Disclosure.Button className="relative w-full px-4 py-4 text-base text-justify text-gray-400 border-b-2 border-white bg-slate-100 ">
@@ -316,6 +323,7 @@ export default function DetailOfPost({
                           profile={profile}
                           onSubmit={handleSubmitPostComment}
                           isLoading={isCommentLoading}
+                          initialComment=""
                         />
                         )}
                         <PostCommentList
