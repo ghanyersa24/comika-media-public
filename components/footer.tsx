@@ -3,6 +3,7 @@ import { IoLogoYoutube, IoLogoTwitter } from 'react-icons/io'
 import { SiTiktok } from 'react-icons/si'
 import { RiInstagramFill } from 'react-icons/ri'
 import { Comikamedia } from './svg'
+import { SocialMediaLogo } from './social-media'
 
 const navigation = [
   { name: 'Artikel', href: '/article', current: true },
@@ -70,7 +71,7 @@ export const Footer = () => (
         <div className="w-full px-4 lg:w-1/2 md:w-1/2">
           <h2 className="h2-text-gray-light">HUBUNGI KAMI</h2>
           <nav className="mb-10 list-none">
-            <Link href="/x">
+            {/* <Link href="/x">
               <a className="flex items-center text-gray-light">
                 <RiInstagramFill className="mr-2 text-xl" />
                 @Comikamedia
@@ -93,7 +94,8 @@ export const Footer = () => (
                 <SiTiktok className="mr-2 text-xl" />
                 @Comikamedia
               </a>
-            </Link>
+            </Link> */}
+            <SocialMediaLogo oritentation="vertical" className="mr-2 text-xl" />
           </nav>
         </div>
       </div>

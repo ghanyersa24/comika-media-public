@@ -27,6 +27,7 @@
   "plugins": ["@typescript-eslint", "simple-import-sort", "react-hooks"],
   "rules": {
     "linebreak-style": 0,
+    "@typescript-eslint/explicit-function-return-type": "off",
     "react/no-unescaped-entities": "off",
     "react-hooks/rules-of-hooks": "error",
     "@next/next/no-page-custom-font": "off",
@@ -52,7 +53,6 @@
       }
     ],
     "react/jsx-props-no-spreading": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "jsx-a11y/anchor-is-valid": [
       "error",

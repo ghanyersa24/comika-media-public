@@ -139,16 +139,6 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
   /* This `show` prop controls all nested `Transition.Child` components. */
   <Transition show={isShowing}>
     {/* Background overlay */}
-    <Transition.Child
-      enter="transition-opacity ease-linear duration-200"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity ease-linear duration-200"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-    >
-      <Disclosure.Button className="fixed top-0 z-40 w-full h-screen bg-black bg-opacity-80 " />
-    </Transition.Child>
     {/* Sliding sidebar */}
     <Transition.Child
       enter="duration-200 ease-out"
@@ -156,7 +146,9 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
       leave="duration-100 ease-in"
       leaveTo="opacity-0 scale-100"
     >
-      <div className="fixed top-0 w-full h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary " style={{ zIndex: 9999 }}>
+      <Disclosure.Button className="fixed top-0 w-full h-screen bg-black bg-opacity-75" style={{ zIndex: 99 }} />
+
+      <div className="fixed top-0 w-full h-screen px-4 pt-2 pb-3 space-y-1 text-white md:w-80 bg-primary " style={{ zIndex: 100 }}>
         <div className="flex justify-end">
           <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <XIcon className="block w-6 h-6" aria-hidden="true" />
@@ -237,11 +229,10 @@ export const Navbar = (): ReactElement => {
 
   return (
     <>
-      <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
+      <Disclosure as="nav" className="fixed top-0 z-50 w-screen bg-white">
         {({ open }) => (
           <>
             <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
-
             <div className="pl-4 pr-2 mx-auto sm:px-6 lg:px-8">
               <div className="flex items-center justify-between h-16 ">
                 <div className="inset-y-0 left-0 flex items-center ">
@@ -258,7 +249,7 @@ export const Navbar = (): ReactElement => {
                 </div>
                 <div className="">
                   <Link href="/">
-                    <a className="relative hidden hover:underline md:block ">
+                    <a className="relative hidden hover:underline md:flex ">
                       <ComikamediaNavbar className="h-8 w-52" />
                     </a>
                   </Link>
