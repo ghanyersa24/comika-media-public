@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable max-len */
 import {
-  Fragment, ReactElement, useEffect, useState,
+  Fragment, MutableRefObject, ReactElement, useEffect, useState,
 } from 'react'
 import Image from 'next/image'
 import { Dialog, Transition } from '@headlessui/react'
@@ -46,9 +46,11 @@ export const CommentItem = ({
   id,
   onClickReply,
   isSubComment,
+  commentRef,
 }: {
   name: string;
   id: string;
+  commentRef:MutableRefObject<any[]>;
   comment: string;
   createdAt: string;
   photo: string;
@@ -70,7 +72,11 @@ export const CommentItem = ({
   }
 
   return (
-    <div className="py-2 ">
+    <div
+      className="py-2 "
+      // eslint-disable-next-line no-param-reassign
+      ref={(el) => { commentRef.current[id] = el }}
+    >
       <table className="table-auto ">
         <tr className="">
           <td className="">
@@ -145,10 +151,12 @@ export const CommentItem = ({
         <tr>
           <td />
           <td>
-            <div className={cn(
-              { ' mt-0  ': isSubComment },
-              { ' mt-2  ': !isSubComment },
-            )}
+            <div
+              // eslint-disable-next-line no-param-reassign
+              className={cn(
+                { ' mt-0  ': isSubComment },
+                { ' mt-2  ': !isSubComment },
+              )}
             >
               {replies?.map(
                 ({
@@ -161,6 +169,7 @@ export const CommentItem = ({
                   <CommentItem
                     name={User.name}
                     isSubComment
+                    commentRef={commentRef}
                     comment={subComment}
                     createdAt={subCreatedAt}
                     photo={User.photo}
@@ -192,8 +201,6 @@ export const PostCommentList = ({
     }) => (
       <div
         key={id}
-        // eslint-disable-next-line no-param-reassign
-        ref={(el) => { commentRef.current[id] = el }}
         className="pt-2 pb-0"
       >
         <CommentItem
@@ -201,6 +208,7 @@ export const PostCommentList = ({
           comment={comment}
           createdAt={createdAt}
           photo={User.photo}
+          commentRef={commentRef}
           id={id}
           replies={replies}
           onClickReply={onClickReply}

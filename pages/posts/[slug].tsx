@@ -143,6 +143,7 @@ export default function DetailOfPost({
   const [parrentCommentId, setParrentComment] = useState('')
   const { commentId } = router.query
   const [isFullyLoaded, setIsFullyLoaded] = useState(false)
+  const [isScrolledToCommendId, setIsScrolledToCommendId] = useState(false)
 
   const commentRef = useRef([])
   // const scrollToRef = (ref:MutableRefObject<any[]>) => {
@@ -172,8 +173,9 @@ export default function DetailOfPost({
   // SCROLL TO COMMENT
   useEffect(() => {
     const currentRef = commentRef.current?.[commentId as string]
-    if (commentId && comments && currentRef && isFullyLoaded) {
+    if (commentId && comments && currentRef && isFullyLoaded && !isScrolledToCommendId) {
       currentRef.scrollIntoView({ behavior: 'smooth', block: isMobile ? 'start' : 'center' })
+      setIsScrolledToCommendId(true)
     }
   }, [isFullyLoaded, comments, commentId, isMobile])
 
