@@ -171,7 +171,7 @@ export default function DetailOfPost({
 
   // SCROLL TO COMMENT
   useEffect(() => {
-    const currentRef = commentRef.current?.['6b0d4ef4-fcf0-4b4a-a9e8-94cea378f073']
+    const currentRef = commentRef.current?.[commentId as string]
     if (commentId && comments && currentRef && isFullyLoaded) {
       currentRef.scrollIntoView({ behavior: 'smooth', block: isMobile ? 'start' : 'center' })
     }
