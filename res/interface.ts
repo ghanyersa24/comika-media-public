@@ -1,5 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
+
+import { MutableRefObject, RefObject } from "react";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseFetch {
   error?: {
@@ -45,30 +48,31 @@ export type Profile = Signup &
   };
 
 export interface CommentType {
-    id: string;
-    comment: string;
-    createdAt: string;
-    User: User;
-    replies?: CommentType[];
-    parentId?: string;
-  }
+  id: string;
+  comment: string;
+  createdAt: string;
+  User: User;
+  replies?: CommentType[];
+  parentId?: string;
+}
 
 export interface User {
-    photo: string;
-    id: string;
-    name: string;
-  }
+  photo: string;
+  id: string;
+  name: string;
+}
 
 export type TypePostCommentComponent = swrReturn & {
   comments: CommentType[];
-  onClickReply: (selectedID:string) => void;
+  commentRef: MutableRefObject<any[]>;
+  onClickReply: (selectedID: string) => void;
 };
 export type TypePostCommentAdd = swrReturn & {
-  onSubmit: (comment:string) => void;
+  onSubmit: (comment: string) => void;
   onCloseModal: () => void;
   initialComment: string;
   onResetParrentComment: () => void;
-  isOpen : boolean;
+  isOpen: boolean;
 
   isLoading: boolean;
   isMobile: boolean;
@@ -264,7 +268,7 @@ export interface Order {
   code?: string;
   price?: number;
   url?: string;
-  status?: 'pending' | 'settlement' | 'expired';
+  status?: "pending" | "settlement" | "expired";
   paymentType?: null;
   details?: DetailOrder[];
 }

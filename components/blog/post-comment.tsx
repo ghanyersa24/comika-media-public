@@ -182,6 +182,7 @@ export const CommentItem = ({
 export const PostCommentList = ({
   comments,
   isLoading,
+  commentRef,
   onClickReply,
 }: TypePostCommentComponent): ReactElement => {
   let content: ReactElement[] | ReactElement = <PostCommentLoading />
@@ -189,7 +190,12 @@ export const PostCommentList = ({
     content = comments.map(({
       User, comment, createdAt, id, replies,
     }) => (
-      <div key={id} className="pt-2 pb-0">
+      <div
+        key={id}
+        // eslint-disable-next-line no-param-reassign
+        ref={(el) => { commentRef.current[id] = el }}
+        className="pt-2 pb-0"
+      >
         <CommentItem
           name={User.name}
           comment={comment}
