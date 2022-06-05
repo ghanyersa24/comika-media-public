@@ -24,6 +24,7 @@ export const NotificationList: FunctionComponent<Props> = (
           onClick={async () => {
             await client.get(`${API_NOTIFICATION}/${notification.id}`)
             router.push(notification.link)
+            // router.push('/posts/Nasi-Sampah-Cak-Tretan--Usaha-Kuliner-yang-Tidak-Berbahaya-dari-Tretan-Muslim?commentId=cc29165c-d85e-4720-832b-21128716ae2b')
           }}
           type="button"
           className={classnames(

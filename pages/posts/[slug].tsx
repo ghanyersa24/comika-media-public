@@ -142,7 +142,6 @@ export default function DetailOfPost({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [parrentCommentId, setParrentComment] = useState('')
   const { commentId } = router.query
-  const [isFullyLoaded, setIsFullyLoaded] = useState(false)
   const [isScrolledToCommendId, setIsScrolledToCommendId] = useState(false)
 
   const commentRef = useRef([])
@@ -152,9 +151,6 @@ export default function DetailOfPost({
 
   useEffect(() => {
     window.instgrm = window.instgrm || {}
-    window.addEventListener('load', () => {
-      setIsFullyLoaded(true)
-    })
     // eslint-disable-next-line no-undef
     if (window?.instgrm?.Embeds && twttr?.widgets && postClient) {
       window.instgrm.Embeds.process()
@@ -173,11 +169,12 @@ export default function DetailOfPost({
   // SCROLL TO COMMENT
   useEffect(() => {
     const currentRef = commentRef.current?.[commentId as string]
-    if (commentId && comments && currentRef && isFullyLoaded && !isScrolledToCommendId) {
+    console.log('CCMM', !!commentId, !!comments, !!currentRef, !isScrolledToCommendId)
+    if (commentId && comments && currentRef && !isScrolledToCommendId) {
       currentRef.scrollIntoView({ behavior: 'smooth', block: isMobile ? 'start' : 'center' })
       setIsScrolledToCommendId(true)
     }
-  }, [isFullyLoaded, comments, commentId, isMobile])
+  }, [comments, commentId, isMobile, isScrolledToCommendId])
 
   if (!router.isFallback && !postClient?.slug) {
     return <ErrorPage statusCode={404} />
