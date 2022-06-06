@@ -261,7 +261,7 @@ export default function DetailOfPost({
                   {/* <p className="hidden -mx-4 text-4xl font-medium leading-10 text-primary md:block">Komentar</p> */}
                   <div className="-mx-4 md:-mx-0">
                     <Disclosure.Button className="relative w-full px-4 py-4 text-base text-justify text-gray-400 border-b-2 border-white bg-slate-100 ">
-                      <div>{open ? 'Tutup kolom komentar' : '10 Komentar dari Ridwan dan lainnya'}</div>
+                      <div>{open ? 'Tutup kolom komentar' : 'Tampilkan kolom komentar'}</div>
                       <div className="absolute left-0 right-0 h-1 bg-slate-200 -bottom-1.5 " />
                     </Disclosure.Button>
                   </div>
