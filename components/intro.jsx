@@ -8,23 +8,23 @@ import classnames from 'classnames'
 import { Get as GetJumbotron } from '../service/jumbotron'
 
 export const ItemDekstop = ({ url, link }) => (
-  <Link href={link || '/'}>
-    <a>
-      <div className="w-full ">
-        {/* <img src={url} alt="Gambar Intro" className="object-cover w-full" /> */}
-        <Image
-          height={480}
-          placeholder="blur"
-          blurDataURL="/background/download.webp"
-          width={1440}
-          layout="responsive"
-          src={url || '/background/download.webp'}
-          alt="Gambar Intro"
-          className="object-cover w-full"
-        />
-      </div>
-    </a>
-  </Link>
+  (<Link href={link || '/'}>
+
+    <div className="w-full ">
+      {/* <img src={url} alt="Gambar Intro" className="object-cover w-full" /> */}
+      <Image
+        height={480}
+        placeholder="blur"
+        blurDataURL="/background/download.webp"
+        width={1440}
+        layout="responsive"
+        src={url || '/background/download.webp'}
+        alt="Gambar Intro"
+        className="object-cover w-full"
+      />
+    </div>
+
+  </Link>)
 
 )
 
@@ -106,22 +106,22 @@ export function IntroDekstop() {
 }
 
 export const ItemMobile = ({ url, link }) => (
-  <Link href={link || '/'}>
-    <a>
-      <div className="w-full rounded-lg">
-        <Image
-          height={184}
-          width={350}
-          layout="responsive"
-          placeholder="blur"
-          blurDataURL="/background/download.webp"
-          src={url || '/background/download.webp'}
-          alt="Gambar Intro"
-          className="object-cover rounded-lg"
-        />
-      </div>
-    </a>
-  </Link>
+  (<Link href={link || '/'}>
+
+    <div className="w-full rounded-lg">
+      <Image
+        height={184}
+        width={350}
+        layout="responsive"
+        placeholder="blur"
+        blurDataURL="/background/download.webp"
+        src={url || '/background/download.webp'}
+        alt="Gambar Intro"
+        className="object-cover rounded-lg"
+      />
+    </div>
+
+  </Link>)
 
 )
 export function IntroMobile() {

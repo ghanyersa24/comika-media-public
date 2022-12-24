@@ -1,16 +1,13 @@
-import React, { ReactNode, useState } from 'react'
-import {
-  signIn,
-  getProviders,
-} from 'next-auth/client'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { FaSpinner, FaGooglePlusG } from 'react-icons/fa'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
-import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import { ComikamediaNavbar, BackgroundLogin } from '../../components/svg'
-import { Login } from '../../res/interface'
+import React, { ReactNode, useState } from "react";
+import { signIn, getProviders } from "next-auth/client";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { FaSpinner, FaGooglePlusG } from "react-icons/fa";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { ComikamediaNavbar, BackgroundLogin } from "../../components/svg";
+import { Login } from "../../res/interface";
 
 // enum Severity {
 //   error='bg-red-200',
@@ -21,50 +18,55 @@ import { Login } from '../../res/interface'
 //   1:string
 // }
 export const LoginPage = (): ReactNode => {
-  const router = useRouter()
-  const [login, setLogin] = useState<Login | null>(null)
-  const [errorMsg, setErrorMsg] = useState<string>(router?.query?.errorNextAuth as string)
-  const [isPasswordShown, setIsPasswordShown] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [login, setLogin] = useState<Login | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>(
+    router?.query?.errorNextAuth as string
+  );
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      type, checked, name, value,
-    } = e.target
-    setLogin({ ...login, [name]: type === 'checkbox' ? checked : value })
-  }
-  const { callbackUrl } = router.query
-  const callbackUrlString = callbackUrl as string || '/'
+    const { type, checked, name, value } = e.target;
+    setLogin({ ...login, [name]: type === "checkbox" ? checked : value });
+  };
+  const { callbackUrl } = router.query;
+  const callbackUrlString = (callbackUrl as string) || "/";
 
   const handleSubmitLogin = (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setErrorMsg(null)
-    signIn('credentials', { redirect: false, ...login, callbackUrlString }).then(
-      (result) => {
-        if (result?.error !== null) {
-          setErrorMsg(result.error)
-          setIsLoading(false)
-        } else router.push(`${callbackUrlString}`)
-      },
-    )
-  }
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMsg(null);
+    signIn("credentials", {
+      redirect: false,
+      ...login,
+      callbackUrlString,
+    }).then((result) => {
+      if (result?.error !== null) {
+        setErrorMsg(result.error);
+        setIsLoading(false);
+      } else router.push(`${callbackUrlString}`);
+    });
+  };
   return (
     <>
       <Head>
-        <title>
-          Comika Media - Login
-        </title>
+        <title>Comika Media - Login</title>
         {/* <meta property="og:image" content={post.ogImage.url} /> */}
       </Head>
       <div className="relative grid min-h-screen lg:grid-cols-2 bg-primary lg:bg-white">
         <BackgroundLogin className="fixed block lg:hidden" />
-        <form onSubmit={handleSubmitLogin} className="absolute bottom-0 flex flex-col w-full px-8 pt-6 pb-8 mx-auto overflow-auto bg-white lg:static rounded-t-2xl lg:rounded lg:mb-4 lg:w-2/3 place-content-center">
+        <form
+          onSubmit={handleSubmitLogin}
+          className="absolute bottom-0 flex flex-col w-full px-8 pt-6 pb-8 mx-auto overflow-auto bg-white lg:static rounded-t-2xl lg:rounded lg:mb-4 lg:w-2/3 place-content-center"
+        >
           <div className="hidden mb-8 lg:flex">
             <ComikamediaNavbar className="w-2/3" />
           </div>
           <div className="mb-8">
-            <p className="text-3xl font-medium leading-9 text-gray-800">Login </p>
+            <p className="text-3xl font-medium leading-9 text-gray-800">
+              Login{" "}
+            </p>
             <p className="text-lg font-medium leading-9 text-gray-800 text-opacity-50">
               Log in to Comika Media
             </p>
@@ -72,7 +74,9 @@ export const LoginPage = (): ReactNode => {
 
           <div className="mb-4">
             {errorMsg ? (
-              <div className="max-w-full p-2 mb-4 bg-red-200 rounded">{errorMsg}</div>
+              <div className="max-w-full p-2 mb-4 bg-red-200 rounded">
+                {errorMsg}
+              </div>
             ) : null}
             <label
               htmlFor="email"
@@ -96,7 +100,7 @@ export const LoginPage = (): ReactNode => {
               <input
                 className="w-full px-3 py-2 mt-3"
                 id="password"
-                type={isPasswordShown ? 'text' : 'password'}
+                type={isPasswordShown ? "text" : "password"}
                 name="password"
                 onChange={handleChangeValue}
                 placeholder="******************"
@@ -123,20 +127,18 @@ export const LoginPage = (): ReactNode => {
               />
               Remember Me
             </label>
-            <Link href="/auth/forget">
-              <a
-                className="inline-block font-bold align-baseline text-blue hover:text-blue-darker"
-              >
-                Forgot Password?
-              </a>
+            <Link
+              href="/auth/forget"
+              className="inline-block font-bold align-baseline text-blue hover:text-blue-darker"
+            >
+              Forgot Password?
             </Link>
-
           </div>
           <button
             className="flex justify-center px-6 py-4 mt-8 font-bold btn-primary"
             type="submit"
           >
-            {isLoading && <FaSpinner className="w-5 h-5 mr-3 animate-spin" /> }
+            {isLoading && <FaSpinner className="w-5 h-5 mr-3 animate-spin" />}
             Sign In
           </button>
           <div className="py-2 font-bold text-center text-gray-800 text-opacity-50">
@@ -144,17 +146,19 @@ export const LoginPage = (): ReactNode => {
           </div>
           <div className="flex justify-center my-2">
             {/* <button
-              type="button"
-              className="btn-secondary border-primary text-primary "
-              onClick={() => signIn('facebook', { redirect: true })}
-            >
-              <FaFacebookF className="mr-2 text-xl" />
-              Facebook
-            </button> */}
+            type="button"
+            className="btn-secondary border-primary text-primary "
+            onClick={() => signIn('facebook', { redirect: true })}
+          >
+            <FaFacebookF className="mr-2 text-xl" />
+            Facebook
+          </button> */}
             <button
               type="button"
               className="w-full text-red-700 border-2 border-red-700 btn-secondary "
-              onClick={() => signIn('google', { callbackUrl: callbackUrlString })}
+              onClick={() =>
+                signIn("google", { callbackUrl: callbackUrlString })
+              }
             >
               <FaGooglePlusG className="mr-2 text-2xl" />
               Google
@@ -162,8 +166,8 @@ export const LoginPage = (): ReactNode => {
           </div>
           <p className="py-4 text-sm leading-relaxed text-center text-gray-500">
             Don’t have an account?
-            <Link href="/auth/signup">
-              <a className="font-bold text-primary"> Sign up</a>
+            <Link href="/auth/signup" className="font-bold text-primary">
+              Sign up
             </Link>
           </p>
         </form>
@@ -172,14 +176,14 @@ export const LoginPage = (): ReactNode => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 // This is the recommended way for Next.js 9.3 or newer
 export const getServerSideProps: GetServerSideProps = async () => {
-  const providers = await getProviders()
+  const providers = await getProviders();
   return {
     props: { providers },
-  }
-}
-export default LoginPage
+  };
+};
+export default LoginPage;

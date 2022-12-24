@@ -1,26 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const withPWA = require('next-pwa')
+/** @type {import('next').NextConfig} */
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+})
 
 module.exports = withPWA({
-  swcMinify: true,
-  pwa: {
-    dest: 'public',
-    disable: process.env.NODE_ENV === 'development',
-  },
+  reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   experimental: {
-    // Enables the styled-components SWC transform
-    swcLoader: true,
-    styledComponents: true,
-  },
-  serverRuntimeConfig: {
-    // Will only be available on the server side
-    mySecret: 'secret',
-    BASH_URL: process.env.NEXT_PUBLIC_BASH_URL, // Pass through env variables
-    GOOGLE_MAP_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY, // Pass through env variables
-  },
-  publicRuntimeConfig: {
-    // Will be available on both server and client
-    staticFolder: '/static',
+    // Required:
+    appDir: true,
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -30,10 +18,11 @@ module.exports = withPWA({
       '1.bp.blogspot.com', 'www.comikacomedy.club', 'comika.id', 'api.comika.mediauploads', 'lh3.googleusercontent.com', 'i.ytimg.com', 'babussalambuana.com', 'api.comika.media', 'i.graphicmama.com', 'via.placeholder.com', 'i.imgur.com',
     ],
   },
-  eslint: {
-    // Warning: Dangerously allow production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    mySecret: 'secret',
+    BASH_URL: process.env.NEXT_PUBLIC_BASH_URL, // Pass through env variables
+    GOOGLE_MAP_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY, // Pass through env variables
   },
   typescript: {
     // !! WARN !!

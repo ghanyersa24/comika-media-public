@@ -9,8 +9,8 @@ import { ButtonNotificationMobile } from '../../button/button-notification-mobil
 export const App: FunctionComponent = () => (
   <div className="pt-4 pb-32 bg-primary hp:pb-40 md:bg-red-400 ">
     <div className="flex items-center justify-between px-4 mb-4">
-      <Link href="/">
-        <a className="block hover:underline "><Comikamedia className="h-5 w-36" /></a>
+      <Link href="/" className="block hover:underline ">
+        <Comikamedia className="h-5 w-36" />
       </Link>
       <div className="flex items-center text-xl text-white">
         <ButtonCartNotifMobile />

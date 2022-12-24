@@ -16,16 +16,16 @@ export const ButtonItem: FunctionComponent<ButtonItemProps> = ({
 }) => {
   const filterParams = url ? `${filterBy}=${url}` : ''
   return (
-    <Link href={`${subUrl}?${filterParams}${searchParam}`}>
-      <a className={isActive
+    (<Link
+      href={`${subUrl}?${filterParams}${searchParam}`}
+      className={isActive
         ? 'h-full text-base leading-tight text-gray-800 font-bold '
-        : 'h-full text-base leading-tight text-gray-400 '}
-      >
-        {label}
-      </a>
-    </Link>
+        : 'h-full text-base leading-tight text-gray-400 '}>
 
-  )
+      {label}
+
+    </Link>)
+  );
 }
 
 type OrderByProps = {

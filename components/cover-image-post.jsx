@@ -23,14 +23,14 @@ export function ImageInstrinsicPost({
   return (
     <div className=" sm:mx-0">
       {slug ? (
-        <Link as={`/posts/${slug}`} href="/posts/[slug]">
-          <a aria-label={title}>{image}</a>
+        <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
+          {image}
         </Link>
       ) : (
         image
       )}
     </div>
-  )
+  );
 }
 
 export function ImageResponsive({
@@ -54,12 +54,12 @@ export function ImageResponsive({
   return (
     <div className="p-0 bg-blue-400 sm:mx-0">
       {slug ? (
-        <Link as={`/posts/${slug}`} href="/posts/[slug]">
-          <a aria-label={title}>{image}</a>
+        <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
+          {image}
         </Link>
       ) : (
         image
       )}
     </div>
-  )
+  );
 }

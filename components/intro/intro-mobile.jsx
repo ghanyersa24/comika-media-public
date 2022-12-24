@@ -29,20 +29,20 @@ export const Pagination = ({ dots, index, onChangeIndex }) => {
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 
 export const ItemMobile = ({ url, link }) => (
-  <Link href={link || '/'}>
-    <a>
-      <div className="w-full rounded-lg">
-        <Image
-          height={184}
-          width={350}
-          layout="responsive"
-          src={url}
-          alt="Gambar Intro"
-          className="object-cover rounded-lg"
-        />
-      </div>
-    </a>
-  </Link>
+  (<Link href={link || '/'}>
+
+    <div className="w-full rounded-lg">
+      <Image
+        height={184}
+        width={350}
+        layout="responsive"
+        src={url}
+        alt="Gambar Intro"
+        className="object-cover rounded-lg"
+      />
+    </div>
+
+  </Link>)
 
 )
 export default function IntroMobile({ jumbotrons }) {

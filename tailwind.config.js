@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable global-require */
+
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}',
+  content: ['./pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './layout/**/*.{js,ts,jsx,tsx}',
     './helpers/**/*.{js,ts,jsx,tsx}'],

@@ -20,14 +20,14 @@ const isMobile = mobile()
 
 export const MenuItem = ({ icon, name, href }
   :{icon:any, name:string, href:string}) :ReactElement => (
-    <Link href={href}>
-      <a className="flex items-center p-4 mt-4 bg-white rounded-lg">
-        <div className="p-2 mr-4 text-2xl text-white rounded-lg bg-primary">
-          {icon}
-        </div>
-        <h2 className="text-base leading-relaxed text-gray-900">{name}</h2>
-      </a>
-    </Link>
+    (<Link href={href} className="flex items-center p-4 mt-4 bg-white rounded-lg">
+
+      <div className="p-2 mr-4 text-2xl text-white rounded-lg bg-primary">
+        {icon}
+      </div>
+      <h2 className="text-base leading-relaxed text-gray-900">{name}</h2>
+
+    </Link>)
 )
 const navigation = [
   { name: 'Akun', href: '/setting/profile', icon: <MdAccountCircle /> },

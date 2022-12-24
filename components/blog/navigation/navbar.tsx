@@ -176,31 +176,33 @@ export const SideBar = ({ isShowing, session, subUrlAdmin }: {
             {navigation.map((item) => (
               (!item.isRequiredLogin || session)
               && (
-              <Link href={`/${item.href}`} key={item.name}>
-                <a
-                  className={classNames(
-                    item.href === subUrlAdmin
-                      ? 'bg-gray-900 bg-opacity-20 text-white'
-                      : 'text-gray-300 hover:text-white  ',
-                    'block px-3 py-2 rounded-md ',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </a>
-              </Link>
+              (<Link
+                href={`/${item.href}`}
+                key={item.name}
+                className={classNames(
+                  item.href === subUrlAdmin
+                    ? 'bg-gray-900 bg-opacity-20 text-white'
+                    : 'text-gray-300 hover:text-white  ',
+                  'block px-3 py-2 rounded-md ',
+                )}
+                aria-current={item.current ? 'page' : undefined}>
+
+                {item.name}
+
+              </Link>)
               )
             ))}
 
-            <Link href={session ? '/auth/signout' : '/auth/signin'} key="auth">
-              <a
-                className={classNames(
-                  'text-gray-300 hover:text-white  ',
-                  'block px-3 py-2 rounded-md',
-                )}
-              >
-                {session ? 'Logout' : 'Login'}
-              </a>
+            <Link
+              href={session ? '/auth/signout' : '/auth/signin'}
+              key="auth"
+              className={classNames(
+                'text-gray-300 hover:text-white  ',
+                'block px-3 py-2 rounded-md',
+              )}>
+
+              {session ? 'Logout' : 'Login'}
+
             </Link>
 
           </div>
@@ -235,83 +237,81 @@ export const Navbar = (): ReactElement => {
   const { data: transactionsNotification } = useSWR<Notification[]>(() => (data ? `${API_NOTIFICATION}?limit=5&page=1&type=transaksi` : null), client.get, { errorRetryCount: 0 })
   const sumOfCarts = carts?.reduce((sum, cart) => sum + cart.qty, 0)
 
-  return (
-    <>
-      <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
-        {({ open }) => (
-          <>
-            <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
+  return <>
+    <Disclosure as="nav" className="fixed top-0 z-30 w-screen bg-white">
+      {({ open }) => (
+        <>
+          <SideBar isShowing={open} session={session} subUrlAdmin={subUrlAdmin} />
 
-            <div className="pl-4 pr-2 mx-auto sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between h-16 ">
-                <div className="inset-y-0 left-0 flex items-center ">
-                  {/* Mobile menu button */}
-                  <Disclosure.Button
-                    className={classNames(
-                      open ? 'text-gray-900' : 'text-gray-500',
-                      'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
-                    )}
-                  >
-                    <span className="sr-only">Open main menu</span>
-                    <MenuIcon className="block w-6 h-6" aria-hidden="true" />
-                  </Disclosure.Button>
-                </div>
-                <div className="">
-                  <Link href="/">
-                    <a className="relative hidden hover:underline md:block ">
-                      <ComikamediaNavbar className="h-8 w-52" />
-                    </a>
-                  </Link>
-                </div>
-                <div className="flex items-center text-primary sm:pr-4">
-                  <SearchBar
-                    className=""
-                    isMobile={false}
-                    searchValue={search as string}
-                    onSubmit={(searchInput) => router.push(`/${currentRoute}?search=${searchInput}`)}
-                  />
-                  <button
-                    type="button"
-                    className="relative"
-                    onClick={() => (session ? router.push('/cart') : toast.info('Harap Login terlebih dahulu', {
-                      position: 'bottom-right',
-                      onClose: () => signIn(),
-                      autoClose: 2000,
-                    }))}
-                  >
-                    {![0, undefined].includes(sumOfCarts) && (
-                      <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
-                        {sumOfCarts}
-                      </div>
-                    )}
-                    <MdShoppingBasket className="mx-2 text-2xl" />
-                  </button>
-                  {session && (
-                  <NotificationPopover
-                    unreadNotifications={unreadNotifications}
-                    messagesNotification={messagesNotification}
-                    transactionsNotification={transactionsNotification}
-                  />
+          <div className="pl-4 pr-2 mx-auto sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 ">
+              <div className="inset-y-0 left-0 flex items-center ">
+                {/* Mobile menu button */}
+                <Disclosure.Button
+                  className={classNames(
+                    open ? 'text-gray-900' : 'text-gray-500',
+                    'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
                   )}
-                  <div className="hidden ml-2 sm:block">
-                    {session ? (
-                      <Profile name={data?.name} src={data?.photo} />
-                    ) : (
-                      <button onClick={() => signIn()} type="button">
-                        Login
-                      </button>
-                    )}
-                  </div>
+                >
+                  <span className="sr-only">Open main menu</span>
+                  <MenuIcon className="block w-6 h-6" aria-hidden="true" />
+                </Disclosure.Button>
+              </div>
+              <div className="">
+                <Link href="/" className="relative hidden hover:underline md:block ">
+
+                  <ComikamediaNavbar className="h-8 w-52" />
+
+                </Link>
+              </div>
+              <div className="flex items-center text-primary sm:pr-4">
+                <SearchBar
+                  className=""
+                  isMobile={false}
+                  searchValue={search as string}
+                  onSubmit={(searchInput) => router.push(`/${currentRoute}?search=${searchInput}`)}
+                />
+                <button
+                  type="button"
+                  className="relative"
+                  onClick={() => (session ? router.push('/cart') : toast.info('Harap Login terlebih dahulu', {
+                    position: 'bottom-right',
+                    onClose: () => signIn(),
+                    autoClose: 2000,
+                  }))}
+                >
+                  {![0, undefined].includes(sumOfCarts) && (
+                    <div className="absolute top-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full right-1">
+                      {sumOfCarts}
+                    </div>
+                  )}
+                  <MdShoppingBasket className="mx-2 text-2xl" />
+                </button>
+                {session && (
+                <NotificationPopover
+                  unreadNotifications={unreadNotifications}
+                  messagesNotification={messagesNotification}
+                  transactionsNotification={transactionsNotification}
+                />
+                )}
+                <div className="hidden ml-2 sm:block">
+                  {session ? (
+                    <Profile name={data?.name} src={data?.photo} />
+                  ) : (
+                    <button onClick={() => signIn()} type="button">
+                      Login
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
+          </div>
 
-          </>
-        )}
-      </Disclosure>
+        </>
+      )}
+    </Disclosure>
 
-    </>
-  )
+  </>;
 }
 
 export default Navbar

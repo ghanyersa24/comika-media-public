@@ -6,21 +6,21 @@ import virtualize from 'react-swipeable-views-utils/lib/virtualize'
 import classnames from 'classnames'
 
 export const ItemDekstop = ({ url, link }) => (
-  <Link href={link || '/'}>
-    <a>
-      <div className="w-full ">
-        {/* <img src={url} alt="Gambar Intro" className="object-cover w-full" /> */}
-        <Image
-          height={480}
-          width={1440}
-          layout="responsive"
-          src={url}
-          alt="Gambar Intro"
-          className="object-cover w-full"
-        />
-      </div>
-    </a>
-  </Link>
+  (<Link href={link || '/'}>
+
+    <div className="w-full ">
+      {/* <img src={url} alt="Gambar Intro" className="object-cover w-full" /> */}
+      <Image
+        height={480}
+        width={1440}
+        layout="responsive"
+        src={url}
+        alt="Gambar Intro"
+        className="object-cover w-full"
+      />
+    </div>
+
+  </Link>)
 
 )
 

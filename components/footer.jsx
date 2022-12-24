@@ -18,21 +18,29 @@ export function Footer2() {
         <div className="flex flex-col pt-8 text-left ">
           <h5 className="text-xl font-bold leading-loose">Menu</h5>
           {navigation.map((item) => (
-            <Link href={item.href} key={item.name}>
-              <a className="font-medium leading-loose hover:underline" aria-current={item.current ? 'page' : undefined}>
-                {item.name}
-              </a>
-            </Link>
+            (<Link
+              href={item.href}
+              key={item.name}
+              className="font-medium leading-loose hover:underline"
+              aria-current={item.current ? 'page' : undefined}>
+
+              {item.name}
+
+            </Link>)
           ))}
         </div>
         <div className="flex flex-col pt-8 text-left ">
           <h5 className="text-xl font-bold leading-loose">Menu</h5>
           {navigation.map((item) => (
-            <Link href={item.href} key={item.name}>
-              <a className="font-medium leading-loose hover:underline" aria-current={item.current ? 'page' : undefined}>
-                {item.name}
-              </a>
-            </Link>
+            (<Link
+              href={item.href}
+              key={item.name}
+              className="font-medium leading-loose hover:underline"
+              aria-current={item.current ? 'page' : undefined}>
+
+              {item.name}
+
+            </Link>)
           ))}
         </div>
       </div>
@@ -43,7 +51,7 @@ export function Footer2() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
 export const Footer = () => (
@@ -59,40 +67,36 @@ export const Footer = () => (
           <h2 className="h2-text-gray-light">NAVIGASI</h2>
           <nav className="mb-10 list-none">
             {navigation.map((item) => (
-              <Link href={item.href} key={item.name}>
-                <a className="block text-gray-light" aria-current={item.current ? 'page' : undefined}>
-                  {item.name}
-                </a>
-              </Link>
+              (<Link
+                href={item.href}
+                key={item.name}
+                className="block text-gray-light"
+                aria-current={item.current ? 'page' : undefined}>
+
+                {item.name}
+
+              </Link>)
             ))}
           </nav>
         </div>
         <div className="w-full px-4 lg:w-1/2 md:w-1/2">
           <h2 className="h2-text-gray-light">HUBUNGI KAMI</h2>
           <nav className="mb-10 list-none">
-            <Link href="/x">
-              <a className="flex items-center text-gray-light">
-                <RiInstagramFill className="mr-2 text-xl" />
-                @Comikamedia
-              </a>
+            <Link href="/x" className="flex items-center text-gray-light">
+
+              <RiInstagramFill className="mr-2 text-xl" />@Comikamedia
             </Link>
-            <Link href="/x">
-              <a className="flex items-center text-gray-light">
-                <IoLogoYoutube className="mr-2 text-xl" />
-                COMIKA MEDIA
-              </a>
+            <Link href="/x" className="flex items-center text-gray-light">
+
+              <IoLogoYoutube className="mr-2 text-xl" />COMIKA MEDIA
             </Link>
-            <Link href="/x">
-              <a className="flex items-center text-gray-light">
-                <IoLogoTwitter className="mr-2 text-xl" />
-                Comikamedia
-              </a>
+            <Link href="/x" className="flex items-center text-gray-light">
+
+              <IoLogoTwitter className="mr-2 text-xl" />Comikamedia
             </Link>
-            <Link href="/x">
-              <a className="flex items-center text-gray-light">
-                <SiTiktok className="mr-2 text-xl" />
-                @Comikamedia
-              </a>
+            <Link href="/x" className="flex items-center text-gray-light">
+
+              <SiTiktok className="mr-2 text-xl" />@Comikamedia
             </Link>
           </nav>
         </div>

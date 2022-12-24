@@ -45,10 +45,13 @@ export default function PostPreview({
       </div>
       <div className="divide-y xs:px-4 md:px-4 md:pb-2 ">
         <h3 className="mb-2 font-bold xs:leading-loose xs:mt-4 md:py-2">
-          <Link as={`/posts/${slug}`} href="/posts/[slug]">
-            <a className="text-xs text-gray-700 hp2:text-sm hover:underline md:text-2xl line-clamp-2">
-              {title}
-            </a>
+          <Link
+            as={`/posts/${slug}`}
+            href="/posts/[slug]"
+            className="text-xs text-gray-700 hp2:text-sm hover:underline md:text-2xl line-clamp-2">
+
+            {title}
+
           </Link>
         </h3>
         <div className="flex items-center justify-between md:py-2">
@@ -67,5 +70,5 @@ export default function PostPreview({
       </div> */}
       {/* <p className="mb-4 text-lg leading-relaxed">{excerpt}</p> */}
     </div>
-  )
+  );
 }
