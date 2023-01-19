@@ -3,7 +3,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import React from "react";
+import React, { useState } from "react";
 import router from "next/router";
 import mobile from "is-mobile";
 import { GetStaticProps } from "next";
@@ -23,6 +23,7 @@ import { LIMIT_DEKSTOP, LIMIT_MOBILE } from "../res/string";
 import { ItemStores } from "../components/items/item-store";
 import { ContainerStore } from "../components/container/container-store";
 import { ItemStoreType, Post } from "../res/interface";
+import { toast } from "react-toastify";
 // import { SubsribeBanner } from '../components/banner/subscribe-banner'
 
 const SubsribeBannerDekstop = dynamic(
@@ -103,6 +104,19 @@ export default function Index({
   const handleLoadMore = () => {
     setSize(size + 1);
   };
+
+  const [newsLetterLoading, setNewsLetterLoading] = useState(false);
+
+  const onSubmit = async (email: string) => {
+    setNewsLetterLoading(true);
+    try {
+      const res = await client.post("/article/email-subscription", { email });
+      toast.success(res.msg);
+    } catch (e) {
+    }
+    setNewsLetterLoading(false);
+  };
+
   return (
     <Layout isMobile={isMobile}>
       <Head>
@@ -152,7 +166,7 @@ export default function Index({
           title="Artikel Terpopuler"
           description="Terpopuler di minggu ini"
         />
-        <NewLetter />
+        <NewLetter onSubmit={onSubmit} loading={newsLetterLoading} />
         <ContainerStore
           className="my-8"
           title="Merchandise"
