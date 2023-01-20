@@ -151,7 +151,7 @@ export default function Index({
             src="/assets/svg/Subscribe_Kecil.svg"
           />
         )}
-        {digitalStores.length > 0 && (
+        {digitalStores?.length > 0 && (
           <ContainerStore
             className="my-8"
             title="Digital produk"
@@ -168,7 +168,7 @@ export default function Index({
           description="Terpopuler di minggu ini"
         />
         <NewLetter onSubmit={onSubmit} loading={newsLetterLoading} />
-        {merchandiseStores.length > 0 && (
+        {merchandiseStores?.length > 0 && (
           <ContainerStore
             className="my-8"
             title="Merchandise"
