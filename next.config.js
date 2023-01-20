@@ -8,7 +8,7 @@ module.exports = withPWA({
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   experimental: {
     // Required:
-    appDir: true,
+    // appDir: true,
   },
   images: {
     formats: ['image/avif', 'image/webp'],

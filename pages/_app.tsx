@@ -1,23 +1,23 @@
-import '../styles/index.css'
-import dynamic from 'next/dynamic'
+import "../styles/index.css";
+import dynamic from "next/dynamic";
 // import { useRouter } from 'next/router'
-import { SWRConfig } from 'swr'
-import { Provider } from 'next-auth/client'
-import type { AppProps /* , AppContext */ } from 'next/app'
-import { ReactElement } from 'react'
-import { Provider as ReduxProvider } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
-import { store } from '../store'
-import 'nprogress/nprogress.css'
+import { SWRConfig } from "swr";
+import { Provider } from "next-auth/client";
+import type { AppProps /* , AppContext */ } from "next/app";
+import { ReactElement } from "react";
+import { Provider as ReduxProvider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { store } from "../store";
+import "nprogress/nprogress.css";
 
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css";
 
-const TopProgressBar = dynamic(
-  () => import('../components/topLoadingBar'),
-  { ssr: false },
-)
+const TopProgressBar = dynamic(() => import("../components/topLoadingBar"), {
+  ssr: false,
+});
 
-function MyApp({ Component, pageProps }: AppProps):ReactElement {
+
+function MyApp({ Component, pageProps }: AppProps): ReactElement {
   // const router = useRouter()
   // const urlComponent = router.route.split('/')
   return (
@@ -38,10 +38,9 @@ function MyApp({ Component, pageProps }: AppProps):ReactElement {
           <TopProgressBar />
           <Component {...pageProps} />
           <ToastContainer />
-
         </SWRConfig>
       </Provider>
     </ReduxProvider>
-  )
+  );
 }
-export default MyApp
+export default MyApp;

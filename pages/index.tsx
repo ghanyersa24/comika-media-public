@@ -24,18 +24,21 @@ import { ItemStores } from "../components/items/item-store";
 import { ContainerStore } from "../components/container/container-store";
 import { ItemStoreType, Post } from "../res/interface";
 import { toast } from "react-toastify";
-import Subscribe from "#/components/banner/Subscribe";
 // import { SubsribeBanner } from '../components/banner/subscribe-banner'
 
-const SubsribeBannerDekstop = dynamic(
-  () => import("../components/banner/subscribe-banner-dektop"),
-  { ssr: true }
-);
-const SubsribeBannerMobile = dynamic(
-  () => import("../components/banner/subscribe-banner-mobile"),
-  { ssr: true }
-);
+// const SubsribeBannerDekstop = dynamic(
+//   () => import("../components/banner/subscribe-banner-dektop"),
+//   { ssr: true }
+// );
+// const SubsribeBannerMobile = dynamic(
+//   () => import("../components/banner/subscribe-banner-mobile"),
+//   { ssr: true }
+// );
 const NewLetter = dynamic(() => import("../components/banner/NewLetter"), {
+  ssr: true,
+});
+
+const SubsribeBanner = dynamic(() => import("../components/banner/Subscribe"), {
   ssr: true,
 });
 
@@ -152,7 +155,7 @@ export default function Index({
             src="/assets/svg/Subscribe_Kecil.svg"
           />
         )} */}
-        <Subscribe
+        <SubsribeBanner
           onSubmit={function (email: string): void {
             router.push("/subscribe");
           }}
