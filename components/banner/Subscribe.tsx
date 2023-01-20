@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
-function NewLetter({
+function Subscribe({
   onSubmit,
   loading,
 }: {
@@ -26,22 +26,14 @@ function NewLetter({
           <div>
             <div className="mb-4 sm:mb-8">
               <h2 className="text-xl font-bold text-white sm:text-2xl lg:text-3xl">
-                Ingin mendapatkan update artikel?
+                Yuk Berlangganan Konten Premium Sekarang
               </h2>
               <p className="mt-1 text-sm text-gray-100 md:text-lg">
-                Yuk daftarkan alamat email kamu untuk menerima notifikasi
-                artikel terbaru kami!
+                Nikmati keseruan membaca tanpa ada batasan
               </p>
-              <div className="w-24 h-1 mt-2 bg-white rounded"></div>
+              <div className="w-16 h-1 mt-2 bg-white rounded"></div>
             </div>
             <form className="flex w-full max-w-md gap-2 mb-3 sm:mb-5">
-              <input
-                value={email}
-                type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Masukkan email kamu"
-                className="flex-1 w-full px-3 py-2 text-gray-800 placeholder-gray-400 transition duration-100 border border-gray-300 rounded outline-none bg-gray-white focus:ring ring-indigo-300"
-              />
               <button
                 disabled={loading}
                 type="button"
@@ -58,4 +50,4 @@ function NewLetter({
   );
 }
 
-export default NewLetter;
+export default Subscribe;

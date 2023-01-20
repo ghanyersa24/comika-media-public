@@ -24,6 +24,7 @@ import { ItemStores } from "../components/items/item-store";
 import { ContainerStore } from "../components/container/container-store";
 import { ItemStoreType, Post } from "../res/interface";
 import { toast } from "react-toastify";
+import Subscribe from "#/components/banner/Subscribe";
 // import { SubsribeBanner } from '../components/banner/subscribe-banner'
 
 const SubsribeBannerDekstop = dynamic(
@@ -138,7 +139,7 @@ export default function Index({
           title="Artikel Terbaru"
           description="Terbaru di minggu ini"
         />
-        {isMobile ? (
+        {/* {isMobile ? (
           <SubsribeBannerMobile
             isShow={!lastestArticles?.[0]?.isPremium}
             onClick={() => router.push("/subscribe")}
@@ -150,7 +151,13 @@ export default function Index({
             onClick={() => router.push("/subscribe")}
             src="/assets/svg/Subscribe_Kecil.svg"
           />
-        )}
+        )} */}
+        <Subscribe
+          onSubmit={function (email: string): void {
+            router.push("/subscribe");
+          }}
+          loading={false}
+        />
         {digitalStores?.length > 0 && (
           <ContainerStore
             className="my-8"
