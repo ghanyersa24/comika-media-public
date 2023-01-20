@@ -112,8 +112,7 @@ export default function Index({
     try {
       const res = await client.post("/article/email-subscription", { email });
       toast.success(res.msg);
-    } catch (e) {
-    }
+    } catch (e) {}
     setNewsLetterLoading(false);
   };
 
@@ -152,13 +151,15 @@ export default function Index({
             src="/assets/svg/Subscribe_Kecil.svg"
           />
         )}
-        <ContainerStore
-          className="my-8"
-          title="Digital produk"
-          titleDescription="Produk populer minggu ini"
-        >
-          <ItemStores digitalStores={digitalStores} isMobile={isMobile} />
-        </ContainerStore>
+        {digitalStores.length > 0 && (
+          <ContainerStore
+            className="my-8"
+            title="Digital produk"
+            titleDescription="Produk populer minggu ini"
+          >
+            <ItemStores digitalStores={digitalStores} isMobile={isMobile} />
+          </ContainerStore>
+        )}
 
         <MorePosts
           posts={pupularArticles}
@@ -167,13 +168,15 @@ export default function Index({
           description="Terpopuler di minggu ini"
         />
         <NewLetter onSubmit={onSubmit} loading={newsLetterLoading} />
-        <ContainerStore
-          className="my-8"
-          title="Merchandise"
-          titleDescription="Merchandise populer minggu ini"
-        >
-          <ItemStores digitalStores={merchandiseStores} isMobile={isMobile} />
-        </ContainerStore>
+        {merchandiseStores.length > 0 && (
+          <ContainerStore
+            className="my-8"
+            title="Merchandise"
+            titleDescription="Merchandise populer minggu ini"
+          >
+            <ItemStores digitalStores={merchandiseStores} isMobile={isMobile} />
+          </ContainerStore>
+        )}
         <TitlePost
           title="Artikel Lainnya"
           description="Lainnya di minggu ini"
