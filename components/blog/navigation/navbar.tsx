@@ -1,6 +1,6 @@
 import { Disclosure, Transition, Menu } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/client'
 import React, { Fragment, ReactElement } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'

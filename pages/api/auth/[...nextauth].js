@@ -4,7 +4,7 @@ import Providers from 'next-auth/providers'
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 
-export default NextAuth({
+export const authOptions = {
   // https://next-auth.js.org/configuration/providers
   providers: [
     // Providers.Email({
@@ -150,8 +150,8 @@ export default NextAuth({
     },
     async signIn(token, user, account, profile) {
       if (user.provider === 'google'
-      && account.verified_email === true
-      && account.email.endsWith('@gmail.com')) {
+        && account.verified_email === true
+        && account.email.endsWith('@gmail.com')) {
         const credentials = {
           email: account.email,
           name: account.name,
@@ -203,4 +203,5 @@ export default NextAuth({
 
   // Enable debug messages in the console if you are having problems
   debug: false,
-})
+}
+export default NextAuth(authOptions)
