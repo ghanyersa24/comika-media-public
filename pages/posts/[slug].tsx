@@ -8,6 +8,8 @@ import { getSession, signIn, useSession } from "next-auth/client";
 import useSWR from "swr";
 import classnames from "classnames";
 import Script from "next/script";
+import mobile from "is-mobile";
+
 import { Disclosure, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import Container from "../../components/container-padding";
@@ -88,6 +90,7 @@ export const Dekstop = ({ post }: { post: Post }): ReactElement => {
     </Container>
   );
 };
+const isMobile = mobile();
 
 export const Mobile = ({ post }: { post: Post }): ReactElement => {
   const { title, banner, updatedAt, Comika, content, viewer, shared } = post;
@@ -143,8 +146,9 @@ const OverlayStopArticle = ({ isShow }) => {
 
 export default function DetailOfPost({
   post,
-  isMobile,
+  // isMobile,
 }: PropsDetailOfPost): ReactElement {
+  console.log("🚀 ~ file: [slug].tsx:148 ~ isMobile", isMobile);
   const [session, loading] = useSession();
   let limit = 3;
   if (isMobile) {
@@ -398,11 +402,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   const UA = context.req.headers["user-agent"];
-  const isMobile = Boolean(
-    UA.match(
-      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-    )
+  console.log(
+    "🚀 ~ file: [slug].tsx:402 ~ constgetServerSideProps:GetServerSideProps= ~ UA",
+    UA
   );
+  // const isMobile = Boolean(
+  //   UA.match(
+  //     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  //   )
+  // );
+
+  // const isMobile = mobile({ ua: UA });
 
   return {
     props: {
@@ -410,7 +420,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ...post,
       },
       session,
-      isMobile,
+      // isMobile,
     },
   };
 };
