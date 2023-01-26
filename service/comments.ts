@@ -15,7 +15,10 @@ export function Get(slug:string):swrReturn {
 }
 export default Get
 
-export const add = async (slug:string, postData: {comment:string}) :Promise <any> => {
+export const add = async (slug:string, postData: {
+  comment:string,
+  commentId:string
+}) :Promise <any> => {
   const res = await client.post(`${URL}/${slug}`, postData)
   return res
 }

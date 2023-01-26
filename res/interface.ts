@@ -1,5 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
+
+import { MutableRefObject, RefObject } from "react";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseFetch {
   error?: {
@@ -43,30 +46,37 @@ export type Profile = Signup &
     lastPremiumDate?: Date;
     photo: string;
   };
-export type comments = {
-  id: "bb3cb8bf-ef5e-4f5b-9ed7-749990401045";
-  comment: "waaah bagus nih gae";
-  userId: "0734f6b2-6b4c-45b9-be8c-d1aaf6803348";
-  articleId: "f3950e22-c609-4f7e-8d23-4fec9b52dd65";
-  createdAt: "2021-06-24T16:56:03.039Z";
-  updatedAt: "2021-06-24T16:56:03.039Z";
-  deletedAt: null;
-  ArticleId: "f3950e22-c609-4f7e-8d23-4fec9b52dd65";
-  UserId: "0734f6b2-6b4c-45b9-be8c-d1aaf6803348";
-  User: {
-    photo: string;
-    id: string;
-    name: string;
-  };
-};
+
+export interface CommentType {
+  id: string;
+  comment: string;
+  createdAt: string;
+  User: User;
+  replies?: CommentType[];
+  parentId?: string;
+}
+
+export interface User {
+  photo: string;
+  id: string;
+  name: string;
+}
 
 export type TypePostCommentComponent = swrReturn & {
-  comments: comments[];
+  comments: CommentType[];
+  commentRef: MutableRefObject<any[]>;
+  onClickReply: (selectedID: string) => void;
 };
 export type TypePostCommentAdd = swrReturn & {
-  onChange: (e: any) => void;
-  onSubmit: () => void;
-  comment: string;
+  onSubmit: (comment: string) => void;
+  onCloseModal: () => void;
+  initialComment: string;
+  onResetParrentComment: () => void;
+  isOpen: boolean;
+
+  isLoading: boolean;
+  isMobile: boolean;
+  parrentComment: CommentType;
 };
 export type subscribeType = {
   rupiah: string;
@@ -235,22 +245,15 @@ export interface Promo {
 }
 
 export interface Notification {
-  typeIcon?: string;
-  id?: string;
-  title?: string;
-  img?: string;
-  description?: string;
-  descriptionHtml?: string;
-  isRead?: boolean;
-  type?: string;
-  userId?: string;
-  orderId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: null;
-  UserId?: string;
-  OrderId?: string;
-  Order?: Order;
+  link: string;
+  typeIcon: string;
+  id: string;
+  img: string;
+  title: string;
+  isRead: boolean;
+  createdAt: Date;
+  type: string;
+  description: string;
 }
 
 export interface UnreadNotification {

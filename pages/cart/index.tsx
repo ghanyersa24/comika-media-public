@@ -24,7 +24,7 @@ export const Cart = ():ReactElement => {
   const [checkedCarts, setCheckedCarts] = useState([])
   if (!session && !loading) {
     toast.info('Harap Login terlebih dahulu', {
-      position: 'bottom-right',
+      
       onClose: () => signIn(),
     })
     return <div>Loading...</div>

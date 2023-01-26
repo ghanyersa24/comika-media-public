@@ -32,7 +32,7 @@ export const Desktop = ({
 )
 
 export const Mobile = ({
-  children, className, title, prevTitle,
+  children, className, title, prevTitle, isUserBottomNavbar,
 }) => (
   <>
     <Head>
@@ -47,13 +47,13 @@ export const Mobile = ({
       {/* <Alert preview={preview} /> */}
       <main className="">{children}</main>
     </div>
-    <BottomNavbar />
+    {isUserBottomNavbar && <BottomNavbar />}
     {/* <Footer /> */}
   </>
 )
 // eslint-disable-next-line no-unused-vars
 export default function Layout({
-  children, isMobile, prevTitle = 'Comika Media', title = null, className = '',
+  children, isMobile, prevTitle = 'Comika Media', title = null, className = '', isUserBottomNavbar = true,
 }) {
   if (isMobile) {
     return (
@@ -61,6 +61,7 @@ export default function Layout({
         prevTitle={prevTitle}
         title={title}
         className={className}
+        isUserBottomNavbar={isUserBottomNavbar}
       >
         {children}
       </Mobile>

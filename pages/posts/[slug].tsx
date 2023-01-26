@@ -1,12 +1,17 @@
+/* eslint-disable max-len */
 import Router, { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
-import React, { ReactElement, useEffect, useState } from 'react'
-import { getSession } from 'next-auth/client'
+import React, {
+  ReactElement, useEffect, useRef, useState,
+} from 'react'
+import { getSession, signIn } from 'next-auth/client'
 import useSWR from 'swr'
 import classnames from 'classnames'
 import Script from 'next/script'
+import { Disclosure, Transition } from '@headlessui/react'
+import { useDispatch } from 'react-redux'
 import Container from '../../components/container-padding'
 import PostBody from '../../components/post-body'
 // import Header from '../../components/header'
@@ -14,15 +19,21 @@ import { PostHeaderDekstop, PostHeaderMobile } from '../../components/post-heade
 import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 import { client } from '../../lib/clientRaw'
-import { API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_ARTICLE, API_ENDPOINT_COMMENT } from '../../res/api-endpoint'
-import { PropsDetailOfPost, Post } from '../../res/interface'
-import { PostCommentList, PostCommentAdd } from '../../components/blog/post-comment'
+import {
+  API_ENDPOINT_DETAIL_ARTICLE, API_ENDPOINT_ARTICLE, API_ENDPOINT_COMMENT, API_ENDPOINT_PROFILE,
+} from '../../res/api-endpoint'
+import {
+  PropsDetailOfPost, Post, CommentType, Profile,
+} from '../../res/interface'
+import { PostCommentList, PostCommentAdd, PostInitialCommentAddDesktop } from '../../components/blog/post-comment'
 import { add as addPost } from '../../service/comments'
 import Layout from '../../components/layout'
 import { MorePosts } from '../../components/more-posts'
 import { SocialMediaShareButton } from '../../components/functional/button/social-media-share-button'
 import { BookmarkButton } from '../../components/functional/button/bookmark'
 import { LikeButton } from '../../components/functional/button/like'
+import { findCommentById } from '../../helper/comment'
+import { setComment, setModalValue } from '../../slices/comment'
 
 declare global {
   interface Window { instgrm: any; }
@@ -119,33 +130,73 @@ export default function DetailOfPost({
   if (isMobile) {
     limit = 2
   }
+
+  const dispatch = useDispatch()
   const { data: postClient, mutate: mutatePost } = useSWR(`${API_ENDPOINT_DETAIL_ARTICLE}/${post.slug}`, client.get, { fallbackData: post })
   const { data: relatedArticle, mutate: mutateRelatedArticle } = useSWR(`${API_ENDPOINT_ARTICLE}?orderBy=popular&ordering=DESC&limit=${limit}&page=${1}`, client.get)
-  const { data: comments, error: errorComment, mutate: mutateComment } = useSWR(() => (postClient?.slug ? `${API_ENDPOINT_COMMENT}/${postClient.slug}` : null), client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
+  const { data: comments, error: errorComment, mutate: mutateComment } = useSWR<CommentType[]>(() => (postClient?.slug ? `${API_ENDPOINT_COMMENT}/${postClient.slug}` : null), client.get, { refreshInterval: 1000 * 60, revalidateOnFocus: true })
+  const { data: profile } = useSWR<Profile>(() => (session ? `${API_ENDPOINT_PROFILE}` : null), client.get)
+  const [isCommentLoading, setIsCommentLoading] = useState(false)
   const router = useRouter()
-  const [comment, setComment] = useState('')
   const [errorMsgPostAdd, setErrorMsgPostAdd] = useState()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [parrentCommentId, setParrentComment] = useState('')
+  const { commentId } = router.query
+  const [isScrolledToCommendId, setIsScrolledToCommendId] = useState(false)
+
+  const commentRef = useRef([])
+  // const scrollToRef = (ref:MutableRefObject<any[]>) => {
+  //   ref.current['6b0d4ef4-fcf0-4b4a-a9e8-94cea378f073'].scrollIntoView({ behavior: 'smooth' })
+  // }
+
   useEffect(() => {
     window.instgrm = window.instgrm || {}
-
     // eslint-disable-next-line no-undef
     if (window?.instgrm?.Embeds && twttr?.widgets && postClient) {
       window.instgrm.Embeds.process()
       twttr.widgets.load()
     }
   }, [])
+
+  useEffect(() => {
+    if (isModalOpen === false) {
+      setTimeout(() => {
+        setParrentComment('')
+      }, 200)
+    }
+  }, [isModalOpen])
+
+  // SCROLL TO COMMENT
+  useEffect(() => {
+    const currentRef = commentRef.current?.[commentId as string]
+    console.log('CCMM', !!commentId, !!comments, !!currentRef, !isScrolledToCommendId)
+    if (commentId && comments && currentRef && !isScrolledToCommendId) {
+      currentRef.scrollIntoView({ behavior: 'smooth', block: isMobile ? 'start' : 'center' })
+      setIsScrolledToCommendId(true)
+    }
+  }, [comments, commentId, isMobile, isScrolledToCommendId])
+
   if (!router.isFallback && !postClient?.slug) {
     return <ErrorPage statusCode={404} />
   }
 
-  const handleSubmitPostComment = async () => {
+  const handleSubmitPostComment = async (comment:string) => {
+    if (!session) signIn()
+
     try {
+      setIsCommentLoading(true)
       await addPost(postClient.slug, {
         comment,
+        commentId: parrentCommentId,
       })
-      mutateComment(); setComment(''); setErrorMsgPostAdd(null)
+      await mutateComment(); setErrorMsgPostAdd(null)
+      setIsModalOpen(false)
+      dispatch(setComment(''))
+      dispatch(setModalValue(''))
     } catch (error) {
       setErrorMsgPostAdd(error)
+    } finally {
+      setIsCommentLoading(false)
     }
   }
   const handleLoadMore = () => {
@@ -153,7 +204,7 @@ export default function DetailOfPost({
   }
 
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} isUserBottomNavbar={false}>
       <Script
         id="embedig"
         src="https://www.instagram.com/embed.js"
@@ -172,12 +223,13 @@ export default function DetailOfPost({
             },
           )}
           >
+
             {isMobile ? <Mobile post={postClient} /> : <Dekstop post={postClient} />}
             { postClient?.withFlayer ? <OverlayStopArticle isShow /> : null}
           </div>
           <div className="mx-4 md:max-w-2xl md:mx-auto">
 
-            <div className="inline-block mb-8 divide-y md:my-12">
+            <div className="inline-block w-full mt-8 mb-8 divide-y md:my-12">
               <div className="pb-4">
                 <SocialMediaShareButton size={32} slug={postClient.slug} />
               </div>
@@ -198,21 +250,69 @@ export default function DetailOfPost({
               </div>
             </div>
 
-            <div className="pb-24">
-              <PostCommentList
-                comments={comments}
-                isLoading={!errorComment && !comments}
-              />
-              {session ? (
-                <PostCommentAdd
-                  onChange={(e) => setComment(e.target.value)}
-                  isLoading={!errorComment && !comments}
-                  error={errorMsgPostAdd}
-                  comment={comment}
-                  onSubmit={handleSubmitPostComment}
-                />
-              ) : null}
-            </div>
+            <Disclosure defaultOpen>
+              {({ open }) => (
+                <>
+                  {/* { (open && !session) && toast.info('Harap Login terlebih dahulu', {
+
+                    onClose: () => signIn(),
+                    autoClose: 5000,
+                  })} */}
+                  {/* <p className="hidden -mx-4 text-4xl font-medium leading-10 text-primary md:block">Komentar</p> */}
+                  <div className="-mx-4 md:-mx-0">
+                    <Disclosure.Button className="relative w-full px-4 py-4 text-base text-justify text-gray-400 border-b-2 border-white bg-slate-100 ">
+                      <div>{open ? 'Tutup kolom komentar' : 'Tampilkan kolom komentar'}</div>
+                      <div className="absolute left-0 right-0 h-1 bg-slate-200 -bottom-1.5 " />
+                    </Disclosure.Button>
+                  </div>
+
+                  <Transition
+                    enter="transition duration-100 "
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="transition duration-75"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Disclosure.Panel>
+                      <div className="pt-4 pb-24 ">
+                        {!isMobile && (
+                        <PostInitialCommentAddDesktop
+                          profile={profile}
+                          onSubmit={handleSubmitPostComment}
+                          isLoading={isCommentLoading}
+                          initialComment=""
+                        />
+                        )}
+                        <PostCommentList
+                          comments={comments}
+                          commentRef={commentRef}
+                          isLoading={!errorComment && !comments}
+                          onClickReply={(id: string) => {
+                            setIsModalOpen(true)
+                            setParrentComment(id)
+                          }}
+                        />
+                        <PostCommentAdd
+                          isLoading={isCommentLoading}
+                          error={errorMsgPostAdd}
+                          initialComment=""
+                          onSubmit={handleSubmitPostComment}
+                          isMobile={isMobile}
+                          isOpen={isModalOpen}
+                          onResetParrentComment={() => setParrentComment('')}
+                          onCloseModal={() => {
+                            setIsModalOpen(false)
+                          }}
+                          parrentComment={findCommentById(comments, parrentCommentId)}
+                        />
+                      </div>
+
+                    </Disclosure.Panel>
+                  </Transition>
+                </>
+              )}
+            </Disclosure>
 
           </div>
 

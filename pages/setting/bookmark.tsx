@@ -29,7 +29,7 @@ export const BookmarkedArticle = ({ isMobile, session }:
   const { data: bookmarkedArticles, mutate: mutateBookmarkedArticles } = useSWR(`${API_ENDPOINT_BOOKMARKED_ARTICLE}`, client.get)
   if (!session) {
     toast.info('Harap Login terlebih dahulu', {
-      position: 'bottom-right',
+      
       onClose: () => signIn(),
     })
   }

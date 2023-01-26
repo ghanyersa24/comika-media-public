@@ -34,7 +34,7 @@ export const Product:FunctionComponent<props> = ({ itemstore }) => {
       note: null,
     })
     toast.success('Berhasil menambahkan ke keranjang', {
-      position: 'bottom-right', autoClose: 2000,
+       autoClose: 2000,
     })
     await mutate(API_ENDPOINT_CART)
     setIsDisabled(false)

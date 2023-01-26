@@ -3,6 +3,7 @@ import { IoLogoYoutube, IoLogoTwitter } from 'react-icons/io'
 import { SiTiktok } from 'react-icons/si'
 import { RiInstagramFill } from 'react-icons/ri'
 import { Comikamedia } from './svg'
+import { SocialMediaLogo } from './social-media'
 
 const navigation = [
   { name: 'Artikel', href: '/article', current: true },

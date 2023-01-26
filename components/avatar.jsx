@@ -49,13 +49,9 @@ export function AvatarRelativeDate({
           height={144}
         />
       </div>
-      <div className="flex-grow ">
-        <p className="leading-tight line-clamp-1">{name}</p>
-        <div className="flex item-center ">
-          <p className="text-xs font-normal text-gray-500 md:text-sm">{date}</p>
-          {/* <p className="mr-1">•</p> */}
-          {/* <p className="">{read}</p> */}
-        </div>
+      <div className="flex flex-grow ">
+        <p className="mr-2 text-sm leading-tight line-clamp-1 ">{name}</p>
+        <span className="text-xs font-normal text-gray-500 md:text-sm">{date}</span>
       </div>
     </div>
   )
