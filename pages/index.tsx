@@ -3,7 +3,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import router from "next/router";
 import mobile from "is-mobile";
 import { GetStaticProps } from "next";
@@ -72,6 +72,15 @@ export default function Index({
   lastestArticlesSSR,
   pupularArticlesSSR,
 }: props): React.ReactNode {
+  const [isSubscribeNewsLetter, setIsSubscribeNewsLetter] = useState(false);
+
+  useEffect(() => {
+    const isSubscribe = localStorage.getItem("isSubscribe");
+    if (isSubscribe) {
+      setIsSubscribeNewsLetter(true);
+    }
+  }, []);
+
   const { data: lastestArticles, mutate: mutateLastestArticles } = useSWR<
     Post[]
   >(lastestArticlesInitialUrl, client.get, {
@@ -116,6 +125,8 @@ export default function Index({
     try {
       const res = await client.post("/article/email-subscription", { email });
       toast.success(res.msg);
+      localStorage.setItem("isSubscribe", "true");
+      setIsSubscribeNewsLetter(true);
     } catch (e) {}
     setNewsLetterLoading(false);
   };
@@ -177,7 +188,9 @@ export default function Index({
           title="Artikel Terpopuler"
           description="Terpopuler di minggu ini"
         />
-        <NewLetter onSubmit={onSubmit} loading={newsLetterLoading} />
+        {!isSubscribeNewsLetter && (
+          <NewLetter onSubmit={onSubmit} loading={newsLetterLoading} />
+        )}
         {merchandiseStores?.length > 0 && (
           <ContainerStore
             className="my-8"
