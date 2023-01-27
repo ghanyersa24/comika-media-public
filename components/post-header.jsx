@@ -44,7 +44,7 @@ export function PostHeaderDekstop({
       </div>
       <div className="mb-8 md:mb-12 sm:mx-0">
         <ImageInstrinsicPost
-          className="object-cover rounded-md"
+          className="object-cover rounded-md  aspect-[2/1] "
           title={title}
           src={coverImage}
           height={620}

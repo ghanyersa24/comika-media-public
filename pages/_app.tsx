@@ -11,6 +11,7 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store } from '../store'
 import 'nprogress/nprogress.css'
+import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "next-auth/client";
 
 

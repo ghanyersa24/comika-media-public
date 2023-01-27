@@ -24,7 +24,7 @@ export default function PostPreview({
     <div className="md:rounded-lg md:shadow-md text-textSecondary">
       <div className="relative">
         <ImageInstrinsicPost
-          className="object-cover rounded-t-md"
+          className="object-cover rounded-t-md aspect-[4/3]"
           slug={slug}
           title={title}
           src={banner}

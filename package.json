@@ -2,7 +2,8 @@
   "name": "Comika-Media",
   "version": "1.0.0",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev",
+    "devc": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lintq": "eslint --fix --ext .js,.jsx,.tsx,.ts .  components/ pages/ service/ res/ --quiet & tsc",

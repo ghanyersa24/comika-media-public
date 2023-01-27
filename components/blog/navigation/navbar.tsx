@@ -57,7 +57,7 @@ export const Profile = ({ src, name }: {
               <div className="w-8 h-8 rounded-full">
                 {src && name ? (
                   <Image
-                    className="rounded-full"
+                    className="rounded-full aspect-[1/1] object-cover"
                     src={src}
                     alt={`gambar ${name}`}
                     layout="responsive"
