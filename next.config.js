@@ -11,7 +11,8 @@ module.exports = withPWA({
     // appDir: true,
   },
   images: {
-    formats: ['image/avif', 'image/webp'],
+    unoptimized: true,
+    // formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60 * 30,
     domains: ['miro.medium.com', 'service-comika.herokuapp.com', 'awsimages.detik.net.id', 'www.static-src.com', 'betterstudio.com',
       'cdn-production-thumbor-vidio.akamaized.net', 'localhost', 'i2.wp.com', 'www.herworld.co.id', 'pbs.twimg.com',
