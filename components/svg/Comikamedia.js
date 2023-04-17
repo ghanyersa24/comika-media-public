@@ -4,7 +4,7 @@ import Image from 'next/image'
 function SvgComikamedia(props) {
   return (
     <div {...props}>
-      <Image
+      <img
         src="https://api.comika.media/uploads/comika/media-white.png"
         alt="logo comika media"
         layout="intrinsic"
